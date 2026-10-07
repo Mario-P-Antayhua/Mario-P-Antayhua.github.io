@@ -21,10 +21,10 @@ title-block-style: none
 
 <p class="hero-cargo">Estudiante de Economía, Universidad Nacional Mayor de San Marcos</p>
 
-Soy estudiante de octavo ciclo de Economía en la Universidad Nacional Mayor de San Marcos y me desempeño como asistente de cátedra en Macroeconomía, Econometría e Informática para Economistas. Mi principal interés académico se encuentra en la econometría aplicada y la macroeconomía, con especial énfasis en el estudio de los fundamentos teóricos, la estructura de los modelos y los mecanismos económicos que subyacen a sus resultados. Busco comprender no solo las implicancias de un modelo, sino también el proceso mediante el cual sus supuestos, relaciones y mecanismos conducen a los resultados que este genera.
+Soy estudiante de octavo ciclo de Economía en la Universidad Nacional Mayor de San Marcos y trabajo como asistente de cátedra en Macroeconomía, Econometría e Informática para Economistas. Me interesa la econometría aplicada y la macroeconomía, y en particular comprender la estructura, supuestos y los mecanismos que subyacen de los resultados de los modelos.
 
 
-En este sitio publico mis apuntes de macroeconomía, econometría y matemática para economistas, con sus demostraciones y ejercicios resueltos.
+En este sitio publico mis apuntes de Macroeconomía, Econometría y Matemática para Economistas, con sus demostraciones y ejercicios resueltos.
 
 <p class="hero-botones">
 <a class="boton boton-principal" href="sobre-mi.qmd">Conoce mi perfil</a>
