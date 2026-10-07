@@ -1,0 +1,12 @@
+---
+title: "Derechos de autor"
+description: "Condiciones de uso del contenido de este sitio."
+number-sections: false
+toc: false
+---
+
+© 2026 Mario Andrés Peñaloza Antayhua. Todos los derechos reservados.
+
+Todo el contenido de este sitio, incluidos los textos, las demostraciones, los ejercicios, las figuras, el código y los archivos descargables, es obra mía y está protegido por la legislación peruana de derechos de autor. No se autoriza su reproducción, distribución, comunicación pública, transformación ni uso comercial, total o parcial, sin mi permiso previo y por escrito. Tampoco se autoriza su uso para entrenar sistemas de inteligencia artificial.
+
+Se puede citar un fragmento con la referencia completa a la obra y a su autor, conforme a la ley. Para cualquier otro uso, escribo a [mario.penaloza@unmsm.edu.pe](mailto:mario.penaloza@unmsm.edu.pe).

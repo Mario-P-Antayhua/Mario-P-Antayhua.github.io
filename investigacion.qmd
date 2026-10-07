@@ -1,0 +1,55 @@
+---
+title: "Líneas de investigación"
+description: "Las áreas en las que investigo, cómo me aproximo a un problema económico y las bases de datos con las que quiero trabajar."
+toc: true
+toc-depth: 2
+number-sections: false
+---
+
+Mi trabajo se ubica entre la macroeconomía y la econometría, y se extiende hacia la economía laboral, la economía de la educación, la organización industrial, la innovación, la ciencia y tecnología, y los efectos económicos de la inteligencia artificial. Entiendo la investigación como la combinación de tres elementos: una teoría económica bien planteada, una metodología econométrica adecuada y evidencia empírica que permita contrastar las hipótesis.
+
+## Líneas actuales
+
+### Macroeconomía y política monetaria
+
+Me interesan la inflación, las expectativas y las reglas de política monetaria, con la curva de Phillips y la regla de Taylor como marcos de referencia. También estudio la macroeconomía abierta, que incluye la paridad de tasas de interés, la balanza de pagos, el tipo de cambio y el *overshooting*, además del crecimiento económico, los modelos dinámicos y de equilibrio, y el pronóstico macroeconómico con series de tiempo.
+
+### Econometría y series de tiempo
+
+Trabajo sobre todo con modelos VAR y SVAR: su identificación, la estacionariedad, la selección de rezagos, la estimación y el diagnóstico, las funciones impulso-respuesta, la descomposición de varianza, el *bootstrap* y la interpretación económica de los choques. Junto con ellos estudio los modelos ARIMA, SARIMA y SARIMAX, los modelos de espacio de estados y el filtro de Kalman.
+
+Quiero ampliar esta línea hacia los modelos de panel, los métodos de evaluación causal, la microeconometría aplicada y las herramientas de aprendizaje estadístico y *machine learning* aplicadas a la economía.
+
+### Inteligencia artificial y mercado laboral
+
+Es la línea que considero más prometedora para investigar con microdatos peruanos. Me interesa ir más allá de preguntar si la inteligencia artificial reemplaza puestos de trabajo, y estudiar cómo cambia la exposición de las ocupaciones, el desajuste entre educación y empleo, la sobreeducación, las tareas que realiza cada trabajador y la demanda de habilidades. También quiero medir su relación con la productividad, los salarios, la calidad del empleo, la polarización ocupacional y la automatización.
+
+Para ello busco usar datos individuales y métodos econométricos que permitan identificar diferencias entre trabajadores, ocupaciones, sectores y niveles educativos.
+
+### Economía de la educación
+
+Quiero estudiar el rendimiento universitario y sus determinantes, en particular los factores socioeconómicos y el consumo de los estudiantes. Para ello me interesan los datos longitudinales y de panel y la evaluación de impacto. Una investigación en educación no debería limitarse a describir; necesita una estrategia econométrica sólida que responda preguntas concretas de política educativa.
+
+### Organización industrial
+
+Me interesan la concentración, la competencia y la innovación, y cómo se relacionan con la estructura de mercado y el desempeño de las empresas. El mercado móvil peruano, con una perspectiva histórica de largo plazo, es el caso con el que trabajo hoy.
+
+### Ciencia, tecnología e innovación
+
+Trabajo con indicadores de ciencia, tecnología e innovación y con la construcción de índices, a partir de variables como el capital humano, la producción científica y las capacidades tecnológicas, con énfasis en la innovación regional.
+
+## Cómo me aproximo a una investigación
+
+Parto de una teoría bien planteada antes de especificar un modelo, y solo después evalúo si los datos son compatibles con las hipótesis. Una investigación sólida necesita una pregunta económica clara y una motivación relevante, una base teórica y una estrategia empírica coherente, con datos adecuados y variables bien definidas. Necesita también una especificación econométrica que se pueda justificar, pruebas de robustez, una interpretación económica de los resultados y conclusiones útiles para futuras investigaciones o para la política pública.
+
+Me importa que el trabajo sea replicable, con bases de datos accesibles y procedimientos transparentes. Por eso no me interesan las investigaciones puramente descriptivas.
+
+## Bases de datos de interés
+
+Trabajo con bases peruanas, entre ellas la ENAHO, la EPEN, las series del BCRP y la información del INEI, además de datos regionales, de educación, laborales, sectoriales y de ciencia, tecnología e innovación. Busco preguntas que se puedan estudiar con microdatos peruanos y que permitan ejercicios econométricos reproducibles.
+
+## Diseños que quiero desarrollar
+
+Para investigaciones futuras me atraen los diseños con datos de panel, con la ENAHO y la EPEN, con datos administrativos o sectoriales, con información regional y con bases internacionales combinadas con información peruana. Prefiero propuestas de extensión manejable, con una pregunta claramente identificable y una metodología que pueda ejecutarse con rigor con los recursos disponibles.
+
+Mi proyecto de tesis de pregrado, que estudia los efectos asimétricos del gasto público según la regla fiscal de déficit, está descrito en [mi perfil](sobre-mi.qmd#proyectos).

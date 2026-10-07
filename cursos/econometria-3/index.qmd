@@ -1,0 +1,20 @@
+---
+title: "Econometría III"
+description: "Mis apuntes de Econometría III."
+number-sections: false
+toc: false
+listing:
+  contents: "*.qmd"
+  type: table
+  sort: "date desc"
+  fields: [date, title, description]
+---
+
+<p class="estado">En proceso</p>
+
+Empecé por el espacio-estado y el filtro de Kalman. Los temas se publican como notas independientes, a medida que los termino.
+
+## Notas publicadas {.unnumbered}
+
+::: {#listado}
+:::

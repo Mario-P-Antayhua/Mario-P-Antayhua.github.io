@@ -1,0 +1,10 @@
+---
+title: "Macroeconomía III"
+description: "Mis apuntes de Macroeconomía III."
+number-sections: false
+toc: false
+---
+
+<p class="estado">En proceso</p>
+
+Los temas se publican como notas independientes, a medida que los termino.

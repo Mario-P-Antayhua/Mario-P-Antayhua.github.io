@@ -1,0 +1,180 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - robots.txt
+  render:
+    - "*.qmd"
+    - "cursos/**/*.qmd"
+    - "material/**/*.qmd"
+
+lang: es
+
+website:
+  title: "Apuntes de Economía"
+  description: "Notas de clase, demostraciones y ejercicios resueltos de macroeconomía, econometría y matemática para economistas, por Mario Peñaloza."
+  site-url: https://mario-p-antayhua.github.io
+  favicon: assets/img/unmsm-escudo.png
+  open-graph: true
+  draft-mode: gone
+  page-navigation: true
+  back-to-top-navigation: true
+  search:
+    location: navbar
+    type: overlay
+  navbar:
+    logo: assets/img/unmsm-escudo.png
+    logo-alt: "Escudo de la Universidad Nacional Mayor de San Marcos"
+    background: primary
+    search: true
+    left:
+      - text: "Inicio"
+        href: index.qmd
+      - text: "Cursos"
+        menu:
+          - text: "Macroeconomía"
+          - text: "Macroeconomía I"
+            href: cursos/macroeconomia-1/index.qmd
+          - text: "Macroeconomía II"
+            href: cursos/macroeconomia-2/index.qmd
+          - text: "Macroeconomía III"
+            href: cursos/macroeconomia-3/index.qmd
+          - text: "---"
+          - text: "Econometría"
+          - text: "Econometría I"
+            href: cursos/econometria-1/index.qmd
+          - text: "Econometría II"
+            href: cursos/econometria-2/index.qmd
+          - text: "Econometría III"
+            href: cursos/econometria-3/index.qmd
+          - text: "---"
+          - text: "Matemática para Economistas"
+          - text: "Matemática para Economistas I"
+            href: cursos/matematica-1/index.qmd
+          - text: "Matemática para Economistas II"
+            href: cursos/matematica-2/index.qmd
+          - text: "Matemática para Economistas III"
+            href: cursos/matematica-3/index.qmd
+          - text: "Matemática para Economistas IV"
+            href: cursos/matematica-4/index.qmd
+      - text: "Material"
+        href: material/index.qmd
+      - text: "Sobre mí"
+        menu:
+          - text: "Perfil"
+            href: sobre-mi.qmd
+          - text: "Líneas de investigación"
+            href: investigacion.qmd
+          - text: "Enfoque y proyección"
+            href: enfoque.qmd
+    tools:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/mario-pe%C3%B1aloza/
+        text: LinkedIn
+      - icon: github
+        href: https://github.com/Mario-P-Antayhua
+        text: GitHub
+      - icon: envelope
+        href: mailto:mario.penaloza@unmsm.edu.pe
+        text: Correo
+  sidebar:
+    style: docked
+    collapse-level: 2
+    contents:
+      - href: index.qmd
+        text: "Inicio"
+      - section: "Sobre mí"
+        contents:
+          - href: sobre-mi.qmd
+            text: "Perfil"
+          - investigacion.qmd
+          - enfoque.qmd
+      - section: "Macroeconomía"
+        contents:
+          - href: cursos/macroeconomia-1/index.qmd
+            text: "Macroeconomía I"
+          - href: cursos/macroeconomia-2/index.qmd
+            text: "Macroeconomía II"
+          - href: cursos/macroeconomia-3/index.qmd
+            text: "Macroeconomía III"
+      - section: "Econometría"
+        contents:
+          - href: cursos/econometria-1/index.qmd
+            text: "Econometría I"
+          - href: cursos/econometria-2/index.qmd
+            text: "Econometría II"
+          - href: cursos/econometria-3/index.qmd
+            text: "Econometría III"
+          - cursos/econometria-3/nivel-local.qmd
+      - section: "Matemática para Economistas"
+        contents:
+          - href: cursos/matematica-1/index.qmd
+            text: "Matemática para Economistas I"
+          - href: cursos/matematica-2/index.qmd
+            text: "Matemática para Economistas II"
+          - href: cursos/matematica-3/index.qmd
+            text: "Matemática para Economistas III"
+          - href: cursos/matematica-4/index.qmd
+            text: "Matemática para Economistas IV"
+      - href: material/index.qmd
+  page-footer:
+    background: primary
+    left: "© 2026 Mario Andrés Peñaloza Antayhua. Todos los derechos reservados."
+    center:
+      - text: "Derechos de autor"
+        href: derechos.qmd
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/mario-pe%C3%B1aloza/
+        aria-label: LinkedIn
+      - icon: github
+        href: https://github.com/Mario-P-Antayhua
+        aria-label: GitHub
+      - icon: envelope
+        href: mailto:mario.penaloza@unmsm.edu.pe
+        aria-label: Correo
+
+format:
+  html:
+    theme:
+      light: [default, assets/fonts.scss, assets/estilo.scss]
+      dark: [default, assets/fonts.scss, assets/estilo.scss, assets/estilo-oscuro.scss]
+    html-math-method: mathjax
+    toc: true
+    toc-depth: 3
+    toc-title: "En esta página"
+    number-sections: true
+    code-fold: false
+    code-copy: true
+    code-block-bg: true
+    fig-format: svg
+    lightbox: true
+    smooth-scroll: true
+    link-external-newwindow: true
+    link-external-icon: false
+    citations-hover: true
+    footnotes-hover: true
+    include-in-header: assets/cabecera.html
+    include-before-body: assets/macros.html
+    include-after-body: assets/scripts.html
+    csl: assets/apa.csl
+
+bibliography: references.bib
+
+crossref:
+  chapters: false
+  eq-prefix: Ecuación
+  thm-title: Teorema
+  lem-title: Lema
+  def-title: Definición
+  prp-title: Proposición
+  cor-title: Corolario
+  exm-title: Ejemplo
+  exr-title: Ejercicio
+
+execute:
+  freeze: auto
+  echo: true
+  warning: false
+
+jupyter: python3

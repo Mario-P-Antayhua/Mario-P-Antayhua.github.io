@@ -1,0 +1,70 @@
+---
+title: "Mario Andrés Peñaloza Antayhua"
+pagetitle: "Mario Peñaloza | Apuntes de Economía"
+description: "Apuntes de macroeconomía, econometría y matemática para economistas."
+toc: false
+page-layout: full
+title-block-style: none
+---
+
+<style>#title-block-header { display: none; }</style>
+
+::: {.hero}
+::: {.hero-foto}
+![](assets/img/foto-placeholder.svg){.foto-perfil .no-lightbox fig-alt="Retrato de Mario Peñaloza"}
+:::
+
+::: {.hero-texto}
+<p class="hero-etiqueta">Economía · Econometría · Análisis de datos</p>
+
+<h1 class="hero-nombre">Mario Andrés Peñaloza Antayhua</h1>
+
+<p class="hero-cargo">Estudiante de Economía, Universidad Nacional Mayor de San Marcos</p>
+
+Soy estudiante de octavo ciclo de Economía en la Universidad Nacional Mayor de San Marcos y trabajo como asistente de cátedra en macroeconomía, econometría e informática para economistas. Me interesa la econometría aplicada y la macroeconomía, y en particular entender de dónde sale cada resultado antes de usarlo.
+
+En este sitio publico mis apuntes de macroeconomía, econometría y matemática para economistas, con sus demostraciones y ejercicios resueltos.
+
+<p class="hero-botones">
+<a class="boton boton-principal" href="sobre-mi.qmd">Conoce mi perfil</a>
+<a class="boton" href="cursos/econometria-3/nivel-local.qmd">Leer una nota</a>
+</p>
+
+<p class="hero-redes">
+<a href="https://www.linkedin.com/in/mario-pe%C3%B1aloza/" aria-label="LinkedIn de Mario Peñaloza"><i class="bi bi-linkedin"></i> LinkedIn</a>
+<a href="https://github.com/Mario-P-Antayhua" aria-label="GitHub de Mario Peñaloza"><i class="bi bi-github"></i> GitHub</a>
+<a href="mailto:mario.penaloza@unmsm.edu.pe" aria-label="Correo institucional"><i class="bi bi-envelope"></i> mario.penaloza@unmsm.edu.pe</a>
+</p>
+:::
+:::
+
+::: {.seccion-inicio}
+## Cursos {.unnumbered}
+
+::: {.tarjetas}
+::: {.tarjeta}
+### Macroeconomía {.unnumbered}
+
+- [Macroeconomía I](cursos/macroeconomia-1/index.qmd)
+- [Macroeconomía II](cursos/macroeconomia-2/index.qmd)
+- [Macroeconomía III](cursos/macroeconomia-3/index.qmd)
+:::
+
+::: {.tarjeta}
+### Econometría {.unnumbered}
+
+- [Econometría I](cursos/econometria-1/index.qmd)
+- [Econometría II](cursos/econometria-2/index.qmd)
+- [Econometría III](cursos/econometria-3/index.qmd)
+:::
+
+::: {.tarjeta}
+### Matemática para Economistas {.unnumbered}
+
+- [Matemática para Economistas I](cursos/matematica-1/index.qmd)
+- [Matemática para Economistas II](cursos/matematica-2/index.qmd)
+- [Matemática para Economistas III](cursos/matematica-3/index.qmd)
+- [Matemática para Economistas IV](cursos/matematica-4/index.qmd)
+:::
+:::
+:::

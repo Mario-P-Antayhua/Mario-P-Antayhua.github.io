@@ -1,0 +1,44 @@
+/*-- scss:defaults --*/
+$body-color: #e4e7ee;
+$body-bg: #0b1020;
+$link-color: #7fc4c4;
+$link-hover-color: #ffffff;
+$headings-color: #cfdcf2;
+$navbar-bg: #060a1c;
+
+/*-- scss:rules --*/
+.navbar, .nav-footer { background: #060a1c; }
+h2 { border-bottom-color: #2c3c66; }
+.theorem, .lemma, .corollary, .proposition, .definition, .example, .exercise, .remark {
+  background: #121a33;
+  border-left-color: #5b84a6;
+}
+.theorem .theorem-title, .lemma .theorem-title, .corollary .theorem-title, .proposition .theorem-title,
+.definition .theorem-title, .example .theorem-title, .exercise .theorem-title { color: #cfdcf2; }
+.proof > p:first-child > em:first-child { color: #cfdcf2; }
+.tarjeta { background: #121a33; border-top-color: #5b84a6; }
+.tarjeta h3 a, .hero-nombre, .hero-redes a { color: #cfdcf2; }
+.hero-cargo { color: #8fb3d1; }
+.hero-etiqueta { color: #7fc4c4; }
+.foto-perfil { border-color: #5b84a6; box-shadow: 0 0 0 6px #121a33, 0 0 0 8px #5b84a6; }
+.boton { color: #cfdcf2; border-color: #5b84a6; }
+.boton:hover, .boton-principal { background: #5b84a6; color: #060a1c; }
+.callout.callout-style-default > .callout-header { background: #121a33; }
+thead th { color: #cfdcf2; border-bottom-color: #5b84a6; }
+.listing-category { background: #121a33; color: #cfdcf2; }
+.quarto-listing-default .listing-title a { color: #cfdcf2; }
+#quarto-sidebar .sidebar-link { color: #e4e7ee; }
+#quarto-sidebar .sidebar-link.active { color: #7fc4c4; }
+#quarto-sidebar a[data-bs-toggle="collapse"] .menu-text { color: #cfdcf2; }
+body, #quarto-content, .quarto-container, #quarto-sidebar, #quarto-margin-sidebar { background-color: #0b1020; color: #e4e7ee; }
+a { color: #7fc4c4; }
+a:hover { color: #ffffff; }
+.nav-footer a, .navbar a { color: #ffffff; }
+.tarjeta h3 a, .hero-redes a, .boton { color: #cfdcf2; }
+.boton-principal, .boton:hover { color: #060a1c; }
+.sourceCode, div.sourceCode { background-color: #121a33; border-color: #2c3c66; }
+caption, .table-caption, figcaption, .figure-caption { color: #b5bccb; }
+h1, h2, h3, h4, .quarto-title-block .quarto-title h1.title { color: #cfdcf2; }
+.quarto-title-meta-heading { color: #7fc4c4; }
+.estado { color: #7fc4c4; border-color: #7fc4c4; }
+.tarjeta li a { color: #cfdcf2; }

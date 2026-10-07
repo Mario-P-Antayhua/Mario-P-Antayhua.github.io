@@ -1,0 +1,8 @@
+---
+title: "Material"
+description: "Presentaciones y guías en PDF de los cursos."
+number-sections: false
+toc: false
+---
+
+Aquí iré publicando las presentaciones y las guías en PDF de cada curso. El material que pertenece a una cátedra lo publico con el visto bueno del docente titular.

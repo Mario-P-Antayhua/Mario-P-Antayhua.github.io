@@ -1,0 +1,151 @@
+/*-- scss:defaults --*/
+// Paleta institucional UNMSM (la misma de las presentaciones Beamer)
+$navy: #000066;
+$primary: #000066;
+$teal: #006666;
+$polvo: #5b84a6;
+$rojo: #780f14;
+$fondo-suave: #f5f5f7;
+$texto: #1e1e1e;
+
+$font-family-sans-serif: "Source Sans 3", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-serif: "Source Serif 4", "Iowan Old Style", Georgia, "Times New Roman", serif;
+$font-family-base: $font-family-serif;
+$headings-font-family: $font-family-serif;
+$headings-font-weight: 600;
+$headings-color: $navy;
+
+$body-color: $texto;
+$body-bg: #ffffff;
+$link-color: $teal;
+$link-hover-color: $navy;
+$font-size-base: 1.06rem;
+$line-height-base: 1.72;
+$border-radius: 4px;
+
+$navbar-bg: $navy;
+$navbar-fg: #ffffff;
+$navbar-hover-color: #ffffff;
+$navbar-light-brand-color: #ffffff;
+$navbar-light-brand-hover-color: #ffffff;
+
+/*-- scss:rules --*/
+:root { --navy: #{$navy}; --teal: #{$teal}; --polvo: #{$polvo}; --suave: #{$fondo-suave}; }
+
+// Interfaz en tipografía sin serifa; el texto largo en serifa
+.navbar, .sidebar, #quarto-sidebar, #TOC, .quarto-title-meta, .page-footer, .nav-footer,
+.listing-category, .quarto-listing, .boton, .hero-etiqueta, .hero-redes, .callout-title-container {
+  font-family: $font-family-sans-serif;
+}
+
+// Barra superior
+.navbar { border-bottom: 3px solid $polvo; }
+.navbar-brand { display: flex; align-items: center; gap: 0.7rem; font-family: $font-family-serif; font-weight: 600; }
+.navbar-brand-container .navbar-logo { max-height: 2.4rem; }
+.navbar .nav-link, .navbar .navbar-title { color: #ffffff; }
+.navbar .nav-link:hover, .navbar .nav-link.active { color: #ffffff; text-decoration: underline; text-underline-offset: 0.35em; text-decoration-thickness: 2px; text-decoration-color: $polvo; }
+.navbar-nav .dropdown-menu { font-family: $font-family-sans-serif; }
+
+// Barra lateral: secciones en azul marino, páginas en texto normal, página activa en verde azulado
+#quarto-sidebar .sidebar-link { color: $texto; font-weight: 400; }
+#quarto-sidebar .sidebar-link.active { color: $teal; font-weight: 600; }
+#quarto-sidebar a[data-bs-toggle="collapse"] .menu-text { color: $navy; font-weight: 600; }
+@media (max-width: 575px) { .navbar-title { display: none; } }
+
+// Pie de página
+.nav-footer { background: $navy; color: #ffffff; border-top: 3px solid $polvo; padding-block: 1.1rem; }
+.nav-footer a, .nav-footer .nav-link { color: #ffffff; }
+.nav-footer a:hover { color: #ffffff; text-decoration: underline; }
+
+// Títulos
+h1, h2, h3, h4 { text-wrap: balance; }
+h1 { letter-spacing: -0.01em; }
+h2 { margin-top: 2.6rem; padding-bottom: 0.35rem; border-bottom: 2px solid $polvo; }
+h3 { margin-top: 2rem; }
+.quarto-title-block .quarto-title h1.title { color: $navy; }
+.quarto-title-block .quarto-title-meta-heading { color: $teal; }
+.page-columns .content > p, .content > p { max-width: 70ch; }
+
+// Cajas de definiciones, teoremas y demás: todas en azul marino, con la palabra del título como diferencia
+.theorem, .lemma, .corollary, .proposition, .definition, .example, .exercise, .remark {
+  margin: 2.2rem 0;
+  padding: 1.1rem 1.4rem 1.2rem;
+  background: $fondo-suave;
+  border-left: 4px solid $navy;
+  border-radius: 0 4px 4px 0;
+  font-style: normal;
+}
+.theorem .theorem-title, .lemma .theorem-title, .corollary .theorem-title, .proposition .theorem-title,
+.definition .theorem-title, .example .theorem-title, .exercise .theorem-title {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: $navy;
+  font-family: $font-family-sans-serif;
+  font-size: 0.98rem;
+}
+.theorem > p:last-child, .definition > p:last-child { margin-bottom: 0; }
+.theorem p, .definition p { max-width: none; }
+
+// La demostración va fuera de la caja, sin color
+.proof { margin: 1.6rem 0 2.4rem; padding-left: 0.2rem; }
+.proof > p:first-child > em:first-child, .proof > p:first-child > .proof-title { font-style: normal; font-weight: 600; color: $navy; }
+
+// Ecuaciones con aire
+.math.display, mjx-container[display="true"] { margin: 1.5rem 0 !important; overflow-x: auto; overflow-y: hidden; }
+
+// Tablas sobrias
+table { font-size: 0.93em; }
+.table > :not(caption) > * > * { padding: 0.55rem 0.7rem; }
+thead th { color: $navy; border-bottom: 2px solid $navy; }
+caption, .table-caption, figcaption, .figure-caption { font-size: 0.88em; color: #4a4a4a; font-family: $font-family-sans-serif; }
+
+// Llamadas
+.callout { margin: 1.8rem 0; border-left-width: 4px; }
+.callout.callout-style-default { border-left-color: $navy; }
+.callout.callout-style-default > .callout-header { background: $fondo-suave; }
+
+// Código
+div.sourceCode { border-radius: 4px; border: 1px solid #dcdce2; }
+pre.sourceCode { font-size: 0.85em; }
+
+// Portada
+.hero { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 3.5rem; align-items: center; max-width: 1080px; margin: 2.5rem auto 1rem; padding-inline: 1.5rem; }
+.hero-foto { display: flex; justify-content: center; }
+.foto-perfil { width: 100%; max-width: 300px; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 50%; border: 5px solid $navy; box-shadow: 0 0 0 6px $fondo-suave, 0 0 0 8px $polvo; background: $navy; }
+.hero-etiqueta { margin: 0 0 0.4rem; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.78rem; font-weight: 600; color: $teal; }
+.hero-nombre { margin: 0 0 0.3rem; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; color: $navy; border: 0; padding: 0; }
+.hero-cargo { margin: 0 0 1.4rem; font-size: 1.15rem; color: $polvo; font-weight: 600; font-family: $font-family-sans-serif; }
+.hero-texto p { max-width: 62ch; }
+.hero-botones { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
+.boton { display: inline-block; padding: 0.65rem 1.25rem; border: 2px solid $navy; border-radius: 4px; color: $navy; font-weight: 600; text-decoration: none; transition: background 0.15s, color 0.15s; }
+.boton:hover { background: $navy; color: #ffffff; }
+.boton-principal { background: $navy; color: #ffffff; }
+.boton-principal:hover { background: $teal; border-color: $teal; }
+.hero-redes { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin-top: 1.4rem; font-size: 0.95rem; }
+.hero-redes a { color: $navy; text-decoration: none; }
+.hero-redes a:hover { color: $teal; text-decoration: underline; }
+.hero-redes .bi { margin-right: 0.35rem; }
+
+.seccion-inicio { max-width: 1080px; margin: 0 auto; padding-inline: 1.5rem; }
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
+.tarjeta { background: $fondo-suave; border-top: 4px solid $navy; border-radius: 0 0 4px 4px; padding: 1.2rem 1.3rem 1.3rem; }
+.tarjeta h3 { margin: 0 0 0.5rem; font-size: 1.2rem; }
+.tarjeta h3 a { text-decoration: none; color: $navy; }
+.tarjeta h3 a:hover { color: $teal; }
+.tarjeta p { margin: 0; font-size: 0.97rem; line-height: 1.6; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; gap: 1.8rem; text-align: center; }
+  .hero-botones, .hero-redes { justify-content: center; }
+  .hero-texto p { margin-inline: auto; }
+}
+
+// Listados de notas
+.quarto-listing-default .listing-title a { color: $navy; }
+.listing-category { background: $fondo-suave; color: $navy; border-radius: 3px; }
+
+// Estado de un curso
+.estado { display: inline-block; margin: 0 0 1rem; padding: 0.25rem 0.8rem; border: 1px solid $teal; border-radius: 999px; color: $teal; font-family: $font-family-sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.tarjeta ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+.tarjeta li a { color: $navy; text-decoration: none; font-weight: 600; font-family: $font-family-sans-serif; }
+.tarjeta li a:hover { color: $teal; text-decoration: underline; }

@@ -1,0 +1,82 @@
+---
+title: "Sobre mí"
+description: "Mi perfil académico y profesional: formación, docencia, investigación, experiencia, herramientas y participación académica."
+toc: true
+toc-depth: 2
+number-sections: false
+---
+
+Mi nombre es Mario Andrés Peñaloza Antayhua. Estudio Economía en la Universidad Nacional Mayor de San Marcos, en la Facultad de Ciencias Económicas, y esta página resume mi formación, mi trabajo docente y mi experiencia en investigación. Mis datos de contacto son el correo [mario.penaloza@unmsm.edu.pe](mailto:mario.penaloza@unmsm.edu.pe) y mi perfil de [LinkedIn](https://www.linkedin.com/in/mario-pe%C3%B1aloza/). Mis líneas de investigación están en [otra página](investigacion.qmd), y mi forma de estudiar y mis metas, en [enfoque y proyección](enfoque.qmd).
+
+## Perfil
+
+Estoy en el octavo ciclo de Economía, en el décimo superior de mi promoción, con una formación cuantitativa orientada a la investigación empírica. Mi interés se concentra en la macroeconomía, la econometría y el análisis cuantitativo, y busco usar herramientas estadísticas y econométricas para estudiar problemas económicos relevantes para el Perú.
+
+He construido este perfil combinando la formación teórica de la carrera con la docencia como asistente de cátedra y la participación en proyectos de investigación sobre ciencia y tecnología regional, organización industrial y el efecto de la inteligencia artificial generativa en el mercado laboral peruano. Quiero seguir fortaleciéndolo para trabajar después como investigador y docente universitario.
+
+## Educación
+
+Estudio la licenciatura en Economía en la Universidad Nacional Mayor de San Marcos desde marzo de 2023 y hoy estoy en el octavo ciclo. Durante la carrera pasé de entender los modelos principalmente desde la teoría a interesarme por su contrastación empírica, por la identificación de relaciones causales, por la construcción de indicadores y por el uso de bases de datos para responder preguntas concretas.
+
+Los cursos que más me han interesado son macroeconomía, econometría, estadística, series de tiempo, procesos estocásticos, matemática aplicada a la economía, economía internacional, política monetaria, teoría del crecimiento, organización industrial, economía laboral y economía de la educación. En macroeconomía me interesan sobre todo la economía abierta y la política monetaria, y en econometría, la inferencia estadística como base de la disciplina.
+
+## Pre-docencia
+
+Desde agosto de 2025 soy asistente de cátedra en la Universidad Nacional Mayor de San Marcos. Apoyo las clases prácticas, resuelvo ejercicios, preparo materiales y prácticas dirigidas, y elaboro evaluaciones.
+
+He trabajado en Macroeconomía I; en Macroeconomía III, en 2026-0 y en 2026-I, este último ciclo con el Mg. Marco Antonio Arroyo Lazo; y en Informática para Economistas y Econometría II, en 2026-I, con el profesor Víctor Benigno Pérez Suárez. En el ciclo 2026-II apoyo Econometría I, con el Mg. Arroyo Lazo, donde me encargo del software y las aplicaciones y dicto refuerzos virtuales, y Econometría III, con el Mg. Vicente Daniel Corzo Valdiglesias, donde preparo presentaciones y notas de clase sobre espacio-estado y filtro de Kalman.
+
+Esta experiencia me dio una segunda orientación profesional: la docencia. Me gusta convertir un concepto teórico o matemático en una explicación que otro estudiante pueda seguir, y por eso escribo mis propios apuntes de Macroeconomía I a III, Econometría I a III y Matemática para Economistas I a IV, que publico en este sitio como cursos independientes.
+
+## Experiencia en investigación
+
+Desde 2025 soy asistente de investigación del Mg. Vicente Daniel Corzo Valdiglesias en la UNMSM, y trabajo con él en tres líneas. La primera estudia la inadecuación laboral y la exposición a la inteligencia artificial generativa en trabajadores con educación superior en el Perú entre 2015 y 2025. La segunda analiza la concentración, la competencia y la innovación en el mercado peruano de telefonía móvil entre 1994 y 2025. La tercera es la elaboración de notas de clase para Macroeconomía III y Econometría III.
+
+En 2025 también apoyé, junto con el Mg. Corzo y para CONCYTEC, el diseño de un instrumento que mide las capacidades de generación de conocimiento en ciencia, tecnología e innovación de las regiones del Perú: el Índice Regional de CTI, 2019 a 2024. Trabajé con información regional y construí un indicador compuesto con normalización min-max y análisis de componentes principales, a partir de variables como publicaciones científicas, capital humano, educación y acceso a internet. Además tuve que resolver datos faltantes y la reducción del tamaño efectivo de la muestra en el análisis de componentes principales.
+
+Esa experiencia reforzó mi interés por construir índices y por usar el análisis multivariado para medir fenómenos que no se observan directamente. El trabajo sobre telefonía móvil, por su parte, complementa mi formación macroeconómica con la mirada microeconómica de la organización industrial.
+
+## Experiencia profesional
+
+Desde 2026 hago mis prácticas preprofesionales como practicante de la Gerencia General en Analitika Market Insight S.R.L., en modalidad remota. Esta práctica complementa mi trabajo como asistente de cátedra y mi participación en investigación, y quiero seguir sumando experiencia aplicada en investigación económica, consultoría, análisis de datos, econometría y política económica.
+
+## Proyectos
+
+Mi proyecto de tesis de pregrado, que desarrollo ahora, se titula *Efectos asimétricos del gasto público en el crecimiento económico del Perú según la regla fiscal de déficit, 1999 a 2025*. La estrategia empírica tiene dos etapas: primero estimo un VAR con umbral (TVAR), en el que el régimen lo define el cumplimiento de la regla macrofiscal de déficit en cada año, y después un VAR con cambio de régimen de Markov (MS-VAR) para descomponer históricamente la contribución del gasto público al crecimiento.
+
+También participé en un proyecto grupal de ciencia de datos de la Winter School in Economics and Finance 2026, de la Universidad del Pacífico, que estima la probabilidad de interrupción de estudios en la Universidad Nacional de Ingeniería con datos abiertos de matriculados. Me encargué de la modelización con regresiones logit y probit.
+
+## Experiencia con datos y series de tiempo
+
+He trabajado con bases macroeconómicas del Banco Central de Reserva del Perú, en particular con series de exportaciones, hidrocarburos y comercio exterior. En esas series apliqué transformaciones logarítmicas, estandarización y Box-Cox, y estimé modelos ARIMA, SARIMA y SARIMAX, funciones de correlación cruzada y modelos de espacio de estados con filtro de Kalman. Evalué los pronósticos con el error absoluto medio, la raíz del error cuadrático medio, el coeficiente de determinación y el U de Theil.
+
+No me interesa solo ejecutar un procedimiento; quiero saber qué hay detrás de cada uno y por qué se usa. Por eso he estudiado con profundidad la estacionariedad débil y fuerte, los procesos estocásticos, las matrices de varianzas y covarianzas, y los valores propios y sus propiedades algebraicas en modelos dinámicos.
+
+## Certificaciones y cursos
+
+| Año | Curso | Institución | Horas | Nota |
+|---|---|---|---|---|
+| 2025 | R para Economistas: Análisis de Datos y Econometría | Lambda Economía y Finanzas | 32 | |
+| 2025 | Python para Economistas, Básico e Intermedio | Lambda Economía y Finanzas | 32 | 18/20 |
+| 2025 | Programación en Python Básico (PIT 2025) | UNI, CTIC-UNI | 16 | 20/20 |
+| 2025 | Power BI Básico (PIT 2025) | UNI, CTIC-UNI | 16 | 16/20 |
+
+## Herramientas
+
+Uso Python para series de tiempo, tratamiento de datos, modelos econométricos, pronóstico y visualización, y Stata para econometría aplicada y microdatos, con regresión lineal, logit, modelos de panel, estadística descriptiva y pruebas de hipótesis. Escribo mis documentos y presentaciones académicas en LaTeX y Beamer, con una estructura limpia, formal y sobria. Mis entornos de trabajo son VS Code y Jupyter Notebook, RStudio, Stata 17, EViews 12 y Matlab.
+
+La tabla siguiente resume cómo valoro mi nivel en cada herramienta.
+
+| Nivel | Herramientas |
+|---|---|
+| Avanzado | Python |
+| Intermedio alto | R, NumPy y Pandas, Statsmodels, Matplotlib y ggplot2, LaTeX, Microsoft Excel |
+| Intermedio | Power BI, Scikit-learn, Stata, EViews, Matlab |
+
+## Idiomas
+
+Mi lengua materna es el español. Estudio inglés y estoy en el nivel Intermedio 5; mi meta es alcanzar un dominio académico que me permita leer literatura científica, participar en programas internacionales y postular a estudios de posgrado en el extranjero.
+
+## Participación académica
+
+He participado en actividades de la comunidad económica peruana, entre ellas las de la Asociación Peruana de Economistas (APE). Quiero ampliar mis redes con estudiantes, profesores e investigadores y exponer en espacios académicos, y valoro el intercambio entre estudiantes: compartir apuntes, revisar ejercicios, preparar exámenes y discutir artículos.

@@ -1,0 +1,9 @@
+<script>
+// Presenta el título de cada entorno como «Teorema 1 : Nombre», en su propia línea
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".theorem-title strong").forEach(function (el) {
+    var m = el.textContent.match(/^(.+?) \((.+)\)$/);
+    if (m) { el.textContent = m[1] + " : " + m[2]; }
+  });
+});
+</script>

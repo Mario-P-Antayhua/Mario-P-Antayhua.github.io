@@ -1,0 +1,41 @@
+---
+title: "Enfoque y proyección"
+description: "Cómo estudio, cómo escribo y hacia dónde quiero llevar mi trayectoria académica."
+toc: true
+toc-depth: 2
+number-sections: false
+---
+
+## Cómo estudio
+
+Tengo una fuerte inclinación hacia el aprendizaje profundo. No me basta saber qué fórmula se usa; quiero entender de dónde sale una expresión, por qué se hace una transformación y qué supuestos sostienen un resultado. Quiero ver cómo se deriva matemáticamente un modelo, qué interpretación económica tiene, qué ocurre si cambia un supuesto y cómo se implementa con datos.
+
+Por eso, cuando estudio matemáticas, estadística o econometría, busco explicaciones paso a paso, sin saltos algebraicos innecesarios. Prefiero comprender el método antes que memorizar comandos, y que cada procedimiento computacional tenga una justificación económica y estadística.
+
+## Cómo entiendo la econometría
+
+Mi forma de entender la disciplina se apoya en la inferencia estadística como base. El camino que sigo empieza por una teoría económica, con la que formulo bien la pregunta de investigación y especifico un modelo coherente. Luego identifico los supuestos y analizo los problemas econométricos posibles, sobre todo la endogeneidad y otras fuentes de sesgo. Después valido las hipótesis con criterios estadísticos y económicos, y termino interpretando los resultados desde la teoría.
+
+En macroeconomía me marcaron la economía abierta, la paridad de tasas de interés, la balanza de pagos, el tipo de cambio, el *overshooting*, las reglas frente a discreción, la curva de Phillips, la regla de Taylor, las expectativas y los portafolios. Esos temas me llevaron después a la econometría aplicada a variables macroeconómicas.
+
+## Cómo escribo
+
+Busco que mis textos combinen rigor, claridad, precisión y formalidad, y que expliquen conceptos complejos de manera sencilla. Prefiero las explicaciones directas, sin un lenguaje innecesariamente sofisticado, y uso la terminología técnica con precisión. Cuando preparo un trabajo quiero que sea sólido pero natural, sin relleno.
+
+Cuando trabajo sobre un curso específico conservo la notación del material original, en lugar de cambiarla arbitrariamente.
+
+## Qué valoro
+
+Valoro la disciplina, la constancia y el aprendizaje continuo. También valoro la capacidad de cuestionar resultados, la búsqueda de evidencia, la colaboración académica y la enseñanza, y busco mejorar de manera constante en cada una.
+
+## Instituciones de interés
+
+Me interesan el Banco Central de Reserva del Perú, el Ministerio de Economía y Finanzas y la Superintendencia de Banca, Seguros y AFP, tanto por su trabajo de política pública como por los cursos y programas especializados que ofrecen. Busco construir una trayectoria que combine formación académica rigurosa, investigación y experiencia profesional.
+
+## Proyección
+
+A corto plazo quiero consolidar mi formación universitaria, ganar experiencia práctica, participar en proyectos de investigación, fortalecer mi econometría y mejorar mi inglés. A mediano plazo quiero acceder a oportunidades de investigación y de formación avanzada, y prepararme para una maestría.
+
+A largo plazo aspiro a un doctorado, idealmente en una institución extranjera con una formación sólida en economía cuantitativa y econometría, y a desarrollar una trayectoria como investigador y docente. Me gustaría mantener o retomar el vínculo con San Marcos y contribuir a la formación de nuevos economistas.
+
+Mi visión combina tres dimensiones. La primera es la investigación, que busca producir evidencia económica rigurosa y relevante. La segunda es la docencia, que busca explicar y enseñar economía con claridad y rigor, y acompañar a otros estudiantes. La tercera es la aplicación, que usa herramientas económicas y econométricas para analizar problemas reales y contribuir a la toma de decisiones.
