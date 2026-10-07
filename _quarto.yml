@@ -9,6 +9,9 @@ project:
     - "material/**/*.qmd"
 
 lang: es
+language:
+  title-block-author-single: "Autor"
+  title-block-author-plural: "Autores"
 
 website:
   title: "Apuntes de Economía"
