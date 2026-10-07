@@ -38,7 +38,7 @@ jobs:
       - name: Agregar firma invisible
         run: .venv/bin/python scripts/marca_de_agua.py _site
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
