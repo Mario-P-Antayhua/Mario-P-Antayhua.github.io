@@ -1,6 +1,6 @@
 ---
 title: "Mario Andrés Peñaloza Antayhua"
-pagetitle: "Mario Peñaloza | Apuntes de Economía"
+pagetitle: "Mario Peñaloza"
 description: "Apuntes de macroeconomía, econometría y matemática para economistas."
 toc: false
 page-layout: full
