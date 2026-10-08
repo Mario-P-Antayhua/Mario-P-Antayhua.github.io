@@ -1,0 +1,39 @@
+---
+title: "El método delta"
+description: "La distribución asintótica de una función diferenciable de un estimador asintóticamente normal, con su demostración mediante el teorema de Slutsky y la diferenciabilidad, y ejemplos con la tasa exponencial y un cociente de medias."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Convergencia]
+---
+
+Los parámetros de interés suelen ser funciones de otros parámetros que se estiman con promedios: una elasticidad es un cociente de medias, una tasa es el inverso de una duración media. Si el estimador de los parámetros básicos es asintóticamente normal, la distribución asintótica de la función se obtiene con una aproximación lineal. Eso es el método delta, que combina la diferenciabilidad de la [Nota “Diferenciación en varias variables”](../matematica-3/04-diferenciacion-en-varias-variables.qmd) con el teorema de Slutsky de la [Nota “El teorema de Slutsky y la aplicación continua”](18-el-teorema-de-slutsky-y-la-aplicacion-continua.qmd).
+
+::: {#thm-metodo-delta}
+## Método delta
+
+Sea $\hat{\vect{\theta}}_n$ una sucesión de vectores aleatorios en $\mathbb{R}^k$ con $\sqrt n(\hat{\vect{\theta}}_n-\vect{\theta})\overset{d}{\to}\vect{V}$, y sea $\vect{g}:\mathbb{R}^k\to\mathbb{R}^m$ diferenciable en $\vect{\theta}$ con jacobiana $\mat{J}=\mat{J}_{\vect{g}}(\vect{\theta})$. Entonces $\sqrt n\bigl(\vect{g}(\hat{\vect{\theta}}_n)-\vect{g}(\vect{\theta})\bigr)\overset{d}{\to}\mat{J}\vect{V}$. En particular, si $\vect{V}\sim\N_k(\vect{0},\mat{\Sigma})$, el límite es $\N_m(\vect{0},\mat{J}\mat{\Sigma}\mat{J}^{\top})$.
+
+:::
+
+::: {.proof}
+Sea $\vect{V}_n=\sqrt n(\hat{\vect{\theta}}_n-\vect{\theta})$. Como $\vect{V}_n\overset{d}{\to}\vect{V}$ y $n^{-1/2}\to0$ es constante, el teorema de Slutsky da $\hat{\vect{\theta}}_n-\vect{\theta}=n^{-1/2}\vect{V}_n\overset{d}{\to}\vect{0}$, y por la parte (ii) del teorema que relaciona probabilidad y distribución, $\hat{\vect{\theta}}_n\overset{p}{\to}\vect{\theta}$. Se define $\vect{\rho}(\vect{h})=\bigl(\vect{g}(\vect{\theta}+\vect{h})-\vect{g}(\vect{\theta})-\mat{J}\vect{h}\bigr)/\|\vect{h}\|$ para $\vect{h}\neq\vect{0}$ y $\vect{\rho}(\vect{0})=\vect{0}$, que es continua en $\vect{0}$ por la definición de diferenciabilidad. Para $\hat{\vect{\theta}}_n\neq\vect{\theta}$, la definición de $\vect{\rho}$ da la identidad
+$$
+\sqrt n\bigl(\vect{g}(\hat{\vect{\theta}}_n)-\vect{g}(\vect{\theta})\bigr)=\mat{J}\vect{V}_n+\|\vect{V}_n\|\,\vect{\rho}(\hat{\vect{\theta}}_n-\vect{\theta}),
+$$ {#eq-identidad-delta}
+porque $\sqrt n\|\hat{\vect{\theta}}_n-\vect{\theta}\|=\|\vect{V}_n\|$, y la identidad también vale cuando $\hat{\vect{\theta}}_n=\vect{\theta}$. Como $\hat{\vect{\theta}}_n-\vect{\theta}\overset{p}{\to}\vect{0}$ y $\vect{\rho}$ es continua en $\vect{0}$, el teorema de funciones continuas y convergencia en probabilidad da $\vect{\rho}(\hat{\vect{\theta}}_n-\vect{\theta})\overset{p}{\to}\vect{0}$. Además $\|\vect{V}_n\|\overset{d}{\to}\|\vect{V}\|$ por el teorema de la aplicación continua, y por el teorema de Slutsky el producto $\|\vect{V}_n\|\vect{\rho}(\hat{\vect{\theta}}_n-\vect{\theta})$ converge en distribución a $\|\vect{V}\|\cdot\vect{0}=\vect{0}$, es decir, en probabilidad. Por último, $\mat{J}\vect{V}_n\overset{d}{\to}\mat{J}\vect{V}$ por la aplicación continua, y el teorema de Slutsky aplicado a la suma en @eq-identidad-delta da el resultado. Si $\vect{V}\sim\N_k(\vect{0},\mat{\Sigma})$, entonces $\mat{J}\vect{V}\sim\N_m(\vect{0},\mat{J}\mat{\Sigma}\mat{J}^{\top})$ por la regla de transformaciones lineales.
+
+:::
+
+Combinado con el teorema central del límite, el método delta produce la distribución asintótica de funciones de promedios. Sean $X_i$ exponenciales con tasa $\lambda$, de modo que $\E[X_1]=1/\lambda$ y $\Var(X_1)=1/\lambda^2$. El teorema central del límite da $\sqrt n(\bar X_n-1/\lambda)\overset{d}{\to}\N(0,1/\lambda^2)$. El estimador natural de la tasa es $\hat\lambda_n=1/\bar X_n=g(\bar X_n)$ con $g(t)=1/t$ y $g'(1/\lambda)=-\lambda^2$. El método delta da
+$$
+\sqrt n(\hat\lambda_n-\lambda)\overset{d}{\to}\N\bigl(0,\ \lambda^4\cdot\lambda^{-2}\bigr)=\N(0,\lambda^2).
+$$
+Con $\lambda=2$ y $n=100$, la desviación estándar aproximada de $\hat\lambda_n$ es $\lambda/\sqrt n=0.2$; una simulación de $20\,000$ muestras de tamaño $100$ da una desviación estándar de $0.203$ y una media de $2.02$, cercanas al valor teórico.
+
+Para dos parámetros, sea $\hat{\vect{\theta}}_n=(\bar X_n,\bar Y_n)$ con límite $\N_2(\vect{0},\mat{\Sigma})$, $\mat{\Sigma}=\left(\begin{smallmatrix}4&2\\2&3\end{smallmatrix}\right)$, y media $\vect{\theta}=(1,2)$, y sea $g(\theta_1,\theta_2)=\theta_1/\theta_2$, el cociente de medias. La jacobiana es $\mat{J}=(1/\theta_2,\ -\theta_1/\theta_2^2)=(0.5,\ -0.25)$, y la varianza asintótica es
+$$
+\mat{J}\mat{\Sigma}\mat{J}^{\top}=0.25\cdot4+2\cdot0.5\cdot(-0.25)\cdot2+0.0625\cdot3=1-0.5+0.1875=0.6875 .
+$$
+Así, $\sqrt n(\bar X_n/\bar Y_n-0.5)\overset{d}{\to}\N(0,0.6875)$, y con $n=400$ el error estándar aproximado del cociente es $\sqrt{0.6875/400}=0.041$.
+
+La condición de diferenciabilidad en $\vect{\theta}$ no es un detalle: si la jacobiana es nula, la aproximación lineal desaparece y el límite normal degenera en cero. Por ejemplo, con $g(t)=t^2$ y $\theta=0$, $\sqrt n\,\bar X_n^2=\sqrt n\,\bar X_n\cdot\bar X_n\overset{p}{\to}0$, y la escala correcta es $n\bar X_n^2$, que converge a un múltiplo de una $\chi^2_1$ por la aplicación continua.

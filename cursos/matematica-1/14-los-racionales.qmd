@@ -1,0 +1,144 @@
+---
+title: "Los racionales"
+description: "Construcción de los racionales como clases de pares de enteros, con sus operaciones, su estructura de cuerpo y su orden total compatible con la aritmética."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sistemas numéricos]
+---
+
+En $\mathbb{Z}$ la ecuación $2x=3$ no tiene solución, y resolverla exige inversos multiplicativos. La construcción de $\mathbb{Q}$ repite la estrategia de los enteros con una diferencia: ahora los pares codifican cocientes en lugar de diferencias, y la segunda coordenada debe excluir el cero. Esa construcción necesita una propiedad de $\mathbb{Z}$ que todavía no se ha demostrado, la ausencia de divisores de cero, y conviene probarla primero.
+
+::: {#lem-z-sin-divisores-cero}
+## Reglas de signos y ausencia de divisores de cero en $\mathbb{Z}$
+
+Para $x,y\in\mathbb{Z}$: (i) $x\cdot0=0$; (ii) $(-x)\cdot y=-(x\cdot y)$ y $(-x)\cdot(-y)=x\cdot y$; (iii) si $x\cdot y=0$, entonces $x=0$ o $y=0$; (iv) $x^2>0$ si $x\neq0$.
+
+:::
+
+::: {.proof}
+Para (i), $x\cdot0=x\cdot(0+0)=x\cdot0+x\cdot0$, y sumando el opuesto de $x\cdot0$ a ambos lados se obtiene $0=x\cdot0$. Para (ii), $x\cdot y+(-x)\cdot y=(x+(-x))\cdot y=0\cdot y=0$ por (i), de modo que $(-x)\cdot y$ es el opuesto de $x\cdot y$; aplicando esto dos veces y la conmutatividad del producto, $(-x)\cdot(-y)=-(x\cdot(-y))=-(-(x\cdot y))=x\cdot y$.
+
+Para (iv) y (iii) se usa el orden de la [Proposición “El orden de $\mathbb{Z}$ está bien definido y es total”](13-los-enteros.qmd#prp-orden-z). Si $x\neq0$, entonces $x$ o $-x$ es positivo, y en ambos casos $x^2=x\cdot x=(-x)\cdot(-x)$ es el producto de dos positivos, luego positivo, lo que prueba (iv). Si $x\neq0$ y $y\neq0$, cada uno es positivo o tiene opuesto positivo, y $x\cdot y=\pm\,u\cdot v$ con $u,v$ positivos por (ii); como $u\cdot v$ es positivo, $x\cdot y\neq0$. Esto es la contrarrecíproca de (iii).
+
+:::
+
+Con ello se puede definir una relación sobre pares de enteros con segunda coordenada no nula.
+
+::: {#def-relacion-racionales}
+## Relación de equivalencia en $\mathbb{Z}\times(\mathbb{Z}\setminus\{0\})$
+
+En $\mathbb{Z}\times(\mathbb{Z}\setminus\{0\})$ se define $(a,b)\sim(c,d)$ si y solo si $ad=bc$.
+
+:::
+
+La condición reformula sin división la igualdad que se quiere capturar: $a/b=c/d$ equivale, multiplicando ambos miembros por $bd$, a $ad=bc$.
+
+::: {#prp-sim-racionales-equivalencia}
+## $\sim$ es una relación de equivalencia
+
+La relación de la @def-relacion-racionales es reflexiva, simétrica y transitiva.
+
+:::
+
+::: {.proof}
+La reflexividad es $ab=ba$ y la simetría es la conmutatividad del producto. Para la transitividad, sean $(a,b)\sim(c,d)$ y $(c,d)\sim(e,f)$, es decir, $ad=bc$ y $cf=de$. Multiplicando la primera por $f$ y la segunda por $b$,
+$$
+adf=bcf
+\qquad\text{y}\qquad
+bcf=bde ,
+$$
+de modo que $adf=bde$, o sea $d\,(af-be)=0$. Como $d\neq0$, el [Lema “Reglas de signos y ausencia de divisores de cero en ℤ”](#lem-z-sin-divisores-cero) da $af=be$, que es $(a,b)\sim(e,f)$.
+
+:::
+
+Las operaciones se definen con las fórmulas de la aritmética de fracciones, que tienen sentido porque el producto de dos enteros no nulos es no nulo.
+
+::: {#def-racionales}
+## Los racionales y sus operaciones
+
+El conjunto de los racionales es $\mathbb{Q}:=\bigl(\mathbb{Z}\times(\mathbb{Z}\setminus\{0\})\bigr)/\!\sim$. La clase $[(a,b)]$ se denota $a/b$, y
+$$
+\frac{a}{b}+\frac{c}{d}:=\frac{ad+bc}{bd},
+\qquad
+\frac{a}{b}\cdot\frac{c}{d}:=\frac{ac}{bd}.
+$$ {#eq-operaciones-racionales}
+
+:::
+
+Como en el caso de los enteros, falta comprobar que el resultado no depende de los representantes.
+
+::: {#lem-buena-def-q}
+## Buena definición de las operaciones en $\mathbb{Q}$
+
+Si $(a,b)\sim(a',b')$ y $(c,d)\sim(c',d')$, entonces $(ad+bc,\,bd)\sim(a'd'+b'c',\,b'd')$ y $(ac,\,bd)\sim(a'c',\,b'd')$.
+
+:::
+
+::: {.proof}
+Las hipótesis son $ab'=ba'$ y $cd'=dc'$. Para el producto, basta encadenar:
+$$
+(ac)(b'd')=(ab')(cd')=(ba')(dc')=(a'c')(bd),
+$$
+donde se usan la asociatividad y la conmutatividad, y es la condición $(ac,bd)\sim(a'c',b'd')$. Para la suma,
+$$
+\begin{aligned}
+(ad+bc)(b'd') &= (ab')(dd')+(cd')(bb') \\
+(ad+bc)(b'd') &= (ba')(dd')+(dc')(bb') \\
+(ad+bc)(b'd') &= (bd)(a'd'+b'c'),
+\end{aligned}
+$$
+que es la condición $(ad+bc,bd)\sim(a'd'+b'c',b'd')$.
+
+:::
+
+Las operaciones están entonces bien definidas, y $\mathbb{Q}$ hereda de $\mathbb{Z}$ la estructura de anillo y gana los inversos multiplicativos.
+
+::: {#prp-q-cuerpo}
+## $\mathbb{Q}$ es un cuerpo
+
+Con $0:=0/1$ y $1:=1/1$, la suma y el producto de $\mathbb{Q}$ son asociativos y conmutativos, $0$ y $1$ son sus neutros, el producto distribuye sobre la suma, todo $a/b$ tiene un opuesto $-a/b:=(-a)/b$, y todo $a/b$ con $a\neq0$ tiene un inverso multiplicativo $b/a$.
+
+:::
+
+::: {.proof}
+Las identidades de asociatividad, conmutatividad y distributividad se verifican al calcular con representantes y reducir a identidades en $\mathbb{Z}$. La suma es conmutativa porque $(ad+bc,bd)=(cb+da,db)$, y asociativa porque $\bigl(a/b+c/d\bigr)+e/f=\bigl((ad+bc)f+bde\bigr)/(bdf)$ y $a/b+\bigl(c/d+e/f\bigr)=\bigl(adf+b(cf+de)\bigr)/(bdf)$ tienen el mismo numerador $adf+bcf+bde$ y el mismo denominador. El producto es conmutativo y asociativo porque numeradores y denominadores se multiplican en $\mathbb{Z}$. Para la distributividad, $\tfrac ab\bigl(\tfrac cd+\tfrac ef\bigr)=\tfrac{a(cf+de)}{bdf}$ y $\tfrac ab\tfrac cd+\tfrac ab\tfrac ef=\tfrac{acbf+bdae}{b^2df}$ son iguales como clases, porque
+$$
+a(cf+de)\,(b^2df)=ab^2cdf^2+ab^2d^2ef=(acbf+bdae)\,(bdf).
+$$
+
+Para los neutros, $a/b+0/1=(a\cdot1+b\cdot0)/(b\cdot1)=a/b$ y $a/b\cdot1/1=a/b$. Para el opuesto, $a/b+(-a)/b=(ab-ab)/b^2=0/b^2=0/1$, porque $(0,b^2)\sim(0,1)$ ya que $0\cdot1=b^2\cdot0$. Para el inverso, si $a\neq0$ el par $(b,a)$ tiene segunda coordenada no nula, y $\tfrac ab\cdot\tfrac ba=\tfrac{ab}{ba}=\tfrac11$ porque $(ab)\cdot1=(ba)\cdot1$.
+
+:::
+
+Para fijar ideas con números: $(6,8)\sim(3,4)$, porque $6\cdot4=24=8\cdot3$, así que ambos pares representan a $3/4$. Se calcula $\tfrac13+\tfrac16=\tfrac{1\cdot6+3\cdot1}{3\cdot6}=\tfrac9{18}$, y $9/18=1/2$ porque $9\cdot2=18=18\cdot1$. Con los representantes $2/6$ en lugar de $1/3$ y $3/18$ en lugar de $1/6$, se obtiene $\tfrac{2\cdot18+6\cdot3}{6\cdot18}=\tfrac{54}{108}$ y $54/108=1/2$ porque $54\cdot2=108=108\cdot1$, el mismo racional. El inverso de $5/7$ es $7/5$, y $\tfrac57\cdot\tfrac75=\tfrac{35}{35}=\tfrac11$.
+
+El orden de $\mathbb{Q}$ se define a partir de los racionales positivos, de modo análogo a $\mathbb{Z}$.
+
+::: {#def-orden-q}
+## Orden en $\mathbb{Q}$
+
+Un racional $a/b$ es ***positivo*** si $ab>0$ en $\mathbb{Z}$. Se escribe $p<q$ si $q-p$ es positivo, y $p\leq q$ si $p<q$ o $p=q$.
+
+:::
+
+Igual que en los enteros, el orden de los racionales se reduce a decidir si una diferencia es positiva, y las propiedades que importan se verifican sobre los racionales positivos y no sobre el orden mismo.
+
+::: {#prp-orden-q}
+## $\mathbb{Q}$ es un cuerpo ordenado
+
+(i) Ser positivo no depende del representante. (ii) Para todo $q\in\mathbb{Q}$ se cumple exactamente una de: $q$ es positivo, $q=0$, $-q$ es positivo. (iii) La suma y el producto de racionales positivos son positivos. En consecuencia, $<$ es transitivo, total, y compatible con la suma y con el producto por un positivo.
+
+:::
+
+::: {.proof}
+Para (i), sea $(a,b)\sim(a',b')$ con $ab>0$. Entonces $a\neq0$ y $ab'\neq0$, y $(ab)(a'b')=(ab')(a'b)=(ab')^2>0$ por el [Lema “Reglas de signos y ausencia de divisores de cero en ℤ”](#lem-z-sin-divisores-cero)(iv), usando $a'b=ba'=ab'$. Si $a'b'$ no fuera positivo, el producto $(ab)(a'b')$ no sería positivo; luego $a'b'>0$.
+
+Para (ii), sea $q=a/b$. Por la tricotomía de $\mathbb{Z}$ se cumple exactamente una de $ab>0$, $ab=0$ y $ab<0$. En el primer caso $q$ es positivo; en el segundo, $a=0$ por el lema y $q=0$; en el tercero, $-q=(-a)/b$ cumple $(-a)b=-(ab)>0$.
+
+Para (iii), si $ab>0$ y $cd>0$, la suma $(ad+bc)/(bd)$ cumple $(ad+bc)(bd)=(ab)d^2+(cd)b^2>0$, porque $d^2>0$ y $b^2>0$; y el producto $ac/(bd)$ cumple $(ac)(bd)=(ab)(cd)>0$.
+
+La transitividad, la totalidad y la compatibilidad se siguen como en $\mathbb{Z}$, porque $r-p=(r-q)+(q-p)$.
+
+:::
+
+La inclusión $\mathbb{Z}\subset\mathbb{Q}$ se hace mediante $z\mapsto z/1$, que es inyectiva y conserva suma, producto y orden. Con $\mathbb{Q}$ dotado de suma, producto, opuestos, inversos y un orden compatible, se dispone de un cuerpo ordenado. Cabría esperar que bastara para todo el análisis, pero la nota siguiente muestra que no es así.

@@ -1,20 +1,29 @@
 ---
 title: "Econometría III"
-description: "Mis apuntes de Econometría III."
+description: "Mis apuntes de Econometría III: modelos de espacio-estado y filtro de Kalman."
 number-sections: false
 toc: false
 listing:
-  contents: "*.qmd"
+  contents: "[0-9]*-*.qmd"
   type: table
-  sort: "date desc"
-  fields: [date, title, description]
+  sort: "filename"
+  fields: [title, description]
 ---
 
 <p class="estado">En proceso</p>
 
-Empecé por el espacio-estado y el filtro de Kalman. Los temas se publican como notas independientes, a medida que los termino.
+Aquí desarrollo la primera unidad de Econometría III: los modelos de espacio-estado y el filtro de Kalman, desde la variable que no se observa hasta las aplicaciones de política económica. Cada nota se apoya solo en las anteriores de este curso y en los cursos de Matemática y de Econometría I y II que la preceden.
 
-## Notas publicadas {.unnumbered}
+## Ruta de lectura {.unnumbered}
+
+El filtro de Kalman es una recursión de proyecciones lineales sobre vectores normales. Por eso la ruta pasa por el álgebra matricial, la probabilidad, la optimización y la verosimilitud. Esta es la cadena mínima, en el orden en que conviene leerla.
+
+1. **Proyección y matrices.** En [Matemática II](../matematica-2/index.qmd): la [proyección ortogonal](../matematica-2/05-ortogonalidad-proyeccion-y-mejor-aproximacion.qmd), las [matrices particionadas y el complemento de Schur](../matematica-2/09-matrices-particionadas-y-complemento-de-schur.qmd), el [producto de Kronecker y el operador vec](../matematica-2/10-producto-de-kronecker-y-operador-vec.qmd), los [valores propios](../matematica-2/11-valores-propios-y-teorema-espectral.qmd) y las [formas cuadráticas](../matematica-2/12-formas-cuadraticas-y-matrices-definidas-positivas.qmd).
+2. **Cálculo y optimización.** En [Matemática III](../matematica-3/index.qmd): la [diferenciación en varias variables](../matematica-3/04-diferenciacion-en-varias-variables.qmd), las [condiciones de optimalidad](../matematica-3/09-condiciones-de-optimalidad-sin-restricciones.qmd) y los [métodos numéricos de optimización](../matematica-3/12-metodos-numericos-de-optimizacion.qmd).
+3. **Probabilidad.** En [Econometría I](../econometria-1/index.qmd): la [esperanza condicional](../econometria-1/14-esperanza-condicional.qmd), la [distribución normal multivariante](../econometria-1/13-la-distribucion-normal-multivariante.qmd) y los [teoremas límite](../econometria-1/19-el-teorema-central-del-limite.qmd).
+4. **Verosimilitud y series de tiempo.** En [Econometría II](../econometria-2/index.qmd): la [consistencia y la normalidad asintótica](../econometria-2/06-normalidad-asintotica-de-estimadores-de-maximizacion.qmd) del estimador de máxima verosimilitud, los [procesos ARMA](../econometria-2/21-el-proceso-arma-p-q.qmd), el [teorema de Wold](../econometria-2/26-el-teorema-de-descomposicion-de-wold.qmd) y la [verosimilitud gaussiana](../econometria-2/30-la-verosimilitud-gaussiana-de-un-proceso-arma.qmd).
+
+## Notas {.unnumbered}
 
 ::: {#listado}
 :::

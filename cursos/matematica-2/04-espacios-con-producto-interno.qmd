@@ -1,227 +1,93 @@
 ---
 title: "Espacios con producto interno"
-description: "Espacios con producto interno. Incluye Producto interno, Desigualdad de Cauchy–Schwarz y La norma inducida por un producto interno es una norma."
+description: "El producto interno, la desigualdad de Cauchy–Schwarz con su caso de igualdad, la norma que induce, la ley del paralelogramo, el ángulo, la ortogonalidad y el teorema de Pitágoras para familias finitas."
 author: "Mario Peñaloza"
-date: 2026-10-07
-categories: [Matemática para Economistas II, Espacios vectoriales, normados y con producto interno]
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
 ---
 
-Una norma mide magnitud, pero no dice si dos vectores apuntan en la misma
-dirección, en direcciones opuestas o en direcciones perpendiculares entre
-sí. La [Ejemplo “Las normas p en ℝn”](03-espacios-normados.qmd#exm-normas-p) ya insinuó que esa información adicional
-proviene de una estructura distinta y más rica que la norma sola: el
-producto interno.
+Una norma mide magnitud, pero no dice si dos vectores apuntan en la misma dirección, en direcciones opuestas o perpendiculares. Esa información adicional proviene de una estructura más rica, el producto interno, que generaliza el producto escalar de $\mathbb{R}^n$ y del que se deduce una norma.
 
 ::: {#def-producto-interno}
 ## Producto interno
 
-Sea $V$ un espacio vectorial. Un ***producto interno*** en
-$V$ es una función $\langle\cdot,\cdot\rangle:V\times V\to\mathbb{R}$ que
-satisface, para todos $\vect{u},\vect{v},\vect{w}\in V$ y todo
-$\alpha\in\mathbb{R}$:
+Sea $V$ un espacio vectorial. Un ***producto interno*** en $V$ es una función $\langle\cdot,\cdot\rangle:V\times V\to\mathbb{R}$ que cumple, para todos $\vect{u},\vect{v},\vect{w}\in V$ y $\alpha\in\mathbb{R}$:
 
-(i) $\langle\vect{u},\vect{v}\rangle=\langle\vect{v},\vect{u}\rangle$
-            (simetría);
+(i) $\langle\vect{u},\vect{v}\rangle=\langle\vect{v},\vect{u}\rangle$ (simetría);
 
-(i) $\langle\vect{u}+\vect{w},\vect{v}\rangle
-         =\langle\vect{u},\vect{v}\rangle+\langle\vect{w},\vect{v}\rangle$
-            y $\langle\alpha\vect{u},\vect{v}\rangle=\alpha\langle
-        \vect{u},\vect{v}\rangle$ (bilinealidad);
+(ii) $\langle\vect{u}+\vect{w},\vect{v}\rangle=\langle\vect{u},\vect{v}\rangle+\langle\vect{w},\vect{v}\rangle$ y $\langle\alpha\vect{u},\vect{v}\rangle=\alpha\langle\vect{u},\vect{v}\rangle$ (linealidad en el primer argumento, y por simetría en el segundo);
 
-(i) $\langle\vect{v},\vect{v}\rangle\geq 0$, con igualdad si y solo
-            si $\vect{v}=\vect{0}$ (definición positiva).
+(iii) $\langle\vect{v},\vect{v}\rangle\geq0$, con igualdad si y solo si $\vect{v}=\vect{0}$ (definición positiva).
 
-Todo producto interno induce una función
-$\|\vect{v}\|:=\sqrt{\langle\vect{v},\vect{v}\rangle}$, que se
-demuestra a continuación que es, en efecto, una norma en el sentido de la
-[Definición “Norma”](03-espacios-normados.qmd#def-norma).
+La función $\|\vect{v}\|:=\sqrt{\langle\vect{v},\vect{v}\rangle}$ se llama la norma inducida.
 
 :::
 
-Las dos primeras propiedades de esa función inducida son inmediatas de
-los axiomas del producto interno; la que exige trabajo es la desigualdad
-triangular, y esta depende a su vez de una desigualdad más básica que
-relaciona el producto interno de dos vectores con el producto de sus
-normas.
+El ejemplo básico es el producto escalar $\langle\vect{x},\vect{y}\rangle=\sum_ix_iy_i$ de $\mathbb{R}^n$, que induce la norma euclidiana. La desigualdad que relaciona el producto interno de dos vectores con el producto de sus normas es la que hace de $\|\cdot\|$ una norma.
 
 ::: {#lem-cauchy-schwarz}
 ## Desigualdad de Cauchy–Schwarz
 
-Para todos $\vect{u},\vect{v}\in V$,
-
-$$
-|\langle\vect{u},\vect{v}\rangle| \leq \|\vect{u}\|\,\|\vect{v}\|.
-$$ {#eq-cauchy-schwarz}
+Para todos $\vect{u},\vect{v}\in V$, $|\langle\vect{u},\vect{v}\rangle|\leq\|\vect{u}\|\,\|\vect{v}\|$, con igualdad si y solo si $\vect{u}$ y $\vect{v}$ son linealmente dependientes.
 
 :::
 
 ::: {.proof}
-Si $\vect{v}=\vect{0}$, ambos lados de @eq-cauchy-schwarz son
-cero y no hay nada que probar, de modo que se supone en adelante
-$\vect{v}\neq\vect{0}$. La estrategia consiste en construir, a partir de
-$\vect{u}$ y $\vect{v}$, una expresión que sea no negativa por el axioma
-(iii) del producto interno, y en extraer de esa no negatividad la
-desigualdad buscada. Para cualquier $t\in\mathbb{R}$,
-
+Si $\vect{v}=\vect{0}$, ambos lados son cero y los vectores son dependientes. Sea $\vect{v}\neq\vect{0}$. La estrategia consiste en construir una expresión no negativa que dependa de un parámetro $t$ y extraer la desigualdad de esa no negatividad. Para todo $t\in\mathbb{R}$, por la definición positiva y la bilinealidad,
 $$
-0 \leq \langle\vect{u}-t\vect{v},\,\vect{u}-t\vect{v}\rangle
-  = \|\vect{u}\|^{2} - 2t\langle\vect{u},\vect{v}\rangle
-  + t^{2}\|\vect{v}\|^{2},
+0\leq\langle\vect{u}-t\vect{v},\,\vect{u}-t\vect{v}\rangle=\|\vect{u}\|^2-2t\langle\vect{u},\vect{v}\rangle+t^2\|\vect{v}\|^2 .
 $$
-
-donde el desarrollo del lado derecho usa la bilinealidad y la simetría
-del producto interno. El lado derecho es un polinomio cuadrático en $t$
-con coeficiente principal $\|\vect{v}\|^{2}>0$, y como es no negativo
-para todo valor real de $t$, su discriminante no puede ser positivo. En
-consecuencia,
-
-$$
-\begin{aligned}
-4\langle\vect{u},\vect{v}\rangle^{2} - 4\|\vect{u}\|^{2}\|\vect{v}\|^{2}
-  &\leq 0,  \\
-  \langle\vect{u},\vect{v}\rangle^{2}
-  &\leq \|\vect{u}\|^{2}\|\vect{v}\|^{2},
-\end{aligned}
-$$ {#eq-cs-discriminante}
-
-y tomando raíz cuadrada en ambos lados de esta última desigualdad, que es
-válida por tratarse de dos cantidades no negativas, se obtiene
-$|\langle\vect{u},\vect{v}\rangle|\leq\|\vect{u}\|\,\|\vect{v}\|$, que es
-lo que se quería demostrar.
+Evaluada en $t=\langle\vect{u},\vect{v}\rangle/\|\vect{v}\|^2$, esa desigualdad se reduce a $0\leq\|\vect{u}\|^2-\langle\vect{u},\vect{v}\rangle^2/\|\vect{v}\|^2$, es decir, $\langle\vect{u},\vect{v}\rangle^2\leq\|\vect{u}\|^2\|\vect{v}\|^2$, y tomar raíces cuadradas da la desigualdad. Hay igualdad si y solo si $\langle\vect{u}-t\vect{v},\vect{u}-t\vect{v}\rangle=0$ para ese $t$, es decir, si y solo si $\vect{u}=t\vect{v}$ por la definición positiva, que equivale a que sean dependientes.
 
 :::
 
-La desigualdad tiene, además de su utilidad algebraica inmediata, una
-lectura geométrica que conviene tener presente porque reaparecerá bajo
-otro nombre en cuanto se introduzca formalmente el ángulo entre dos
-vectores: afirma que el producto interno de dos vectores nunca puede
-exceder, en valor absoluto, al producto de sus tamaños, y que solo lo
-iguala cuando ambos vectores son paralelos entre sí, caso en el que la
-desigualdad @eq-cauchy-schwarz se vuelve una igualdad. Esa
-igualdad se alcanza precisamente cuando el discriminante del polinomio
-cuadrático de la demostración se anula, lo cual ocurre si y solo si
-existe algún $t^*$ para el que $\vect{u}-t^*\vect{v}=\vect{0}$, es decir,
-si y solo si $\vect{u}$ es múltiplo escalar de $\vect{v}$. Conviene
-subrayar que la desigualdad no depende de que $V$ tenga dimensión finita
-ni de la naturaleza concreta de sus elementos, únicamente de los tres
-axiomas del producto interno de la @def-producto-interno; por eso
-seguirá siendo válida, sin ninguna modificación, cuando más adelante se
-aplique a variables aleatorias con el producto interno
-$\langle X,Y\rangle=\Esp{XY}$, donde adopta el nombre de desigualdad de
-Cauchy–Schwarz para momentos y garantiza, entre otras cosas, que toda
-correlación esté acotada entre $-1$ y $1$.
-
-Con la desigualdad de Cauchy–Schwarz disponible, la desigualdad
-triangular para la norma inducida por un producto interno deja de ser un
-axioma que se asume y pasa a ser un resultado que se deriva.
+La desigualdad no depende de que $V$ tenga dimensión finita ni de la naturaleza de sus elementos, solo de los tres axiomas del producto interno. Con ella, la norma inducida cumple la desigualdad triangular.
 
 ::: {#prp-norma-inducida}
 ## La norma inducida por un producto interno es una norma
 
-La función $\|\vect{v}\|=\sqrt{\langle\vect{v},\vect{v}\rangle}$ de la
-@def-producto-interno satisface los tres axiomas de la
-[Definición “Norma”](03-espacios-normados.qmd#def-norma).
+La función $\|\vect{v}\|=\sqrt{\langle\vect{v},\vect{v}\rangle}$ cumple los axiomas de la [Definición “Norma”](03-espacios-normados.qmd#def-norma).
 
 :::
 
 ::: {.proof}
-Los axiomas (i) y (ii) de la [Definición “Norma”](03-espacios-normados.qmd#def-norma) se siguen directamente del
-axioma (iii) del producto interno y de su bilinealidad, respectivamente,
-sin requerir la desigualdad de Cauchy–Schwarz. Para la desigualdad
-triangular, conviene desarrollar $\|\vect{u}+\vect{v}\|^{2}$ y acotar el
-término cruzado con el @lem-cauchy-schwarz:
-
+Los axiomas (i) y (ii) de la norma se siguen de la definición positiva y de la bilinealidad, $\|\alpha\vect{v}\|^2=\alpha^2\|\vect{v}\|^2$. Para la desigualdad triangular se desarrolla el cuadrado y se acota el término cruzado con el @lem-cauchy-schwarz:
 $$
 \begin{aligned}
-\|\vect{u}+\vect{v}\|^{2}
-  &= \langle\vect{u}+\vect{v},\,\vect{u}+\vect{v}\rangle
-  = \|\vect{u}\|^{2} + 2\langle\vect{u},\vect{v}\rangle + \|\vect{v}\|^{2},
-   \\
-  \|\vect{u}+\vect{v}\|^{2}
-  &\leq \|\vect{u}\|^{2} + 2\|\vect{u}\|\,\|\vect{v}\| + \|\vect{v}\|^{2}
-  = \bigl(\|\vect{u}\|+\|\vect{v}\|\bigr)^{2},
+\|\vect{u}+\vect{v}\|^2 &= \|\vect{u}\|^2+2\langle\vect{u},\vect{v}\rangle+\|\vect{v}\|^2 \\
+\|\vect{u}+\vect{v}\|^2 &\leq \|\vect{u}\|^2+2\|\vect{u}\|\,\|\vect{v}\|+\|\vect{v}\|^2=\bigl(\|\vect{u}\|+\|\vect{v}\|\bigr)^2,
 \end{aligned}
 $$ {#eq-norma-suma-expandida}
-
-donde el paso de @eq-norma-suma-expandida a
-@eq-norma-suma-expandida sustituye
-$\langle\vect{u},\vect{v}\rangle$ por su cota superior
-$\|\vect{u}\|\,\|\vect{v}\|$ proporcionada por la desigualdad de
-Cauchy–Schwarz. Como ambos lados de @eq-norma-suma-expandida son no
-negativos, tomar raíz cuadrada preserva la desigualdad y da
-$\|\vect{u}+\vect{v}\|\leq\|\vect{u}\|+\|\vect{v}\|$.
+y tomar raíz cuadrada preserva la desigualdad por ser ambos lados no negativos.
 
 :::
 
-::: {#nota-paralelogramo .callout-note appearance="simple" title="Nota: Ley del paralelogramo"}
-Toda norma inducida por un producto interno satisface
-$\|\vect{u}+\vect{v}\|^{2}+\|\vect{u}-\vect{v}\|^{2}
-=2\|\vect{u}\|^{2}+2\|\vect{v}\|^{2}$, identidad que se obtiene sumando el
-desarrollo bilineal de ambos cuadrados. La norma $\|\cdot\|_\infty$ de la
-[Ejemplo “Las normas p en ℝn”](03-espacios-normados.qmd#exm-normas-p) no satisface esta ley, lo que confirma algebraicamente
-que su bola cuadrada de la [Figura “Espacios normados”](03-espacios-normados.qmd#fig-bolas-unitarias) no puede provenir
-de ningún producto interno. La lectura geométrica de la identidad es
-directa: en un paralelogramo con lados $\vect{u}$ y $\vect{v}$, la suma
-de los cuadrados de las dos diagonales, $\vect{u}+\vect{v}$ y
-$\vect{u}-\vect{v}$, iguala siempre el doble de la suma de los cuadrados
-de los lados, una propiedad que la geometría euclidiana usual da por
-evidente y que aquí queda establecida para cualquier espacio con producto
-interno, sin importar la naturaleza de sus elementos.
+::: {#nota-paralelogramo .callout-note appearance="simple" title="Nota: ley del paralelogramo"}
+Toda norma inducida por un producto interno cumple $\|\vect{u}+\vect{v}\|^2+\|\vect{u}-\vect{v}\|^2=2\|\vect{u}\|^2+2\|\vect{v}\|^2$, identidad que se obtiene sumando el desarrollo bilineal de ambos cuadrados, en el que los términos cruzados se cancelan. Las normas $\|\cdot\|_1$ y $\|\cdot\|_\infty$ de $\mathbb{R}^2$ no la cumplen: con $\vect{u}=(1,0)$ y $\vect{v}=(0,1)$ se tiene $\|\vect{u}\pm\vect{v}\|_1=2$, de modo que el lado izquierdo vale $4+4=8$ y el derecho $2+2=4$; y con la misma elección $\|\vect{u}\pm\vect{v}\|_\infty=1$, de modo que el lado izquierdo vale $2$ y el derecho $4$. Ninguna de ellas proviene, por tanto, de un producto interno.
 
 :::
 
-Con la norma y la desigualdad de Cauchy–Schwarz disponibles, ya es
-posible definir con precisión qué significa que dos vectores formen un
-ángulo recto, que es el concepto sobre el que se construye el resto de la
-sección.
+Con la norma y la desigualdad de Cauchy–Schwarz disponibles se puede definir el ángulo y, con él, la ortogonalidad. Para $\vect{u},\vect{v}\neq\vect{0}$, el cociente $\langle\vect{u},\vect{v}\rangle/(\|\vect{u}\|\|\vect{v}\|)$ está en $[-1,1]$, y como el coseno es una biyección estrictamente decreciente de $[0,\pi]$ sobre $[-1,1]$ por la [Proposición “El número $\pi$”](../matematica-1/34-seno-coseno-y-forma-polar.qmd#prp-definicion-pi), existe un único $\theta\in[0,\pi]$ con $\cos\theta=\langle\vect{u},\vect{v}\rangle/(\|\vect{u}\|\|\vect{v}\|)$.
 
 ::: {#def-ortogonalidad}
-## Ortogonalidad
+## Ángulo y ortogonalidad
 
-Dos vectores $\vect{u},\vect{v}\in V$ son ***ortogonales***,
-lo que se escribe $\vect{u}\perp\vect{v}$, si
-$\langle\vect{u},\vect{v}\rangle=0$. Como $|\langle\vect{u},\vect{v}\rangle|
-\leq\|\vect{u}\|\,\|\vect{v}\|$ por la @lem-cauchy-schwarz, cuando
-$\vect{u},\vect{v}\neq\vect{0}$ el cociente
-$\langle\vect{u},\vect{v}\rangle/(\|\vect{u}\|\,\|\vect{v}\|)$ queda
-siempre entre $-1$ y $1$, lo que permite definir el ángulo $\theta$ entre
-ambos vectores mediante $\cos\theta=\langle\vect{u},\vect{v}\rangle/
-(\|\vect{u}\|\,\|\vect{v}\|)$; la ortogonalidad corresponde al caso
-$\theta=\pi/2$.
+El ***ángulo*** entre $\vect{u},\vect{v}\neq\vect{0}$ es el único $\theta\in[0,\pi]$ con $\cos\theta=\langle\vect{u},\vect{v}\rangle/(\|\vect{u}\|\|\vect{v}\|)$. Dos vectores $\vect{u},\vect{v}\in V$ son ***ortogonales***, lo que se escribe $\vect{u}\perp\vect{v}$, si $\langle\vect{u},\vect{v}\rangle=0$, que equivale a $\theta=\pi/2$ cuando ambos son no nulos.
 
 :::
 
-La ortogonalidad se vuelve útil cuando permite descomponer longitudes; el primer resultado en esa dirección generaliza un hecho conocido de la geometría plana.
+La ortogonalidad es útil porque permite descomponer longitudes. El primer resultado en esa dirección generaliza un hecho conocido de la geometría plana.
 
 ::: {#thm-pitagoras}
 ## Teorema de Pitágoras generalizado
 
-Si $\vect{u}\perp\vect{v}$, entonces
-$\|\vect{u}+\vect{v}\|^{2}=\|\vect{u}\|^{2}+\|\vect{v}\|^{2}$.
+Si $\vect{u}\perp\vect{v}$, entonces $\|\vect{u}+\vect{v}\|^2=\|\vect{u}\|^2+\|\vect{v}\|^2$. Más generalmente, si $\vect{v}_1,\ldots,\vect{v}_m$ son ortogonales dos a dos, $\bigl\|\sum_{i=1}^{m}\vect{v}_i\bigr\|^2=\sum_{i=1}^{m}\|\vect{v}_i\|^2$.
 
 :::
 
 ::: {.proof}
-Basta retomar el desarrollo bilineal de
-@eq-norma-suma-expandida y usar que el término cruzado se anula
-por hipótesis de ortogonalidad,
-
-$$
-\|\vect{u}+\vect{v}\|^{2}
-  = \|\vect{u}\|^{2} + 2\langle\vect{u},\vect{v}\rangle + \|\vect{v}\|^{2}
-  = \|\vect{u}\|^{2} + 2(0) + \|\vect{v}\|^{2}
-  = \|\vect{u}\|^{2}+\|\vect{v}\|^{2},
-$$
-
-con lo que la identidad queda establecida.
+Para dos vectores, se retoma el desarrollo @eq-norma-suma-expandida y se usa que el término cruzado se anula por hipótesis, $\|\vect{u}+\vect{v}\|^2=\|\vect{u}\|^2+2\cdot0+\|\vect{v}\|^2$. Para $m$ vectores, se induce sobre $m$: si $\vect{w}=\sum_{i<m}\vect{v}_i$, entonces $\langle\vect{w},\vect{v}_m\rangle=\sum_{i<m}\langle\vect{v}_i,\vect{v}_m\rangle=0$, de modo que $\vect{w}\perp\vect{v}_m$, y el caso de dos vectores junto con la hipótesis de inducción da $\|\vect{w}+\vect{v}_m\|^2=\|\vect{w}\|^2+\|\vect{v}_m\|^2=\sum_{i\leq m}\|\vect{v}_i\|^2$.
 
 :::
 
-El mismo argumento se extiende, por inducción sobre el número de
-sumandos, a cualquier colección finita de vectores ortogonales dos a dos:
-la norma al cuadrado de la suma es la suma de las normas al cuadrado, sin
-ningún término cruzado que compense. Esa extensión es la que
-[Sección “El teorema de descomposición de Wold”](../econometria-2/32-el-teorema-de-descomposicion-de-wold.qmd) usará, sin volver a demostrarla, para calcular la
-varianza de una suma infinita de innovaciones no correlacionadas en la
-representación de Wold, donde cada término de la suma juega el papel de
-uno de estos vectores ortogonales.
+Con números en $\mathbb{R}^3$, los vectores $(1,2,0)$ y $(-2,1,3)$ son ortogonales, porque $-2+2+0=0$, y $\|(1,2,0)+(-2,1,3)\|^2=\|(-1,3,3)\|^2=19=5+14$. Los vectores $(1,0)$ y $(1,1)$ de $\mathbb{R}^2$ forman un ángulo $\theta$ con $\cos\theta=1/\sqrt2$, es decir, $\theta=\pi/4$, que no es ortogonal.

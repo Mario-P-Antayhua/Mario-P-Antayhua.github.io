@@ -1,0 +1,33 @@
+---
+title: "Notación"
+description: "Tabla de los símbolos del modelo de espacio-estado y del filtro de Kalman usados en las notas de la unidad, con sus dimensiones, y la convención temporal adoptada."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Espacio-estado]
+---
+
+Esta nota reúne los símbolos de la unidad con su significado y su dimensión. El modelo tiene $N$ series observadas, un estado de dimensión $m$ y $r$ perturbaciones de transición, y el tiempo corre de $t=1$ a $t=n$. La convención es la contemporánea: la ecuación de transición escribe el estado de $t$ en función del de $t-1$ y la de medición usa el estado de $t$. Otra convención adelanta la transición un período, con $\vect{\alpha}_{t+1}=\mat{T}_t\vect{\alpha}_t+\mat{R}_t\vect{\eta}_t$ y $\vect{y}_t=\mat{Z}_t\vect{\alpha}_t+\vect{\varepsilon}_t$, que describe el mismo proceso con otro índice para el estado; solo importa si las perturbaciones de medición y de transición pueden estar correlacionadas.
+
+| Símbolo | Significado | Dimensión |
+|:--|:--|:--|
+| $\vect{y}_t$ | observación en $t$ | $N\times1$ |
+| $\vect{\alpha}_t$ | vector de estado | $m\times1$ |
+| $\mat{Z}_t$, $\vect{d}_t$ | matriz y término constante de la medición | $N\times m$, $N\times1$ |
+| $\vect{\varepsilon}_t$, $\mat{H}_t$ | perturbación de medición y su varianza | $N\times1$, $N\times N$ |
+| $\mat{T}_t$, $\vect{c}_t$ | matriz y término constante de la transición | $m\times m$, $m\times1$ |
+| $\mat{R}_t$ | matriz que reparte las perturbaciones en el estado | $m\times r$ |
+| $\vect{\eta}_t$, $\mat{Q}_t$ | perturbación de transición y su varianza | $r\times1$, $r\times r$ |
+| $\vect{a}_0$, $\mat{P}_0$ | media y varianza del estado inicial | $m\times1$, $m\times m$ |
+| $\mathcal{Y}_t$ | información $\{\vect{y}_1,\ldots,\vect{y}_t\}$ | |
+| $\vect{a}_{t\mid t-1}$, $\mat{P}_{t\mid t-1}$ | estado predicho y su varianza | $m\times1$, $m\times m$ |
+| $\vect{a}_{t\mid t}$, $\mat{P}_{t\mid t}$ | estado filtrado y su varianza | $m\times1$, $m\times m$ |
+| $\vect{a}_{t\mid n}$, $\mat{P}_{t\mid n}$ | estado suavizado y su varianza | $m\times1$, $m\times m$ |
+| $\vect{v}_t$, $\mat{F}_t$ | innovación y su varianza | $N\times1$, $N\times N$ |
+| $\mat{K}_t$ | ganancia de Kalman | $m\times N$ |
+| $\mat{J}_t$ | peso del suavizador hacia atrás | $m\times m$ |
+| $\vect{\psi}$ | parámetros desconocidos del modelo | |
+| $\ell(\vect{\psi})$ | log-verosimilitud | |
+
+: Símbolos del modelo de espacio-estado y del filtro de Kalman. {#tbl-notacion}
+
+Las relaciones entre ellos son las del filtro. Los predichos y los filtrados se vinculan por $\vect{a}_{t\mid t}=\vect{a}_{t\mid t-1}+\mat{K}_t\vect{v}_t$ con $\mat{K}_t=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}\mat{F}_t^{-1}$ y $\mat{F}_t=\mat{Z}_t\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}+\mat{H}_t$, y los del período siguiente por $\vect{a}_{t+1\mid t}=\mat{T}_{t+1}\vect{a}_{t\mid t}+\vect{c}_{t+1}$ y $\mat{P}_{t+1\mid t}=\mat{T}_{t+1}\mat{P}_{t\mid t}\mat{T}_{t+1}^{\top}+\mat{R}_{t+1}\mat{Q}_{t+1}\mat{R}_{t+1}^{\top}$. En los modelos univariados, $\mat{Z}_t$ es un vector fila y $\mat{H}_t$, $\mat{F}_t$ y $\mat{K}_t$ se reducen a un escalar y a un vector columna. En los modelos estructurales se usan además los símbolos $\mu_t$ para el nivel, $\beta_t$ para la pendiente, $S_t$ para la estacionalidad, $c_t$ para el ciclo, y $\sigma^2$ con el subíndice del componente para la varianza de su perturbación.

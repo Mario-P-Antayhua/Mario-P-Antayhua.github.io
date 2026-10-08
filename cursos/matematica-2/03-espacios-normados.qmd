@@ -1,101 +1,74 @@
 ---
 title: "Espacios normados"
-description: "Espacios normados. Incluye Norma y Toda norma induce una métrica."
+description: "La norma como medida del tamaño de un vector, las normas 1, 2 e infinito de ℝⁿ, la métrica que induce una norma y la equivalencia de todas las normas de ℝⁿ."
 author: "Mario Peñaloza"
-date: 2026-10-07
-categories: [Matemática para Economistas II, Espacios vectoriales, normados y con producto interno]
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
 ---
 
-La dimensión cuenta direcciones, pero ningún resultado de esta
-subsección hasta ahora permite decir que un vector es “grande” o que dos vectores están “cerca”. Para eso hace falta una función que generalice al
-valor absoluto de $\mathbb{R}$ del mismo modo en que la
-[Definición “Espacio métrico”](../matematica-1/23-espacios-metricos.qmd#def-espacio-metrico) generalizó la distancia usual.
+La dimensión cuenta direcciones, pero nada de lo anterior permite decir que un vector es grande o que dos vectores están cerca. Para eso hace falta una función que generalice el valor absoluto de $\mathbb{R}$ y que sea compatible con la estructura vectorial, del mismo modo en que la métrica de la [Definición “Espacio métrico”](../matematica-1/24-espacios-metricos.qmd#def-espacio-metrico) generaliza la distancia usual.
 
 ::: {#def-norma}
 ## Norma
 
-Sea $V$ un espacio vectorial. Una ***norma*** en $V$ es una
-función $\|\cdot\|:V\to\mathbb{R}$ que satisface, para todos
-$\vect{u},\vect{v}\in V$ y todo $\alpha\in\mathbb{R}$:
+Sea $V$ un espacio vectorial. Una ***norma*** en $V$ es una función $\|\cdot\|:V\to\mathbb{R}$ que cumple, para todos $\vect{u},\vect{v}\in V$ y $\alpha\in\mathbb{R}$:
 
-(i) $\|\vect{v}\|\geq 0$, con igualdad si y solo si $\vect{v}=\vect{0}$;
+(i) $\|\vect{v}\|\geq0$, con igualdad si y solo si $\vect{v}=\vect{0}$;
 
-(i) $\|\alpha\vect{v}\| = |\alpha|\,\|\vect{v}\|$ (homogeneidad absoluta);
+(ii) $\|\alpha\vect{v}\|=|\alpha|\,\|\vect{v}\|$ (homogeneidad absoluta);
 
-(i) $\|\vect{u}+\vect{v}\|\leq\|\vect{u}\|+\|\vect{v}\|$ (desigualdad
-            triangular).
+(iii) $\|\vect{u}+\vect{v}\|\leq\|\vect{u}\|+\|\vect{v}\|$ (desigualdad triangular).
 
 Al par $(V,\|\cdot\|)$ se le llama ***espacio normado***.
 
 :::
 
-Distintas normas sobre el mismo espacio capturan nociones de tamaño
-genuinamente distintas, y esa diferencia es difícil de apreciar sin verla
-dibujada: dos normas pueden coincidir en cuáles vectores son
-“pequeños” y aun así discrepar drásticamente
-en la forma de su bola unitaria.
+Distintas normas sobre el mismo espacio capturan nociones de tamaño distintas, y esa diferencia es difícil de apreciar sin verla dibujada: dos normas pueden coincidir en cuáles vectores son pequeños y, sin embargo, discrepar en la forma de su bola unitaria.
 
 ::: {#exm-normas-p}
-## Las normas $p$ en $\mathbb{R}^n$
+## Las normas $1$, $2$ e $\infty$ en $\mathbb{R}^n$
 
-Para $\vect{x}=(x_1,\ldots,x_n)\in\mathbb{R}^n$ y $p\geq 1$, la norma $p$
-se define como
+Para $\vect{x}=(x_1,\ldots,x_n)\in\mathbb{R}^n$ se definen $\|\vect{x}\|_1=\sum_i|x_i|$, $\|\vect{x}\|_2=\sqrt{\sum_ix_i^2}$ (la norma euclidiana) y $\|\vect{x}\|_\infty=\max_i|x_i|$. Las tres cumplen los axiomas de la @def-norma. La no negatividad, con igualdad solo en $\vect{0}$, y la homogeneidad se leen directamente de las fórmulas. La desigualdad triangular de $\|\cdot\|_1$ es la suma de las desigualdades $|x_i+y_i|\leq|x_i|+|y_i|$; la de $\|\cdot\|_\infty$ se sigue de que $|x_i+y_i|\leq\|\vect{x}\|_\infty+\|\vect{y}\|_\infty$ para cada $i$, de modo que el máximo también lo cumple; y la de $\|\cdot\|_2$ es la [Proposición “La distancia euclidiana es una métrica”](../matematica-1/24-espacios-metricos.qmd#prp-metrica-euclidiana), que se apoya en la desigualdad de Cauchy–Schwarz.
 
-$$
-\|\vect{x}\|_p = \Bigl(\sum_{i=1}^{n}|x_i|^{p}\Bigr)^{1/p},
-$$
-
-y el caso límite $p\to\infty$ da $\|\vect{x}\|_\infty=\max_i|x_i|$. Las
-tres verifican los tres axiomas de la @def-norma, pero producen
-bolas unitarias de forma distinta en $\mathbb{R}^2$: la de $\|\cdot\|_1$
-es un rombo, la de $\|\cdot\|_2$ (la norma euclidiana usual) es un
-círculo, y la de $\|\cdot\|_\infty$ es un cuadrado, como muestra la
-@fig-bolas-unitarias. La norma euclidiana es la única de las tres
-que proviene de un producto interno, en el sentido que precisa la
-[Subsección “Espacios con producto interno”](04-espacios-con-producto-interno.qmd).
+La @fig-bolas-unitarias muestra las bolas unitarias $\{\|\vect{x}\|\leq1\}$ en $\mathbb{R}^2$: un rombo para $\|\cdot\|_1$, un círculo para $\|\cdot\|_2$ y un cuadrado para $\|\cdot\|_\infty$.
 
 :::
 
-![Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro.](../../assets/img/fig/matematica-2-03-espacios-normados-1.svg){#fig-bolas-unitarias fig-alt="Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro."}
+![Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro.](../../assets/img/fig/matematica-2-03-espacios-normados-1.svg){#fig-bolas-unitarias fig-alt="Tres bolas unitarias en el plano: un rombo, un círculo y un cuadrado, anidadas alrededor del origen."}
 
-Con una norma fijada, el espacio vectorial hereda automáticamente una
-estructura métrica, lo que conecta esta subsección con la
-[Sección “Espacios métricos”](../matematica-1/23-espacios-metricos.qmd) sin necesidad de volver a verificar sus axiomas desde
-cero.
+Con una norma fijada, el espacio vectorial hereda una métrica, de modo que todo lo desarrollado sobre vecindades, conjuntos abiertos y compacidad se aplica a los espacios normados.
 
 ::: {#prp-norma-induce-metrica}
 ## Toda norma induce una métrica
 
-Si $\|\cdot\|$ es una norma en $V$, la función
-$d(\vect{u},\vect{v}):=\|\vect{u}-\vect{v}\|$ es una métrica en $V$ en el
-sentido de la [Definición “Espacio métrico”](../matematica-1/23-espacios-metricos.qmd#def-espacio-metrico).
+Si $\|\cdot\|$ es una norma en $V$, la función $d(\vect{u},\vect{v}):=\|\vect{u}-\vect{v}\|$ es una métrica en $V$.
 
 :::
 
 ::: {.proof}
-Las tres condiciones de la [Definición “Espacio métrico”](../matematica-1/23-espacios-metricos.qmd#def-espacio-metrico) se verifican
-directamente a partir de los axiomas de la norma. La no negatividad y la
-condición de igualdad se siguen del axioma (i): $d(\vect{u},\vect{v})=
-\|\vect{u}-\vect{v}\|\geq 0$, con igualdad si y solo si
-$\vect{u}-\vect{v}=\vect{0}$, es decir, si y solo si $\vect{u}=\vect{v}$.
-La simetría se sigue del axioma (ii) tomando $\alpha=-1$, puesto que
-$\|\vect{u}-\vect{v}\|=\|(-1)(\vect{v}-\vect{u})\|=\|\vect{v}-\vect{u}\|$.
-Para la desigualdad triangular, el axioma (iii) aplicado a los vectores
-$\vect{u}-\vect{w}$ y $\vect{w}-\vect{v}$ da
-
+La no negatividad y la condición de igualdad se siguen del axioma (i): $d(\vect{u},\vect{v})=\|\vect{u}-\vect{v}\|\geq0$, con igualdad si y solo si $\vect{u}-\vect{v}=\vect{0}$, es decir, si y solo si $\vect{u}=\vect{v}$. La simetría se sigue del axioma (ii) con $\alpha=-1$, porque $\|\vect{u}-\vect{v}\|=\|(-1)(\vect{v}-\vect{u})\|=\|\vect{v}-\vect{u}\|$. Para la desigualdad triangular, el axioma (iii) aplicado a $\vect{u}-\vect{w}$ y $\vect{w}-\vect{v}$ da
 $$
-d(\vect{u},\vect{v}) = \|\vect{u}-\vect{v}\|
-  = \|(\vect{u}-\vect{w})+(\vect{w}-\vect{v})\|
-  \leq \|\vect{u}-\vect{w}\| + \|\vect{w}-\vect{v}\|
-  = d(\vect{u},\vect{w}) + d(\vect{w},\vect{v}),
+d(\vect{u},\vect{v})=\|(\vect{u}-\vect{w})+(\vect{w}-\vect{v})\|\leq\|\vect{u}-\vect{w}\|+\|\vect{w}-\vect{v}\|=d(\vect{u},\vect{w})+d(\vect{w},\vect{v}).
 $$
-
-que es exactamente la tercera condición de la [Definición “Espacio métrico”](../matematica-1/23-espacios-metricos.qmd#def-espacio-metrico).
 
 :::
 
-Esta proposición es la que permite, a partir de aquí, aplicar sin
-comentario adicional todo lo desarrollado en la [Sección “Espacios métricos”](../matematica-1/23-espacios-metricos.qmd) sobre
-vecindades, conjuntos abiertos y compacidad a cualquier espacio normado
-que aparezca más adelante, incluyendo el espacio de parámetros de un
-modelo econométrico dotado de la norma euclidiana.
+Las tres normas del ejemplo producen métricas distintas, pero en $\mathbb{R}^n$ definen las mismas nociones de convergencia, de abierto y de compacto, porque cualquier par de normas son equivalentes. La demostración usa los resultados de continuidad y compacidad de la primera parte.
+
+::: {#thm-equivalencia-normas}
+## Todas las normas de $\mathbb{R}^n$ son equivalentes
+
+Sea $\|\cdot\|$ cualquier norma en $\mathbb{R}^n$. Existen constantes $0<c\leq C$ tales que, para todo $\vect{x}\in\mathbb{R}^n$, $c\,\|\vect{x}\|_2\leq\|\vect{x}\|\leq C\,\|\vect{x}\|_2$.
+
+:::
+
+::: {.proof}
+La cota superior se obtiene de la base canónica. Por la desigualdad triangular y la homogeneidad, y luego por la desigualdad de Cauchy–Schwarz del [Lema “Desigualdad de Cauchy–Schwarz en $\mathbb{R}^k$”](../matematica-1/24-espacios-metricos.qmd#lem-cauchy-schwarz-rk),
+$$
+\|\vect{x}\|\leq\sum_{i=1}^{n}|x_i|\,\|\vect{e}_i\|\leq\Bigl(\sum_{i=1}^{n}\|\vect{e}_i\|^2\Bigr)^{1/2}\|\vect{x}\|_2=:C\|\vect{x}\|_2 .
+$$
+De esta cota se sigue que $\|\cdot\|$ es continua respecto de $\|\cdot\|_2$: por la desigualdad triangular, $\bigl|\|\vect{x}\|-\|\vect{y}\|\bigr|\leq\|\vect{x}-\vect{y}\|\leq C\|\vect{x}-\vect{y}\|_2$. La esfera unitaria euclidiana $S=\{\vect{x}:\|\vect{x}\|_2=1\}$ es cerrada, por ser la preimagen del cerrado $\{1\}$ por una función continua, y acotada, de modo que es compacta por el [Teorema “Teorema de Heine–Borel”](../matematica-1/28-conjuntos-compactos-y-el-teorema-de-heine-borel.qmd#thm-heine-borel). Por el [Teorema “Teorema de los valores extremos”](../matematica-1/30-limites-y-continuidad-de-funciones.qmd#thm-weierstrass-valores-extremos), $\|\cdot\|$ alcanza un mínimo $c$ en $S$, y $c>0$ porque $\vect{0}\notin S$ y $\|\vect{x}\|>0$ si $\vect{x}\neq\vect{0}$. Para $\vect{x}\neq\vect{0}$, $\vect{x}/\|\vect{x}\|_2\in S$, y la homogeneidad da $\|\vect{x}\|=\|\vect{x}\|_2\,\bigl\|\vect{x}/\|\vect{x}\|_2\bigr\|\geq c\|\vect{x}\|_2$.
+
+:::
+
+La equivalencia permite elegir la norma más cómoda para cada argumento, sin que cambien las conclusiones de convergencia o de continuidad. Con números, para $\vect{x}=(3,-4)$ las tres normas son $7$, $5$ y $4$, y cumplen $\|\vect{x}\|_\infty\leq\|\vect{x}\|_2\leq\|\vect{x}\|_1$; las constantes de equivalencia entre $\|\cdot\|_1$ y $\|\cdot\|_2$ en $\mathbb{R}^2$ son $c=1$ y $C=\sqrt2$.

@@ -1,0 +1,71 @@
+---
+title: "Las distribuciones uniforme y exponencial"
+description: "La distribución uniforme y la exponencial con sus densidades, funciones de distribución, medias y varianzas, y la propiedad de falta de memoria de la exponencial."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Distribuciones]
+---
+
+Las dos distribuciones continuas más sencillas sirven de punto de partida para modelar. La uniforme describe una incertidumbre sin preferencias dentro de un intervalo, y la exponencial describe el tiempo de espera hasta un evento cuando el pasado no informa sobre el futuro. En ambas, las probabilidades, las medias y las varianzas se calculan con las integrales de la [Nota “El teorema fundamental del cálculo”](../matematica-3/02-teorema-fundamental-del-calculo.qmd) y la fórmula de la ley de la [Nota “El cálculo de esperanzas”](04-el-calculo-de-esperanzas.qmd).
+
+::: {#def-uniforme}
+## Distribución uniforme
+
+Una variable $X$ tiene distribución ***uniforme*** en $[a,b]$, con $a<b$, si tiene densidad $f(x)=1/(b-a)$ para $x\in[a,b]$ y $f(x)=0$ fuera de él.
+
+:::
+
+La densidad es constante, de modo que la probabilidad de un subintervalo es proporcional a su longitud: $\Prob{c<X\leq d}=(d-c)/(b-a)$ para $a\leq c<d\leq b$. Su función de distribución es $F(x)=(x-a)/(b-a)$ en $[a,b]$, $0$ a la izquierda y $1$ a la derecha.
+
+::: {#prp-momentos-uniforme}
+## Media y varianza de la uniforme
+
+Si $X$ es uniforme en $[a,b]$, entonces $\E[X]=(a+b)/2$ y $\Var(X)=(b-a)^2/12$.
+
+:::
+
+::: {.proof}
+Por la fórmula de la ley, $\E[X]=\int_a^b\frac{x}{b-a}\,dx=\frac{b^2-a^2}{2(b-a)}=\frac{a+b}2$ y $\E[X^2]=\int_a^b\frac{x^2}{b-a}\,dx=\frac{b^3-a^3}{3(b-a)}=\frac{a^2+ab+b^2}3$. Entonces $\Var(X)=\frac{a^2+ab+b^2}{3}-\frac{(a+b)^2}4=\frac{4a^2+4ab+4b^2-3a^2-6ab-3b^2}{12}=\frac{(b-a)^2}{12}$.
+
+:::
+
+Con números, para $a=2$ y $b=5$, la media es $3.5$, la varianza $9/12=0.75$ y $\Prob{3<X\leq4}=1/3$. La uniforme en $[0,1]$ tiene media $1/2$ y varianza $1/12\approx0.083$, y es la variable que alimenta el método de la transformada inversa de la [Nota “Variables aleatorias y funciones de distribución”](03-variables-aleatorias-y-funciones-de-distribucion.qmd).
+
+La exponencial es la distribución del tiempo hasta un evento que ocurre con una intensidad constante.
+
+::: {#def-exponencial}
+## Distribución exponencial
+
+Una variable $X$ tiene distribución ***exponencial*** con tasa $\lambda>0$ si tiene densidad $f(x)=\lambda e^{-\lambda x}$ para $x\geq0$ y $f(x)=0$ para $x<0$.
+
+:::
+
+La integral de la densidad es $\int_0^\infty\lambda e^{-\lambda x}\,dx=\lim_{R\to\infty}(1-e^{-\lambda R})=1$, de modo que es una densidad, y la función de supervivencia es $\Prob{X>x}=e^{-\lambda x}$ para $x\geq0$. Los momentos se obtienen por inducción con integración por partes.
+
+::: {#prp-momentos-exponencial}
+## Momentos de la exponencial
+
+Si $X$ es exponencial con tasa $\lambda$, entonces $\E[X^n]=n!/\lambda^n$ para todo $n\geq0$. En particular, $\E[X]=1/\lambda$ y $\Var(X)=1/\lambda^2$.
+
+:::
+
+::: {.proof}
+Se procede por inducción en $n$. Para $n=0$, $\E[1]=1$. Si el resultado vale para $n-1$, la integración por partes de la [Proposición “Integración por partes y cambio de variable”](../matematica-3/02-teorema-fundamental-del-calculo.qmd#prp-partes-sustitucion) con $u=x^n$ y $v'=\lambda e^{-\lambda x}$ da, en $[0,R]$, $\int_0^Rx^n\lambda e^{-\lambda x}\,dx=-R^ne^{-\lambda R}+n\int_0^Rx^{n-1}e^{-\lambda x}\,dx$. Cuando $R\to\infty$, $R^ne^{-\lambda R}\to0$, porque $e^{\lambda R}\geq(\lambda R)^{n+1}/(n+1)!$ por la serie de la exponencial, y la integral restante converge a $n\E[X^{n-1}]/\lambda$. Entonces $\E[X^n]=(n/\lambda)\E[X^{n-1}]=n!/\lambda^n$. La varianza es $2/\lambda^2-1/\lambda^2=1/\lambda^2$.
+
+:::
+
+La propiedad que identifica a la exponencial es que el tiempo ya esperado no cambia lo que falta esperar.
+
+::: {#prp-falta-memoria}
+## Falta de memoria
+
+Si $X$ es exponencial con tasa $\lambda$, entonces $\Prob{X>s+t\mid X>s}=\Prob{X>t}$ para todo $s,t\geq0$.
+
+:::
+
+::: {.proof}
+Como $\{X>s+t\}\subseteq\{X>s\}$, la definición de probabilidad condicional da $\Prob{X>s+t\mid X>s}=\Prob{X>s+t}/\Prob{X>s}=e^{-\lambda(s+t)}/e^{-\lambda s}=e^{-\lambda t}=\Prob{X>t}$.
+
+:::
+
+Con números, para $\lambda=2$ (tiempo medio $0.5$), $\Prob{X>2}=e^{-4}=0.0183$, y $\Prob{X>3\mid X>1}=e^{-6}/e^{-2}=e^{-4}=0.0183$, el mismo valor: haber esperado una unidad de tiempo no acorta ni alarga la espera restante. También $\E[X^3]=3!/2^3=0.75$ y $\Prob{X\leq0.5}=1-e^{-1}=0.632$.

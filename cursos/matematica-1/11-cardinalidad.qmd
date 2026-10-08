@@ -1,0 +1,97 @@
+---
+title: "Cardinalidad"
+description: "Cómo comparar el tamaño de conjuntos infinitos mediante biyecciones, la numerabilidad de los enteros y de los pares de naturales, y el teorema de Cantor."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Teoría de conjuntos]
+---
+
+Contar los elementos de un conjunto uno por uno deja de servir cuando el conjunto es infinito. La salida consiste en sustituir el conteo por el emparejamiento: dos conjuntos tienen el mismo tamaño si sus elementos pueden aparearse sin que sobre ni falte ninguno, y esa idea se formaliza con las biyecciones de la [Definición “Inyectividad, sobreyectividad, biyectividad”](10-funciones.qmd#def-iso). En esta nota $\mathbb{N}=\{1,2,3,\ldots\}$ y $\mathbb{Z}$ se usan con su aritmética habitual, que se construye con rigor en las notas sobre los sistemas numéricos.
+
+::: {#def-equipotencia}
+## Equipotencia
+
+Dos conjuntos $A$ y $B$ son ***equipotentes***, lo que se escribe $A\sim B$, si existe una función biyectiva $f:A\to B$.
+
+:::
+
+La equipotencia es una relación de equivalencia en el sentido de la [Definición “Relación de equivalencia y clase de equivalencia”](09-relaciones-de-equivalencia-y-de-orden.qmd#def-relacion-equivalencia), y conviene comprobarlo porque justifica hablar de «el tamaño» de un conjunto como algo bien definido. Es reflexiva porque la función identidad es biyectiva. Es simétrica porque la inversa de una biyección es una biyección, según el [Teorema “Caracterización de la invertibilidad”](10-funciones.qmd#thm-invertibilidad). Y es transitiva porque la composición de dos biyecciones es una biyección: es inyectiva, ya que $g(f(a_1))=g(f(a_2))$ implica $f(a_1)=f(a_2)$ y esto implica $a_1=a_2$, y es sobreyectiva, ya que todo $c$ es $g(b)$ para algún $b$ y este $b$ es $f(a)$ para algún $a$. En consecuencia, por el [Teorema “Equivalencia entre relaciones de equivalencia y particiones”](09-relaciones-de-equivalencia-y-de-orden.qmd#thm-equivalencia-particion), la equipotencia reparte los conjuntos en bloques, y cada bloque agrupa a los que comparten tamaño.
+
+Fijada esa relación, corresponde nombrar los bloques que más interesan.
+
+::: {#def-numerable}
+## Conjunto finito, infinito, numerable
+
+Un conjunto $A$ es ***finito*** si $A=\varnothing$ o si $A\sim\{1,2,\ldots,n\}$ para algún $n\in\mathbb{N}$; en caso contrario es ***infinito***. Un conjunto infinito es ***numerable*** si $A\sim\mathbb{N}$, y ***no numerable*** si no lo es. Un conjunto es ***contable*** si es finito o numerable.
+
+:::
+
+Los enteros muestran de inmediato que los conjuntos infinitos se comportan de manera distinta a los finitos: pese a que $\mathbb{N}$ está contenido de forma estricta en $\mathbb{Z}$, ambos tienen el mismo tamaño.
+
+::: {#prp-z-numerable}
+## Los enteros son numerables
+
+La función $f:\mathbb{N}\to\mathbb{Z}$ definida por $f(n)=n/2$ si $n$ es par y $f(n)=-(n-1)/2$ si $n$ es impar es una biyección, de modo que $\mathbb{Z}\sim\mathbb{N}$.
+
+:::
+
+::: {.proof}
+La función recorre los enteros en el orden $0,\ 1,\ -1,\ 2,\ -2,\ \ldots$, porque $f(1)=0$, $f(2)=1$, $f(3)=-1$, $f(4)=2$ y $f(5)=-2$; lo que hay que probar es que ese recorrido no omite ni repite ningún entero.
+
+Para la inyectividad, obsérvese que si $n$ es par, $f(n)=n/2\geq 1$, mientras que si $n$ es impar, $f(n)=-(n-1)/2\leq 0$. Dos naturales de paridad distinta tienen entonces imágenes distintas, porque una es positiva y la otra no. Si ambos son pares y $n/2=m/2$, entonces $n=m$; si ambos son impares y $-(n-1)/2=-(m-1)/2$, entonces $n=m$.
+
+Para la sobreyectividad, sea $z\in\mathbb{Z}$. Si $z\geq 1$, el natural par $n=2z$ cumple $f(n)=z$. Si $z\leq 0$, el natural impar $n=1-2z$ cumple $f(n)=-(1-2z-1)/2=z$. Todo entero está en la imagen.
+
+:::
+
+La numerabilidad se extiende a pares de naturales, un conjunto que a primera vista parece mucho mayor, y la demostración aprovecha una enumeración por diagonales.
+
+::: {#prp-producto-numerable}
+## El producto de naturales es numerable
+
+$\mathbb{N}\times\mathbb{N}$ es numerable.
+
+:::
+
+::: {.proof}
+La estrategia consiste en exhibir una biyección explícita con $\mathbb{N}$. Se agrupan los pares $(m,n)$ según el valor de $d=m+n-1$. La diagonal $d$ contiene los $d$ pares $(1,d),(2,d-1),\ldots,(d,1)$, de modo que cada diagonal es finita. Por la [Proposición “Suma de los primeros $n$ naturales”](05-el-principio-de-induccion-matematica.qmd#prp-suma-naturales), las diagonales $1,\ldots,d-1$ contienen en total
+$$
+T(d-1)=\frac{(d-1)d}{2}
+$$
+pares. Se define
+$$
+f(m,n)=\underbrace{\frac{(d-1)d}{2}}_{\text{pares en las diagonales anteriores}}+\underbrace{m}_{\text{posición dentro de la diagonal}},\qquad d=m+n-1.
+$$
+
+Sobre la diagonal $d$, la función toma los valores $T(d-1)+1,\ldots,T(d-1)+d=T(d)$, y los toma una sola vez cada uno, porque $m$ recorre $1,\ldots,d$ sin repetirse. Los conjuntos $\{T(d-1)+1,\ldots,T(d)\}$, para $d=1,2,3,\ldots$, son disjuntos dos a dos y su unión es $\mathbb{N}$, porque $T(0)=0$ y cada uno empieza donde termina el anterior y $T(d)\to\infty$. Por lo tanto $f$ es inyectiva, ya que dos pares de la misma diagonal tienen valores distintos y dos pares de diagonales distintas caen en bloques disjuntos, y es sobreyectiva, porque todo natural cae en exactamente uno de los bloques.
+
+:::
+
+Para verificar la fórmula con números, el par $(1,1)$ está en la diagonal $d=1$ y $f(1,1)=0+1=1$; el par $(2,1)$ está en la diagonal $d=2$ y $f(2,1)=1+2=3$; el par $(1,3)$ está en la diagonal $d=3$ y $f(1,3)=3+1=4$. Los dos resultados anteriores podrían sugerir que todos los conjuntos infinitos son equipotentes entre sí. El teorema que sigue muestra que no es así.
+
+::: {#thm-cantor}
+## Teorema de Cantor
+
+Para todo conjunto $A$, no existe ninguna función sobreyectiva de $A$ en $\mathcal{P}(A)$. En particular, $A$ y $\mathcal{P}(A)$ nunca son equipotentes.
+
+:::
+
+::: {.proof}
+Se procede por contradicción, según el método de la [Nota “Métodos de demostración”](04-metodos-de-demostracion.qmd). Supóngase que existe una función sobreyectiva $f:A\to\mathcal{P}(A)$, que asigna a cada elemento de $A$ un subconjunto de $A$ y los alcanza todos.
+
+El paso decisivo consiste en construir un subconjunto diseñado para no poder ser alcanzado. Defínase
+$$
+D := \bigl\{a\in A : a\notin f(a)\bigr\},
+$$ {#eq-cantor-diagonal}
+el conjunto de los elementos que no pertenecen al subconjunto que ellos mismos determinan. Está bien definido por la [Definición “Especificación”](07-conjuntos-pertenencia-y-operaciones-basicas.qmd#def-especificacion), porque «$a\notin f(a)$» es una función proposicional sobre los elementos de $A$.
+
+Como $D\subseteq A$, se tiene $D\in\mathcal{P}(A)$, y como $f$ es sobreyectiva existe $a_0\in A$ con $f(a_0)=D$. Se pregunta ahora si $a_0$ pertenece a $D$, y cualquier respuesta conduce a una contradicción. Si $a_0\in D$, la definición @eq-cantor-diagonal exige $a_0\notin f(a_0)=D$, lo que contradice la suposición. Si $a_0\notin D$, entonces $a_0\notin f(a_0)$, que es exactamente la condición que define la pertenencia a $D$, de modo que $a_0\in D$, lo que contradice la otra suposición.
+
+En ambos casos hay una contradicción, de modo que no existe una función sobreyectiva de $A$ en $\mathcal{P}(A)$. La afirmación sobre la equipotencia se sigue porque toda biyección es sobreyectiva.
+
+:::
+
+::: {#idea-cantor-consecuencia .callout-tip appearance="simple" title="Idea central: no hay un infinito máximo"}
+Con $A=\mathbb{N}$, el teorema de Cantor implica que $\mathcal{P}(\mathbb{N})$ no es numerable, porque no puede ser equipotente a $\mathbb{N}$. Existe entonces al menos un infinito estrictamente mayor que el de los naturales. Aplicado a $\mathcal{P}(\mathbb{N})$, $\mathcal{P}(\mathcal{P}(\mathbb{N}))$ y así sucesivamente, el mismo argumento produce una escalera infinita de tamaños cada vez más grandes, sin que exista un infinito máximo.
+
+:::

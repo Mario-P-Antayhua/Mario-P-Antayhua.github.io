@@ -1,0 +1,88 @@
+---
+title: "Seno, coseno, el número π y la forma polar"
+description: "Seno y coseno definidos con la exponencial compleja, sus fórmulas de adición y derivadas, el número π, la forma polar de los complejos, la fórmula de De Moivre y las raíces de la unidad."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Funciones continuas]
+---
+
+Los ciclos y las estacionalidades de una serie económica se describen con funciones periódicas, y las raíces complejas de un polinomio se describen con un módulo y un ángulo. Ambas cosas dependen del seno y el coseno, que aquí no se suponen conocidos: se definen con la exponencial compleja de la [Nota “La función exponencial y el logaritmo”](33-exponencial-y-logaritmo.qmd), y de esa definición se deducen todas sus propiedades.
+
+::: {#def-seno-coseno}
+## Seno y coseno
+
+Para $\theta\in\mathbb{R}$, $\cos\theta:=\operatorname{Re}\exp(i\theta)$ y $\sin\theta:=\operatorname{Im}\exp(i\theta)$, de modo que $\exp(i\theta)=\cos\theta+i\sin\theta$.
+
+:::
+
+Como $i^{2k}=(-1)^k$ e $i^{2k+1}=(-1)^ki$, separar la serie de $\exp(i\theta)$ en partes real e imaginaria da
+$$
+\cos\theta=\sum_{k=0}^{\infty}\frac{(-1)^k\theta^{2k}}{(2k)!},
+\qquad
+\sin\theta=\sum_{k=0}^{\infty}\frac{(-1)^k\theta^{2k+1}}{(2k+1)!}.
+$$
+Las propiedades básicas son consecuencia directa de la ecuación funcional.
+
+::: {#prp-trigonometricas-basicas}
+## Propiedades básicas de seno y coseno
+
+Para $\theta,\phi\in\mathbb{R}$: (i) $\cos0=1$, $\sin0=0$, $\cos(-\theta)=\cos\theta$ y $\sin(-\theta)=-\sin\theta$; (ii) $\cos^2\theta+\sin^2\theta=1$; (iii) $\cos(\theta+\phi)=\cos\theta\cos\phi-\sin\theta\sin\phi$ y $\sin(\theta+\phi)=\sin\theta\cos\phi+\cos\theta\sin\phi$; (iv) $\cos$ y $\sin$ son derivables con $\cos'=-\sin$ y $\sin'=\cos$.
+
+:::
+
+::: {.proof}
+Para (i), $\exp(0)=1$ y $\exp(-i\theta)=\overline{\exp(i\theta)}$ por la [Proposición “Ecuación funcional de la exponencial”](33-exponencial-y-logaritmo.qmd#prp-ecuacion-funcional)(iii), de modo que las partes real e imaginaria de $\exp(-i\theta)$ son $\cos\theta$ y $-\sin\theta$. Para (ii), $\exp(i\theta)\exp(-i\theta)=1$ y $\exp(-i\theta)=\overline{\exp(i\theta)}$, de modo que $|\exp(i\theta)|^2=\cos^2\theta+\sin^2\theta=1$. Para (iii), $\exp(i(\theta+\phi))=\exp(i\theta)\exp(i\phi)$, y al multiplicar $(\cos\theta+i\sin\theta)(\cos\phi+i\sin\phi)$ e igualar partes real e imaginaria se obtienen las dos fórmulas.
+
+Para (iv), por el [Lema “La serie de la exponencial converge absolutamente”](33-exponencial-y-logaritmo.qmd#lem-exponencial-converge) con $z=ih$ y $|h|\leq1$, $|\exp(ih)-1-ih|\leq h^2$; la parte real es $|\cos h-1|\leq h^2$ y la imaginaria $|\sin h-h|\leq h^2$, de modo que $(\cos h-1)/h\to0$ y $(\sin h)/h\to1$. Por (iii),
+$$
+\frac{\cos(\theta+h)-\cos\theta}{h}=\cos\theta\,\frac{\cos h-1}{h}-\sin\theta\,\frac{\sin h}{h}\longrightarrow-\sin\theta,
+$$
+y de modo análogo $\bigl(\sin(\theta+h)-\sin\theta\bigr)/h\to\cos\theta$.
+
+:::
+
+Las dos funciones son periódicas, y la longitud del período define el número $\pi$. La construcción empieza por localizar el primer cero positivo del coseno.
+
+::: {#prp-definicion-pi}
+## El número $\pi$
+
+El coseno tiene un menor cero positivo, que se denota $\pi/2$. Además: (i) $\cos>0$ y $\sin>0$ en $(0,\pi/2)$, y $\sin(\pi/2)=1$; (ii) $\exp(i\pi/2)=i$, $\exp(i\pi)=-1$ y $\exp(2\pi i)=1$, de modo que $\exp(i(\theta+2\pi))=\exp(i\theta)$; (iii) $\cos$ es estrictamente decreciente en $[0,\pi]$ con $\cos0=1$ y $\cos\pi=-1$, y $\sin\geq0$ en $[0,\pi]$.
+
+:::
+
+::: {.proof}
+Se prueba que $\cos2<0$. Con $a_k:=2^{2k}/(2k)!$, $\cos2=1-a_1+a_2-a_3+a_4-\cdots$ con $a_1=2$, $a_2=\tfrac23$, y $a_k$ decreciente para $k\geq1$ porque $a_{k+1}/a_k=4/((2k+1)(2k+2))<1$. Agrupando $-a_3+a_4$, $-a_5+a_6,\ldots$, cada par es $\leq0$, de modo que $\cos2\leq1-2+\tfrac23=-\tfrac13<0$. Como $\cos0=1$ y $\cos$ es continua, el [Teorema “Teorema del valor intermedio”](30-limites-y-continuidad-de-funciones.qmd#thm-valor-intermedio) da un cero en $(0,2)$. El conjunto de ceros positivos de $\cos$ en $[0,2]$ es cerrado por el [Teorema “Continuidad y conjuntos abiertos”](30-limites-y-continuidad-de-funciones.qmd#thm-continuidad-abiertos) y no contiene $0$, de modo que tiene un mínimo $\pi/2>0$.
+
+Para (i), $\cos$ no cambia de signo en $[0,\pi/2)$, porque no tiene ceros allí y es continua, y $\cos0=1$ la hace positiva. Entonces $\sin'=\cos>0$ en $[0,\pi/2)$ y $\sin$ es estrictamente creciente desde $\sin0=0$, de modo que $\sin>0$ en $(0,\pi/2]$; con $\cos(\pi/2)=0$ y $\cos^2+\sin^2=1$ se obtiene $\sin(\pi/2)=1$. Para (ii), $\exp(i\pi/2)=0+1\cdot i=i$; elevando al cuadrado, $\exp(i\pi)=i^2=-1$, y $\exp(2\pi i)=(-1)^2=1$. Para (iii), $\sin(\pi-\theta)=\sin\pi\cos\theta-\cos\pi\sin\theta=\sin\theta$ por la fórmula de adición (con $\sin\pi=0$ y $\cos\pi=-1$ de (ii)), de modo que $\sin\geq0$ en $[\pi/2,\pi]$, y $\cos'=-\sin\leq0$ en $[0,\pi]$, con $\sin>0$ salvo en los extremos, hace estrictamente decreciente al coseno entre $\cos0=1$ y $\cos\pi=-1$.
+
+:::
+
+Numéricamente, resolviendo $\cos x=0$ con la serie, $\pi/2=1.5707963\ldots$ y $\pi=3.1415927\ldots$ La periodicidad permite medir el ángulo de cualquier número complejo no nulo.
+
+::: {#thm-forma-polar}
+## Forma polar de un número complejo
+
+Todo $z\in\mathbb{C}$, $z\neq0$, se escribe $z=r\exp(i\theta)=r(\cos\theta+i\sin\theta)$ con $r=|z|$ y algún $\theta\in\mathbb{R}$, único salvo múltiplos de $2\pi$, llamado un ***argumento*** de $z$. Además, para $z=r\exp(i\theta)$ y $w=s\exp(i\phi)$ se cumple $zw=rs\exp(i(\theta+\phi))$.
+
+:::
+
+::: {.proof}
+Sea $u=z/|z|=a+bi$ con $a^2+b^2=1$. Como $a\in[-1,1]$ y $\cos$ es continua y estrictamente decreciente en $[0,\pi]$ de $1$ a $-1$, existe un único $\theta_0\in[0,\pi]$ con $\cos\theta_0=a$, y $\sin\theta_0=\sqrt{1-a^2}=|b|$ porque $\sin\theta_0\geq0$. Si $b\geq0$, $u=\exp(i\theta_0)$; si $b<0$, $u=\exp(-i\theta_0)$ por la paridad de coseno y seno. Para la unicidad módulo $2\pi$, si $\exp(i\theta)=\exp(i\phi)$, entonces $\exp(i(\theta-\phi))=1$; sea $\theta-\phi=2\pi m+\rho$ con $m$ entero y $\rho\in[0,2\pi)$; por la periodicidad, $\exp(i\rho)=1$, es decir, $\cos\rho=1$, y como $\cos<1$ en $(0,\pi]$ y $\cos\rho=\cos(2\pi-\rho)<1$ para $\rho\in(\pi,2\pi)$, resulta $\rho=0$. La fórmula del producto es la ecuación funcional con $|zw|=|z||w|$.
+
+:::
+
+La forma polar convierte potencias y raíces en operaciones sobre ángulos.
+
+::: {#cor-de-moivre}
+## Fórmula de De Moivre y raíces
+
+Para $z=r\exp(i\theta)$ y $n\in\mathbb{N}$: (i) $z^n=r^n\bigl(\cos n\theta+i\sin n\theta\bigr)$; (ii) la ecuación $w^n=z$ con $z\neq0$ tiene exactamente $n$ soluciones, $w_k=r^{1/n}\exp\bigl(i(\theta+2\pi k)/n\bigr)$ para $k=0,\ldots,n-1$; en particular las raíces de $w^n=1$ son $\exp(2\pi ik/n)$, todas de módulo $1$.
+
+:::
+
+::: {.proof}
+La parte (i) es la fórmula del producto aplicada $n$ veces. Para (ii), $w_k^n=r\exp\bigl(i(\theta+2\pi k)\bigr)=r\exp(i\theta)=z$ por la periodicidad. Las $w_k$ son distintas entre sí, porque sus argumentos $(\theta+2\pi k)/n$ difieren en menos de $2\pi$ entre sí y la forma polar fija el argumento módulo $2\pi$. Si $w^n=z$ con $w=s\exp(i\phi)$, entonces $s^n=r$ y $n\phi=\theta+2\pi k$ para algún entero $k$, de modo que $w$ es una de las $w_k$; solo hay $n$ porque $k$ y $k+n$ dan el mismo valor.
+
+:::
+
+Con números, $z=1+i$ tiene $|z|=\sqrt2$ y argumento $\pi/4$: $\exp(i\pi/4)=a+bi$ con $a,b>0$ cumple $(a+bi)^2=i$, de modo que $a^2=b^2$ y $2ab=1$, es decir $a=b=1/\sqrt2$ y $z=\sqrt2\exp(i\pi/4)$. Por De Moivre, $z^8=(\sqrt2)^8\exp(2\pi i)=16$, lo que coincide con $(1+i)^2=2i$, $(1+i)^4=-4$, $(1+i)^8=16$. Las ocho raíces octavas de la unidad, $\exp(2\pi ik/8)$, forman los vértices de un octógono regular en la circunferencia unitaria.

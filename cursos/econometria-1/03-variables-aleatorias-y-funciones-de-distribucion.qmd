@@ -1,128 +1,93 @@
 ---
 title: "Variables aleatorias y funciones de distribución"
-description: "Variables aleatorias y funciones de distribución. Incluye Variable aleatoria, Función de distribución acumulada y Propiedades de la función de distribución."
+description: "Variables aleatorias como funciones medibles, la ley de una variable, la función de distribución acumulada con sus propiedades, su existencia mediante la transformada inversa y las variables discretas y continuas."
 author: "Mario Peñaloza"
-date: 2026-10-07
+date: 2026-10-08
 categories: [Econometría I, Fundamentos de probabilidad]
 ---
 
-Los eventos de $\mathcal{F}$ pueden ser conjuntos de naturaleza
-arbitraria, sin ninguna estructura numérica; la variable aleatoria es la
-que traduce esos eventos a números reales, permitiendo aplicarles
-directamente todo el aparato de las secciones anteriores. La ganancia es
-considerable: en lugar de razonar sobre subconjuntos abstractos de
-$\Omega$, basta con razonar sobre una función real, para la cual ya se
-dispone del cálculo diferencial e integral de la
-[Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd), de la estructura de espacio vectorial de la
-[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) y de la noción de límite de la
-[Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd). Esta traducción es la que permite, por ejemplo,
-hablar del límite de una sucesión de variables aleatorias, tema de la
-[Sección “Modos de convergencia”](05-modos-de-convergencia.qmd), sin necesidad de especificar en cada caso el
-espacio de probabilidad subyacente.
+Los eventos pueden ser conjuntos de naturaleza arbitraria, sin ninguna estructura numérica. La variable aleatoria traduce los resultados a números reales, y con ello permite usar el cálculo y las matemáticas de los cursos anteriores. Esta nota define las variables aleatorias, muestra que las operaciones usuales entre ellas siguen produciendo variables aleatorias, y describe su comportamiento con una sola función, la función de distribución acumulada. La nota se apoya en los espacios de probabilidad de la [Nota “Espacios de probabilidad”](01-espacios-de-probabilidad.qmd) y en la [Nota “Límites y continuidad de funciones”](../matematica-1/30-limites-y-continuidad-de-funciones.qmd).
 
 ::: {#def-variable-aleatoria}
 ## Variable aleatoria
 
-Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad. Una
-***variable aleatoria*** es una función $X:\Omega\to
-\mathbb{R}$ tal que, para todo $x\in\mathbb{R}$, el conjunto
-$\{\omega\in\Omega:X(\omega)\leq x\}$ pertenece a $\mathcal{F}$; a esta
-condición se le llama ***medibilidad***.
+Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad. Una ***variable aleatoria*** es una función $X:\Omega\to\mathbb{R}$ tal que $\{\omega:X(\omega)\leq x\}\in\mathcal{F}$ para todo $x\in\mathbb{R}$. Esta condición se llama ***medibilidad***. Un ***vector aleatorio*** $\vect{X}=(X_1,\ldots,X_k)$ es una función de $\Omega$ en $\mathbb{R}^k$ cuyas coordenadas son variables aleatorias.
 
 :::
 
-La condición de medibilidad es, precisamente, la que garantiza que
-expresiones como $\Prob{X\leq x}$ tengan sentido: sin ella, el conjunto
-$\{\omega:X(\omega)\leq x\}$ podría no ser un evento, y $\Prob{\cdot}$
-no estaría definida sobre él. En la práctica, toda función razonable de
-interés económico, ingresos, precios, tasas de interés, resulta medible
-respecto de cualquier $\sigma$-álgebra suficientemente rica, de modo que
-la medibilidad rara vez es una restricción activa y se dará por
-descontada de aquí en adelante. Una vez fijada $X$, se induce sobre
-$\mathbb{R}$ una nueva probabilidad, $\Prob{X\in\cdot}$, que asigna a
-cada subconjunto razonable de $\mathbb{R}$ la probabilidad del evento
-correspondiente en $\Omega$; esta probabilidad inducida es la que en la
-práctica interesa manipular, porque permite olvidarse por completo del
-espacio muestral original y trabajar exclusivamente sobre la recta
-real, con todo el aparato de las secciones anteriores. Lo que sí
-interesa, y mucho, es resumir el comportamiento probabilístico completo
-de $X$ en una sola función.
+La medibilidad garantiza que $\Prob{X\leq x}$ tenga sentido, porque exige que $\{X\leq x\}$ sea un evento. Más aún, garantiza que $\Prob{X\in B}$ tenga sentido para cualquier conjunto de Borel $B$, como muestra la proposición siguiente, y de ella se obtienen las operaciones permitidas entre variables aleatorias.
 
-::: {#def-fda}
-## Función de distribución acumulada
+::: {#prp-preimagen-borel}
+## Medibilidad respecto de los conjuntos de Borel
 
-La ***función de distribución acumulada*** (FDA) de una
-variable aleatoria $X$ es $F_X(x):=\Prob{X\leq x}$ para $x\in
-\mathbb{R}$.
-
-:::
-
-La FDA describe por completo el comportamiento probabilístico de $X$,
-en el sentido de que $\Prob{a<X\leq b}=F_X(b)-F_X(a)$ para
-cualesquiera $a<b$, y expresiones análogas permiten recuperar la
-probabilidad de cualquier evento de interés sobre $X$ a partir
-únicamente de $F_X$. No toda función, sin embargo, puede ser la FDA de
-alguna variable aleatoria: hace falta que satisfaga ciertas condiciones
-estructurales, que se derivan directamente de los axiomas de Kolmogorov
-de la [Definición “Espacio de probabilidad”](01-espacios-de-probabilidad.qmd#def-espacio-probabilidad) y que conviene dejar establecidas
-de una vez por todas.
-
-::: {#prp-propiedades-fda}
-## Propiedades de la función de distribución
-
-La FDA de cualquier variable aleatoria $X$ satisface: (i) $F_X$ es no
-decreciente; (ii) $\lim_{x\to-\infty}F_X(x)=0$ y
-$\lim_{x\to\infty}F_X(x)=1$; (iii) $F_X$ es continua por la derecha.
+Si $X$ es una variable aleatoria, entonces $\{X\in B\}:=\{\omega:X(\omega)\in B\}\in\mathcal{F}$ para todo $B\in\mathcal{B}(\mathbb{R})$. En consecuencia, si $g:\mathbb{R}\to\mathbb{R}$ es continua, $g(X)$ es una variable aleatoria.
 
 :::
 
 ::: {.proof}
-Para (i), si $x_1<x_2$, el evento $\{X\leq x_1\}$ está contenido en
-$\{X\leq x_2\}$, y la monotonía de la
-[Proposición “Propiedades básicas de la probabilidad”](01-espacios-de-probabilidad.qmd#prp-propiedades-probabilidad) da
-$F_X(x_1)=\Prob{X\leq x_1}\leq\Prob{X\leq x_2}=F_X(x_2)$. Para (ii),
-basta aplicar el [Teorema “Continuidad de la probabilidad”](01-espacios-de-probabilidad.qmd#thm-continuidad-probabilidad) a la sucesión
-creciente de eventos $\{X\leq n\}$ cuando $n\to\infty$, cuya unión es
-todo $\Omega$, y a la sucesión creciente $\{X\leq -n\}^c=\{X>-n\}$
-cuando $n\to\infty$, cuya unión también es $\Omega$; el primer límite da
-$F_X(n)\to 1$ y el segundo, tras pasar al complemento, da
-$F_X(-n)\to 0$. Para (iii), fíjese $x$ y aplíquese el
-[Teorema “Continuidad de la probabilidad”](01-espacios-de-probabilidad.qmd#thm-continuidad-probabilidad) a la sucesión decreciente
-$\{X\leq x+1/n\}$, cuya intersección es $\{X\leq x\}$; el argumento del
-teorema se adapta directamente al caso decreciente pasando al
-complemento, y da $F_X(x+1/n)\to F_X(x)$, que es exactamente la
-continuidad por la derecha en $x$.
+Sea $\mathcal{G}:=\{B\subseteq\mathbb{R}:\{X\in B\}\in\mathcal{F}\}$. Esta colección es una $\sigma$-álgebra: $\{X\in\mathbb{R}\}=\Omega$, la preimagen del complemento es el complemento de la preimagen, y la preimagen de una unión numerable es la unión de las preimágenes. Como $\mathcal{G}$ contiene a los conjuntos $(-\infty,x]$ por la definición de variable aleatoria, contiene a $\sigma(\{(-\infty,x]\})=\mathcal{B}(\mathbb{R})$ por la [Proposición “$\sigma$-álgebra generada y $\sigma$-álgebra de Borel”](01-espacios-de-probabilidad.qmd#prp-sigma-algebra-generada). Si $g$ es continua, $g^{-1}((-\infty,y])$ es cerrado, y por tanto de Borel, de modo que $\{g(X)\leq y\}=\{X\in g^{-1}((-\infty,y])\}\in\mathcal{F}$.
 
 :::
 
-Estas tres propiedades caracterizan por completo qué funciones pueden
-ser una FDA: puede demostrarse, aunque no se hará aquí por no
-necesitarse en lo que sigue, que toda función que las satisface es
-efectivamente la FDA de alguna variable aleatoria construida sobre un
-espacio de probabilidad adecuado. En la práctica econométrica, casi
-todas las variables de interés caen en una de dos categorías según
-la forma que adopta su FDA, y distinguirlas resulta indispensable
-porque determina si la esperanza, que se define en la siguiente
-subsección, se calcula mediante una suma o mediante una integral.
+Las sumas y los productos también conservan la medibilidad. Para $X+Y$ con $X$ e $Y$ variables aleatorias, $\{X+Y<c\}=\bigcup_{q\in\mathbb{Q}}\{X<q\}\cap\{Y<c-q\}$, una unión numerable de eventos, de modo que $\{X+Y\leq x\}=\bigcap_n\{X+Y<x+1/n\}$ es un evento. El producto se obtiene de la identidad $XY=\tfrac14\bigl[(X+Y)^2-(X-Y)^2\bigr]$ y de la continuidad de $t\mapsto t^2$. De manera análoga, $\max\{X,Y\}$ y $\min\{X,Y\}$ son variables aleatorias, y un límite puntual de variables aleatorias, cuando existe, también lo es. Esas operaciones se usarán sin mención explícita.
+
+Una variable aleatoria induce una probabilidad sobre la recta real, que permite olvidar el espacio original $\Omega$ y trabajar solo con ella.
+
+::: {#def-ley}
+## Ley de una variable aleatoria
+
+La ***ley*** de $X$ es la función $P_X:\mathcal{B}(\mathbb{R})\to[0,1]$ dada por $P_X(B):=\Prob{X\in B}$. Es una medida de probabilidad sobre $(\mathbb{R},\mathcal{B}(\mathbb{R}))$: $P_X(\mathbb{R})=\Prob{\Omega}=1$, y la aditividad numerable se hereda porque las preimágenes de conjuntos disjuntos son disjuntas.
+
+:::
+
+La ley contiene toda la información probabilística de $X$ y se describe con una función de una variable.
+
+::: {#def-fda}
+## Función de distribución acumulada
+
+La ***función de distribución acumulada*** (FDA) de $X$ es $F_X(x):=\Prob{X\leq x}$ para $x\in\mathbb{R}$.
+
+:::
+
+La FDA determina las probabilidades de los intervalos, $\Prob{a<X\leq b}=F_X(b)-F_X(a)$ para $a<b$, porque $\{X\leq b\}$ es la unión disjunta de $\{X\leq a\}$ y $\{a<X\leq b\}$. No toda función es una FDA, y las condiciones que debe cumplir se derivan de los axiomas.
+
+::: {#prp-propiedades-fda}
+## Propiedades de la función de distribución
+
+La FDA de una variable aleatoria $X$ satisface: (i) $F_X$ es no decreciente; (ii) $\lim_{x\to-\infty}F_X(x)=0$ y $\lim_{x\to\infty}F_X(x)=1$; (iii) $F_X$ es continua por la derecha; (iv) existe el límite por la izquierda $F_X(x^-)$ y $\Prob{X=x}=F_X(x)-F_X(x^-)$.
+
+:::
+
+::: {.proof}
+Para (i), si $x_1<x_2$, entonces $\{X\leq x_1\}\subseteq\{X\leq x_2\}$ y la monotonía da $F_X(x_1)\leq F_X(x_2)$. Para (ii), los eventos $\{X\leq n\}$ crecen hacia $\Omega$ cuando $n\to\infty$, de modo que el [Teorema “Continuidad de la probabilidad”](01-espacios-de-probabilidad.qmd#thm-continuidad-probabilidad) da $F_X(n)\to1$; los eventos $\{X\leq-n\}$ decrecen hacia $\varnothing$, y la segunda parte del teorema da $F_X(-n)\to0$. Como $F_X$ es monótona, los límites a lo largo de los enteros son los límites a lo largo de los reales. Para (iii), los eventos $\{X\leq x+1/n\}$ decrecen hacia $\{X\leq x\}$, y el teorema da $F_X(x+1/n)\to F_X(x)$; de nuevo la monotonía extiende la convergencia a toda sucesión que decrece hacia $x$. Para (iv), los eventos $\{X\leq x-1/n\}$ crecen hacia $\{X<x\}$, de modo que $F_X(x-1/n)\to\Prob{X<x}$, que por monotonía es el límite por la izquierda $F_X(x^-)$, y $\Prob{X=x}=\Prob{X\leq x}-\Prob{X<x}$.
+
+:::
+
+Las tres primeras propiedades también son suficientes: toda función con ellas es la FDA de alguna variable aleatoria. La demostración construye la variable con la función cuantil, y entrega un método para simular.
+
+::: {#thm-existencia-fda}
+## Existencia de una variable con FDA dada
+
+Sea $F:\mathbb{R}\to[0,1]$ no decreciente, continua por la derecha, con límites $0$ en $-\infty$ y $1$ en $+\infty$. Sea $U$ una variable aleatoria uniforme en $(0,1)$, es decir, con $\Prob{U\leq u}=u$ para $u\in(0,1)$. Entonces $X:=Q(U)$, con $Q(u):=\inf\{x:F(x)\geq u\}$, tiene FDA igual a $F$.
+
+:::
+
+::: {.proof}
+La función $Q(u)$ es finita para $u\in(0,1)$, porque el conjunto $\{x:F(x)\geq u\}$ es no vacío por el límite en $+\infty$ y acotado inferiormente por el límite en $-\infty$. Se prueba que $Q(u)\leq x$ si y solo si $u\leq F(x)$. Si $u\leq F(x)$, entonces $x$ pertenece al conjunto cuyo ínfimo es $Q(u)$, de modo que $Q(u)\leq x$. Recíprocamente, si $Q(u)\leq x$, para todo $\varepsilon>0$ existe un punto $x'<Q(u)+\varepsilon\leq x+\varepsilon$ con $F(x')\geq u$, y la monotonía da $F(x+\varepsilon)\geq u$; la continuidad por la derecha de $F$ da $F(x)\geq u$. Entonces $\Prob{X\leq x}=\Prob{Q(U)\leq x}=\Prob{U\leq F(x)}=F(x)$.
+
+:::
+
+Con números, para la FDA exponencial con parámetro $2$, $F(x)=1-e^{-2x}$ para $x\geq0$, la función cuantil es $Q(u)=-\ln(1-u)/2$. Con $u=0.5$ resulta $Q(0.5)=0.3466$, y se verifica que $F(0.3466)=1-e^{-0.6931}=0.5$. Generar números uniformes y aplicarles $Q$ simula la distribución exponencial.
+
+En la práctica, casi todas las variables caen en una de dos categorías según la forma que toma su FDA, que determina si las probabilidades se calculan con sumas o con integrales.
 
 ::: {#def-discreta-continua}
 ## Variables discretas y continuas
 
-Una variable aleatoria $X$ es ***discreta*** si toma valores
-en un conjunto numerable $\{x_1,x_2,\ldots\}$, en cuyo caso su
-comportamiento queda descrito por la ***función de masa de
-probabilidad*** $p_X(x_i):=\Prob{X=x_i}$. Es
-***continua*** si su FDA admite una
-***función de densidad*** $f_X\geq 0$ tal que
-$F_X(x)=\int_{-\infty}^{x}f_X(t)\,dt$ para todo $x$, integral en el
-sentido de Riemann de la [Definición “Sumas de Riemann e integral”](../matematica-2/11-la-integral-de-riemann-y-el-teorema-fundamental.qmd#def-particion-integral-riemann).
+Una variable aleatoria $X$ es ***discreta*** si toma valores en un conjunto numerable $\{x_1,x_2,\ldots\}$, y entonces su ley queda descrita por la ***función de masa de probabilidad*** $p_X(x_i):=\Prob{X=x_i}$, con $\sum_ip_X(x_i)=1$. Es ***continua*** si existe una ***función de densidad*** $f_X\geq0$, continua salvo en una cantidad finita de puntos, tal que $F_X(x)=\int_{-\infty}^xf_X(t)\,dt$ para todo $x$, como integral impropia en el sentido de la [Nota “Integrales impropias y la integral gaussiana”](../matematica-3/03-integrales-impropias-y-la-integral-gaussiana.qmd).
 
 :::
 
-Con la distribución de una variable aleatoria completamente
-caracterizada, ya sea por su función de masa o por su densidad, la
-pregunta natural es cómo resumir esa distribución en unos pocos números
-que capturen sus rasgos más informativos: dónde se centra, qué tan
-dispersa está, y cómo se comporta en sus colas. Esa tarea de resumen es
-la que emprende la esperanza matemática y los momentos que se
-construyen a partir de ella.
+En una variable discreta la FDA es una función escalonada con saltos $p_X(x_i)$ en los valores posibles, y en una continua es continua con $\Prob{X=x}=0$ para todo $x$, porque no tiene saltos. En una variable continua, $f_X(x)=F_X'(x)$ en los puntos de continuidad de $f_X$, por la primera parte del [Teorema “Teorema fundamental del cálculo, primera parte”](../matematica-3/02-teorema-fundamental-del-calculo.qmd#thm-fundamental-calculo), y por tanto $\Prob{a<X\leq b}=\int_a^bf_X(t)\,dt$ y $\int_{-\infty}^{\infty}f_X=1$. Con números, un dado equilibrado tiene $p_X(k)=1/6$ para $k=1,\ldots,6$ y su FDA vale $F_X(3.7)=3/6=0.5$ y $F_X(6)=1$; en cambio, una variable con densidad $f_X(x)=2x$ en $[0,1]$ tiene $F_X(x)=x^2$ y $\Prob{0.5<X\leq0.8}=0.64-0.25=0.39$.
+
+Hay variables que no son ni discretas ni continuas en este sentido, como una cantidad que vale cero con probabilidad $1/2$ y tiene densidad en el resto de los casos. Las distribuciones que se usan en este curso son de los dos tipos anteriores.

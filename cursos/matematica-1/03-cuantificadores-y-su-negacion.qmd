@@ -1,12 +1,12 @@
 ---
 title: "Cuantificadores y su negación"
-description: "Cuantificadores y su negación. Incluye Cuantificadores universal y existencial y Negación de proposiciones cuantificadas."
+description: "Los cuantificadores universal y existencial, el orden en que se escriben y la regla para negar una proposición cuantificada."
 author: "Mario Peñaloza"
-date: 2026-10-07
+date: 2026-10-08
 categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
 ---
 
-Queda pendiente un asunto que la primera subsección dejó abierto. Se dijo
+Queda pendiente un asunto que la primera nota dejó abierto. Se dijo
 allí que un enunciado con una variable libre, como “$x$ es primo”, no es una
 proposición porque su valor de verdad depende de qué se sustituya en lugar de
 $x$; y se anticipó que hay dos maneras de convertirlo en una proposición
@@ -64,11 +64,9 @@ propiedad.
 
 Este fenómeno, llamado verdad vacua, no es una anomalía del lenguaje sino una
 consecuencia obligada de tomar en serio la definición del cuantificador
-universal. Reaparecerá de forma natural más adelante en cualquier argumento
-que empiece por descartar, mediante una hipótesis previa, la posibilidad de
-que el conjunto sobre el que se cuantifica sea vacío; y será, en particular,
-la razón por la cual el conjunto vacío resulta ser subconjunto de todos los
-conjuntos.
+universal. Una consecuencia llamativa es que, sobre un dominio vacío,
+afirmaciones que parecen absurdas, como que todo elemento del dominio es a la
+vez par e impar, resultan verdaderas.
 
 Con frecuencia una afirmación involucra dos variables ligadas por
 cuantificadores distintos, y en ese caso el orden en que se escriben no es en
@@ -91,11 +89,10 @@ cualquier candidato a ese número $y$ queda superado por $y+1$.
 La diferencia entre ambas proposiciones es exactamente el orden de los
 cuantificadores: en la primera, $y$ puede elegirse después de conocer $x$ y en
 función de él; en la segunda, $y$ debe fijarse antes y servir para todos los
-$x$ a la vez. Esta distinción, que aquí puede parecer un juego, será la que
-separe la continuidad de la continuidad uniforme cuando se estudien
-funciones, y la que haga que la definición de límite exija leerse con cuidado.
+$x$ a la vez. La distinción parece un juego de lenguaje, pero cambia por
+completo el valor de verdad del enunciado.
 
-Corresponde ahora el resultado que más se usará de esta subsección, y que
+Corresponde ahora el resultado que más se usará de esta nota, y que
 indica cómo se niega una afirmación cuantificada.
 
 ::: {#thm-negacion-cuantificadores}
@@ -167,6 +164,6 @@ $\exists x\in U,\ \forall y\in V,\ \neg P(x,y)$.
 Aplicar la regla de un solo salto, en vez de intercambiar los cuantificadores
 uno por uno, es el error más frecuente al negar afirmaciones matemáticas, y
 conviene evitarlo sistemáticamente escribiendo el intercambio paso a paso las
-primeras veces que se practique. La negación de la definición de límite, que
-aparecerá más adelante y que involucra tres cuantificadores anidados, es el
-caso donde este cuidado más rinde.
+primeras veces que se practique. Con tres cuantificadores anidados, la
+negación de $\forall a\,\exists b\,\forall c\,P(a,b,c)$ se obtiene en tres
+pasos y es $\exists a\,\forall b\,\exists c\,\neg P(a,b,c)$.

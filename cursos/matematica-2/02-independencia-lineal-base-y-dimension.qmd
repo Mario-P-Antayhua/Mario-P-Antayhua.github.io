@@ -1,160 +1,104 @@
 ---
 title: "Independencia lineal, base y dimensión"
-description: "Independencia lineal, base y dimensión. Incluye Independencia lineal, Base de un espacio vectorial y Lema de sustitución."
+description: "Independencia lineal, bases y coordenadas únicas, el lema de intercambio, la dimensión bien definida y sus consecuencias: completar a una base y dimensión de los subespacios."
 author: "Mario Peñaloza"
-date: 2026-10-07
-categories: [Matemática para Economistas II, Espacios vectoriales, normados y con producto interno]
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
 ---
 
-La envoltura lineal responde a qué vectores puede alcanzar un conjunto
-$S$, pero no dice nada sobre si $S$ contiene redundancia, es decir, si
-alguno de sus elementos podría eliminarse sin reducir lo que se genera.
-Esa distinción es exactamente la que separa, en un modelo de regresión, a
-un conjunto de regresores que identifica los parámetros de otro que
-produce multicolinealidad perfecta, y se formaliza con la independencia
-lineal.
+La envoltura lineal responde a qué vectores puede alcanzar un conjunto $S$, pero no dice si $S$ contiene redundancia, es decir, si algún elemento podría eliminarse sin reducir lo que se genera. Esa distinción es la que separa, en un modelo de regresión, a un conjunto de regresores que identifica los parámetros de otro que produce multicolinealidad perfecta, y se formaliza con la independencia lineal.
 
 ::: {#def-independencia-lineal}
 ## Independencia lineal
 
-Los vectores $\vect{v}_1,\ldots,\vect{v}_k\in V$ son
-***linealmente independientes*** si la única solución de
-
-$$
-\alpha_1\vect{v}_1+\cdots+\alpha_k\vect{v}_k=\vect{0}
-$$
-
-es $\alpha_1=\cdots=\alpha_k=0$. En caso contrario, los vectores son
-***linealmente dependientes***.
+Los vectores $\vect{v}_1,\ldots,\vect{v}_k\in V$ son ***linealmente independientes*** si la única solución de $\alpha_1\vect{v}_1+\cdots+\alpha_k\vect{v}_k=\vect{0}$ es $\alpha_1=\cdots=\alpha_k=0$. En caso contrario son ***linealmente dependientes***.
 
 :::
 
-Cuando un conjunto de vectores no solo es independiente sino que además
-genera todo el espacio, alcanza el estatus de base: describe
-completamente a $V$ sin ningún elemento sobrante.
+La dependencia significa que alguno de los vectores es combinación de los demás: si $\sum\alpha_i\vect{v}_i=\vect{0}$ con $\alpha_j\neq0$, se despeja $\vect{v}_j=-\alpha_j^{-1}\sum_{i\neq j}\alpha_i\vect{v}_i$; y recíprocamente, si $\vect{v}_j=\sum_{i\neq j}\beta_i\vect{v}_i$, la combinación $\vect{v}_j-\sum\beta_i\vect{v}_i=\vect{0}$ tiene el coeficiente $1$ en $\vect{v}_j$. En $\mathbb{R}^3$, los vectores $(1,0,1)$, $(0,1,1)$ y $(1,1,2)$ son dependientes, porque el tercero es la suma de los dos primeros; los dos primeros, en cambio, son independientes, porque $\alpha(1,0,1)+\beta(0,1,1)=(\alpha,\beta,\alpha+\beta)=\vect{0}$ obliga a $\alpha=\beta=0$. Cuando un conjunto es independiente y además genera todo el espacio, describe a $V$ sin ningún elemento sobrante.
 
 ::: {#def-base}
 ## Base de un espacio vectorial
 
-Un conjunto $B=\{\vect{v}_1,\ldots,\vect{v}_n\}\subseteq V$ es una
-***base*** de $V$ si $B$ es linealmente independiente y
-$\operatorname{gen}(B)=V$.
+Un conjunto $B=\{\vect{v}_1,\ldots,\vect{v}_n\}\subseteq V$ es una ***base*** de $V$ si es linealmente independiente y $\operatorname{gen}(B)=V$.
 
 :::
 
-Antes de definir la dimensión hace falta resolver una pregunta previa:
-¿puede un mismo espacio vectorial tener dos bases con distinto número de
-elementos? Si la respuesta fuera afirmativa, hablar de “la
-dimensión” de $V$ no tendría sentido, porque dependería de
-qué base se eligiera. El resultado auxiliar siguiente, conocido como el
-lema de sustitución, descarta esa posibilidad al comparar el tamaño de
-cualquier conjunto independiente con el de cualquier conjunto generador.
+Una base asigna a cada vector una lista única de coordenadas, y esa unicidad es lo que permite identificar $V$ con $\mathbb{R}^n$.
 
-::: {#lem-sustitucion}
-## Lema de sustitución
+::: {#prp-coordenadas}
+## Coordenadas únicas
 
-Sea $V$ un espacio vectorial, sea $\{\vect{u}_1,\ldots,\vect{u}_k\}$ un
-conjunto linealmente independiente en $V$ y sea
-$\{\vect{v}_1,\ldots,\vect{v}_n\}$ un conjunto que genera $V$. Entonces
-$k\leq n$.
+Si $B=\{\vect{v}_1,\ldots,\vect{v}_n\}$ es una base de $V$, todo $\vect{v}\in V$ se escribe de una única manera como $\vect{v}=\alpha_1\vect{v}_1+\cdots+\alpha_n\vect{v}_n$. Los $\alpha_i$ son las ***coordenadas*** de $\vect{v}$ en $B$.
 
 :::
 
 ::: {.proof}
-Se procede por inducción sobre $k$. El caso $k=0$ es trivial, porque el
-conjunto vacío es independiente y $0\leq n$ para cualquier $n\geq 0$. Para
-el paso inductivo, se supone el resultado válido para $k-1$ y se prueba
-para $k$.
-
-Por hipótesis de inducción aplicada a $\{\vect{u}_1,\ldots,\vect{u}_{k-1}\}$
-se tiene $k-1\leq n$, y además, reordenando los $\vect{v}_j$ si hace
-falta, el conjunto $\{\vect{u}_1,\ldots,\vect{u}_{k-1},
-\vect{v}_k,\ldots,\vect{v}_n\}$ sigue generando $V$: cada sustitución de
-un $\vect{v}_j$ por el $\vect{u}_j$ correspondiente preserva la
-generación, porque $\vect{v}_j$ se puede recuperar despejándolo de la
-combinación lineal que expresa a $\vect{u}_j$ en términos del conjunto
-generador vigente en ese paso, siempre que el coeficiente de $\vect{v}_j$
-en esa combinación sea distinto de cero.
-
-Falta ahora incorporar a $\vect{u}_k$. Como el conjunto
-$\{\vect{u}_1,\ldots,\vect{u}_{k-1},\vect{v}_k,\ldots,\vect{v}_n\}$ genera
-$V$, existe una combinación lineal
-
-$$
-\vect{u}_k = \sum_{i=1}^{k-1}\beta_i\vect{u}_i
-             + \sum_{j=k}^{n}\gamma_j\vect{v}_j.
-$$
-
-Si todos los $\gamma_j$ fueran cero, $\vect{u}_k$ sería combinación lineal
-de $\vect{u}_1,\ldots,\vect{u}_{k-1}$, lo que contradice la independencia
-lineal de $\{\vect{u}_1,\ldots,\vect{u}_k\}$; de manera que existe al
-menos un $\gamma_j\neq 0$, y esto requiere que quede al menos un
-$\vect{v}_j$ disponible para sustituir, es decir, que $k\leq n$. Si $k$
-excediera a $n$ ya no habría ningún $\vect{v}_j$ en la lista, y la
-contradicción anterior no podría resolverse, con lo cual $k\leq n$ queda
-establecido.
+La existencia es que $B$ genera $V$. Para la unicidad, si $\sum\alpha_i\vect{v}_i=\sum\beta_i\vect{v}_i$, entonces $\sum(\alpha_i-\beta_i)\vect{v}_i=\vect{0}$, y la independencia obliga a $\alpha_i=\beta_i$ para todo $i$.
 
 :::
 
-Aplicado dos veces, en direcciones opuestas, este lema resuelve de forma
-inmediata la pregunta planteada antes de enunciarlo.
+Antes de definir la dimensión hace falta resolver una pregunta previa: ¿puede un mismo espacio tener dos bases con distinto número de elementos? Si así fuera, hablar de «la dimensión» de $V$ no tendría sentido. El resultado auxiliar siguiente, el lema de intercambio, descarta esa posibilidad al comparar el tamaño de cualquier conjunto independiente con el de cualquier conjunto generador.
+
+::: {#lem-sustitucion}
+## Lema de intercambio
+
+Sea $\{\vect{u}_1,\ldots,\vect{u}_k\}$ linealmente independiente en $V$ y $\{\vect{v}_1,\ldots,\vect{v}_n\}$ un conjunto que genera $V$. Entonces $k\leq n$, y, tras reordenar los $\vect{v}_j$, el conjunto $\{\vect{u}_1,\ldots,\vect{u}_k,\vect{v}_{k+1},\ldots,\vect{v}_n\}$ también genera $V$.
+
+:::
+
+::: {.proof}
+Se prueba por inducción sobre $j$, para $0\leq j\leq k$, la afirmación $P(j)$: $j\leq n$ y, tras reordenar los $\vect{v}$, el conjunto $\{\vect{u}_1,\ldots,\vect{u}_j,\vect{v}_{j+1},\ldots,\vect{v}_n\}$ genera $V$. Para $j=0$ es la hipótesis sobre los $\vect{v}$.
+
+Supóngase $P(j)$ con $j<k$. Como el conjunto de $P(j)$ genera $V$, existe una expresión
+$$
+\vect{u}_{j+1}=\sum_{i=1}^{j}\beta_i\vect{u}_i+\sum_{l=j+1}^{n}\gamma_l\vect{v}_l .
+$$
+Si no quedaran vectores $\vect{v}$, es decir, si $j=n$, o si todos los $\gamma_l$ fueran cero, $\vect{u}_{j+1}$ sería combinación lineal de $\vect{u}_1,\ldots,\vect{u}_j$, lo que contradice la independencia de los $\vect{u}$. Por lo tanto $j<n$, es decir, $j+1\leq n$, y algún $\gamma_l\neq0$; reordenando se puede suponer $\gamma_{j+1}\neq0$. Despejando,
+$$
+\vect{v}_{j+1}=\gamma_{j+1}^{-1}\Bigl(\vect{u}_{j+1}-\sum_{i=1}^{j}\beta_i\vect{u}_i-\sum_{l=j+2}^{n}\gamma_l\vect{v}_l\Bigr),
+$$
+de modo que $\vect{v}_{j+1}$ pertenece a $\operatorname{gen}\{\vect{u}_1,\ldots,\vect{u}_{j+1},\vect{v}_{j+2},\ldots,\vect{v}_n\}$. Este conjunto contiene entonces a todos los elementos del conjunto de $P(j)$ en su envoltura lineal, y como esta es un subespacio, contiene a $\operatorname{gen}$ de aquel, que es $V$. Esto prueba $P(j+1)$. Con $j=k$ se obtiene $k\leq n$ y la afirmación sobre el conjunto que genera.
+
+:::
+
+Aplicado dos veces, en direcciones opuestas, el lema resuelve la pregunta planteada.
 
 ::: {#thm-dimension-bien-definida}
 ## Buena definición de la dimensión
 
-Si $V$ admite una base finita, entonces todas las bases de $V$ tienen el
-mismo número de elementos.
+Si $V$ admite una base finita, todas sus bases tienen el mismo número de elementos.
 
 :::
 
 ::: {.proof}
-Sean $B=\{\vect{v}_1,\ldots,\vect{v}_n\}$ y
-$B'=\{\vect{w}_1,\ldots,\vect{w}_m\}$ dos bases de $V$. Como $B'$ es
-independiente y $B$ genera $V$, el @lem-sustitucion da $m\leq n$.
-Intercambiando los papeles, como $B$ es independiente y $B'$ genera $V$,
-el mismo lema da $n\leq m$. Las dos desigualdades juntas obligan a
-$m=n$, que es lo que se quería probar.
+Sean $B=\{\vect{v}_1,\ldots,\vect{v}_n\}$ y $B'=\{\vect{w}_1,\ldots,\vect{w}_m\}$ bases. Como $B'$ es independiente y $B$ genera $V$, el @lem-sustitucion da $m\leq n$. Intercambiando los papeles, $n\leq m$, y por lo tanto $m=n$.
 
 :::
 
 ::: {#def-dimension}
 ## Dimensión
 
-Si $V$ admite una base finita, su ***dimensión***,
-$\dim(V)$, es el número de elementos de cualquiera de sus bases; el
-@thm-dimension-bien-definida garantiza que ese número no depende de
-cuál base se elija. Por convención, $\dim(\{\vect{0}\})=0$.
+Si $V$ admite una base finita, su ***dimensión*** $\dim(V)$ es el número de elementos de cualquiera de sus bases; por convención $\dim(\{\vect{0}\})=0$. Se dice que $V$ es de ***dimensión finita***.
 
 :::
 
-Esta definición tiene una lectura estadística inmediata que conviene explicitar antes de seguir.
+La dimensión mide cuántas direcciones independientes admite un espacio: $\dim\mathbb{R}^n=n$, porque los vectores canónicos $\vect{e}_1,\ldots,\vect{e}_n$ son una base. Los resultados siguientes explican cómo se construye una base y cómo se comparan las dimensiones de un espacio y sus subespacios.
 
-::: {#idea-dimension-grados-libertad .callout-tip appearance="simple" title="Idea central: La dimensión como grados de libertad"}
-La dimensión mide cuántas direcciones genuinamente independientes admite
-un espacio, y esa lectura tiene un correlato exacto en el modelo de
-regresión lineal. Si $\mat{X}$ es la matriz de regresores de tamaño
-$n\times k$ y sus columnas son linealmente independientes en el sentido
-de la @def-independencia-lineal, el espacio columna de $\mat{X}$
-tiene dimensión exactamente $k$, los $k$ parámetros del modelo quedan
-identificados y $\mat{X}^{\top}\mat{X}$ resulta invertible. Si, en
-cambio, alguna columna es combinación lineal de las demás, la dimensión
-del espacio columna cae por debajo de $k$, y esa caída es, precisamente,
-la multicolinealidad perfecta que impide estimar el modelo por mínimos
-cuadrados.
+::: {#prp-completar-base}
+## Completar a una base y dimensión de los subespacios
+
+Sea $V$ de dimensión $n$. (i) Todo conjunto independiente $\{\vect{u}_1,\ldots,\vect{u}_k\}$ se completa a una base de $V$, y en particular $k\leq n$. (ii) Todo conjunto independiente de $n$ vectores es una base. (iii) Todo subespacio $W$ de $V$ tiene dimensión finita, $\dim W\leq n$, y $\dim W=n$ si y solo si $W=V$.
 
 :::
 
-Todo lo desarrollado hasta aquí supone, de forma tácita, que $V$ admite
-una base finita, y en efecto $\mathbb{R}^n$, el espacio de matrices y el
-de polinomios de grado acotado la admiten. No todo espacio vectorial
-relevante para lo que sigue tiene esa propiedad: el espacio de las
-variables aleatorias con varianza finita mencionado en la
-[Definición “Espacio vectorial”](01-espacios-vectoriales-y-subespacios.qmd#def-espacio-vectorial) es de dimensión infinita, porque ninguna
-lista finita de variables aleatorias genera, mediante combinaciones
-lineales, a todas las demás. La [Subsección “Ortogonalidad, proyección y el teorema de la mejor aproximación”](05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd) tratará ese caso
-con cuidado, porque el resultado central de la sección solo se enuncia
-para subespacios de dimensión finita dentro de un espacio que puede ser,
-él mismo, de dimensión infinita; la dimensión finita se exige del
-subespacio sobre el que se proyecta, no del espacio ambiente completo.
-Antes de llegar a la proyección hace falta, sin embargo, dotar a $V$ de
-una noción de tamaño, que es el objeto de la siguiente subsección.
+::: {.proof}
+Para (i), si $\operatorname{gen}\{\vect{u}_1,\ldots,\vect{u}_k\}\neq V$, existe $\vect{v}\notin\operatorname{gen}\{\vect{u}_1,\ldots,\vect{u}_k\}$, y el conjunto ampliado $\{\vect{u}_1,\ldots,\vect{u}_k,\vect{v}\}$ sigue siendo independiente: si $\alpha\vect{v}+\sum\beta_i\vect{u}_i=\vect{0}$ con $\alpha\neq0$, entonces $\vect{v}$ estaría en la envoltura, y si $\alpha=0$, la independencia de los $\vect{u}$ da $\beta_i=0$. El proceso se repite mientras el conjunto no genere, y se detiene después de a lo sumo $n$ pasos, porque un conjunto independiente tiene a lo sumo $n$ elementos por el @lem-sustitucion aplicado a una base de $V$. Al detenerse, el conjunto es independiente y genera $V$.
+
+Para (ii), si un conjunto independiente de $n$ vectores no generara, el proceso de (i) daría un conjunto independiente de más de $n$ vectores, contra el lema. Para (iii), todo conjunto independiente en $W$ lo es en $V$ y tiene a lo sumo $n$ elementos; uno de tamaño máximo es una base de $W$, porque si no generara a $W$ se le podría añadir un elemento de $W$ fuera de su envoltura conservando la independencia, como en (i). Por lo tanto $\dim W\leq n$. Si $\dim W=n$, una base de $W$ es un conjunto independiente de $n$ vectores de $V$, que por (ii) es una base de $V$, de modo que $W=V$. El recíproco es inmediato.
+
+:::
+
+La dimensión tiene una lectura estadística inmediata. Si $\mat{X}$ es la matriz de regresores de tamaño $n\times k$, sus columnas son linealmente independientes cuando la única solución de $\mat{X}\vect{\alpha}=\vect{0}$ es $\vect{\alpha}=\vect{0}$. Si hubiera una solución no nula, los coeficientes $\vect{\beta}$ y $\vect{\beta}+\vect{\alpha}$ producirían las mismas predicciones $\mat{X}\vect{\beta}=\mat{X}(\vect{\beta}+\vect{\alpha})$, y ninguna información de los datos permitiría distinguirlos: esa es la multicolinealidad perfecta, que impide identificar los parámetros del modelo.
+
+Todo lo anterior supone que $V$ admite una base finita. No todo espacio relevante la tiene: el espacio de las funciones $f:[0,1]\to\mathbb{R}$, por ejemplo, tiene dimensión infinita, porque los polinomios $1,x,x^2,\ldots,x^m$ son independientes para todo $m$ (un polinomio no nulo de grado $m$ tiene a lo sumo $m$ raíces, por el [Corolario “Factorización en factores lineales”](../matematica-1/35-polinomios-y-el-teorema-fundamental-del-algebra.qmd#cor-factorizacion-completa), y no puede anularse en todo el intervalo) y, por tanto, ninguna lista finita puede generar todo el espacio. Los resultados de las notas siguientes se enuncian para subespacios de dimensión finita, sin exigir que el espacio ambiente lo sea.

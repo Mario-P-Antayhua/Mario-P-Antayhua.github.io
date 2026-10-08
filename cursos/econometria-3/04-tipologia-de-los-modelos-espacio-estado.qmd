@@ -1,0 +1,42 @@
+---
+title: "Tipología de los modelos de espacio-estado"
+description: "La clasificación de los modelos de espacio-estado en deterministas y estocásticos, invariantes y variantes, univariados y multivariados, con la regresión de coeficientes fijos y de coeficientes variables como casos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Espacio-estado]
+---
+
+La definición de un modelo de espacio-estado es lo bastante general como para contener modelos de naturaleza muy distinta: una regresión con coeficientes fijos, un paseo aleatorio con ruido, un modelo con estacionalidad, un sistema de varias series relacionadas. Para ordenarlos conviene clasificarlos según tres criterios, cada uno asociado a una propiedad de las matrices del modelo de la [Definición “Modelo de espacio-estado lineal gaussiano”](03-que-es-un-modelo-espacio-estado.qmd#def-espacio-estado). Con la clasificación se sabe qué esperar de cada caso: en los deterministas el estado se conoce con certeza desde el inicio, en los invariantes el filtro converge a una forma estable, en los multivariados hay que manejar matrices de innovaciones.
+
+El primer criterio es si el estado tiene componentes aleatorias.
+
+::: {#def-determinista-estocastico}
+## Modelo determinista y estocástico
+
+Un modelo de espacio-estado es ***determinista*** en su transición si $\mat{Q}_t=\mat{0}$ (o $\mat{R}_t=\mat{0}$) para todo $t$, de modo que el estado evoluciona sin perturbaciones a partir de $\vect{\alpha}_0$. Es ***estocástico*** si alguna $\mat{Q}_t\neq\mat{0}$ con $\mat{R}_t$ no nula.
+
+:::
+
+En un modelo determinista en la transición, el único origen de incertidumbre sobre el estado es el estado inicial, y si éste se conoce, todo el estado es conocido. La tendencia lineal determinista es el ejemplo típico. Con el estado $\vect{\alpha}_t=(\mu_t,\beta_t)^{\top}$ y la transición $\mu_t=\mu_{t-1}+\beta_{t-1}$, $\beta_t=\beta_{t-1}$, es decir, $\mat{T}=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$ y $\mat{Q}=\mat{0}$, se tiene $\mat{T}^t=\left(\begin{smallmatrix}1&t\\0&1\end{smallmatrix}\right)$, como se comprueba por inducción: $\mat{T}^{t}\mat{T}=\left(\begin{smallmatrix}1&t+1\\0&1\end{smallmatrix}\right)$. Entonces $\vect{\alpha}_t=\mat{T}^t\vect{\alpha}_0$ da $\mu_t=\mu_0+t\beta_0$. Con $\vect{\alpha}_0=(10,0.5)^{\top}$, $\mu_4=10+4\cdot0.5=12$. Si se le añade una perturbación $\eta_t$ a la pendiente, el mismo modelo se convierte en estocástico y la pendiente deja de ser fija.
+
+El segundo criterio es si las matrices dependen del tiempo.
+
+::: {#def-invariante-variante}
+## Modelo invariante y variante
+
+El modelo es ***invariante*** (o de coeficientes constantes) si $\mat{Z}_t,\mat{T}_t,\mat{R}_t,\mat{H}_t,\mat{Q}_t,\vect{c}_t,\vect{d}_t$ no dependen de $t$, y ***variante*** en caso contrario.
+
+:::
+
+Los modelos invariantes son los que admiten una distribución estacionaria del estado, calculada en la nota anterior, y un estado estable del filtro, en el que la ganancia deja de cambiar con el tiempo. Los variantes aparecen cuando una matriz incorpora datos. Una regresión con coeficientes fijos, $y_t=\vect{x}_t^{\top}\vect{\beta}+\varepsilon_t$, es un modelo de espacio-estado con estado $\vect{\alpha}_t=\vect{\beta}$, $\mat{T}=\Imat$, $\mat{Q}=\mat{0}$ y $\mat{Z}_t=\vect{x}_t^{\top}$, que depende de $t$ y por eso es variante; es determinista en la transición, y el filtro de Kalman reproduce los mínimos cuadrados recursivos de la [Nota “Orígenes del filtro de Kalman”](02-origenes-del-filtro-de-kalman.qmd). Si se permite que los coeficientes se muevan como paseos aleatorios, $\vect{\beta}_t=\vect{\beta}_{t-1}+\vect{\eta}_t$ con $\mat{Q}\neq\mat{0}$, se obtiene la regresión con coeficientes variables, un modelo estocástico y variante en el que los parámetros se adaptan a los datos recientes.
+
+El tercer criterio es la dimensión de la observación.
+
+::: {#def-univariado-multivariado}
+## Modelo univariado y multivariado
+
+El modelo es ***univariado*** si $N=1$, es decir, se observa una sola serie en cada período, y ***multivariado*** si $N>1$. En el caso univariado, $\mat{Z}_t=\vect{z}_t^{\top}$ es un vector fila y $\mat{H}_t=h_t$ es un escalar.
+
+:::
+
+En el caso multivariado la varianza de la innovación es una matriz $N\times N$, y la ganancia del filtro involucra su inversa. Un modelo de dos series con un nivel común, $y_{1t}=\mu_t+\varepsilon_{1t}$ y $y_{2t}=\gamma\mu_t+\varepsilon_{2t}$, con $\mu_t$ un paseo aleatorio, es multivariado con $\mat{Z}=(1,\gamma)^{\top}$, y es el tipo de estructura que permite estimar un factor común no observable a partir de varios indicadores. Los tres criterios son independientes, y cada modelo concreto es una combinación. La tendencia lineal determinista es determinista, invariante y univariada. La regresión con coeficientes variables es estocástica, variante y univariada, o multivariada si hay varias series. Los modelos de componentes no observables de las notas siguientes son estocásticos e invariantes, y casi siempre univariados.

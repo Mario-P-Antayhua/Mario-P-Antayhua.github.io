@@ -1,0 +1,90 @@
+---
+title: "Métodos numéricos de optimización"
+description: "Los métodos de Newton–Raphson, de descenso por gradiente y BHHH como iteraciones que difieren en la dirección de actualización, con la convergencia del descenso por gradiente en el caso cuadrático y ejemplos numéricos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Optimización]
+---
+
+Las condiciones de primer y segundo orden caracterizan un óptimo, pero resolver $\nabla f(\vect{\theta})=\vect{0}$ de forma exacta solo es posible cuando $f$ es cuadrática o tiene una estructura especial. En el resto de los casos, y en particular con las funciones de verosimilitud, el óptimo se aproxima mediante una sucesión de puntos $\vect{\theta}_{k+1}=\vect{\theta}_k+s_k\vect{d}_k$, donde $\vect{d}_k$ es una dirección de actualización y $s_k>0$ es un tamaño de paso. Los métodos de esta nota se distinguen por cómo eligen la dirección.
+
+::: {#def-newton-raphson}
+## Método de Newton–Raphson
+
+Dado $\vect{\theta}_0$ y una función $f$ de clase $C^2$, el ***método de Newton–Raphson*** genera
+$$
+\vect{\theta}_{k+1}:=\vect{\theta}_k-\bigl[\mat{H}_f(\vect{\theta}_k)\bigr]^{-1}\nabla f(\vect{\theta}_k),
+$$ {#eq-newton-raphson}
+siempre que $\mat{H}_f(\vect{\theta}_k)$ sea invertible.
+
+:::
+
+La regla tiene una interpretación geométrica que explica su velocidad cerca de un óptimo.
+
+::: {#prp-newton-taylor}
+## Newton–Raphson salta al punto crítico de la aproximación cuadrática
+
+El punto $\vect{\theta}_{k+1}$ de @eq-newton-raphson es el único punto crítico de la aproximación de Taylor de segundo orden de $f$ en $\vect{\theta}_k$, siempre que $\mat{H}_f(\vect{\theta}_k)$ sea invertible. Si $f$ es una forma cuadrática con hessiana definida positiva, $\vect{\theta}_1$ es el mínimo global para cualquier $\vect{\theta}_0$.
+
+:::
+
+::: {.proof}
+La aproximación de segundo orden, como función de $\vect{h}=\vect{\theta}-\vect{\theta}_k$, es $q(\vect{h})=f(\vect{\theta}_k)+\langle\nabla f(\vect{\theta}_k),\vect{h}\rangle+\tfrac12\vect{h}^{\top}\mat{H}_f(\vect{\theta}_k)\vect{h}$ según la fórmula del [Teorema “Fórmula de Taylor de segundo orden”](06-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#thm-taylor-segundo-orden). Por el [Ejemplo “Gradiente y hessiana de una forma cuadrática”](06-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#exm-gradiente-hessiana-cuadratica), con $\mat{A}=\tfrac12\mat{H}_f(\vect{\theta}_k)$, el gradiente de $q$ es $\nabla f(\vect{\theta}_k)+\mat{H}_f(\vect{\theta}_k)\vect{h}$, que se anula si y solo si $\vect{h}=-\mat{H}_f(\vect{\theta}_k)^{-1}\nabla f(\vect{\theta}_k)$; con ese $\vect{h}$, $\vect{\theta}_k+\vect{h}=\vect{\theta}_{k+1}$. Si $f$ es cuadrática, $q=f-f(\vect{\theta}_k)$ sin resto, de modo que el punto crítico de $q$ lo es de $f$, y es el mínimo global por el [Corolario “Bajo convexidad, el primer orden es necesario y suficiente”](09-condiciones-de-optimalidad-sin-restricciones.qmd#cor-primer-orden-suficiente-convexa).
+
+:::
+
+Con números, para $f(x_1,x_2)=x_1^2+x_1x_2+2x_2^2-x_1$ y $\vect{\theta}_0=(0,0)$, el gradiente es $(-1,0)$ y la hessiana es $\left(\begin{smallmatrix}2&1\\1&4\end{smallmatrix}\right)$ con inversa $\tfrac17\left(\begin{smallmatrix}4&-1\\-1&2\end{smallmatrix}\right)$, de modo que $\vect{\theta}_1=-\tfrac17(-4,\,1)=(4/7,\,-1/7)$, que es el mínimo hallado en el [Corolario “Bajo convexidad, el primer orden es necesario y suficiente”](09-condiciones-de-optimalidad-sin-restricciones.qmd#cor-primer-orden-suficiente-convexa). Cuando $f$ no es cuadrática, el método converge muy deprisa cerca de un óptimo, como muestra el ejemplo siguiente.
+
+::: {#exm-newton-exponencial}
+## Convergencia cuadrática de Newton–Raphson
+
+Sea $f(\theta)=3\ln\theta-6\theta$ para $\theta>0$, que es la log-verosimilitud de la muestra $1,2,3$ bajo una densidad $\theta e^{-\theta x}$. Entonces $f'(\theta)=3/\theta-6$ y $f''(\theta)=-3/\theta^2$, el máximo está en $\theta^*=1/2$, y el método da $\theta_{k+1}=2\theta_k-2\theta_k^2$.
+
+:::
+
+Restando $\theta^*$ a ambos lados, $\theta_{k+1}-\tfrac12=-2(\theta_k-\tfrac12)^2$, de modo que el error se eleva al cuadrado en cada paso, multiplicado por $2$. Desde $\theta_0=0.3$, la sucesión es $0.42$, $0.4872$, $0.49967$, $0.4999998$, con errores $0.2$, $0.08$, $0.0128$, $0.00033$, $0.0000002$, y el número de cifras correctas se duplica aproximadamente en cada iteración. El costo de este método es calcular e invertir la hessiana en cada paso, y su riesgo es que la hessiana no sea definida lejos del óptimo, caso en que el paso puede no ser de descenso.
+
+El segundo método prescinde de la curvatura. Según la [Idea central “El gradiente apunta en la dirección de máximo crecimiento”](04-diferenciacion-en-varias-variables.qmd#idea-gradiente-direccion-maxima), $-\nabla f(\vect{\theta}_k)$ es la dirección de mayor descenso de primer orden, y el ***descenso por gradiente*** usa $\vect{\theta}_{k+1}=\vect{\theta}_k-\eta\nabla f(\vect{\theta}_k)$ con un paso fijo $\eta>0$. La pregunta es cuándo converge y a qué velocidad, y para formas cuadráticas la respuesta se obtiene exactamente.
+
+::: {#thm-descenso-gradiente-cuadratico}
+## Descenso por gradiente en una forma cuadrática
+
+Sea $f(\vect{x})=\vect{x}^{\top}\mat{A}\vect{x}+\vect{b}^{\top}\vect{x}$ con $\mat{A}$ simétrica definida positiva, de valores propios $0<\lambda_{\min}\leq\cdots\leq\lambda_{\max}$, y $\vect{x}^*$ su mínimo. El descenso por gradiente con paso $\eta$ converge a $\vect{x}^*$ desde todo punto inicial si y solo si $0<\eta<1/\lambda_{\max}$. En ese caso $\vect{x}_k-\vect{x}^*=\mat{M}^k(\vect{x}_0-\vect{x}^*)$ con $\mat{M}=\Imat-2\eta\mat{A}$, y la mejor tasa $\rho=\dfrac{\lambda_{\max}-\lambda_{\min}}{\lambda_{\max}+\lambda_{\min}}$ se logra con $\eta=1/(\lambda_{\max}+\lambda_{\min})$.
+
+:::
+
+::: {.proof}
+Como $\nabla f(\vect{x})=2\mat{A}\vect{x}+\vect{b}$ y $\nabla f(\vect{x}^*)=\vect{0}$, restando, $\nabla f(\vect{x})=2\mat{A}(\vect{x}-\vect{x}^*)$. Entonces $\vect{x}_{k+1}-\vect{x}^*=\vect{x}_k-\vect{x}^*-2\eta\mat{A}(\vect{x}_k-\vect{x}^*)=\mat{M}(\vect{x}_k-\vect{x}^*)$, y por inducción $\vect{x}_k-\vect{x}^*=\mat{M}^k(\vect{x}_0-\vect{x}^*)$. Los valores propios de $\mat{M}$ son $1-2\eta\lambda_i$. Si todos tienen módulo menor que $1$, el [Teorema “Potencias de una matriz y valores propios”](../matematica-2/11-valores-propios-y-teorema-espectral.qmd#thm-potencias-matriz) da $\mat{M}^k\to\mat{0}$, y el error tiende a cero para todo $\vect{x}_0$. Si alguno tiene módulo mayor o igual que $1$, la misma proposición muestra que $\mat{M}^k\vect{v}\not\to\vect{0}$ para un vector propio $\vect{v}$, y con $\vect{x}_0=\vect{x}^*+\vect{v}$ no hay convergencia. La condición $|1-2\eta\lambda_i|<1$ equivale a $0<\eta\lambda_i<1$, es decir, a $0<\eta<1/\lambda_i$, y exigirla para todos los $i$ equivale a $0<\eta<1/\lambda_{\max}$. Para la tasa, $\|\mat{M}^k\vect{e}\|\leq\rho(\eta)^k\|\vect{e}\|$ con $\rho(\eta)=\max_i|1-2\eta\lambda_i|=\max\{|1-2\eta\lambda_{\min}|,|1-2\eta\lambda_{\max}|\}$ porque $\mat{M}$ es simétrica; ese máximo es mínimo cuando ambos términos tienen el mismo módulo con signos opuestos, $1-2\eta\lambda_{\min}=-(1-2\eta\lambda_{\max})$, lo que da $\eta=1/(\lambda_{\max}+\lambda_{\min})$ y $\rho=(\lambda_{\max}-\lambda_{\min})/(\lambda_{\max}+\lambda_{\min})$.
+
+:::
+
+En el teorema, $\lambda_i$ son los valores propios de $\mat{A}$, mientras que la hessiana es $2\mat{A}$ y tiene valores propios $2\lambda_i$. Con números, para la misma función cuadrática, $\mat{A}$ tiene valores propios $(3\pm\sqrt2)/2\approx2.207$ y $0.793$, y el paso óptimo es $\eta=1/(\lambda_{\max}+\lambda_{\min})=1/3$ con $\rho=\sqrt2/3\approx0.471$. Desde $\vect{x}_0=(0,0)$ los errores son $0.278$ y $0.131$ tras dos pasos, con cociente $0.471$. Con el paso $\eta=0.2$ el factor es $\max\{|1-0.2\cdot4.414|,|1-0.2\cdot1.586|\}=0.683$, y los errores $0.398$, $0.272$, $0.185$ decrecen con ese cociente. El descenso por gradiente necesita así muchas iteraciones, pero cada una es barata.
+
+El tercer método se aplica cuando $f(\vect{\theta})=\sum_{i=1}^{n}\ell_i(\vect{\theta})$ es una suma de contribuciones individuales y se quiere maximizarla, como en una log-verosimilitud.
+
+::: {#def-bhhh}
+## Método BHHH
+
+El ***método BHHH*** para maximizar $f=\sum_i\ell_i$ usa la dirección $\vect{d}_k=\mat{B}_k^{-1}\nabla f(\vect{\theta}_k)$, con
+$$
+\mat{B}_k:=\sum_{i=1}^{n}\nabla\ell_i(\vect{\theta}_k)\,\nabla\ell_i(\vect{\theta}_k)^{\top},
+$$
+la suma de los productos exteriores de los gradientes individuales, y el tamaño de paso $s_k\in(0,1]$.
+
+:::
+
+La matriz $\mat{B}_k$ se calcula solo con primeras derivadas y es siempre semidefinida positiva, porque $\vect{v}^{\top}\mat{B}_k\vect{v}=\sum_i\langle\nabla\ell_i(\vect{\theta}_k),\vect{v}\rangle^2\geq0$. Cuando es invertible, es definida positiva y garantiza que la dirección mejore la función.
+
+::: {#prp-bhhh-ascenso}
+## BHHH produce una dirección de ascenso
+
+Si $\mat{B}_k$ es definida positiva y $\nabla f(\vect{\theta}_k)\neq\vect{0}$, entonces $\langle\nabla f(\vect{\theta}_k),\vect{d}_k\rangle>0$ y, para $s>0$ suficientemente pequeño, $f(\vect{\theta}_k+s\vect{d}_k)>f(\vect{\theta}_k)$.
+
+:::
+
+::: {.proof}
+Como la inversa de una matriz definida positiva es definida positiva, por la caracterización espectral de la [Nota “Formas cuadráticas y matrices definidas positivas”](../matematica-2/12-formas-cuadraticas-y-matrices-definidas-positivas.qmd), $\langle\nabla f,\mat{B}_k^{-1}\nabla f\rangle>0$ para $\nabla f\neq\vect{0}$. Sea $\phi(s)=f(\vect{\theta}_k+s\vect{d}_k)$. Por la regla de la cadena, $\phi'(0)=\langle\nabla f(\vect{\theta}_k),\vect{d}_k\rangle>0$, de modo que $[\phi(s)-\phi(0)]/s\to\phi'(0)>0$ y el cociente es positivo para $s$ pequeño.
+
+:::
+
+El paso $s_k$ es esencial, como muestra un ejemplo. Con $f(\theta)=3\ln\theta-6\theta$ y $\ell_i=\ln\theta-\theta x_i$ para $x=1,2,3$, en $\theta=0.3$ se tiene $f'=4$ y $\mat{B}=\sum(1/\theta-x_i)^2=7.33$, de modo que $d=4/7.33=0.545$. El paso completo lleva a $0.845$, donde $f=-5.58$ es peor que $f(0.3)=-5.41$; el paso $s=1/2$ lleva a $0.573$, donde $f=-5.11$ mejora, y el máximo es $f(0.5)=-5.08$. La dirección es de ascenso, pero la longitud del paso hay que controlarla.

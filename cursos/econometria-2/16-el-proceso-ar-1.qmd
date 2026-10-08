@@ -1,0 +1,52 @@
+---
+title: "El proceso AR(1)"
+description: "El proceso autorregresivo de primer orden, la solución estacionaria causal cuando el coeficiente tiene módulo menor que uno, su media, autocovarianza y autocorrelación, la solución no causal y la ausencia de solución estacionaria con raíz unitaria."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+El modelo autorregresivo de primer orden dice que el valor de hoy es una fracción del de ayer más una perturbación nueva. Es el modelo dinámico más sencillo y contiene en pequeño todos los fenómenos de los modelos más generales: la persistencia, la dependencia de la condición inicial y el papel crucial de la raíz del polinomio. Esta nota resuelve la ecuación en diferencias estocástica con la inversión de la [Nota “Inversión y factorización de polinomios de rezagos”](15-inversion-y-factorizacion-de-polinomios-de-rezagos.qmd) y calcula todos los momentos de la solución.
+
+::: {#def-ar1}
+## Proceso AR(1)
+
+Un proceso $\{X_t\}$ es un ***AR(1)*** si satisface $X_t=c+\phi X_{t-1}+\varepsilon_t$ para todo $t\in\mathbb{Z}$, con $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$, $\sigma^2>0$, y $\phi\in\mathbb{R}$. En notación de rezagos, $(1-\phi L)X_t=c+\varepsilon_t$.
+
+:::
+
+La ecuación no define el proceso de manera única, porque puede tener varias soluciones o ninguna según el valor de $\phi$. El caso central es $|\phi|<1$.
+
+::: {#thm-ar1-estacionario}
+## Solución estacionaria del AR(1)
+
+Si $|\phi|<1$, existe una única solución con varianza acotada, y es $X_t=\mu+\sum_{j=0}^{\infty}\phi^j\varepsilon_{t-j}$, con $\mu=c/(1-\phi)$. Es débilmente estacionaria, con $\E[X_t]=\mu$, y para todo $h\in\mathbb{Z}$,
+$$
+\gamma(h)=\frac{\sigma^2\phi^{|h|}}{1-\phi^2},\qquad\rho(h)=\phi^{|h|}.
+$$ {#eq-ar1-autocovarianza}
+Además, $\varepsilon_t$ es no correlacionada con $X_{t-k}$ para $k\geq1$.
+
+:::
+
+::: {.proof}
+Sea $Y_t=X_t-\mu$, de modo que $(1-\phi L)Y_t=\varepsilon_t$, porque $(1-\phi)\mu=c$. El teorema de inversión de $1-\lambda L$ con $\lambda=\phi$ da la existencia y unicidad de la solución con varianza acotada, $Y_t=\sum_j\phi^j\varepsilon_{t-j}$, con convergencia en media cuadrática. La media de cada suma parcial es cero y la convergencia en $L^2$ conserva la media, de modo que $\E[Y_t]=0$. Si $S_n\to S$ y $T_n\to T$ en $L^2$, la desigualdad de Cauchy–Schwarz da $|\E[S_nT_n]-\E[ST]|\leq\|S_n-S\|\|T_n\|+\|S\|\|T_n-T\|\to0$, de modo que las covarianzas del límite son los límites de las covarianzas de las sumas parciales. Para $h\geq0$, $\Cov(Y_t,Y_{t+h})=\lim_n\sum_{j=0}^{n}\sum_{k=0}^{n}\phi^j\phi^k\E[\varepsilon_{t-j}\varepsilon_{t+h-k}]$, y como el ruido blanco no tiene correlaciones cruzadas, solo sobreviven los términos con $k=j+h$, de modo que $\gamma(h)=\sigma^2\sum_{j\geq0}\phi^{j}\phi^{j+h}=\sigma^2\phi^h/(1-\phi^2)$ por la serie geométrica. La estacionariedad se sigue de que ni la media ni $\gamma(h)$ dependen de $t$, y $\gamma(-h)=\gamma(h)$. Finalmente, $X_{t-k}$ es límite de combinaciones de $\varepsilon_{s}$ con $s\leq t-k<t$, que no están correlacionadas con $\varepsilon_t$.
+
+:::
+
+La autocovarianza satisface la recursión $\gamma(h)=\phi\gamma(h-1)$ para $h\geq1$, de modo que la autocorrelación decae geométricamente, monótonamente si $\phi>0$ y alternando de signo si $\phi<0$. Con números, para $\phi=0.8$ y $\sigma^2=1$, $\gamma(0)=1/(1-0.64)=2.778$, $\rho(1)=0.8$, $\rho(5)=0.8^5=0.328$, y con $c=2$ la media es $\mu=2/0.2=10$. Un valor de $\phi$ cercano a uno da mucha persistencia: con $\phi=0.99$ la varianza es $50.3\,\sigma^2$ y $\rho(50)=0.605$.
+
+Si $|\phi|>1$ la solución causal diverge, pero existe una solución estacionaria que depende del futuro.
+
+::: {#prp-ar1-explosivo}
+## El AR(1) con $|\phi|>1$ y con $\phi=1$
+
+(i) Si $|\phi|>1$, la única solución con varianza acotada es $X_t=\mu-\sum_{j\geq1}\phi^{-j}\varepsilon_{t+j}$, con autocorrelación $\rho(h)=\phi^{-|h|}$; es no causal, porque depende de choques futuros. (ii) Si $\phi=1$ y $c$ es cualquiera, la ecuación no tiene ninguna solución con varianza acotada.
+
+:::
+
+::: {.proof}
+La parte (i) es el caso $|\lambda|>1$ del teorema de inversión, con $\mu=c/(1-\phi)$, y el cálculo de las covarianzas es el mismo con $\phi^{-1}$ en lugar de $\phi$ y el sentido del tiempo invertido. La parte (ii) es el argumento del caso $|\lambda|=1$ del mismo teorema aplicado a $Y_t=X_t-\mu$ cuando $c=0$; con $c\neq0$ la diferencia $X_t-X_{t-n}=nc+\sum_{j<n}\varepsilon_{t-j}$ tiene norma al menos $n|c|-\sqrt{n}\sigma$, que no está acotada.
+
+:::
+
+La solución no causal tiene la misma función de autocorrelación que un AR(1) causal con coeficiente $1/\phi$, y es indistinguible de él a partir de los segundos momentos. Por eso, en la práctica, la condición $|\phi|<1$ se impone como definición de un modelo AR(1) estacionario, y un valor estimado cercano a uno se interpreta como evidencia de persistencia o de una raíz unitaria. Con $\phi=1$ y $c=0$ se obtiene el paseo aleatorio, que no es estacionario.

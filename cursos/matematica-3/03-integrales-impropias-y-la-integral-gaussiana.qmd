@@ -1,0 +1,71 @@
+---
+title: "Integrales impropias y la integral gaussiana"
+description: "Integrales sobre intervalos no acotados, el criterio de comparación y el cálculo exacto de la integral de la densidad normal mediante las integrales de Wallis."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Cálculo integral]
+---
+
+Las densidades de probabilidad más usadas están definidas en toda la recta, y la esperanza de una variable continua es una integral sobre un intervalo no acotado. La integral de Riemann de la nota anterior solo se definió sobre intervalos cerrados y acotados, de modo que hace falta extenderla. La extensión se hace con un límite, y su aplicación más importante es la que garantiza que la densidad normal integra uno.
+
+::: {#def-integral-impropia}
+## Integral impropia
+
+Sea $f:[a,\infty)\to\mathbb{R}$ integrable en cada $[a,R]$. La ***integral impropia*** $\int_a^\infty f(x)\,dx$ es $\lim_{R\to\infty}\int_a^Rf(x)\,dx$ cuando ese límite existe, y se dice que ***converge***. De modo análogo se define $\int_{-\infty}^bf$. Para $f:\mathbb{R}\to\mathbb{R}$, $\int_{-\infty}^\infty f:=\int_{-\infty}^0f+\int_0^\infty f$ si ambas convergen.
+
+:::
+
+La integral $\int_0^\infty e^{-x}\,dx=\lim_R(1-e^{-R})=1$ converge, mientras que $\int_1^\infty\frac{dx}{x}=\lim_R\ln R=\infty$ diverge, y $\int_1^\infty\frac{dx}{x^2}=\lim_R(1-1/R)=1$ converge. Decidir la convergencia sin calcular el límite se hace con un criterio de comparación, análogo al de las series.
+
+::: {#prp-comparacion-integrales}
+## Criterio de comparación para integrales impropias
+
+Sean $f,g:[a,\infty)\to\mathbb{R}$ integrables en cada $[a,R]$ con $0\leq f\leq g$. Si $\int_a^\infty g$ converge, entonces $\int_a^\infty f$ converge y $\int_a^\infty f\leq\int_a^\infty g$. Si $|f|\leq g$ y $\int_a^\infty g$ converge, entonces $\int_a^\infty f$ converge.
+
+:::
+
+::: {.proof}
+La función $R\mapsto\int_a^Rf$ es creciente, porque $f\geq0$, y está acotada por $\int_a^\infty g$, porque $\int_a^Rf\leq\int_a^Rg\leq\int_a^\infty g$ por la monotonía de la integral; por el [Teorema “Teorema de convergencia monótona”](../matematica-1/20-sucesiones-monotonas.qmd#thm-convergencia-monotona) aplicado a cualquier sucesión $R_n\to\infty$, y la monotonía en $R$, el límite existe. Para $|f|\leq g$, las partes positiva y negativa $f^{\pm}=\max\{\pm f,0\}$ cumplen $0\leq f^{\pm}\leq g$, de modo que sus integrales impropias convergen, y $f=f^+-f^-$ converge por linealidad.
+
+:::
+
+La comparación con una exponencial decreciente es la que se usa para mostrar que casi todas las densidades tienen integral finita. El caso más importante es la densidad normal, cuya integral se calcula con exactitud en el resto de la nota. La estrategia consiste en encerrar $e^{-x^2}$ entre dos funciones cuyas integrales son integrales de Wallis, que se calculan con integración por partes.
+
+::: {#def-wallis}
+## Integrales de Wallis
+
+Para $m\geq0$ entero, $W_m:=\int_0^{\pi/2}\cos^m\theta\,d\theta$.
+
+:::
+
+Estas integrales satisfacen una recurrencia que se obtiene integrando por partes, y de ella se deducen cotas precisas para su tamaño cuando el exponente crece.
+
+::: {#lem-wallis}
+## Propiedades de las integrales de Wallis
+
+(i) $W_0=\pi/2$ y $W_1=1$. (ii) $W_{m+1}=\dfrac m{m+1}W_{m-1}$ para $m\geq1$. (iii) $W_{m+1}\leq W_m$. (iv) $(m+1)W_mW_{m+1}=\pi/2$ para $m\geq0$. (v) $\dfrac{\pi}{2(m+1)}\leq W_m^2\leq\dfrac{\pi}{2m}$ para $m\geq1$, de modo que $\sqrt m\,W_m\to\sqrt{\pi/2}$.
+
+:::
+
+::: {.proof}
+Para (i), $W_0=\pi/2$ y $W_1=\sin(\pi/2)-\sin0=1$. Para (ii), se integra por partes con $u=\cos^m\theta$ y $v'=\cos\theta$: $W_{m+1}=[\cos^m\theta\sin\theta]_0^{\pi/2}+m\int_0^{\pi/2}\cos^{m-1}\theta\sin^2\theta\,d\theta=m(W_{m-1}-W_{m+1})$, porque $\sin^2=1-\cos^2$, de donde $(m+1)W_{m+1}=mW_{m-1}$. Para (iii), $\cos^{m+1}\theta\leq\cos^m\theta$ en $[0,\pi/2]$ y la monotonía de la integral. Para (iv), (ii) da $(m+1)W_{m+1}W_m=mW_mW_{m-1}$, de modo que $(m+1)W_mW_{m+1}$ es constante en $m\geq1$ e igual a su valor en $m=0$, que es $W_0W_1=\pi/2$. Para (v), por (iii), $W_{m+1}\leq W_m\leq W_{m-1}$, de modo que $W_m^2\geq W_mW_{m+1}=\pi/(2(m+1))$ y $W_m^2\leq W_{m-1}W_m=\pi/(2m)$, ambos por (iv); multiplicando por $m$ y tomando el límite en las dos cotas, que tienden a $\pi/2$, el teorema del sándwich da $mW_m^2\to\pi/2$.
+
+:::
+
+::: {#thm-integral-gaussiana}
+## La integral gaussiana
+
+$\displaystyle\int_{-\infty}^{\infty}e^{-x^2/2}\,dx=\sqrt{2\pi}$. En consecuencia, $\varphi(x)=\dfrac1{\sqrt{2\pi}}e^{-x^2/2}$ cumple $\int_{-\infty}^\infty\varphi=1$.
+
+:::
+
+::: {.proof}
+Sea $I=\int_0^\infty e^{-x^2}\,dx$, que converge por comparación con $e^{-x}$ para $x\geq1$ (porque $x^2\geq x$). De las desigualdades $1-y\leq e^{-y}$ y $1+y\leq e^{y}$ para $y\geq0$, que son $\ln(1-y)\leq-y$ y $\ln(1+y)\leq y$ del [Corolario “Desigualdades del logaritmo y de las medias”](../matematica-1/36-convexidad-y-desigualdad-de-jensen.qmd#cor-desigualdades-log), se obtienen, para $n\geq2$ y $0\leq x\leq\sqrt n$,
+$$
+\Bigl(1-\frac{x^2}{n}\Bigr)^n\leq e^{-x^2}\leq\Bigl(1+\frac{x^2}{n}\Bigr)^{-n}.
+$$
+Integrando, $\int_0^{\sqrt n}\bigl(1-x^2/n\bigr)^n\,dx\leq\int_0^{\sqrt n}e^{-x^2}\,dx\leq I\leq\int_0^\infty\bigl(1+x^2/n\bigr)^{-n}\,dx$. En la primera integral, el cambio de variable $x=\sqrt n\sin\theta$ da $\sqrt n\int_0^{\pi/2}\cos^{2n+1}\theta\,d\theta=\sqrt nW_{2n+1}$; en la última, $x=\sqrt n\tan\theta$ da $\sqrt n\int_0^{\pi/2}\cos^{2n-2}\theta\,d\theta=\sqrt nW_{2n-2}$, porque $1+\tan^2\theta=\sec^2\theta$. Por el lema, $\sqrt{2n+1}\,W_{2n+1}\to\sqrt{\pi/2}$ y $\sqrt{2n-2}\,W_{2n-2}\to\sqrt{\pi/2}$, y como $\sqrt n/\sqrt{2n\pm c}\to1/\sqrt2$, ambas cotas tienden a $\sqrt\pi/2$. Entonces $I=\sqrt\pi/2$, de modo que $\int_{-\infty}^\infty e^{-x^2}\,dx=\sqrt\pi$ por la simetría del integrando. Con el cambio de variable $x=u/\sqrt2$, $\int_{-\infty}^\infty e^{-u^2/2}\,du=\sqrt2\sqrt\pi=\sqrt{2\pi}$.
+
+:::
+
+Numéricamente, $\sqrt{2\pi}=2.5066\ldots$, y para $n=100$ la cota inferior $\sqrt{100}\,W_{201}$ y la superior $\sqrt{100}\,W_{198}$ valen $0.8829$ y $0.8896$ aproximadamente, encerrando $\sqrt\pi/2=0.8862\ldots$ con un margen de menos de siete milésimas a cada lado.

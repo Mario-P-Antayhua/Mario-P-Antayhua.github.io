@@ -1,0 +1,76 @@
+---
+title: "Sucesiones monótonas y el teorema de convergencia monótona"
+description: "El teorema de convergencia monótona y el número e como límite de una sucesión creciente y acotada."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sucesiones y series]
+---
+
+La primera estrategia para garantizar convergencia sin conocer el límite de
+antemano explota una propiedad puramente cualitativa de la sucesión: que se
+mueva siempre en la misma dirección.
+
+::: {#def-monotona}
+## Sucesión monótona
+
+Una sucesión $(x_n)$ es ***creciente*** si $x_n\leq x_{n+1}$
+para todo $n$, y ***decreciente*** si $x_n\geq x_{n+1}$ para
+todo $n$. Es ***monótona*** si es creciente o decreciente.
+
+:::
+
+Una sucesión monótona pero no acotada, como $x_n=n$, diverge con toda
+evidencia, así que la monotonía por sí sola no basta; lo que el siguiente
+teorema muestra es que la monotonía combinada con la acotación, que por la
+[Nota “el recíproco es falso”](18-sucesiones-y-su-limite.qmd#nota-acotada-no-converge) no bastaba sola, sí es una condición
+suficiente para la convergencia, y es precisamente aquí donde el axioma de
+completitud entra en juego de manera decisiva.
+
+::: {#thm-convergencia-monotona}
+## Teorema de convergencia monótona
+
+Toda sucesión monótona y acotada converge.
+
+:::
+
+::: {.proof}
+Supóngase que $(x_n)$ es creciente y acotada superiormente; el caso
+decreciente se reduce a este aplicándolo a $(-x_n)$, que es creciente y acotada superiormente, y usando que $-x_n\to-x$ implica $x_n\to x$ por el teorema algebraico del límite. Sea
+$A=\{x_n : n\in\mathbb{N}\}$; por hipótesis, $A$ es no vacío y acotado
+superiormente, así que por el [Axioma “completitud”](16-los-reales-el-axioma-de-completitud.qmd#ax-completitud) existe $x=\sup A$. Se
+afirma $x_n\to x$.
+
+Dado $\varepsilon>0$, por la [Proposición “Caracterización del supremo mediante $\varepsilon$”](16-los-reales-el-axioma-de-completitud.qmd#prp-sup-epsilon) existe algún $x_N\in A$
+con $x_N>x-\varepsilon$. Como la sucesión es creciente, para todo $n\geq N$
+se tiene $x_n\geq x_N>x-\varepsilon$; y como $x$ es cota superior de $A$,
+$x_n\leq x$ para todo $n$, así que $x_n<x+\varepsilon$ trivialmente. Juntando
+ambas desigualdades, $x-\varepsilon<x_n\leq x<x+\varepsilon$, de donde
+$|x_n-x|<\varepsilon$ para todo $n\geq N$.
+
+:::
+
+Lo notable de esta demostración es que en ningún momento se calcula el
+límite antes de probar que existe: el supremo se construye por completitud,
+sin fórmula explícita, y solo después se verifica que ese número
+efectivamente satisface la definición de límite. Ese orden de razonamiento,
+existencia antes que cálculo, es exactamente el que se necesitará para
+tratar sucesiones cuyo límite no admite expresión cerrada.
+
+El teorema es una afirmación de existencia: garantiza que el límite existe sin decir cuánto vale. El ejemplo clásico es la sucesión $x_n=(1+1/n)^n$.
+
+::: {#exm-numero-e}
+## El número $e$ como límite de una sucesión monótona acotada
+
+La sucesión $x_n=(1+1/n)^n$ es creciente y acotada por $3$, de modo que converge; su límite se denota $e$.
+
+:::
+
+Por el [Teorema “Teorema del binomio”](06-sumatorias-potencias-y-binomio.qmd#thm-binomio), y por la [Proposición “Fórmula factorial del coeficiente binomial”](06-sumatorias-potencias-y-binomio.qmd#prp-binomial-factorial),
+$$
+x_n=\sum_{k=0}^{n}\binom nk\frac1{n^k}=\sum_{k=0}^{n}\frac1{k!}\prod_{j=0}^{k-1}\Bigl(1-\frac jn\Bigr).
+$$
+Cada factor $1-j/n$ crece con $n$, y la suma de $x_{n+1}$ tiene un término positivo más que la de $x_n$; en consecuencia $x_n\leq x_{n+1}$. Por otra parte, cada factor es menor o igual que $1$, de modo que $x_n\leq\sum_{k=0}^{n}1/k!$, y como $k!\geq2^{k-1}$ para $k\geq1$ (por inducción, $(k+1)!=(k+1)k!\geq2\cdot2^{k-1}$), resulta
+$$
+x_n\leq1+\sum_{k=1}^{n}\frac1{2^{k-1}}=1+\frac{1-2^{-n}}{1-\tfrac12}<3,
+$$
+por la suma geométrica finita de la [Proposición “Suma geométrica finita”](06-sumatorias-potencias-y-binomio.qmd#prp-suma-geometrica). La sucesión es creciente y acotada, y el teorema de convergencia monótona da que converge. Numéricamente, $x_1=2$, $x_{10}\approx2.5937$, $x_{100}\approx2.7048$ y $x_{1000}\approx2.7169$, valores crecientes y por debajo de $e=2.71828\ldots$

@@ -1,0 +1,41 @@
+---
+title: "Las ecuaciones de Yule–Walker"
+description: "Las ecuaciones que relacionan los coeficientes de un AR(p) con su función de autocovarianza, la definición positiva de la matriz de autocovarianzas, la identificación de los coeficientes y el cálculo de las autocorrelaciones de un AR(2)."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+Los coeficientes de un AR(p) determinan sus autocovarianzas, y las autocovarianzas determinan de vuelta los coeficientes. Esa doble relación, dada por las ecuaciones de Yule–Walker, es la base de dos usos: calcular la función de autocorrelación del modelo sin sumar series infinitas, y estimar los coeficientes a partir de las autocovarianzas muestrales. Las ecuaciones se obtienen multiplicando el modelo por un valor pasado del proceso y tomando esperanza, y su solución única se garantiza con la definición positiva de la matriz de autocovarianzas.
+
+::: {#thm-yule-walker}
+## Ecuaciones de Yule–Walker
+
+Sea $\{X_t\}$ un AR(p) estacionario causal con media $\mu$ y autocovarianza $\gamma$. Entonces
+$$
+\gamma(h)=\sum_{i=1}^p\phi_i\,\gamma(h-i)\quad(h\geq1),\qquad\gamma(0)=\sum_{i=1}^p\phi_i\,\gamma(i)+\sigma^2 .
+$$ {#eq-yule-walker}
+En forma matricial, con $\mat{\Gamma}_p=\bigl(\gamma(i-j)\bigr)_{i,j=1}^p$, $\vect{\gamma}_p=(\gamma(1),\ldots,\gamma(p))^{\top}$ y $\vect{\phi}=(\phi_1,\ldots,\phi_p)^{\top}$, $\mat{\Gamma}_p\vect{\phi}=\vect{\gamma}_p$ y $\sigma^2=\gamma(0)-\vect{\phi}^{\top}\vect{\gamma}_p$.
+
+:::
+
+::: {.proof}
+Se escribe $Y_t=X_t-\mu$, que cumple $Y_t=\sum_i\phi_iY_{t-i}+\varepsilon_t$. Se multiplica por $Y_{t-h}$ con $h\geq0$ y se toma esperanza: $\gamma(h)=\sum_i\phi_i\gamma(h-i)+\E[\varepsilon_tY_{t-h}]$. Para $h\geq1$, $\E[\varepsilon_tY_{t-h}]=0$ porque $Y_{t-h}$ es límite de combinaciones de $\varepsilon_s$ con $s<t$. Para $h=0$, $\E[\varepsilon_tY_t]=\E[\varepsilon_t(\sum_i\phi_iY_{t-i}+\varepsilon_t)]=\sigma^2$ por la misma razón. La forma matricial reúne las ecuaciones $h=1,\ldots,p$ usando $\gamma(-k)=\gamma(k)$, y la de $h=0$ da $\sigma^2$.
+
+:::
+
+Para que las ecuaciones permitan recuperar los coeficientes hace falta que la matriz $\mat{\Gamma}_p$ sea invertible.
+
+::: {#prp-gamma-definida}
+## La matriz de autocovarianzas de un AR(p) es definida positiva
+
+En las condiciones del teorema, $\mat{\Gamma}_n$ es definida positiva para todo $n\geq1$, y por tanto $\vect{\phi}=\mat{\Gamma}_p^{-1}\vect{\gamma}_p$ queda determinado por la autocovarianza.
+
+:::
+
+::: {.proof}
+Sea $\vect{a}\neq\vect{0}$ y $k$ el primer índice con $a_k\neq0$, de modo que $\vect{a}^{\top}(Y_t,Y_{t-1},\ldots,Y_{t-n+1})^{\top}=\sum_{i\geq k}a_iY_{t-i+1}$. El término más reciente es $a_kY_{t-k+1}=a_k\varepsilon_{t-k+1}+a_kP$, con $P=\sum_j\phi_jY_{t-k+1-j}$, y el resto es $R=\sum_{i>k}a_iY_{t-i+1}$. Tanto $P$ como $R$ solo involucran valores $Y_s$ con $s<t-k+1$, que no están correlacionados con $\varepsilon_{t-k+1}$. Por tanto $\Var(\vect{a}^{\top}\vect{Y})=a_k^2\sigma^2+\Var(a_kP+R)\geq a_k^2\sigma^2>0$. Esto prueba que $\vect{a}^{\top}\mat{\Gamma}_n\vect{a}>0$.
+
+:::
+
+Con números, para el AR(2) con $\vect{\phi}=(1.2,-0.35)$ y $\sigma^2=1$, las ecuaciones de Yule–Walker para las autocorrelaciones $\rho(h)=\gamma(h)/\gamma(0)$ son $\rho(1)=\phi_1+\phi_2\rho(1)$ y $\rho(2)=\phi_1\rho(1)+\phi_2$. La primera da $\rho(1)=\phi_1/(1-\phi_2)=1.2/1.35=0.8889$ y la segunda $\rho(2)=1.2\cdot0.8889-0.35=0.7167$, y luego $\rho(3)=\phi_1\rho(2)+\phi_2\rho(1)=0.5489$. La ecuación para $h=0$ da $\gamma(0)=\sigma^2/(1-\phi_1\rho(1)-\phi_2\rho(2))=1/(1-1.0667+0.2508)=5.430$, que coincide con la suma $\sum_j\psi_j^2=5.430$ calculada con los coeficientes de la representación MA($\infty$), y entonces $\gamma(1)=4.827$ y $\gamma(2)=3.891$. Las ecuaciones son lineales en $\vect{\phi}$ y $\vect{\gamma}_p$, y por eso reemplazar las autocovarianzas por las muestrales produce estimadores de los coeficientes de cálculo inmediato.

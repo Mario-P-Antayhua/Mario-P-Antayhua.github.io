@@ -1,0 +1,55 @@
+---
+title: "El operador de rezago y los polinomios de rezagos"
+description: "El operador de rezago y el de diferencia, los polinomios de rezagos como combinaciones lineales de rezagos, su álgebra conmutativa idéntica a la de los polinomios ordinarios y su efecto sobre la media y la autocovarianza de un proceso estacionario."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Operador de rezago]
+---
+
+Los modelos de series de tiempo expresan cada observación como combinación de sus valores pasados y de perturbaciones. Escribir esas combinaciones con sumas de términos se vuelve engorroso con rapidez. El operador de rezago introduce una notación que trata un rezago como un objeto algebraico, y permite manipular un modelo entero con las reglas de los polinomios. Esta nota define el operador, comprueba que esa analogía es exacta y calcula el efecto de un filtro sobre los momentos de un proceso.
+
+::: {#def-operador-rezago}
+## Operador de rezago y de diferencia
+
+El ***operador de rezago*** $L$ transforma un proceso $\{X_t\}$ en el proceso $\{LX_t\}$ con $LX_t=X_{t-1}$. Sus potencias son $L^kX_t=X_{t-k}$ para $k\geq0$ entero, con $L^0X_t=X_t$. El ***operador de diferencia*** es $\Delta=1-L$, es decir, $\Delta X_t=X_t-X_{t-1}$, y el de diferencia estacional de período $s$ es $1-L^s$.
+
+:::
+
+El operador es lineal, $L(aX_t+bY_t)=aLX_t+bLY_t$, y deja fijas las constantes, $Lc=c$. Dos rezagos consecutivos componen un rezago mayor: $L^iL^jX_t=L^iX_{t-j}=X_{t-i-j}=L^{i+j}X_t$, de modo que la composición de potencias de $L$ suma los exponentes y es conmutativa. Eso permite combinar rezagos de manera formal.
+
+::: {#def-polinomio-rezagos}
+## Polinomio de rezagos
+
+Un ***polinomio de rezagos*** de grado $p$ es $\phi(L)=\phi_0+\phi_1L+\cdots+\phi_pL^p$ con coeficientes reales, que actúa sobre un proceso como $\phi(L)X_t=\phi_0X_t+\phi_1X_{t-1}+\cdots+\phi_pX_{t-p}$.
+
+:::
+
+La suma y el producto de polinomios de rezagos se calculan como los de polinomios ordinarios en una indeterminada $z$, y la correspondencia es exacta.
+
+::: {#prp-algebra-rezagos}
+## Álgebra de los polinomios de rezagos
+
+Sean $\phi(L)=\sum_{i=0}^p\phi_iL^i$ y $\psi(L)=\sum_{j=0}^q\psi_jL^j$. Entonces (i) $\phi(L)+\psi(L)$ es el polinomio de rezagos cuyos coeficientes son las sumas $\phi_k+\psi_k$; (ii) la composición $\phi(L)\psi(L)X_t=\phi(L)\bigl(\psi(L)X_t\bigr)$ es el polinomio de rezagos con coeficientes $c_k=\sum_{i+j=k}\phi_i\psi_j$, que son los del producto $\phi(z)\psi(z)$ de polinomios ordinarios; (iii) $\phi(L)\psi(L)=\psi(L)\phi(L)$; (iv) si $c$ es una constante, $\phi(L)c=\phi(1)c$.
+
+:::
+
+::: {.proof}
+El inciso (i) se sigue de la linealidad. Para (ii), $\phi(L)\bigl(\psi(L)X_t\bigr)=\sum_i\phi_i\sum_j\psi_jX_{t-i-j}=\sum_k\bigl(\sum_{i+j=k}\phi_i\psi_j\bigr)X_{t-k}$, agrupando los términos con el mismo rezago $k=i+j$, que es la regla del producto de polinomios. El inciso (iii) es la conmutatividad del producto de polinomios ordinarios, porque $c_k=\sum_{i+j=k}\phi_i\psi_j$ es simétrica en los dos factores. Para (iv), $\phi(L)c=\sum_i\phi_ic=\phi(1)c$.
+
+:::
+
+La consecuencia práctica es que cualquier identidad entre polinomios ordinarios, como una factorización, vale entre polinomios de rezagos. Por ejemplo, $1-1.2L+0.35L^2=(1-0.5L)(1-0.7L)$, porque $1-1.2z+0.35z^2=(1-0.5z)(1-0.7z)$. Además, aplicar un polinomio de rezagos a un proceso estacionario produce otro proceso estacionario cuyos momentos se calculan directamente.
+
+::: {#prp-filtro-estacionario}
+## Efecto de un filtro finito sobre un proceso estacionario
+
+Si $\{X_t\}$ es débilmente estacionario con media $\mu$ y autocovarianza $\gamma_X$, y $Y_t=\phi(L)X_t=\sum_{i=0}^p\phi_iX_{t-i}$, entonces $\{Y_t\}$ es débilmente estacionario con $\E[Y_t]=\phi(1)\mu$ y $\gamma_Y(h)=\sum_{i,j=0}^p\phi_i\phi_j\gamma_X(h-i+j)$.
+
+:::
+
+::: {.proof}
+La media es $\sum_i\phi_i\mu=\phi(1)\mu$. Para la autocovarianza, por la bilinealidad de la covarianza, $\Cov(Y_t,Y_{t+h})=\sum_{i,j}\phi_i\phi_j\Cov(X_{t-i},X_{t+h-j})=\sum_{i,j}\phi_i\phi_j\gamma_X(h-j+i)$, que no depende de $t$. Al intercambiar los nombres de $i$ y $j$ se obtiene la expresión equivalente enunciada.
+
+:::
+
+Con números, sea $X_t=\varepsilon_t$ un ruido blanco de varianza $\sigma^2=1$ y $Y_t=(1+0.5L)\varepsilon_t=\varepsilon_t+0.5\varepsilon_{t-1}$. Entonces $\gamma_Y(0)=1+0.25=1.25$ (solo los términos con $i=j$ sobreviven), $\gamma_Y(1)=0.5$ y $\gamma_Y(h)=0$ para $h\geq2$, de modo que $\rho_Y(1)=0.5/1.25=0.4$. La diferencia de un ruido blanco, $\Delta\varepsilon_t=\varepsilon_t-\varepsilon_{t-1}$, tiene media $\phi(1)\cdot0=0$ con $\phi(z)=1-z$, varianza $2\sigma^2$ y autocorrelación $\rho(1)=-1/2$.

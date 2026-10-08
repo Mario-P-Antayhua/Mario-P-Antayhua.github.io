@@ -1,0 +1,161 @@
+---
+title: "Funciones"
+description: "Funciones, inyectividad, sobreyectividad, composición e inversa, y la imagen y la preimagen de un conjunto."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Teoría de conjuntos]
+---
+
+Entre todas las relaciones posibles hay una clase particularmente importante,
+caracterizada por dos exigencias adicionales que convierten a la relación en
+una regla de asignación sin ambigüedad.
+
+::: {#def-funcion}
+## Función
+
+Una ***función*** $f$ de $A$ en $B$, denotada $f:A\to B$, es una
+relación $f\subseteq A\times B$ tal que para todo $a\in A$ existe un único
+$b\in B$ con $(a,b)\in f$. A ese único $b$ se le denota $f(a)$. El conjunto
+$A$ se llama ***dominio*** de $f$, $B$ se llama
+***codominio***, y el conjunto $f(A):=\{f(a) : a\in A\}\subseteq
+B$ se llama ***imagen*** o ***rango*** de $f$.
+
+:::
+
+Las dos exigencias hacen trabajos distintos y conviene separarlas. La de
+existencia captura la idea de que $f$ está definida en todo punto de $A$, sin
+huecos; la de unicidad captura la idea de que $f$ no es ambigua, en el
+sentido de que a cada elemento del dominio le corresponde un valor y solo
+uno. Una relación general no cumple ninguna de las dos: un mismo $a$ podría
+estar relacionado con varios elementos de $B$ a la vez, o con ninguno.
+
+Las funciones se clasifican según cómo se comporten respecto del codominio,
+y esa clasificación determina cuándo pueden invertirse.
+
+::: {#def-iso}
+## Inyectividad, sobreyectividad, biyectividad
+
+Sea $f:A\to B$. Se dice que $f$ es:
+
+(i) ***inyectiva*** si $\forall a_1,a_2\in A,\
+        \bigl[f(a_1)=f(a_2)\rightarrow a_1=a_2\bigr]$, es decir, si elementos
+            distintos del dominio tienen siempre imágenes distintas;
+
+(i) ***sobreyectiva*** si $\forall b\in B,\ \exists a\in A,\
+        f(a)=b$, es decir, si $f(A)=B$;
+
+(i) ***biyectiva*** si es inyectiva y sobreyectiva a la vez.
+
+:::
+
+Nótese que la inyectividad se ha enunciado en su forma contrarrecíproca, que
+es la más cómoda para trabajar: en lugar de exigir que $a_1\neq a_2$ implique
+$f(a_1)\neq f(a_2)$, se exige que $f(a_1)=f(a_2)$ implique $a_1=a_2$. Ambas
+formulaciones son equivalentes por la [Proposición “Equivalencias lógicas fundamentales”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#prp-equivalencias), y la segunda
+suele ser la que se verifica en la práctica.
+
+::: {#def-composicion-inversa}
+## Composición e inversa
+
+Dadas $f:A\to B$ y $g:B\to C$, la ***composición***
+$g\circ f: A\to C$ se define por $(g\circ f)(a):=g(f(a))$. Si existe una
+función $f^{-1}:B\to A$ tal que $f^{-1}\circ f$ es la función identidad en
+$A$ y $f\circ f^{-1}$ es la función identidad en $B$, se dice que $f$ es
+***invertible*** y que $f^{-1}$ es su ***inversa***.
+
+:::
+
+El resultado que sigue conecta las dos definiciones anteriores y explica por
+qué la biyectividad es la propiedad relevante.
+
+::: {#thm-invertibilidad}
+## Caracterización de la invertibilidad
+
+Una función $f:A\to B$ es invertible si y solo si es biyectiva.
+
+:::
+
+::: {.proof}
+Se prueban las dos implicaciones por separado.
+
+Supóngase primero que $f$ es invertible, con inversa $f^{-1}$, y verifíquense
+las dos propiedades que componen la biyectividad. Para la inyectividad,
+supóngase $f(a_1)=f(a_2)$; aplicando $f^{-1}$ a ambos lados de esa igualdad,
+
+$$
+f^{-1}\bigl(f(a_1)\bigr) = f^{-1}\bigl(f(a_2)\bigr),
+$$
+
+y como $f^{-1}\circ f$ es la identidad en $A$, el lado izquierdo es $a_1$ y
+el derecho es $a_2$, de donde $a_1=a_2$.
+
+Para la sobreyectividad, sea $b\in B$ cualquiera y considérese el elemento
+$a:=f^{-1}(b)\in A$. Aplicando $f$,
+
+$$
+f(a) = f\bigl(f^{-1}(b)\bigr) = b,
+$$
+
+porque $f\circ f^{-1}$ es la identidad en $B$; así que $b$ está en la imagen
+de $f$, y como $b$ era arbitrario, $f$ es sobreyectiva.
+
+Corresponde ahora la implicación recíproca. Supóngase que $f$ es biyectiva y
+constrúyase explícitamente su inversa. Para cada $b\in B$, la sobreyectividad
+garantiza que existe al menos un $a\in A$ con $f(a)=b$, y la inyectividad
+garantiza que ese $a$ es único, porque si $f(a_1)=b=f(a_2)$ entonces
+$a_1=a_2$.
+
+Esa existencia y unicidad son exactamente las dos condiciones que la
+@def-funcion exige, de modo que puede definirse sin ambigüedad una
+función $g:B\to A$ mediante la regla de que $g(b)$ es el único $a\in A$ tal
+que $f(a)=b$.
+
+Falta comprobar que $g$ es efectivamente la inversa de $f$. Por construcción,
+$g(f(a))=a$ para todo $a\in A$, puesto que $a$ es precisamente el único
+elemento que $f$ envía a $f(a)$; y $f(g(b))=b$ para todo $b\in B$, por la
+propia definición de $g(b)$. Ambas composiciones son la identidad, así que
+$f$ es invertible.
+
+:::
+
+Además de enviar elementos a elementos, una función transporta subconjuntos. Dos operaciones lo formalizan, y la segunda es la que aparece siempre que se pregunta qué elementos del dominio producen un valor dentro de cierto conjunto.
+
+::: {#def-imagen-preimagen}
+## Imagen y preimagen de un conjunto
+
+Sea $f:A\to B$. Para $S\subseteq A$, la ***imagen*** de $S$ es $f(S):=\{f(a) : a\in S\}$. Para $T\subseteq B$, la ***preimagen*** de $T$ es $f^{-1}(T):=\{a\in A : f(a)\in T\}$.
+
+:::
+
+La preimagen está definida para cualquier función, sea o no invertible; el símbolo $f^{-1}(T)$ designa un subconjunto de $A$ y no presupone que exista la función inversa. Por ejemplo, para $f(x)=x^2$ de $\mathbb{R}$ en $\mathbb{R}$, la preimagen de $T=[1,4]$ es $[-2,-1]\cup[1,2]$, porque tanto $x$ como $-x$ llevan al mismo valor.
+
+La preimagen se comporta bien frente a todas las operaciones de conjuntos, lo que la hace la herramienta preferida para describir propiedades de una función en términos de conjuntos.
+
+::: {#prp-preimagen}
+## La preimagen respeta las operaciones de conjuntos
+
+Sea $f:A\to B$ y sean $T,T_1,T_2\subseteq B$. Entonces
+$$
+f^{-1}(T_1\cup T_2)=f^{-1}(T_1)\cup f^{-1}(T_2),
+\qquad
+f^{-1}(T_1\cap T_2)=f^{-1}(T_1)\cap f^{-1}(T_2),
+\qquad
+f^{-1}(B\setminus T)=A\setminus f^{-1}(T).
+$$
+
+:::
+
+::: {.proof}
+Las tres igualdades se prueban por una cadena de equivalencias elemento a elemento, como en la [Proposición “Leyes de De Morgan para conjuntos”](07-conjuntos-pertenencia-y-operaciones-basicas.qmd#prp-demorgan-conjuntos). Para $a\in A$, por la @def-imagen-preimagen y la definición de unión,
+$$
+a\in f^{-1}(T_1\cup T_2)\;\equiv\;f(a)\in T_1\vee f(a)\in T_2\;\equiv\;a\in f^{-1}(T_1)\vee a\in f^{-1}(T_2),
+$$
+que es la pertenencia a $f^{-1}(T_1)\cup f^{-1}(T_2)$.
+
+Para la intersección, el mismo argumento con la conjunción da $a\in f^{-1}(T_1\cap T_2)\equiv f(a)\in T_1\wedge f(a)\in T_2\equiv a\in f^{-1}(T_1)\cap f^{-1}(T_2)$.
+
+Para el complemento, $a\in f^{-1}(B\setminus T)$ equivale a $f(a)\notin T$, que es la negación de $f(a)\in T$ y, por tanto, equivale a $a\notin f^{-1}(T)$, esto es, a $a\in A\setminus f^{-1}(T)$.
+
+:::
+
+La imagen, en cambio, no respeta las intersecciones. Con $f(x)=x^2$, los conjuntos $S_1=[-1,0]$ y $S_2=[0,1]$ cumplen $S_1\cap S_2=\{0\}$ y por tanto $f(S_1\cap S_2)=\{0\}$, mientras que $f(S_1)\cap f(S_2)=[0,1]\cap[0,1]=[0,1]$. Esta asimetría es la razón por la que las propiedades de una función se formulan casi siempre con preimágenes.

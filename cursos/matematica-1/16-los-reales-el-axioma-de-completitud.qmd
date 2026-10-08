@@ -1,0 +1,177 @@
+---
+title: "Los reales: el axioma de completitud"
+description: "Los números reales como cuerpo ordenado completo, con las consecuencias del axioma de completitud: intervalos encajados, propiedad arquimediana, densidad de los racionales y existencia de raíces cuadradas."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sistemas numéricos]
+---
+
+A diferencia de $\mathbb{Z}$ y $\mathbb{Q}$, que se construyeron como conjuntos cociente sobre pares del sistema anterior, $\mathbb{R}$ se introduce aquí de manera axiomática: se postula que existe un cuerpo ordenado que extiende a $\mathbb{Q}$ y que satisface la propiedad que a $\mathbb{Q}$ le faltaba. Las construcciones explícitas de $\mathbb{R}$, mediante cortaduras de Dedekind o sucesiones de Cauchy, exigen un aparato considerablemente mayor y no aportan ninguna herramienta que se use después. Antes de enunciar el axioma hace falta fijar el vocabulario de cotas y supremos sobre el que se apoya.
+
+::: {#def-supremo}
+## Cota, supremo e ínfimo
+
+Sea $A\subseteq\mathbb{R}$ no vacío. Un número $b\in\mathbb{R}$ es una ***cota superior*** de $A$ si $a\leq b$ para todo $a\in A$, y en ese caso $A$ está ***acotado superiormente***. Un número $s$ es el ***supremo*** de $A$, denotado $s=\sup A$, si $s$ es cota superior de $A$ y toda cota superior $b$ cumple $s\leq b$; es decir, si $s$ es la menor de las cotas superiores. Las nociones de ***cota inferior***, ***acotado inferiormente*** e ***ínfimo*** ($\inf A$, la mayor de las cotas inferiores) son las simétricas.
+
+:::
+
+La definición exige dos cosas de naturaleza distinta: que $s$ acote a $A$ por arriba y que ninguna cota superior más pequeña sea posible. Es esta segunda exigencia la que falló para el racional candidato en la [Proposición “El conjunto $S=\{r\in\mathbb{Q}:r>0,\ r^2<2\}$ no tiene supremo en $\mathbb{Q}$”](15-por-que-los-racionales-no-bastan.qmd#prp-no-sup-en-q), y la que el axioma siguiente garantiza de forma incondicional en $\mathbb{R}$.
+
+::: {#ax-completitud .callout-important appearance="simple" title="Axioma: completitud"}
+$\mathbb{R}$ es un cuerpo ordenado que contiene a $\mathbb{Q}$ y todo subconjunto no vacío de $\mathbb{R}$ acotado superiormente tiene supremo en $\mathbb{R}$.
+
+:::
+
+El axioma no añade ninguna operación algebraica a las de $\mathbb{Q}$: $\mathbb{R}$ sigue siendo un cuerpo ordenado, con las mismas reglas de suma, producto y orden. Añade una garantía de naturaleza topológica, la ausencia de huecos. De ella se sigue que todo conjunto no vacío acotado inferiormente tiene ínfimo, porque $\inf A=-\sup(-A)$, donde $-A:=\{-a:a\in A\}$ está acotado superiormente.
+
+La utilidad del supremo en las demostraciones depende de una caracterización en términos de márgenes arbitrariamente pequeños.
+
+::: {#prp-sup-epsilon}
+## Caracterización del supremo mediante $\varepsilon$
+
+Sea $A\subseteq\mathbb{R}$ no vacío y acotado superiormente. Entonces $s=\sup A$ si y solo si $s$ es cota superior de $A$ y, para todo $\varepsilon>0$, existe $a\in A$ con $a>s-\varepsilon$.
+
+:::
+
+::: {.proof}
+Para la implicación directa, sea $s=\sup A$ y $\varepsilon>0$. Como $s-\varepsilon<s$ y $s$ es la menor cota superior, $s-\varepsilon$ no es cota superior; esto significa que existe $a\in A$ con $a>s-\varepsilon$.
+
+Para el recíproco, sea $s$ cota superior con la propiedad del enunciado, y supóngase por contradicción que existe otra cota superior $b<s$. Tomando $\varepsilon=s-b>0$, la hipótesis da $a\in A$ con
+$$
+a>s-\varepsilon=s-(s-b)=b,
+$$ {#eq-sup-epsilon-contradiccion}
+lo que contradice que $b$ sea cota superior de $A$. Por lo tanto $s$ es la menor cota superior.
+
+:::
+
+Todo el análisis que sigue mide distancias entre reales con el valor absoluto, que conviene definir y estudiar aquí.
+
+::: {#def-valor-absoluto}
+## Valor absoluto
+
+El ***valor absoluto*** de $x\in\mathbb{R}$ es $|x|:=x$ si $x\geq0$ y $|x|:=-x$ si $x<0$.
+
+:::
+
+La definición por casos se maneja mejor mediante un conjunto de propiedades que permiten calcular con el valor absoluto sin volver a distinguir los signos cada vez, y la más importante es la desigualdad triangular.
+
+::: {#prp-valor-absoluto}
+## Propiedades del valor absoluto
+
+Para todos $x,y\in\mathbb{R}$: (i) $|x|\geq0$, con igualdad si y solo si $x=0$; (ii) $-|x|\leq x\leq|x|$; (iii) $|xy|=|x||y|$; (iv) $|x+y|\leq|x|+|y|$ (desigualdad triangular); (v) $\bigl||x|-|y|\bigr|\leq|x-y|$; (vi) para $\varepsilon>0$, $|x|<\varepsilon$ si y solo si $-\varepsilon<x<\varepsilon$.
+
+:::
+
+::: {.proof}
+Las propiedades (i) y (ii) se leen de la definición por casos. Para (iii), se examinan los cuatro casos de signo de $x$ e $y$: por ejemplo, si $x<0\leq y$, entonces $xy\leq0$ y $|xy|=-xy=(-x)y=|x||y|$; los demás son análogos.
+
+Para (iv), por (ii) se tiene $x\leq|x|$ e $y\leq|y|$, de modo que $x+y\leq|x|+|y|$; y también $-x\leq|x|$ y $-y\leq|y|$, de modo que $-(x+y)\leq|x|+|y|$. Como $|x+y|$ es $x+y$ o $-(x+y)$, ambas cotas dan $|x+y|\leq|x|+|y|$.
+
+Para (v), (iv) aplicada a $x=(x-y)+y$ da $|x|\leq|x-y|+|y|$, es decir $|x|-|y|\leq|x-y|$; intercambiando los papeles de $x$ e $y$ se obtiene $|y|-|x|\leq|x-y|$, y ambas desigualdades dicen que $\bigl||x|-|y|\bigr|\leq|x-y|$.
+
+Para (vi), si $x\geq0$, entonces $|x|<\varepsilon$ equivale a $x<\varepsilon$, y $-\varepsilon<0\leq x$ se cumple siempre; si $x<0$, entonces $|x|=-x<\varepsilon$ equivale a $x>-\varepsilon$, y $x<0<\varepsilon$ se cumple siempre.
+
+:::
+
+La primera consecuencia sustancial del axioma es que una sucesión de intervalos cerrados encajados unos dentro de otros comparte al menos un punto.
+
+::: {#thm-intervalos-encajados}
+## Propiedad de los intervalos encajados
+
+Sea $\{I_n\}_{n\in\mathbb{N}}$ una sucesión de intervalos cerrados $I_n=[a_n,b_n]\subseteq\mathbb{R}$ con $I_1\supseteq I_2\supseteq I_3\supseteq\cdots$. Entonces $\bigcap_{n\in\mathbb{N}}I_n\neq\varnothing$.
+
+:::
+
+::: {.proof}
+El candidato a punto común se identifica considerando el conjunto de extremos izquierdos $A=\{a_n:n\in\mathbb{N}\}$. El encajamiento implica $a_n\leq b_m$ para cualesquiera índices $m,n$: si $n\geq m$, entonces $a_n\in I_n\subseteq I_m$, de donde $a_n\leq b_m$; si $n<m$, entonces $a_m\in I_m\subseteq I_n$ y $a_n\leq a_m\leq b_m$. Por lo tanto todo $b_m$ es cota superior de $A$, de modo que $A$ es no vacío y acotado superiormente, y por el [Axioma de completitud](#ax-completitud) existe
+$$
+x:=\sup A .
+$$ {#eq-intervalos-x-definido}
+
+Falta comprobar que $a_n\leq x\leq b_n$ para todo $n$. La primera desigualdad es inmediata porque $x$ es cota superior de $A$ y $a_n\in A$. Para la segunda, cada $b_n$ es cota superior de $A$ y $x$ es la menor de todas, de modo que $x\leq b_n$. Así $x\in I_n$ para todo $n$, y $x\in\bigcap_nI_n$.
+
+:::
+
+Una segunda consecuencia, de apariencia elemental, es que los naturales no están acotados en $\mathbb{R}$; su demostración depende de la completitud.
+
+::: {#thm-arquimediana}
+## Propiedad arquimediana
+
+(i) Para todo $x\in\mathbb{R}$ existe $n\in\mathbb{N}$ con $n>x$. (ii) Para todo $y>0$ existe $n\in\mathbb{N}$ con $1/n<y$.
+
+:::
+
+::: {.proof}
+Para (i), se razona por contradicción. Si ningún natural superara a $x$, entonces $x$ sería cota superior de $\mathbb{N}$, que es no vacío, y el axioma garantizaría
+$$
+\alpha:=\sup\mathbb{N}.
+$$ {#eq-arquimediana-alpha}
+Por la @prp-sup-epsilon con $\varepsilon=1$, existe $n\in\mathbb{N}$ con $n>\alpha-1$, y sumando $1$ se obtiene $n+1>\alpha$. Pero $n+1\in\mathbb{N}$, de modo que esto contradice que $\alpha$ sea cota superior de $\mathbb{N}$.
+
+Para (ii), dado $y>0$ se aplica (i) a $x=1/y$: existe $n$ con $n>1/y$, y multiplicando por $y/n>0$ se obtiene $y>1/n$.
+
+:::
+
+Con la propiedad arquimediana se prueba que entre dos reales distintos hay siempre un racional: los racionales no completan la recta, pero están repartidos por toda ella.
+
+::: {#thm-densidad-q}
+## Densidad de $\mathbb{Q}$ en $\mathbb{R}$
+
+Para cualesquiera $a,b\in\mathbb{R}$ con $a<b$, existe $r\in\mathbb{Q}$ con $a<r<b$.
+
+:::
+
+::: {.proof}
+Por la parte (ii) del @thm-arquimediana, existe $n\in\mathbb{N}$ con $1/n<b-a$, de modo que $nb-na>1$. Se busca un entero $m$ con $na<m<nb$. Por la parte (i) del mismo teorema existe $N\in\mathbb{N}$ con $N>-na$, y existe un natural mayor que $na+N$; el conjunto de los naturales $j$ con $j>na+N$ es entonces no vacío y, por la [Proposición “Buen orden de $\mathbb{N}$”](05-el-principio-de-induccion-matematica.qmd#prp-buen-orden), tiene un menor elemento $j_0$. El entero $m:=j_0-N$ es el menor entero mayor que $na$: es mayor que $na$, y si un entero $k$ cumple $k>na$, entonces $k+N>0$ es natural y mayor que $na+N$, de modo que $k+N\geq j_0$ y $k\geq m$. Por la minimalidad, $m-1\leq na$, de donde
+$$
+na<m\leq na+1<na+(nb-na)=nb .
+$$ {#eq-densidad-paso2}
+Dividiendo $na<m<nb$ entre $n>0$ se obtiene $a<m/n<b$, y $r=m/n\in\mathbb{Q}$.
+
+:::
+
+Falta el resultado que justifica la construcción: dentro de $\mathbb{R}$ existe un número cuyo cuadrado es exactamente $2$, y en general la raíz cuadrada de todo real no negativo. La demostración reutiliza la perturbación algebraica que fallaba en $\mathbb{Q}$, con la diferencia de que ahora el supremo existe. Antes, el orden de los cuadrados.
+
+::: {#lem-monotonia-cuadrado-r}
+## Monotonía del cuadrado en $\mathbb{R}$
+
+Si $p,q\in\mathbb{R}$ cumplen $0\leq p<q$, entonces $p^2<q^2$. Recíprocamente, si $p,q\geq0$ y $p^2<q^2$, entonces $p<q$.
+
+:::
+
+::: {.proof}
+De $0\leq p<q$ se sigue $q-p>0$ y $q+p>0$, y su producto $q^2-p^2$ es positivo. Recíprocamente, si no fuera $p<q$ se tendría $p\geq q\geq0$ y, por lo anterior, $p^2\geq q^2$, lo que contradice $p^2<q^2$.
+
+:::
+
+::: {#thm-existe-raiz-2}
+## Existencia de raíces cuadradas
+
+Para todo $c\in\mathbb{R}$ con $c\geq0$ existe un único $\beta\geq0$ con $\beta^2=c$. Se denota $\beta=\sqrt c$. En particular, existe $\sqrt2$.
+
+:::
+
+::: {.proof}
+Si $c=0$, $\beta=0$ cumple $\beta^2=0$, y es el único no negativo con esa propiedad, porque un real positivo tiene cuadrado positivo. Sea $c>0$ y
+$$
+T:=\{r\in\mathbb{R}:r>0,\ r^2<c\}.
+$$
+El conjunto $T$ es no vacío, porque contiene a $\tfrac12\min\{1,c\}$, cuyo cuadrado es menor que $c$. Está acotado superiormente por $\max\{1,c\}$: si $r>\max\{1,c\}$, entonces $r>1$ implica $r^2>r$ y $r>c$ implica $r^2>c$. Por el axioma existe $\beta:=\sup T$, y $\beta>0$ porque $T$ tiene elementos positivos. Se descartan las dos alternativas $\beta^2<c$ y $\beta^2>c$.
+
+Si $\beta^2<c$, se perturba hacia arriba: para $0<\varepsilon<1$,
+$$
+(\beta+\varepsilon)^2=\beta^2+2\beta\varepsilon+\varepsilon^2<\beta^2+\varepsilon(2\beta+1),
+$$ {#eq-raiz-caso1}
+y eligiendo $\varepsilon<\min\{1,\,(c-\beta^2)/(2\beta+1)\}$ resulta $(\beta+\varepsilon)^2<c$. Entonces $\beta+\varepsilon\in T$ con $\beta+\varepsilon>\beta$, lo que contradice que $\beta$ sea cota superior de $T$.
+
+Si $\beta^2>c$, se perturba hacia abajo: para $0<\varepsilon<\beta$,
+$$
+(\beta-\varepsilon)^2=\beta^2-2\beta\varepsilon+\varepsilon^2>\beta^2-2\beta\varepsilon ,
+$$ {#eq-raiz-caso2}
+y eligiendo además $\varepsilon<(\beta^2-c)/(2\beta)$ resulta $(\beta-\varepsilon)^2>c$. Todo $r\in T$ cumple $r^2<c<(\beta-\varepsilon)^2$, de modo que $r<\beta-\varepsilon$ por el @lem-monotonia-cuadrado-r. Entonces $\beta-\varepsilon$ es cota superior de $T$ menor que $\beta$, lo que contradice que $\beta$ sea la menor.
+
+Ambas alternativas son imposibles, y la tricotomía obliga a $\beta^2=c$. La unicidad se sigue del @lem-monotonia-cuadrado-r: si $\beta_1<\beta_2$ fueran ambos no negativos, sus cuadrados serían distintos.
+
+:::
+
+La completitud de $\mathbb{R}$ se aprecia mejor en números concretos. Sea $A=\{2-1/n:n\in\mathbb{N}\}=\{1,\ 1.5,\ 1.667,\ 1.75,\ldots\}$. Se afirma que $\sup A=2$: por un lado, $2-1/n<2$ para todo $n$, de modo que $2$ acota a $A$; por otro, dado $\varepsilon=0.01$, el @thm-arquimediana (ii) garantiza $n$ con $1/n<0.01$, y con $n=101$ se obtiene $2-1/101\approx1.9901>2-0.01$, un elemento de $A$ dentro del margen exigido por la @prp-sup-epsilon. Para los intervalos encajados, sea $I_n=\bigl[3-\tfrac1n,\ 3+\tfrac1{n^2}\bigr]$: $I_1=[2,\,4]$, $I_2=[2.5,\,3.25]$ e $I_3=[2.667,\,3.111]$ cumplen $I_3\subset I_2\subset I_1$, y el punto $x=3$ pertenece a todos porque $3-1/n<3<3+1/n^2$. Para la densidad, con $a=\sqrt2\approx1.41421356$ y $b=a+0.001$, se necesita $1/n<0.001$, y con $n=1001$ se calcula $na\approx1415.63$; el menor entero mayor que $na$ es $m=1416$ y $r=1416/1001\approx1.414585$ cumple $a<r<b$. Finalmente, la sucesión de racionales $1.4,\ 1.41,\ 1.414,\ 1.4142$ tiene cuadrados $1.96,\ 1.9881,\ 1.999396,\ 1.99996164$, todos menores que $2$ y con errores $0.04,\ 0.0119,\ 0.000604,\ 0.0000384$, que se reducen en más de un orden de magnitud en cada término: los términos pertenecen al conjunto $T$ del @thm-existe-raiz-2 con $c=2$ y se aproximan a su supremo $\sqrt2$.

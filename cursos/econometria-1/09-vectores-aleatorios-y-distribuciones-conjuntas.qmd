@@ -1,0 +1,90 @@
+---
+title: "Vectores aleatorios y distribuciones conjuntas"
+description: "Distribuciones conjuntas, marginales y condicionales de un vector aleatorio, la independencia de variables aleatorias, la factorización de la esperanza de un producto y la existencia de variables independientes."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Vectores aleatorios]
+---
+
+Una variable describe una cantidad; la econometría trabaja con varias a la vez, como el ingreso, la educación y la edad de una misma persona. Para describir el comportamiento conjunto de varias variables hace falta una distribución sobre $\mathbb{R}^k$, de la cual se obtienen las distribuciones de cada coordenada y las que resultan de condicionar unas coordenadas en otras. Esta nota define esos objetos, formaliza la noción de independencia entre variables y demuestra que la independencia permite factorizar esperanzas. Se usan los resultados de las notas [Nota “Variables aleatorias y funciones de distribución”](03-variables-aleatorias-y-funciones-de-distribucion.qmd) y [Nota “El cálculo de esperanzas”](04-el-calculo-de-esperanzas.qmd).
+
+::: {#def-distribucion-conjunta}
+## Distribución conjunta, función de masa y densidad
+
+La ***función de distribución conjunta*** de un vector aleatorio $\vect{X}=(X_1,\ldots,X_k)$ es $F_{\vect{X}}(\vect{x})=\Prob{X_1\leq x_1,\ldots,X_k\leq x_k}$. El vector es ***discreto*** si toma valores en un conjunto numerable, con ***función de masa conjunta*** $p(\vect{x})=\Prob{\vect{X}=\vect{x}}$. Tiene ***densidad conjunta*** $f:\mathbb{R}^k\to[0,\infty)$ si $\Prob{\vect{X}\in B}=\int_Bf(\vect{x})\,d\vect{x}$ para todo conjunto de Borel $B\subseteq\mathbb{R}^k$.
+
+:::
+
+Para un vector con densidad, $\int_{\mathbb{R}^k}f=1$, y la esperanza de una función del vector se calcula con la fórmula de la ley, $\E[g(\vect{X})]=\int g\,f$. Las distribuciones de las coordenadas por separado se obtienen sumando o integrando las demás.
+
+::: {#prp-marginales}
+## Distribuciones marginales
+
+Sea $(X,Y)$ un par aleatorio. Si es discreto con función de masa $p$, entonces $p_X(x)=\sum_yp(x,y)$. Si tiene densidad conjunta $f$, entonces $X$ tiene densidad $f_X(x)=\int_{-\infty}^{\infty}f(x,y)\,dy$. Resultados análogos valen para $Y$ y para vectores con más coordenadas.
+
+:::
+
+::: {.proof}
+En el caso discreto, el evento $\{X=x\}$ es la unión disjunta de los eventos $\{X=x,Y=y\}$ sobre los valores posibles de $Y$, y la aditividad numerable da la fórmula. En el caso continuo, para un conjunto de Borel $A$, $\Prob{X\in A}=\Prob{(X,Y)\in A\times\mathbb{R}}=\int_{A\times\mathbb{R}}f=\int_A\bigl(\int f(x,y)\,dy\bigr)dx$ por el teorema de Tonelli–Fubini (E7), de modo que la función $x\mapsto\int f(x,y)\,dy$ es una densidad de $X$.
+
+:::
+
+Las marginales no determinan la conjunta, pero dada la conjunta se obtienen las condicionales, que describen una variable cuando la otra se conoce.
+
+::: {#def-condicional}
+## Distribución condicional
+
+Sea $(X,Y)$ un par con función de masa o densidad conjunta $f$ y marginal $f_X$. Para cada $x$ con $f_X(x)>0$, la ***distribución condicional*** de $Y$ dado $X=x$ tiene función de masa o densidad $f_{Y\mid X}(y\mid x)=f(x,y)/f_X(x)$.
+
+:::
+
+En el caso discreto, $f_{Y\mid X}(y\mid x)=\Prob{Y=y\mid X=x}$ es la probabilidad condicional de la [Nota “Probabilidad condicional e independencia”](02-probabilidad-condicional-e-independencia.qmd). En el caso continuo, $\Prob{X=x}=0$ y la definición se toma como la que corresponde a la densidad: $f_{Y\mid X}(\cdot\mid x)$ es una densidad en $y$ porque $\int f(x,y)\,dy=f_X(x)$, y satisface $f(x,y)=f_{Y\mid X}(y\mid x)f_X(x)$. Con números, para el par discreto con $p(0,0)=0.3$, $p(0,1)=0.2$, $p(1,0)=0.1$ y $p(1,1)=0.4$, las marginales son $p_X=(0.5,0.5)$ y $p_Y=(0.4,0.6)$, y $\Prob{Y=1\mid X=1}=0.4/0.5=0.8$, mientras que $\Prob{Y=1\mid X=0}=0.2/0.5=0.4$.
+
+Para el par con densidad $f(x,y)=x+y$ en $[0,1]^2$, que integra $\int_0^1\int_0^1(x+y)\,dy\,dx=1/2+1/2=1$, la marginal es $f_X(x)=x+1/2$, y la condicional es $f_{Y\mid X}(y\mid x)=(x+y)/(x+1/2)$, cuya integral en $y$ es uno.
+
+Si el conocimiento de una variable no cambia la distribución de la otra, las variables se llaman independientes, igual que los eventos.
+
+::: {#def-independencia-variables}
+## Independencia de variables aleatorias
+
+Las variables aleatorias $X_1,\ldots,X_n$ son ***independientes*** si, para todos los conjuntos de Borel $B_1,\ldots,B_n$, $\Prob{X_1\in B_1,\ldots,X_n\in B_n}=\prod_{i=1}^n\Prob{X_i\in B_i}$. Una sucesión infinita es independiente si toda subfamilia finita lo es. Si además tienen la misma distribución, se dice que son ***independientes e idénticamente distribuidas*** (iid).
+
+:::
+
+La independencia se hereda por las funciones: si $X$ e $Y$ son independientes y $g,h$ son continuas, entonces $g(X)$ y $h(Y)$ son independientes, porque $\{g(X)\in B\}=\{X\in g^{-1}(B)\}$ y $g^{-1}(B)$ es de Borel. La independencia se reconoce en las densidades por una factorización.
+
+::: {#prp-independencia-densidades}
+## Independencia y factorización de la densidad
+
+Sean $X,Y$ con densidades $f_X,f_Y$. (i) Si son independientes, el par tiene densidad conjunta $f(x,y)=f_X(x)f_Y(y)$. (ii) Si el par tiene densidad conjunta de la forma $f(x,y)=a(x)b(y)$ para funciones no negativas, entonces $X$ e $Y$ son independientes. El resultado análogo vale para funciones de masa.
+
+:::
+
+::: {.proof}
+Para (i), sea $\nu$ la medida de probabilidad en $\mathbb{R}^2$ con densidad $f_X(x)f_Y(y)$. Para un rectángulo $A\times B$, el teorema de Tonelli–Fubini da $\nu(A\times B)=\int_Af_X\int_Bf_Y=\Prob{X\in A}\Prob{Y\in B}=\Prob{(X,Y)\in A\times B}$ por la independencia. La ley de $(X,Y)$ y $\nu$ coinciden en los rectángulos, y la unicidad (E9) las iguala. Para (ii), por la marginalización $f_X(x)=a(x)\int b$ y $f_Y(y)=b(y)\int a$, con $\int f=\int a\int b=1$, de modo que $f=f_Xf_Y$. Entonces $\Prob{X\in A,Y\in B}=\int_{A\times B}f_Xf_Y=\int_Af_X\int_Bf_Y$ por Tonelli–Fubini.
+
+:::
+
+El par con densidad $f(x,y)=4xy$ en $[0,1]^2$ se factoriza como $(2x)(2y)$, con marginales $2x$ y $2y$, de modo que $X$ e $Y$ son independientes y $\Prob{X\leq0.5,Y\leq0.5}=(0.25)(0.25)=1/16$. En cambio, el par con $f(x,y)=x+y$ no es independiente: $f(0,0)=0$ pero $f_X(0)f_Y(0)=1/4$, y el producto de las marginales en $(0,0)$ no coincide con la conjunta. La propiedad fundamental de la independencia en la práctica es la factorización de las esperanzas.
+
+::: {#thm-esperanza-producto}
+## Esperanza de un producto de variables independientes
+
+Sean $X$ e $Y$ independientes, cada una discreta o con densidad, y $g,h$ continuas a trozos con $g(X)h(Y)\geq0$, o con $g(X)$ y $h(Y)$ integrables. Entonces $\E[g(X)h(Y)]=\E[g(X)]\,\E[h(Y)]$.
+
+:::
+
+::: {.proof}
+Por la independencia, y por la proposición anterior en el caso con densidades, la función de masa o densidad conjunta de $(X,Y)$ es el producto de las marginales, con cada factor una densidad o una función de masa. La fórmula de la ley (E6) da $\E[g(X)h(Y)]=\int\!\!\int g(x)h(y)f_X(x)f_Y(y)\,dx\,dy$, y el teorema de Tonelli–Fubini (E7), que admite sumas en lugar de integrales, escribe la integral doble como el producto de las dos integrales simples $\int gf_X\cdot\int hf_Y$, esto es, $\E[g(X)]\E[h(Y)]$. En los casos mixtos, una suma y una integral, el mismo argumento aplica (E7) con la suma.
+
+:::
+
+Con la densidad $4xy$, $\E[XY]=\int_0^1\int_0^14x^2y^2\,dx\,dy=4\cdot\tfrac13\cdot\tfrac13=4/9$, que coincide con $\E[X]\E[Y]=(2/3)(2/3)$ por la fórmula de $\E[X]=\int_0^12x^2=2/3$. En cambio, con $f=x+y$ y $\E[X]=\int_0^1x(x+1/2)\,dx=7/12$, se tiene $\E[XY]=\int_0^1\int_0^1xy(x+y)\,dx\,dy=1/3$, que difiere de $\E[X]\E[Y]=49/144$.
+
+Finalmente, la existencia de variables independientes con leyes dadas, que se necesita para construir en una misma probabilidad las sucesiones de datos y las variables auxiliares de las demostraciones, se acepta como parte del marco.
+
+::: {#ax-independientes .callout-important appearance="simple" title="Axioma: Existencia de variables independientes"}
+Dadas medidas de probabilidad $P_1,P_2,\ldots$ sobre $\mathbb{R}^{k_1},\mathbb{R}^{k_2},\ldots$, existe un espacio de probabilidad con variables aleatorias independientes $\vect{X}_1,\vect{X}_2,\ldots$ tales que la ley de $\vect{X}_i$ es $P_i$ para todo $i$.
+:::
+
+Con este axioma tiene sentido hablar de una muestra de variables iid con una distribución dada, o de variables auxiliares independientes de una muestra.

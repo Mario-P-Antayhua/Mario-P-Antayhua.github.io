@@ -1,0 +1,56 @@
+---
+title: "Predicción óptima y actualización de una predicción"
+description: "La esperanza condicional como predictor que minimiza la matriz de error cuadrático medio, la proyección lineal con los mismos momentos de segundo orden, el caso normal y la actualización de una predicción cuando llega información nueva mediante la innovación."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Predicción]
+---
+
+El filtro de Kalman es una cadena de predicciones. En cada período se predice el estado con la información pasada, y cuando llega una observación nueva se corrige la predicción con lo que la observación aporta. Todo el algoritmo es una aplicación repetida de dos resultados: cuál es la mejor predicción de un vector aleatorio dada cierta información, y cómo se modifica esa predicción cuando se agrega información. Esta nota los demuestra en el caso general, con los resultados de la [Nota “Esperanza condicional”](../econometria-1/14-esperanza-condicional.qmd) y de la [Nota “La distribución normal multivariante”](../econometria-1/13-la-distribucion-normal-multivariante.qmd), que el filtro usa sin modificación.
+
+Sea $\vect{Y}\in\mathbb{R}^p$ el vector que se quiere predecir y $\vect{X}$ el vector de información. Un ***predictor*** es una función $\vect{g}(\vect{X})$, y su ***matriz de error cuadrático medio*** es $\mat{M}(\vect{g})=\E[(\vect{Y}-\vect{g}(\vect{X}))(\vect{Y}-\vect{g}(\vect{X}))^{\top}]$. Dado que el error es un vector, se compara la matriz con el orden de Loewner: $\mat{A}\succeq\mat{B}$ si $\mat{A}-\mat{B}$ es semidefinida positiva, lo que equivale a que toda combinación lineal $\vect{a}^{\top}\vect{Y}$ tenga mayor error con el predictor $\vect{g}$.
+
+::: {#thm-predictor-optimo-vectorial}
+## La esperanza condicional minimiza la matriz de error
+
+Sean $\vect{m}(\vect{X})=\E[\vect{Y}\mid\vect{X}]$ y $\vect{Y}$ con segundo momento finito. Para todo predictor $\vect{g}$ con segundo momento finito, $\mat{M}(\vect{g})=\mat{M}(\vect{m})+\E[(\vect{m}-\vect{g})(\vect{m}-\vect{g})^{\top}]\succeq\mat{M}(\vect{m})$, con $\mat{M}(\vect{m})=\E[\Var(\vect{Y}\mid\vect{X})]$.
+
+:::
+
+::: {.proof}
+Se escribe $\vect{Y}-\vect{g}=(\vect{Y}-\vect{m})+(\vect{m}-\vect{g})$. El término cruzado $\E[(\vect{Y}-\vect{m})(\vect{m}-\vect{g})^{\top}]$ es cero, porque cada entrada es de la forma $\E[(Y_i-m_i)\,h(\vect{X})]$ con $h=m_j-g_j$ de segundo momento finito, y el teorema de la mejor predicción de Econometría I (con la propiedad de proyección extendida) da $\E[(Y_i-m_i)h(\vect{X})]=0$. Entonces $\mat{M}(\vect{g})=\mat{M}(\vect{m})+\E[(\vect{m}-\vect{g})(\vect{m}-\vect{g})^{\top}]$, y el último término es semidefinido positivo por ser una matriz de segundos momentos. Finalmente, $\mat{M}(\vect{m})=\E[(\vect{Y}-\vect{m})(\vect{Y}-\vect{m})^{\top}]=\E[\Var(\vect{Y}\mid\vect{X})]$ por las esperanzas iteradas.
+
+:::
+
+El predictor óptimo es entonces la esperanza condicional, pero su cálculo exige conocer la distribución conjunta. Si se restringe a predictores lineales, solo se necesitan los segundos momentos.
+
+::: {#thm-proyeccion-lineal-vectorial}
+## Mejor predictor lineal y caso normal
+
+Sean $\vect{Y}$ y $\vect{X}$ con medias $\vect{\mu}_Y,\vect{\mu}_X$ y covarianzas $\mat{\Sigma}_{YX}=\Cov(\vect{Y},\vect{X})$ y $\mat{\Sigma}_{XX}=\Var(\vect{X})$ definida positiva. (i) El mejor predictor lineal, que minimiza $\mat{M}$ entre las funciones $\vect{A}+\mat{C}\vect{X}$, es $\hat{\vect{Y}}=\vect{\mu}_Y+\mat{\Sigma}_{YX}\mat{\Sigma}_{XX}^{-1}(\vect{X}-\vect{\mu}_X)$, con matriz de error $\mat{\Sigma}_{YY}-\mat{\Sigma}_{YX}\mat{\Sigma}_{XX}^{-1}\mat{\Sigma}_{XY}$. (ii) Si $(\vect{Y},\vect{X})$ es normal, $\hat{\vect{Y}}=\E[\vect{Y}\mid\vect{X}]$ y el error condicional $\Var(\vect{Y}\mid\vect{X})$ es esa misma matriz, que no depende de $\vect{X}$.
+
+:::
+
+::: {.proof}
+Para (i), el residuo $\vect{e}=\vect{Y}-\hat{\vect{Y}}$ tiene media cero y $\Cov(\vect{e},\vect{X})=\mat{\Sigma}_{YX}-\mat{\Sigma}_{YX}\mat{\Sigma}_{XX}^{-1}\mat{\Sigma}_{XX}=\mat{0}$. Para cualquier predictor lineal $\vect{A}+\mat{C}\vect{X}$, la diferencia $\hat{\vect{Y}}-\vect{A}-\mat{C}\vect{X}$ es lineal en $\vect{X}$ y por tanto no correlacionada con $\vect{e}$, de modo que $\mat{M}(\vect{A}+\mat{C}\vect{X})=\Var(\vect{e})+\E[(\hat{\vect{Y}}-\vect{A}-\mat{C}\vect{X})(\cdot)^{\top}]\succeq\Var(\vect{e})$. La varianza del residuo es $\Var(\vect{Y})-\mat{\Sigma}_{YX}\mat{\Sigma}_{XX}^{-1}\mat{\Sigma}_{XY}$ al expandir. La parte (ii) es el teorema de marginales y condicionales de la normal multivariante.
+
+:::
+
+La actualización de una predicción responde a la pregunta de qué cambia cuando se conoce un dato más. Sea la información $\vect{X}=(\vect{X}_1,\vect{X}_2)$, donde $\vect{X}_1$ ya se tenía y $\vect{X}_2$ es nueva. La parte de $\vect{X}_2$ que no estaba contenida en $\vect{X}_1$ es la ***innovación*** $\vect{v}=\vect{X}_2-\E[\vect{X}_2\mid\vect{X}_1]$ (o su proyección lineal), y la corrección de la predicción es proporcional a ella.
+
+::: {#thm-actualizacion}
+## Actualización de una predicción con información nueva
+
+En el caso normal (o con proyecciones lineales en general), con $\hat{\vect{Y}}_1=\E[\vect{Y}\mid\vect{X}_1]$, $\vect{v}=\vect{X}_2-\E[\vect{X}_2\mid\vect{X}_1]$ y $\mat{F}=\Var(\vect{v})$ invertible,
+$$
+\E[\vect{Y}\mid\vect{X}_1,\vect{X}_2]=\hat{\vect{Y}}_1+\Cov(\vect{Y},\vect{v})\mat{F}^{-1}\vect{v},\qquad\Var(\vect{Y}\mid\vect{X}_1,\vect{X}_2)=\Var(\vect{Y}\mid\vect{X}_1)-\Cov(\vect{Y},\vect{v})\mat{F}^{-1}\Cov(\vect{v},\vect{Y}).
+$$ {#eq-actualizacion}
+
+:::
+
+::: {.proof}
+El vector $(\vect{X}_1,\vect{v})$ es una transformación afín invertible de $(\vect{X}_1,\vect{X}_2)$, porque $\vect{X}_2=\vect{v}+\E[\vect{X}_2\mid\vect{X}_1]$ y la esperanza condicional es lineal en $\vect{X}_1$ en el caso normal. Condicionar en uno u otro da la misma información. Además $\vect{v}$ es no correlacionada con $\vect{X}_1$ por la propiedad de proyección, y por tanto independiente de $\vect{X}_1$ en el caso normal. Aplicando la fórmula del teorema anterior a $(\vect{X}_1,\vect{v})$, cuya matriz de covarianza es diagonal por bloques, la matriz $\mat{\Sigma}_{YX}\mat{\Sigma}_{XX}^{-1}$ se reparte en dos sumandos: $\Cov(\vect{Y},\vect{X}_1)\Var(\vect{X}_1)^{-1}(\vect{X}_1-\vect{\mu}_1)$, que es $\hat{\vect{Y}}_1$, y $\Cov(\vect{Y},\vect{v})\mat{F}^{-1}\vect{v}$. Del mismo modo, la matriz de error resta dos términos, y el primero es $\Var(\vect{Y}\mid\vect{X}_1)$.
+
+:::
+
+La fórmula tiene la forma exacta de una actualización del filtro de Kalman: la predicción anterior, más una ganancia $\Cov(\vect{Y},\vect{v})\mat{F}^{-1}$ por la innovación, y una varianza que disminuye. Con números, sea $(Y,X_1,X_2)$ normal de media cero con covarianza $\left(\begin{smallmatrix}2&1&0.5\\1&2&0.8\\0.5&0.8&1.5\end{smallmatrix}\right)$. Con solo $X_1$, $\E[Y\mid X_1]=0.5X_1$ y $\Var(Y\mid X_1)=2-0.5=1.5$. La innovación de $X_2$ es $v=X_2-0.4X_1$, con $\Var(v)=1.5-0.8^2/2=1.18$ y $\Cov(Y,v)=0.5-0.4\cdot1=0.1$. La actualización da $\E[Y\mid X_1,X_2]=0.5X_1+(0.1/1.18)(X_2-0.4X_1)=0.4661X_1+0.0847X_2$ y la varianza condicional $1.5-0.1^2/1.18=1.4915$. La regresión directa sobre $(X_1,X_2)$ da los mismos coeficientes $(0.4661,0.0847)$ y la misma varianza $1.4915$, lo que confirma la fórmula.

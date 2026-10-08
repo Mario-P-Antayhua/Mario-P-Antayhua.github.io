@@ -1,0 +1,29 @@
+---
+title: "La ley uniforme de los grandes números"
+description: "La convergencia uniforme en probabilidad de un promedio muestral de funciones continuas del parámetro sobre un espacio compacto, con una función dominante, y la continuidad de su límite."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Verosimilitud]
+---
+
+La ley de los grandes números dice que, para cada parámetro $\vect{\theta}$ fijo, el promedio de $q(X_i,\vect{\theta})$ se acerca a su esperanza. Para estudiar el máximo de un promedio se necesita más: que la aproximación sea buena a la vez en todos los parámetros, porque el punto donde ocurre el máximo depende de la muestra. Esa convergencia uniforme no es consecuencia de la puntual, y requiere condiciones de continuidad y de dominancia. Esta nota las enuncia y demuestra el resultado con la compacidad de la [Nota “Conjuntos compactos y el teorema de Heine–Borel”](../matematica-1/28-conjuntos-compactos-y-el-teorema-de-heine-borel.qmd) y la ley débil de Khinchin de la [Nota “Leyes de los grandes números”](../econometria-1/16-leyes-de-los-grandes-numeros.qmd).
+
+::: {#thm-ulln}
+## Ley uniforme de los grandes números
+
+Sean $X_1,X_2,\ldots$ iid, $\Theta\subseteq\mathbb{R}^k$ compacto y $q(x,\vect{\theta})$ una función continua en $\vect{\theta}$ para cada $x$ y medible en $x$ para cada $\vect{\theta}$, con $\E\bigl[\sup_{\vect{\theta}\in\Theta}|q(X,\vect{\theta})|\bigr]<\infty$. Sea $Q(\vect{\theta})=\E[q(X,\vect{\theta})]$ y $Q_n(\vect{\theta})=\tfrac1n\sum_{i=1}^nq(X_i,\vect{\theta})$. Entonces $Q$ es continua en $\Theta$ y $\sup_{\vect{\theta}\in\Theta}|Q_n(\vect{\theta})-Q(\vect{\theta})|\overset{p}{\to}0$.
+
+:::
+
+::: {.proof}
+Sea $D(x)=\sup_{\vect{\theta}\in\Theta}|q(x,\vect{\theta})|$, medible porque el supremo sobre $\Theta$ coincide por continuidad con el supremo sobre un subconjunto numerable denso. Para $\vect{\theta}\in\Theta$ y $\delta>0$ se define la oscilación local $w(x,\vect{\theta},\delta)=\sup\{|q(x,\vect{\theta}')-q(x,\vect{\theta})|:\vect{\theta}'\in\Theta,\ \|\vect{\theta}'-\vect{\theta}\|<\delta\}$, acotada por $2D(x)$. Por la continuidad de $q$ en $\vect{\theta}$, $w(x,\vect{\theta},\delta)\to0$ cuando $\delta\to0$ para cada $x$, y como $2D(X)$ es integrable, la convergencia dominada (E5) da $\E[w(X,\vect{\theta},\delta)]\to0$.
+
+Dado $\varepsilon>0$, para cada $\vect{\theta}\in\Theta$ se elige $\delta_{\vect{\theta}}$ con $\E[w(X,\vect{\theta},\delta_{\vect{\theta}})]<\varepsilon$. Las bolas abiertas $B(\vect{\theta},\delta_{\vect{\theta}})$ cubren $\Theta$, y por la compacidad existe un subcubrimiento finito $B_j=B(\vect{\theta}_j,\delta_j)$, $j=1,\ldots,J$. Para todo $\vect{\theta}$ y todo $\vect{\theta}'$ con $\|\vect{\theta}'-\vect{\theta}\|<\delta_{\vect{\theta}}$, $|Q(\vect{\theta}')-Q(\vect{\theta})|\leq\E[w(X,\vect{\theta},\delta_{\vect{\theta}})]<\varepsilon$, lo que prueba que $Q$ es continua en cada punto. Además, para $\vect{\theta}\in B_j$ se tiene $|Q(\vect{\theta})-Q(\vect{\theta}_j)|<\varepsilon$ y
+$$
+|Q_n(\vect{\theta})-Q(\vect{\theta})|\leq\frac1n\sum_{i=1}^nw(X_i,\vect{\theta}_j,\delta_j)+|Q_n(\vect{\theta}_j)-Q(\vect{\theta}_j)|+\varepsilon .
+$$
+Como hay finitos $j$, la ley débil de Khinchin da, con probabilidad que tiende a uno, $\tfrac1n\sum_iw(X_i,\vect{\theta}_j,\delta_j)<\E[w(X,\vect{\theta}_j,\delta_j)]+\varepsilon<2\varepsilon$ y $|Q_n(\vect{\theta}_j)-Q(\vect{\theta}_j)|<\varepsilon$ para todos los $j$ a la vez. En ese evento, $\sup_{\vect{\theta}}|Q_n(\vect{\theta})-Q(\vect{\theta})|<4\varepsilon$. Como $\varepsilon$ es arbitrario, el supremo tiende a cero en probabilidad.
+
+:::
+
+La compacidad y la dominancia no son detalles técnicos. Sin la primera, la convergencia puntual puede ser uniforme en cada compacto pero no en todo el espacio, y sin la segunda, una cola pesada puede arruinar la aproximación en parámetros extremos. Con números, sea $q(x,\theta)=-(x-\theta)^2$ en $\Theta=[0,3]$, con $X\sim\N(1,1)$. La función dominante es $\sup_\theta(x-\theta)^2\leq2x^2+18$, integrable, y $Q(\theta)=-(1+(1-\theta)^2)$. En una simulación con semilla fija, la desviación máxima $\sup_\theta|Q_n-Q|$ sobre una rejilla de pasos de $0.01$ fue $0.182$ con $n=100$ y $0.029$ con $n=10\,000$, que disminuye con $n$ como el teorema asegura.

@@ -12,7 +12,7 @@ listing:
 
 <p class="estado">En proceso</p>
 
-Aquí desarrollo los espacios vectoriales, normados y con producto interno, el álgebra matricial y la integral de Riemann. Cada tema es una nota independiente que se apoya solo en las anteriores.
+Aquí desarrollo los espacios vectoriales, normados y con producto interno, la proyección ortogonal, el álgebra matricial con el determinante, las matrices particionadas y el producto de Kronecker, y los valores propios con el teorema espectral y las formas cuadráticas. Cada nota se apoya solo en las de Matemática I y en las anteriores de este curso.
 
 ## Notas {.unnumbered}
 

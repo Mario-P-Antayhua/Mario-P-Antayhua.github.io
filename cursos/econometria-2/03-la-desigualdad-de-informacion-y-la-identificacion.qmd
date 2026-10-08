@@ -1,0 +1,55 @@
+---
+title: "La desigualdad de información y la identificación"
+description: "La divergencia de Kullback–Leibler entre dos densidades, su no negatividad y su nulidad solo entre densidades iguales, la identificación de un modelo paramétrico y el parámetro verdadero como maximizador único de la log-verosimilitud esperada."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Verosimilitud]
+---
+
+Un estimador de máxima verosimilitud maximiza la log-verosimilitud de la muestra, pero lo que se quiere es acercarse al parámetro verdadero. El puente entre ambas cosas es que, en promedio, la log-verosimilitud alcanza su máximo exactamente en el parámetro verdadero. Esta nota demuestra esa afirmación con una desigualdad elemental del logaritmo, que mide la distancia entre dos densidades con la divergencia de Kullback–Leibler, y precisa la condición de identificación que impide que dos parámetros distintos describan la misma distribución.
+
+::: {#def-kl}
+## Divergencia de Kullback–Leibler
+
+Sean $f_0$ y $f$ dos densidades (o funciones de masa) con $f>0$ en el soporte de $f_0$. La ***divergencia de Kullback–Leibler*** de $f$ respecto de $f_0$ es $\mathrm{KL}(f_0\|f)=\E_{f_0}\bigl[\ln\bigl(f_0(X)/f(X)\bigr)\bigr]\in[0,\infty]$, donde la esperanza se toma con $X\sim f_0$.
+
+:::
+
+Que sea no negativa y que solo se anule cuando las densidades coinciden es el contenido del teorema siguiente, que es la desigualdad de Jensen para el logaritmo y que aquí se demuestra con la acotación $\ln y\leq y-1$.
+
+::: {#thm-desigualdad-informacion}
+## Desigualdad de información
+
+Con $f_0$ y $f$ como en la definición, $\mathrm{KL}(f_0\|f)\geq0$, y $\mathrm{KL}(f_0\|f)=0$ si y solo si $f=f_0$ casi seguramente bajo $f_0$.
+
+:::
+
+::: {.proof}
+Sea $Y=f(X)/f_0(X)>0$ con $X\sim f_0$. Su esperanza es $\E[Y]=\int_{\{f_0>0\}}f(x)\,dx\leq1$. Se escribe $-\ln Y=(Y-1-\ln Y)+(1-Y)$, donde el primer sumando es no negativo, porque $\ln y\leq y-1$ para $y>0$ por el [Corolario “Desigualdades del logaritmo y de las medias”](../matematica-1/36-convexidad-y-desigualdad-de-jensen.qmd#cor-desigualdades-log), con igualdad solo si $y=1$, y el segundo tiene esperanza $1-\E[Y]\geq0$. Entonces $\mathrm{KL}(f_0\|f)=\E[Y-1-\ln Y]+\bigl(1-\E[Y]\bigr)\geq0$. Si es cero, los dos sumandos no negativos tienen esperanza cero, de modo que $Y-1-\ln Y=0$ casi seguramente por la propiedad (iii) de la proposición de propiedades inmediatas de la esperanza, es decir, $Y=1$ casi seguramente. Recíprocamente, si $f=f_0$ casi seguramente, el logaritmo de $f_0/f$ es cero.
+
+:::
+
+Con números, para dos exponenciales con tasas $\lambda_0=2$ y $\lambda=1$, la divergencia es $\mathrm{KL}=\ln(\lambda_0/\lambda)-(\lambda_0-\lambda)/\lambda_0=\ln2-0.5=0.1931>0$, y es cero solo si $\lambda=\lambda_0$. La divergencia no es simétrica: la que va de $\lambda=1$ a $\lambda_0=2$ vale $\ln(1/2)-(1-2)/1=0.3069$. Se aplica a un modelo paramétrico con una condición que impide que dos parámetros produzcan la misma distribución.
+
+::: {#def-identificacion}
+## Identificación
+
+El modelo $\{f(\cdot;\vect{\theta}):\vect{\theta}\in\Theta\}$ está ***identificado*** en $\vect{\theta}_0$ si, para todo $\vect{\theta}\in\Theta$ con $\vect{\theta}\neq\vect{\theta}_0$, $\Prob_{\vect{\theta}_0}\bigl(f(X;\vect{\theta})\neq f(X;\vect{\theta}_0)\bigr)>0$.
+
+:::
+
+La identificación es una propiedad del modelo y no de la muestra. Si no se cumple, ningún estimador puede distinguir entre los parámetros que dan la misma distribución. Por ejemplo, si $X\sim\N(a+b,1)$ con $(a,b)\in\mathbb{R}^2$, los pares $(1,2)$ y $(0,3)$ producen la misma densidad, y los datos solo informan sobre la suma $a+b$. Con identificación, la log-verosimilitud esperada tiene un máximo único en el valor verdadero.
+
+::: {#cor-maximo-unico}
+## El parámetro verdadero maximiza la log-verosimilitud esperada
+
+Sea $Q(\vect{\theta})=\E_{\vect{\theta}_0}[\ln f(X;\vect{\theta})]$, finita para todo $\vect{\theta}\in\Theta$. Si el modelo está identificado en $\vect{\theta}_0$, entonces $Q(\vect{\theta})<Q(\vect{\theta}_0)$ para todo $\vect{\theta}\neq\vect{\theta}_0$.
+
+:::
+
+::: {.proof}
+Por la finitud, $Q(\vect{\theta}_0)-Q(\vect{\theta})=\E_{\vect{\theta}_0}\bigl[\ln\bigl(f(X;\vect{\theta}_0)/f(X;\vect{\theta})\bigr)\bigr]=\mathrm{KL}\bigl(f(\cdot;\vect{\theta}_0)\|f(\cdot;\vect{\theta})\bigr)$. Es no negativa por el teorema, y es cero solo si las densidades coinciden casi seguramente, lo que la identificación excluye para $\vect{\theta}\neq\vect{\theta}_0$.
+
+:::
+
+Con números, para el modelo exponencial con $\lambda_0=2$, $Q(\lambda)=\ln\lambda-\lambda\E[X]=\ln\lambda-\lambda/2$, con derivada $1/\lambda-1/2$ que se anula en $\lambda=2$, y $Q(2)-Q(1)=(\ln2-1)-(0-0.5)=0.1931$, la divergencia calculada antes. La log-verosimilitud muestral $\ell_n$ se aproxima a $Q$ para cada $\vect{\theta}$ por la ley de los grandes números, pero para que sus máximos se aproximen la aproximación debe ser uniforme en $\vect{\theta}$.

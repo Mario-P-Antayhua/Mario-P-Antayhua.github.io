@@ -1,0 +1,90 @@
+---
+title: "Sucesiones en espacios métricos, completitud y puntos fijos"
+description: "Convergencia y sucesiones de Cauchy en un espacio métrico, la completitud de ℝᵏ, la caracterización de la clausura por sucesiones y el teorema del punto fijo de una contracción."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Topología de la recta y del espacio]
+---
+
+La definición $\varepsilon$-$N$ de límite de la [Nota “Sucesiones y su límite”](18-sucesiones-y-su-limite.qmd) usa el valor absoluto solo para medir la distancia entre $x_n$ y $x$. Sustituirlo por la métrica de un espacio cualquiera da la noción de convergencia en un espacio métrico, y con ella se pueden traducir a sucesiones las nociones topológicas de la nota anterior. Esta nota hace esa traducción, introduce la completitud, que es la propiedad de que las sucesiones de Cauchy convergen, y demuestra el teorema del punto fijo de una contracción, la herramienta con la que se resuelven ecuaciones sin fórmula explícita.
+
+::: {#def-convergencia-metrica}
+## Convergencia y sucesiones de Cauchy en un espacio métrico
+
+Sea $(X,d)$ un espacio métrico. Una sucesión $(x_n)$ en $X$ ***converge*** a $x\in X$, lo que se escribe $x_n\to x$, si para todo $\varepsilon>0$ existe $N$ tal que $d(x_n,x)<\varepsilon$ para todo $n\geq N$. Es de ***Cauchy*** si para todo $\varepsilon>0$ existe $N$ tal que $d(x_n,x_m)<\varepsilon$ para todos $m,n\geq N$. El espacio $X$ es ***completo*** si toda sucesión de Cauchy en $X$ converge a un punto de $X$.
+
+:::
+
+Todos los resultados de las notas sobre sucesiones de reales que solo usan la desigualdad triangular se trasladan sin cambio: el límite es único, y toda sucesión convergente es de Cauchy. La prueba de la unicidad, por ejemplo, toma $\varepsilon=d(x,y)/2$ si $x_n\to x$ y $x_n\to y$ con $x\neq y$, y la desigualdad triangular da $d(x,y)\leq d(x,x_n)+d(x_n,y)<d(x,y)$ para $n$ grande, una contradicción. La caracterización de los conjuntos cerrados por sucesiones es la traducción central.
+
+::: {#prp-clausura-sucesiones}
+## Clausura y conjuntos cerrados mediante sucesiones
+
+Sea $E\subseteq X$. (i) Un punto $p$ pertenece a $\overline{E}$ si y solo si existe una sucesión en $E$ que converge a $p$. (ii) $E$ es cerrado si y solo si el límite de toda sucesión convergente de puntos de $E$ pertenece a $E$.
+
+:::
+
+::: {.proof}
+Para (i), si $p\in\overline{E}$, o bien $p\in E$ y la sucesión constante $p,p,\ldots$ converge a $p$, o bien $p$ es punto límite de $E$ y para cada $n$ la vecindad $N_{1/n}(p)$ contiene un $x_n\in E$; entonces $d(x_n,p)<1/n\to0$ y $x_n\to p$. Recíprocamente, si $x_n\to p$ con $x_n\in E$, para cada vecindad $N_\varepsilon(p)$ existe $n$ con $x_n\in N_\varepsilon(p)$; si $p\notin E$, ese $x_n\neq p$ prueba que $p$ es punto límite, de modo que $p\in\overline{E}$.
+
+Para (ii), si $E$ es cerrado, $\overline{E}=E$ por el [Teorema “Propiedades de la clausura”](26-conjuntos-abiertos-cerrados-y-la-clausura.qmd#thm-clausura), y (i) da que todo límite de una sucesión en $E$ está en $E$. Recíprocamente, si $p$ es punto límite de $E$, (i) da $p\in\overline{E}$ y, por hipótesis, el límite de una sucesión en $E$ que converge a $p$ está en $E$, de modo que $p\in E$ y $E$ es cerrado.
+
+:::
+
+La completitud de $\mathbb{R}$ es el [Teorema “Criterio de Cauchy”](22-el-criterio-de-cauchy.qmd#thm-criterio-cauchy). Se extiende a $\mathbb{R}^k$ coordenada a coordenada.
+
+::: {#prp-rk-completo}
+## $\mathbb{R}^k$ es completo, y un cerrado de un espacio completo es completo
+
+(i) $\mathbb{R}^k$ con la distancia euclidiana es completo. (ii) Si $X$ es completo y $F\subseteq X$ es cerrado, entonces $F$, con la misma métrica, es completo.
+
+:::
+
+::: {.proof}
+Para (i), sea $(\vect{x}_n)$ de Cauchy en $\mathbb{R}^k$. Para cada coordenada $i$, $|x_{n,i}-x_{m,i}|\leq\|\vect{x}_n-\vect{x}_m\|$, porque $(x_{n,i}-x_{m,i})^2$ es uno de los sumandos no negativos de $\|\vect{x}_n-\vect{x}_m\|^2$; por lo tanto $(x_{n,i})_n$ es de Cauchy en $\mathbb{R}$ y converge a un real $x_i$ por el criterio de Cauchy. Sea $\vect{x}=(x_1,\ldots,x_k)$. Dado $\varepsilon>0$, para cada $i$ existe $N_i$ con $|x_{n,i}-x_i|<\varepsilon/\sqrt k$ para $n\geq N_i$, y con $N=\max_iN_i$ resulta, para $n\geq N$,
+$$
+\|\vect{x}_n-\vect{x}\|^2=\sum_{i=1}^{k}(x_{n,i}-x_i)^2<k\cdot\frac{\varepsilon^2}{k}=\varepsilon^2,
+$$
+de modo que $\vect{x}_n\to\vect{x}$.
+
+Para (ii), una sucesión de Cauchy en $F$ lo es en $X$, converge a un punto de $X$ por completitud, y ese límite está en $F$ por la [Proposición “Clausura y conjuntos cerrados mediante sucesiones”](#prp-clausura-sucesiones)(ii).
+
+:::
+
+Una función que acorta todas las distancias por un factor fijo menor que uno tiene un único punto que no mueve, y las iteraciones de la función convergen a él desde cualquier punto de partida.
+
+::: {#def-contraccion}
+## Contracción
+
+Una función $g:X\to X$ en un espacio métrico es una ***contracción*** si existe $q\in[0,1)$ tal que $d(g(x),g(y))\leq q\,d(x,y)$ para todos $x,y\in X$.
+
+:::
+
+Una contracción acorta todas las distancias en un factor fijo menor que uno. El teorema siguiente afirma que una función así, definida sobre un espacio completo, tiene exactamente un punto que no mueve, y que ese punto se alcanza iterando la función desde cualquier punto de partida.
+
+::: {#thm-punto-fijo}
+## Teorema del punto fijo de una contracción
+
+Sea $X$ un espacio métrico completo, no vacío, y $g:X\to X$ una contracción con constante $q$. Entonces existe un único $x^*\in X$ con $g(x^*)=x^*$, y para cualquier $x_0\in X$ la sucesión $x_{n+1}=g(x_n)$ converge a $x^*$ con la cota
+$$
+d(x_n,x^*)\leq\frac{q^n}{1-q}\,d(x_1,x_0).
+$$ {#eq-cota-contraccion}
+
+:::
+
+::: {.proof}
+La estrategia consiste en probar que $(x_n)$ es de Cauchy, de modo que converge por completitud, y que su límite es un punto fijo. Por inducción, $d(x_{n+1},x_n)\leq q^n\,d(x_1,x_0)$: para $n=0$ es una igualdad, y si vale para $n$, $d(x_{n+2},x_{n+1})=d(g(x_{n+1}),g(x_n))\leq q\,d(x_{n+1},x_n)\leq q^{n+1}d(x_1,x_0)$. Para $m>n$, la desigualdad triangular repetida y la suma geométrica de la [Proposición “Suma geométrica finita”](06-sumatorias-potencias-y-binomio.qmd#prp-suma-geometrica) dan
+$$
+d(x_m,x_n)\leq\sum_{k=n}^{m-1}d(x_{k+1},x_k)\leq d(x_1,x_0)\sum_{k=n}^{m-1}q^k\leq\frac{q^n}{1-q}\,d(x_1,x_0).
+$$
+Como $q^n\to0$ por el [Lema “$r^{N}\to 0$ cuando $|r|<1$”](23-series-infinitas.qmd#lem-potencia-a-cero), la sucesión es de Cauchy y converge a un $x^*\in X$.
+
+La función $g$ es continua en el sentido de que $d(g(x_n),g(x^*))\leq q\,d(x_n,x^*)\to0$, de modo que $x_{n+1}=g(x_n)\to g(x^*)$; por la unicidad del límite, $g(x^*)=x^*$. Si $y^*$ fuera otro punto fijo, $d(x^*,y^*)=d(g(x^*),g(y^*))\leq q\,d(x^*,y^*)$ obliga a $(1-q)d(x^*,y^*)\leq0$, es decir, $d(x^*,y^*)=0$. Finalmente, haciendo $m\to\infty$ en la cota de $d(x_m,x_n)$ y usando que $d(x_m,x_n)\to d(x^*,x_n)$ por la desigualdad triangular, se obtiene @eq-cota-contraccion.
+
+:::
+
+El método de aproximaciones sucesivas del teorema es el que se usa para resolver numéricamente ecuaciones $g(x)=x$. Con el espacio completo $X=[1,2]$, cerrado en $\mathbb{R}$, la función $g(x)=\tfrac12\bigl(x+\tfrac2x\bigr)$ aplica $X$ en sí mismo, porque $g(x)\geq1$ equivale a $x^2-2x+2\geq0$, siempre cierto, y $g(x)\leq\tfrac32$ equivale a $(x-1)(x-2)\leq0$, cierto en $X$. Es una contracción con $q=\tfrac12$, porque
+$$
+g(x)-g(y)=(x-y)\Bigl(\frac12-\frac1{xy}\Bigr)\quad\text{y}\quad\frac1{xy}\in\Bigl[\frac14,1\Bigr]\ \Rightarrow\ \Bigl|\frac12-\frac1{xy}\Bigr|\leq\frac12 .
+$$
+Su punto fijo cumple $x=\tfrac12(x+2/x)$, es decir, $x^2=2$, de modo que es $\sqrt2$. Partiendo de $x_0=1$ se obtienen $x_1=1.5$, $x_2=1.416667$, $x_3=1.414216$ y $x_4=1.414214$, y la cota @eq-cota-contraccion con $d(x_1,x_0)=0.5$ garantiza errores menores que $0.5,\ 0.25,\ 0.125,\ 0.0625$ para $n=1,2,3,4$, mucho más holgados que los errores reales.

@@ -1,8 +1,8 @@
 ---
 title: "Tablas de verdad y equivalencias lógicas"
-description: "Habiendo definido los cinco conectores por separado, conviene disponer de un instrumento que permita calcular el valor de verdad de cualquier combinación de ellos, por complicada que sea, de forma puramente mecánica."
+description: "Las tablas de verdad, la noción de tautología y de equivalencia lógica, y el catálogo de equivalencias que sostiene los métodos de demostración."
 author: "Mario Peñaloza"
-date: 2026-10-07
+date: 2026-10-08
 categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
 ---
 
@@ -48,12 +48,30 @@ $p\equiv q$.
 
 :::
 
+Dos casos extremos de proposición compuesta tienen nombre propio, porque fijan
+el vocabulario con el que se habla de validez en lógica.
+
+::: {#def-tautologia}
+## Tautología y contradicción
+
+Una proposición compuesta es una ***tautología*** si es verdadera para toda
+combinación de valores de verdad de sus componentes, y una
+***contradicción*** si es falsa para toda combinación.
+
+:::
+
+La proposición $p\vee\neg p$ es una tautología, porque en las dos filas
+posibles de su tabla uno de los dos disyuntos es verdadero; y la proposición
+$p\wedge\neg p$ es una contradicción, porque en esas mismas filas uno de los
+dos factores es falso. Con este vocabulario, la equivalencia lógica admite una
+reformulación inmediata: $p\equiv q$ si y solo si $p\leftrightarrow q$ es una
+tautología, ya que el bicondicional es verdadero exactamente en las filas donde
+ambas proposiciones coinciden.
+
 La utilidad de la equivalencia lógica es que permite sustituir una
 proposición por otra que dice exactamente lo mismo pero que resulta más
-manejable para demostrar. Esta idea, que ahora parece un tecnicismo, será en
-la [Subsección “Métodos de demostración”](04-metodos-de-demostracion.qmd) la que fundamente dos de los cinco métodos de
-demostración, así que conviene establecer con cuidado el catálogo de
-equivalencias que se usarán.
+manejable para demostrar, y por eso conviene establecer con cuidado el
+catálogo de equivalencias que se usarán.
 
 ::: {#prp-equivalencias}
 ## Equivalencias lógicas fundamentales

@@ -1,124 +1,90 @@
 ---
 title: "Probabilidad condicional e independencia"
-description: "Probabilidad condicional e independencia. Incluye Probabilidad condicional, Teorema de Bayes y Independencia de eventos."
+description: "La probabilidad condicional como nueva medida de probabilidad, la regla del producto, la probabilidad total, el teorema de Bayes y la independencia de eventos, con la diferencia entre independencia por pares y mutua."
 author: "Mario Peñaloza"
-date: 2026-10-07
+date: 2026-10-08
 categories: [Econometría I, Fundamentos de probabilidad]
 ---
+
+Saber que ocurrió un evento cambia lo que se puede esperar de otro. La probabilidad condicional formaliza ese cambio, y su caso límite, en el que saber no cambia nada, define la independencia. Ambas nociones se construyen a partir de los axiomas de la [Definición “Espacio de probabilidad”](01-espacios-de-probabilidad.qmd#def-espacio-probabilidad) sin añadir ninguno nuevo.
 
 ::: {#def-probabilidad-condicional}
 ## Probabilidad condicional
 
-Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad y
-$A,B\in\mathcal{F}$ con $\Prob{B}>0$. La ***probabilidad
-condicional*** de $A$ dado $B$ es
-$\Prob{A\mid B}:=\dfrac{\Prob{A\cap B}}{\Prob{B}}$.
+Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad y $B\in\mathcal{F}$ con $\Prob{B}>0$. La ***probabilidad condicional*** de $A\in\mathcal{F}$ dado $B$ es $\Prob{A\mid B}:=\Prob{A\cap B}/\Prob{B}$.
 
 :::
 
-Fijado $B$ con $\Prob{B}>0$, la función $A\mapsto\Prob{A\mid B}$
-satisface, por verificación directa a partir de la
-@def-probabilidad-condicional, los dos axiomas de Kolmogorov de la
-[Definición “Espacio de probabilidad”](01-espacios-de-probabilidad.qmd#def-espacio-probabilidad), de modo que
-$(\Omega,\mathcal{F},\Prob{\cdot\mid B})$ es, por derecho propio, otro
-espacio de probabilidad: condicionar no abandona el marco axiomático, y
-todo lo demostrado para probabilidades no condicionales, incluida la
-[Proposición “Propiedades básicas de la probabilidad”](01-espacios-de-probabilidad.qmd#prp-propiedades-probabilidad), se aplica sin cambios a
-$\Prob{\cdot\mid B}$. Reescribiendo la definición como
-$\Prob{A\cap B}=\Prob{A\mid B}\Prob{B}$ se obtiene la regla de la
-multiplicación, y aplicándola en las dos direcciones posibles se llega
-al resultado que permite invertir el orden del condicionamiento.
+La definición renormaliza la probabilidad: de todos los resultados posibles se conservan solo los de $B$, y se divide por $\Prob{B}$ para que el total vuelva a ser uno. Eso significa que condicionar no sale del marco axiomático, y todo lo demostrado para probabilidades vale para las condicionales.
+
+::: {#prp-condicional-es-probabilidad}
+## La probabilidad condicional es una probabilidad
+
+Si $\Prob{B}>0$, la función $A\mapsto\Prob{A\mid B}$ es una medida de probabilidad sobre $(\Omega,\mathcal{F})$.
+
+:::
+
+::: {.proof}
+Se verifican los axiomas. Primero, $\Prob{\Omega\mid B}=\Prob{\Omega\cap B}/\Prob{B}=1$. Segundo, si $A_1,A_2,\ldots$ son disjuntos dos a dos, los eventos $A_i\cap B$ también lo son y su unión es $\bigl(\bigcup_iA_i\bigr)\cap B$, de modo que la aditividad numerable de $\Prob{\cdot}$ da $\Prob{\bigcup_iA_i\mid B}=\sum_i\Prob{A_i\cap B}/\Prob{B}=\sum_i\Prob{A_i\mid B}$. Los valores están en $[0,1]$ porque $A\cap B\subseteq B$ y la monotonía da $\Prob{A\cap B}\leq\Prob{B}$.
+
+:::
+
+De la definición se obtiene la regla del producto $\Prob{A\cap B}=\Prob{A\mid B}\Prob{B}$, que se extiende a cualquier cantidad de eventos y es la herramienta para calcular probabilidades de secuencias.
+
+::: {#prp-regla-producto}
+## Regla del producto
+
+Si $\Prob{A_1\cap\cdots\cap A_{n-1}}>0$, entonces $\Prob{A_1\cap\cdots\cap A_n}=\Prob{A_1}\,\Prob{A_2\mid A_1}\,\Prob{A_3\mid A_1\cap A_2}\cdots\Prob{A_n\mid A_1\cap\cdots\cap A_{n-1}}$.
+
+:::
+
+::: {.proof}
+Se procede por inducción. Para $n=1$ la igualdad es trivial, y para $n=2$ es la definición de probabilidad condicional. Si la fórmula vale para $n-1$ eventos, la definición aplicada con $B=A_1\cap\cdots\cap A_{n-1}$ da $\Prob{A_1\cap\cdots\cap A_n}=\Prob{A_n\mid A_1\cap\cdots\cap A_{n-1}}\Prob{A_1\cap\cdots\cap A_{n-1}}$, y el segundo factor se reemplaza con la hipótesis de inducción. Las probabilidades condicionantes son positivas porque cada intersección contiene a la siguiente y la última tiene probabilidad positiva por hipótesis.
+
+:::
+
+Cuando el espacio se divide en causas posibles, la probabilidad de un evento se obtiene sumando la contribución de cada causa, y el teorema de Bayes recupera la probabilidad de cada causa dado el evento.
 
 ::: {#thm-bayes}
-## Teorema de Bayes
+## Probabilidad total y teorema de Bayes
 
-Sean $A,B\in\mathcal{F}$ con $\Prob{A}>0$ y $\Prob{B}>0$. Entonces
-
+Sea $\{B_i\}_{i\geq1}$ una ***partición*** de $\Omega$ en eventos disjuntos con $\Prob{B_i}>0$ y unión $\Omega$. Entonces, para todo evento $A$: (i) $\Prob{A}=\sum_i\Prob{A\mid B_i}\Prob{B_i}$; (ii) si $\Prob{A}>0$, para cada $j$,
 $$
-\Prob{A\mid B} = \frac{\Prob{B\mid A}\,\Prob{A}}{\Prob{B}}.
+\Prob{B_j\mid A}=\frac{\Prob{A\mid B_j}\Prob{B_j}}{\sum_i\Prob{A\mid B_i}\Prob{B_i}} .
 $$ {#eq-bayes}
 
 :::
 
 ::: {.proof}
-La @def-probabilidad-condicional aplicada dos veces, una vez
-condicionando en $B$ y otra en $A$, da las dos identidades
-$\Prob{A\cap B}=\Prob{A\mid B}\Prob{B}$ y
-$\Prob{A\cap B}=\Prob{B\mid A}\Prob{A}$, porque $A\cap B=B\cap A$.
-Igualando ambas expresiones para $\Prob{A\cap B}$ y despejando
-$\Prob{A\mid B}$, que es válido porque $\Prob{B}>0$, se obtiene
-exactamente @eq-bayes.
+Para (i), $A=\bigcup_i(A\cap B_i)$ es una unión disjunta, porque los $B_i$ lo son, y la aditividad numerable junto con la regla del producto da $\Prob{A}=\sum_i\Prob{A\cap B_i}=\sum_i\Prob{A\mid B_i}\Prob{B_i}$. Para (ii), la definición y la regla del producto dan $\Prob{B_j\mid A}=\Prob{A\cap B_j}/\Prob{A}=\Prob{A\mid B_j}\Prob{B_j}/\Prob{A}$, y se sustituye el denominador por (i).
 
 :::
 
-::: {#exm-bayes-diagnostico}
-## Inversión de un test diagnóstico
+Un test diagnóstico muestra por qué importa la inversión. Una enfermedad afecta al $1\,\%$ de una población, sea $A$ el evento de padecerla. Un test da positivo en el $95\,\%$ de los enfermos, y en el $5\,\%$ de los sanos. Con $B$ el evento «el test es positivo», la probabilidad total es $\Prob{B}=0.95\cdot0.01+0.05\cdot0.99=0.059$, y la fórmula de Bayes da $\Prob{A\mid B}=0.0095/0.059\approx0.161$. De cada cien personas con resultado positivo, solo unas dieciséis están enfermas, porque la enfermedad es rara y la mayoría de los positivos proviene del gran número de sanos. Confundir $\Prob{B\mid A}=0.95$ con $\Prob{A\mid B}=0.161$ es el error de interpretación más común de la probabilidad condicional.
 
-Una enfermedad afecta al $1\%$ de una población; sea $A$ el evento de
-padecerla, con $\Prob{A}=0.01$. Un test detecta la enfermedad
-correctamente en el $95\%$ de los casos cuando el paciente la tiene,
-$\Prob{B\mid A}=0.95$, donde $B$ es el evento de dar positivo, pero
-también arroja falsos positivos en el $5\%$ de los casos sin
-enfermedad, $\Prob{B\mid A^c}=0.05$. La probabilidad total de dar
-positivo se calcula descomponiendo $B$ en sus dos posibles orígenes,
-$\Prob{B}=\Prob{B\mid A}\Prob{A}+\Prob{B\mid A^c}\Prob{A^c}=
-(0.95)(0.01)+(0.05)(0.99)=0.059$. El @thm-bayes da entonces
+Otro ejemplo con tres causas: tres fábricas producen $50\,\%$, $30\,\%$ y $20\,\%$ de las piezas, con tasas de defecto de $1\,\%$, $2\,\%$ y $5\,\%$. La probabilidad de que una pieza sea defectuosa es $0.5\cdot0.01+0.3\cdot0.02+0.2\cdot0.05=0.021$, y dada una pieza defectuosa, las probabilidades de provenir de cada fábrica son $0.238$, $0.286$ y $0.476$, que suman uno. La fábrica menos productiva es la principal fuente de defectos.
 
-$$
-\Prob{A\mid B} = \frac{(0.95)(0.01)}{0.059} \approx 0.161,
-$$
-
-de modo que, pese a que el test acierta el $95\%$ de las veces sobre
-pacientes enfermos, solo alrededor del $16\%$ de quienes dan positivo
-están efectivamente enfermos. La razón es que la enfermedad es rara: la
-gran mayoría de la población no la tiene, y aunque la tasa de falsos
-positivos sea baja en términos relativos, sobre una base tan grande de
-personas sanas produce, en términos absolutos, casi tantos falsos
-positivos como verdaderos positivos genuinos. Este fenómeno, conocido
-como la falacia de la tasa base cuando se ignora, es la razón por la
-que interpretar $\Prob{B\mid A}$ como si fuera $\Prob{A\mid B}$, un
-error frecuente fuera del ámbito técnico, puede llevar a conclusiones
-completamente equivocadas.
-
-:::
-
-La probabilidad condicional describe cómo cambia la probabilidad de un
-evento al conocer otro; el caso particular en el que no cambia en
-absoluto merece un nombre propio, porque describe la ausencia de
-relación estadística entre dos eventos.
+Cuando conocer un evento no cambia la probabilidad de otro, la relación entre ambos desaparece desde el punto de vista probabilístico, y eso define la independencia.
 
 ::: {#def-independencia-eventos}
 ## Independencia de eventos
 
-Dos eventos $A,B\in\mathcal{F}$ son ***independientes*** si
-$\Prob{A\cap B}=\Prob{A}\Prob{B}$. Cuando $\Prob{B}>0$, esta condición
-equivale, por la @def-probabilidad-condicional, a
-$\Prob{A\mid B}=\Prob{A}$: conocer que ocurrió $B$ no altera la
-probabilidad de $A$.
+Dos eventos $A,B$ son ***independientes*** si $\Prob{A\cap B}=\Prob{A}\Prob{B}$. Cuando $\Prob{B}>0$, esto equivale a $\Prob{A\mid B}=\Prob{A}$. Una familia de eventos $\{A_i\}_{i\in I}$ es ***mutuamente independiente*** si, para toda subfamilia finita $i_1,\ldots,i_k$ de índices distintos, $\Prob{A_{i_1}\cap\cdots\cap A_{i_k}}=\Prob{A_{i_1}}\cdots\Prob{A_{i_k}}$.
 
 :::
 
-La independencia de eventos es la versión más sencilla de una idea que se generaliza a variables aleatorias, y conviene distinguirla desde ahora de la ausencia de correlación.
+La definición con producto se prefiere a la condicional porque no exige que $\Prob{B}>0$ y es simétrica. La independencia se conserva al reemplazar un evento por su complemento, lo que muestra que no depende de qué lado de cada evento se mire.
 
-::: {#idea-independencia-correlacion .callout-tip appearance="simple" title="Idea central: Independencia y correlación"}
-La independencia de eventos de esta subsección es la versión más
-primitiva de una idea que reaparecerá, en un lenguaje distinto, para
-variables aleatorias: la [Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd) definirá la
-covarianza entre dos variables aleatorias y mostrará que la
-independencia siempre implica covarianza nula, pero no al revés, porque
-la covarianza solo detecta relaciones *lineales* entre variables,
-mientras que la independencia descarta cualquier relación, lineal o no.
-Esa asimetría es la razón por la que, en econometría, la ausencia de
-correlación nunca se usa como sinónimo de independencia salvo bajo el
-supuesto adicional de normalidad conjunta, caso en el que ambas
-nociones sí coinciden, como mostrará la
-[Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd).
+::: {#prp-independencia-complemento}
+## Independencia y complementos
+
+Si $A$ y $B$ son independientes, también lo son $A$ y $B^c$, $A^c$ y $B$, y $A^c$ y $B^c$.
 
 :::
 
-Los eventos y la probabilidad condicional bastan para describir
-experimentos con resultados cualitativos, como si una moneda cae cara o
-sello, pero la mayoría de las cantidades de interés económico son
-numéricas: un ingreso, una tasa de interés, un número de transacciones.
-La noción que traduce el lenguaje de eventos al de números es la
-variable aleatoria, tema de la subsección siguiente.
+::: {.proof}
+Como $A=(A\cap B)\cup(A\cap B^c)$ es una unión disjunta, $\Prob{A\cap B^c}=\Prob{A}-\Prob{A\cap B}=\Prob{A}-\Prob{A}\Prob{B}=\Prob{A}\bigl(1-\Prob{B}\bigr)=\Prob{A}\Prob{B^c}$. Aplicando este resultado al par $(B,A)$ se obtiene la independencia de $B$ y $A^c$, y aplicándolo otra vez al par $(A^c,B)$, la de $A^c$ y $B^c$.
+
+:::
+
+La independencia de una familia es más exigente que la independencia de cada par. Con dos lanzamientos de una moneda equilibrada, sea $A$ «el primero es cara», $B$ «el segundo es cara» y $C$ «ambos lanzamientos coinciden». Cada evento tiene probabilidad $1/2$, y cada par tiene probabilidad de intersección $1/4=1/2\cdot1/2$, de modo que son independientes por pares. Sin embargo, $A\cap B\cap C=\{(\text{cara},\text{cara})\}$ tiene probabilidad $1/4$, mientras que el producto de las tres probabilidades es $1/8$. La familia no es mutuamente independiente: saber que $A$ y $B$ ocurrieron determina que $C$ ocurre, aunque saber solo uno de los dos no dice nada sobre $C$.

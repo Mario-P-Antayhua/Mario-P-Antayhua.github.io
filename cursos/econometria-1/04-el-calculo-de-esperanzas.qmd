@@ -1,0 +1,68 @@
+---
+title: "El cálculo de esperanzas"
+description: "El marco de integración que se acepta como axioma, la definición de esperanza y de variable integrable, sus propiedades inmediatas, la fórmula de la ley y la derivación de una esperanza bajo el signo de esperanza."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Fundamentos de probabilidad]
+---
+
+La esperanza de una variable discreta es una suma, y la de una variable continua es una integral. Para tratar ambos casos con la misma notación, y para justificar el intercambio de límites con esperanzas que aparecerá en las leyes de los grandes números y en la verosimilitud, hace falta la integral de Lebesgue. Desarrollarla exigiría un curso de teoría de la medida, que no es el objetivo de estos apuntes. Lo que se hace aquí es declarar una vez, como axioma de marco, las reglas del cálculo que se usarán, y demostrar todo lo demás a partir de ellas. Los resultados de las notas siguientes dependen de estas reglas y de nada más. Las integrales de Riemann y la fórmula de cambio de variable de las notas de [Nota “La integral de Riemann”](../matematica-3/01-la-integral-de-riemann.qmd) son casos particulares de ellas.
+
+Se dice que una propiedad de $\omega\in\Omega$ se cumple ***casi seguramente*** (a.s.) si el conjunto donde falla está contenido en un evento de probabilidad cero. Se dice que una variable aleatoria $X$ es ***integrable*** si $\E|X|<\infty$, donde la esperanza de una variable no negativa puede ser infinita.
+
+::: {#ax-esperanza .callout-important appearance="simple" title="Axioma: Cálculo de esperanzas"}
+A cada variable aleatoria $X\geq0$, y a cada variable aleatoria integrable, se le asocia su ***esperanza*** $\E[X]\in[0,\infty]$, respectivamente $\E[X]\in\mathbb{R}$, con las propiedades siguientes.
+
+**(E1)** *Indicadores.* $\E[\mathbf{1}_A]=\Prob{A}$ para todo evento $A$, donde $\mathbf{1}_A(\omega)=1$ si $\omega\in A$ y $0$ en otro caso.
+
+**(E2)** *Linealidad.* Si $X,Y$ son integrables y $a,b\in\mathbb{R}$, entonces $aX+bY$ es integrable y $\E[aX+bY]=a\E[X]+b\E[Y]$. Para variables no negativas y $a,b\geq0$ la igualdad vale con valores infinitos.
+
+**(E3)** *Monotonía.* Si $0\leq X\leq Y$, entonces $\E[X]\leq\E[Y]$; y si $X\leq Y$ son integrables, también.
+
+**(E4)** *Convergencia monótona.* Si $0\leq X_1\leq X_2\leq\cdots$ y $X_n\to X$, entonces $\E[X_n]\to\E[X]$, aun si el límite es infinito.
+
+**(E5)** *Convergencia dominada.* Si $X_n\to X$ casi seguramente y existe $Y$ integrable con $|X_n|\leq Y$ casi seguramente, entonces $X$ es integrable y $\E[X_n]\to\E[X]$.
+
+**(E6)** *Fórmula de la ley.* Sea $\vect{X}$ un vector aleatorio y $g$ continua a trozos (o de Borel) con $g(\vect{X})\geq0$ o integrable. Si $\vect{X}$ es discreto con función de masa $p$, entonces $\E[g(\vect{X})]=\sum_{\vect{x}}g(\vect{x})p(\vect{x})$; si $\vect{X}$ tiene densidad $f$, entonces $\E[g(\vect{X})]=\int g(\vect{x})f(\vect{x})\,d\vect{x}$.
+
+**(E7)** *Tonelli–Fubini.* Si $h\geq0$ es medible en $\mathbb{R}^m\times\mathbb{R}^n$, las dos integrales iteradas de $h$ existen y coinciden con la integral doble, en cualquier orden; si $h$ tiene integral absolutamente finita, lo mismo vale para $h$. Las mismas igualdades valen cuando alguna de las integrales es una suma sobre un conjunto numerable.
+
+**(E8)** *Cambio de variables.* Si $\vect{\varphi}:U\to V$ es una biyección de clase $C^1$ entre abiertos de $\mathbb{R}^k$ con inversa de clase $C^1$ y $h\geq0$ o integrable en $V$, entonces $\int_Vh(\vect{y})\,d\vect{y}=\int_Uh(\vect{\varphi}(\vect{x}))\,|\det\mat{J}_{\vect{\varphi}}(\vect{x})|\,d\vect{x}$.
+
+**(E9)** *Unicidad de la ley.* Dos medidas de probabilidad sobre $(\mathbb{R}^k,\mathcal{B}(\mathbb{R}^k))$ que coinciden sobre todos los rectángulos $\prod_{i=1}^k(a_i,b_i]$ son iguales.
+:::
+
+Las propiedades (E2) y (E3) son las conocidas de la suma y de la integral de Riemann; (E4) y (E5) son las que permiten tomar límites dentro de una esperanza bajo condiciones controladas; (E6) conecta la definición abstracta con las sumas y las integrales ordinarias; (E7) y (E8) son los teoremas de integración múltiple que se usarán para distribuciones conjuntas y transformaciones, y (E9) permite identificar una distribución conjunta por sus valores en rectángulos. Con ellas se obtienen las propiedades inmediatas de la esperanza.
+
+::: {#prp-esperanza-basica}
+## Propiedades inmediatas de la esperanza
+
+Sean $X,Y$ variables aleatorias integrables. (i) $\E[c]=c$ para toda constante $c$. (ii) $\bigl|\E[X]\bigr|\leq\E|X|$. (iii) Si $X\geq0$ y $\E[X]=0$, entonces $X=0$ casi seguramente. (iv) Si $X\leq Y$ casi seguramente, entonces $\E[X]\leq\E[Y]$.
+
+:::
+
+::: {.proof}
+Para (i), $c=c\cdot\mathbf{1}_{\Omega}$, y (E2) con (E1) dan $\E[c]=c\Prob{\Omega}=c$. Para (ii), $-|X|\leq X\leq|X|$, y (E3) con (E2) dan $-\E|X|\leq\E[X]\leq\E|X|$. Para (iii), para cada $n$ se tiene $\tfrac1n\mathbf{1}_{\{X>1/n\}}\leq X$, de modo que (E3), (E2) y (E1) dan $\tfrac1n\Prob{X>1/n}\leq\E[X]=0$, y entonces $\Prob{X>1/n}=0$. Los eventos $\{X>1/n\}$ crecen hacia $\{X>0\}$, y la continuidad de la probabilidad da $\Prob{X>0}=0$. Para (iv), sea $N=\{X>Y\}$, de probabilidad cero. Para cada variable integrable $Z$, se tiene $\min\{|Z|,n\}\mathbf{1}_N\leq n\mathbf{1}_N$, de modo que (E3) y (E1) dan $\E[\min\{|Z|,n\}\mathbf{1}_N]\leq n\Prob{N}=0$, y como $\min\{|Z|,n\}\mathbf{1}_N$ crece hacia $|Z|\mathbf{1}_N$ cuando $n\to\infty$, (E4) da $\E[|Z|\mathbf{1}_N]=0$, y por (ii) también $\E[Z\mathbf{1}_N]=0$. Entonces $\E[X]=\E[X\mathbf{1}_{N^c}]+\E[X\mathbf{1}_N]=\E[X\mathbf{1}_{N^c}]\leq\E[Y\mathbf{1}_{N^c}]=\E[Y]$, donde la desigualdad usa (E3) porque $X\mathbf{1}_{N^c}\leq Y\mathbf{1}_{N^c}$ en todo punto.
+
+:::
+
+Por la fórmula de la ley, la esperanza de una variable discreta es $\E[X]=\sum_xx\,p_X(x)$ y la de una continua es $\E[X]=\int xf_X(x)\,dx$, cuando existen. Con un dado equilibrado, $\E[X]=(1+\cdots+6)/6=3.5$ y $\E[X^2]=(1+4+9+16+25+36)/6=91/6\approx15.17$. Con la densidad $f_X(x)=2x$ en $[0,1]$ de la [Nota “Variables aleatorias y funciones de distribución”](03-variables-aleatorias-y-funciones-de-distribucion.qmd), $\E[X]=\int_0^12x^2\,dx=2/3$ y $\E[X^2]=\int_0^12x^3\,dx=1/2$.
+
+Un uso temprano y frecuente de las reglas de convergencia es derivar una esperanza respecto de un parámetro. La regla de Leibniz de la [Nota “Diferenciación bajo el signo de la integral”](../matematica-3/07-diferenciacion-bajo-el-signo-de-la-integral.qmd) exigía integrales de Riemann; con (E5) se obtiene la versión para esperanzas, que es la que se usa para estudiar la función score.
+
+::: {#prp-derivar-esperanza}
+## Derivación bajo el signo de esperanza
+
+Sea $\Theta\subseteq\mathbb{R}$ un intervalo abierto y $g(\vect{x},\theta)$ una función tal que $g(\vect{X},\theta)$ es integrable para cada $\theta\in\Theta$, $\theta\mapsto g(\vect{x},\theta)$ es derivable para cada $\vect{x}$, y existe $G(\vect{x})$ con $\bigl|\partial g/\partial\theta(\vect{x},\theta)\bigr|\leq G(\vect{x})$ para todo $\theta\in\Theta$ y $\E[G(\vect{X})]<\infty$. Entonces $\theta\mapsto\E[g(\vect{X},\theta)]$ es derivable y
+$$
+\frac{d}{d\theta}\E\bigl[g(\vect{X},\theta)\bigr]=\E\Bigl[\frac{\partial g}{\partial\theta}(\vect{X},\theta)\Bigr].
+$$ {#eq-derivar-esperanza}
+
+:::
+
+::: {.proof}
+Sea $(h_n)$ una sucesión no nula con $h_n\to0$ y $\theta+h_n\in\Theta$. Por la linealidad, $\bigl(\E[g(\vect{X},\theta+h_n)]-\E[g(\vect{X},\theta)]\bigr)/h_n=\E[D_n]$ con $D_n:=\bigl(g(\vect{X},\theta+h_n)-g(\vect{X},\theta)\bigr)/h_n$. Por el [Teorema “Teorema de Rolle y del valor medio”](../matematica-1/31-la-derivada-de-una-variable.qmd#thm-valor-medio), $D_n=\tfrac{\partial g}{\partial\theta}(\vect{X},\xi_n)$ para algún $\xi_n$ entre $\theta$ y $\theta+h_n$, de modo que $|D_n|\leq G(\vect{X})$, que es integrable. Además $D_n\to\tfrac{\partial g}{\partial\theta}(\vect{X},\theta)$ puntualmente por la definición de derivada. La convergencia dominada (E5) da $\E[D_n]\to\E[\tfrac{\partial g}{\partial\theta}(\vect{X},\theta)]$ para toda sucesión $h_n\to0$, que es la afirmación.
+
+:::
+
+Con números, sea $X$ uniforme en $(0,1)$ (densidad $1$ en ese intervalo) y $g(x,\theta)=e^{\theta x}$, con $\theta\in(-1,2)$. La cota $|xe^{\theta x}|\leq e^{2}$ es integrable. La esperanza es $\E[e^{\theta X}]=(e^\theta-1)/\theta$, cuya derivada en $\theta=1$ es $(\theta e^\theta-e^\theta+1)/\theta^2=1$, y la regla da $\E[Xe^{X}]=\int_0^1xe^x\,dx=1$, el mismo valor que el cálculo por partes de la [Nota “El teorema fundamental del cálculo”](../matematica-3/02-teorema-fundamental-del-calculo.qmd).

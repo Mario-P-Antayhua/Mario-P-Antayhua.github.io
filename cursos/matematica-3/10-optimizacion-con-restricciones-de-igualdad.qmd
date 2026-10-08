@@ -1,0 +1,62 @@
+---
+title: "Optimización con restricciones de igualdad"
+description: "El problema con restricciones de igualdad, la condición de independencia lineal, los multiplicadores de Lagrange demostrados con curvas sobre el conjunto factible, su suficiencia bajo convexidad y la demanda Cobb–Douglas."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Optimización]
+---
+
+Un consumidor maximiza su utilidad con un ingreso dado, y un modelo de proporciones maximiza una verosimilitud sujeta a que las probabilidades sumen uno. En ambos casos el óptimo se busca sobre un conjunto definido por ecuaciones, y la condición $\nabla f(\vect{x}^*)=\vect{0}$ del [Teorema “Condición necesaria de primer orden”](09-condiciones-de-optimalidad-sin-restricciones.qmd#thm-fermat) deja de ser necesaria, porque el punto óptimo puede ser uno donde $f$ todavía crece en direcciones que la restricción prohíbe. La condición correcta compara el gradiente de $f$ con los de las restricciones.
+
+::: {#def-problema-igualdad}
+## Problema con restricciones de igualdad
+
+Sea $D\subseteq\mathbb{R}^n$ abierto, $f:D\to\mathbb{R}$ y $g:D\to\mathbb{R}^m$ de clase $C^1$ con $m<n$. El problema consiste en minimizar (o maximizar) $f(\vect{x})$ sujeto a $g(\vect{x})=\vect{0}$. Un punto $\vect{x}^*$ con $g(\vect{x}^*)=\vect{0}$ es ***factible***, y satisface la ***calificación de independencia lineal de restricciones*** (LICQ) si $\rango\mat{J}_g(\vect{x}^*)=m$, es decir, si los gradientes $\nabla g_1(\vect{x}^*),\ldots,\nabla g_m(\vect{x}^*)$ son linealmente independientes.
+
+:::
+
+La calificación evita que dos restricciones sean redundantes o apunten en direcciones incompatibles en $\vect{x}^*$, y es exactamente la hipótesis del [Corolario “Curvas que respetan una restricción”](05-funcion-inversa-e-implicita.qmd#cor-curvas-restriccion), que garantiza que para cada dirección tangente al conjunto factible existe una curva factible con esa velocidad. Con ese corolario el resultado central se demuestra sin recurrir a argumentos no probados.
+
+::: {#thm-lagrange}
+## Condición de primer orden de Lagrange
+
+Sea $\vect{x}^*$ un óptimo local del problema, con LICQ en $\vect{x}^*$. Entonces existe $\vect{\lambda}^*\in\mathbb{R}^m$, el vector de ***multiplicadores de Lagrange***, tal que
+$$
+\nabla f(\vect{x}^*)=\mat{J}_g(\vect{x}^*)^{\top}\vect{\lambda}^*=\sum_{j=1}^{m}\lambda_j^*\,\nabla g_j(\vect{x}^*).
+$$ {#eq-lagrange-primer-orden}
+
+:::
+
+::: {.proof}
+Sea $\vect{u}\in\ker\mat{J}_g(\vect{x}^*)$. El corolario de curvas da una curva $\vect{x}:(-\tau,\tau)\to D$ de clase $C^1$ con $\vect{x}(0)=\vect{x}^*$, $\vect{x}'(0)=\vect{u}$ y $g(\vect{x}(t))=t\,\mat{J}_g(\vect{x}^*)\vect{u}=\vect{0}$, de modo que todos sus puntos son factibles. Como $\vect{x}^*$ es un óptimo local del problema y $\vect{x}(t)\to\vect{x}^*$, la función $\phi(t):=f(\vect{x}(t))$ tiene un óptimo local en $t=0$ y es derivable por la regla de la cadena, con $\phi'(0)=\langle\nabla f(\vect{x}^*),\vect{u}\rangle$. El [Teorema “Teorema de Fermat”](../matematica-1/31-la-derivada-de-una-variable.qmd#thm-fermat-una-variable) da $\phi'(0)=0$. Como $\vect{u}$ era arbitrario en el núcleo, $\nabla f(\vect{x}^*)\in\ker\mat{J}_g(\vect{x}^*)^{\perp}$. Por el [Corolario “Rango por filas y por columnas, y núcleo ortogonal a las filas”](../matematica-2/07-matrices-transformaciones-lineales-y-rango.qmd#cor-rango-fila-columna), ese complemento ortogonal es $\operatorname{Im}\mat{J}_g(\vect{x}^*)^{\top}$, el espacio generado por las filas de $\mat{J}_g(\vect{x}^*)$, de modo que existe $\vect{\lambda}^*$ con $\nabla f(\vect{x}^*)=\mat{J}_g(\vect{x}^*)^{\top}\vect{\lambda}^*$.
+
+:::
+
+La condición es necesaria y no suficiente. Para conseguir suficiencia se necesita convexidad del ***lagrangiano*** $L(\vect{x}):=f(\vect{x})-\langle\vect{\lambda}^*,g(\vect{x})\rangle$, cuyo gradiente en $\vect{x}^*$ es exactamente $\nabla f(\vect{x}^*)-\mat{J}_g(\vect{x}^*)^{\top}\vect{\lambda}^*$.
+
+::: {#prp-suficiencia-lagrange}
+## Suficiencia de Lagrange bajo convexidad
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y convexo, $f,g$ de clase $C^2$, $\vect{x}^*$ factible y $\vect{\lambda}^*$ tales que $\nabla f(\vect{x}^*)=\mat{J}_g(\vect{x}^*)^{\top}\vect{\lambda}^*$. Si $L(\vect{x})=f(\vect{x})-\langle\vect{\lambda}^*,g(\vect{x})\rangle$ es convexa en $D$, entonces $\vect{x}^*$ es un mínimo global de $f$ sobre el conjunto factible. Esto ocurre, en particular, cuando $f$ es convexa y $g$ es afín.
+
+:::
+
+::: {.proof}
+El gradiente de $L$ en $\vect{x}^*$ es nulo, y $L$ es convexa, de modo que el [Corolario “Bajo convexidad, el primer orden es necesario y suficiente”](09-condiciones-de-optimalidad-sin-restricciones.qmd#cor-primer-orden-suficiente-convexa) da $L(\vect{y})\geq L(\vect{x}^*)$ para todo $\vect{y}\in D$. Si $\vect{y}$ es factible, $g(\vect{y})=\vect{0}=g(\vect{x}^*)$, de modo que $L(\vect{y})=f(\vect{y})$ y $L(\vect{x}^*)=f(\vect{x}^*)$, y la desigualdad dice $f(\vect{y})\geq f(\vect{x}^*)$. Si $g$ es afín, $\langle\vect{\lambda}^*,g\rangle$ es afín, su hessiana es nula y $L$ tiene la hessiana de $f$.
+
+:::
+
+Con números, se minimiza $f(x,y)=x^2+y^2$ sujeto a $g(x,y)=x+y-1=0$. El gradiente es $(2x,2y)$ y $\mat{J}_g=(1,1)$, de rango $1$, de modo que LICQ vale en todo punto. La condición $(2x,2y)=\lambda(1,1)$ da $x=y=\lambda/2$, y la restricción da $x=y=1/2$ y $\lambda^*=1$. Como $f$ es convexa y $g$ es afín, la proposición garantiza que $(1/2,1/2)$ es el mínimo global, con valor $1/2$. Si se cambia la restricción a $x+y=c$, el mínimo es $x=y=c/2$ con valor $c^2/2$, cuya derivada respecto de $c$ en $c=1$ es $1=\lambda^*$: el multiplicador mide cuánto cambia el valor óptimo al relajar la restricción, lo que en economía se llama el ***precio sombra***.
+
+::: {#exm-cobb-douglas}
+## Demanda Cobb–Douglas
+
+Un consumidor con utilidad $u(x_1,x_2)=x_1^{\alpha}x_2^{1-\alpha}$, $\alpha\in(0,1)$, y precios $p_1,p_2>0$ e ingreso $m>0$ maximiza $u$ sobre $p_1x_1+p_2x_2=m$, con $\vect{x}\in D=(0,\infty)^2$.
+
+:::
+
+Como el logaritmo es creciente, maximizar $u$ equivale a maximizar $\alpha\ln x_1+(1-\alpha)\ln x_2$, es decir, a minimizar $f(\vect{x})=-\alpha\ln x_1-(1-\alpha)\ln x_2$, cuya hessiana $\mathrm{diag}(\alpha/x_1^2,\,(1-\alpha)/x_2^2)$ es definida positiva, de modo que $f$ es convexa en el convexo abierto $D$. La restricción $g=p_1x_1+p_2x_2-m$ es afín con $\mat{J}_g=(p_1,p_2)\neq\vect{0}$, y la condición de Lagrange es $-\alpha/x_1=\lambda p_1$, $-(1-\alpha)/x_2=\lambda p_2$. Despejando, $p_1x_1=-\alpha/\lambda$ y $p_2x_2=-(1-\alpha)/\lambda$, y la restricción da $-1/\lambda=m$, de modo que $\lambda^*=-1/m$ y la demanda es
+$$
+x_1^*=\frac{\alpha m}{p_1},\qquad x_2^*=\frac{(1-\alpha)m}{p_2}.
+$$ {#eq-demanda-cobb-douglas}
+Por la proposición de suficiencia, este es el máximo global: el consumidor gasta una fracción $\alpha$ de su ingreso en el primer bien, sin importar los precios. Con $\alpha=0.3$, $p_1=2$, $p_2=5$ y $m=100$, la demanda es $(15,\,14)$ y el gasto $2\cdot15+5\cdot14=100$ agota el ingreso. El valor óptimo de $\alpha\ln x_1+(1-\alpha)\ln x_2$ como función del ingreso es $\alpha\ln(\alpha m/p_1)+(1-\alpha)\ln((1-\alpha)m/p_2)$, cuya derivada respecto de $m$ es $1/m=-\lambda^*$, de modo que el multiplicador, que es negativo por haber escrito el problema como una minimización, es menos la utilidad marginal del ingreso.

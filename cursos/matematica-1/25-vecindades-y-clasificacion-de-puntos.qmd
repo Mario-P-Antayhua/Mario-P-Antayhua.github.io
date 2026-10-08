@@ -1,0 +1,79 @@
+---
+title: "Vecindades y la clasificación de los puntos de un conjunto"
+description: "Vecindades en un espacio métrico y la clasificación de los puntos respecto de un conjunto en interiores, puntos límite y aislados, con la noción de conjunto acotado."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Topología de la recta y del espacio]
+---
+
+La vecindad reemplaza al intervalo $(p-r,p+r)$ que se usaba en $\mathbb{R}$: es el conjunto de los puntos que están a menos de cierta distancia de un punto dado. A partir de ella se clasifica, respecto de un conjunto, a cualquier punto del espacio, sin importar si pertenece o no al conjunto, y esa clasificación sostiene las definiciones de conjunto abierto y cerrado.
+
+::: {#def-vecindad}
+## Vecindad
+
+En un espacio métrico $X$, la ***vecindad*** de radio $r>0$ alrededor de $p\in X$ es $N_r(p):=\{q\in X:d(p,q)<r\}$.
+
+:::
+
+Con la vecindad definida, se pueden clasificar los puntos del espacio respecto de un conjunto según cómo se distribuyen sus vecinos, y esa clasificación es lo que realmente se usará en las nociones de conjunto abierto y cerrado.
+
+::: {#def-puntos-especiales}
+## Punto interior, punto límite y punto aislado
+
+Sea $X$ un espacio métrico y $E\subseteq X$.
+
+(i) $p\in X$ es ***punto interior*** de $E$ si existe una vecindad $N$ de $p$ con $N\subseteq E$.
+
+(ii) $p\in X$ es ***punto límite*** de $E$ si toda vecindad de $p$ contiene algún punto de $E$ distinto de $p$.
+
+(iii) Si $p\in E$ y $p$ no es punto límite de $E$, $p$ es un ***punto aislado*** de $E$.
+
+:::
+
+La última noción de esta clasificación no se refiere a un punto sino al conjunto completo, y mide si el conjunto cabe dentro de alguna vecindad.
+
+::: {#def-acotado}
+## Conjunto acotado
+
+$E\subseteq X$ es ***acotado*** si existen $M>0$ y $q\in X$ con $d(p,q)\leq M$ para todo $p\in E$.
+
+:::
+
+La diferencia entre punto límite y punto aislado suele ser lo más difícil de fijar la primera vez, porque ambos describen puntos de $E$: lo que distingue a uno de otro es si sus vecinos se acercan indefinidamente o si hay una brecha que los separa de cualquier otro punto de $E$. El conjunto siguiente ilustra los tres casos y la acotación, con un radio numérico explícito.
+
+::: {#exm-puntos-especiales-numerico}
+## Puntos aislados y punto límite sobre un mismo conjunto
+
+Sea $E=\left\{\frac{1}{n}:n\in\mathbb{N}\right\}\cup\{0\}\subseteq\mathbb{R}$, es decir, $E=\{1,\ \tfrac12,\ \tfrac13,\ldots\}\cup\{0\}$.
+
+Con $p=1$ y radio $r=0.4$, la vecindad $N_{0.4}(1)=(0.6,1.4)$ contiene, de todo $E$, únicamente a $1$, porque el siguiente elemento hacia abajo es $\tfrac12=0.5<0.6$. Como existe una vecindad de $1$ sin otros puntos de $E$, $1$ es aislado; lo mismo ocurre con todo $1/n$, porque entre $1/n$ y su vecino $1/(n+1)$ hay una brecha $\tfrac1{n(n+1)}>0$.
+
+Para $p=0$ y cualquier $\varepsilon>0$, la propiedad arquimediana ([Teorema “Propiedad arquimediana”](16-los-reales-el-axioma-de-completitud.qmd#thm-arquimediana)) da $N$ con $1/N<\varepsilon$, y entonces $1/N\in N_\varepsilon(0)$ con $1/N\neq0$. Toda vecindad de $0$ contiene un elemento de $E$ distinto de $0$; con $\varepsilon=0.01$, ya $1/101\approx0.0099$ lo cumple. Por lo tanto $0$ es punto límite de $E$, y es el único, porque ningún $1/n$ lo es.
+
+Finalmente $E\subseteq[0,1]$, de modo que $E$ es acotado con $M=1$ y $q=0$.
+
+:::
+
+Una vecindad suficientemente pequeña alrededor de cualquiera de sus puntos no se sale de sí misma, y esta propiedad, aparentemente evidente, convierte a las vecindades en el bloque de construcción de lo que sigue.
+
+::: {#prp-vecindad-abierta}
+## Los puntos de una vecindad son interiores a ella
+
+Sea $N=N_r(p)$ una vecindad. Todo punto $q\in N$ es punto interior de $N$.
+
+:::
+
+::: {.proof}
+Sea $q\in N_r(p)$, es decir, $d(p,q)<r$. Se propone como radio la diferencia entre $r$ y la distancia ya recorrida,
+$$
+h:=r-d(p,q)>0,
+$$
+y se afirma que $N_h(q)\subseteq N_r(p)$, lo que reduce el problema a una aplicación de la desigualdad triangular. Si $s\in N_h(q)$, es decir, $d(q,s)<h$, entonces
+$$
+d(p,s)\leq d(p,q)+d(q,s)<d(p,q)+h=r,
+$$
+de modo que $s\in N_r(p)$. Por lo tanto $N_h(q)\subseteq N_r(p)$, y $q$ es interior a $N$.
+
+:::
+
+El margen $h=r-d(p,q)$ es exactamente lo que le queda al punto $q$ antes de tocar el borde de la vecindad original. El argumento no usa que $X$ sea $\mathbb{R}$ o $\mathbb{R}^k$, solo la desigualdad triangular, de modo que vale en cualquier espacio métrico.

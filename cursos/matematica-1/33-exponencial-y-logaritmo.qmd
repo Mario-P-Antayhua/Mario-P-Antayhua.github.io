@@ -1,0 +1,154 @@
+---
+title: "La función exponencial y el logaritmo"
+description: "La exponencial definida por su serie para reales y complejos, su ecuación funcional, derivada y límite de (1+x/n)ⁿ, el logaritmo natural como inversa y las potencias reales."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Funciones continuas]
+---
+
+La exponencial y el logaritmo aparecen en toda la econometría: la verosimilitud normal es una exponencial, la log-verosimilitud convierte productos en sumas, y los procesos autorregresivos se resuelven con potencias. Esta nota las construye a partir de lo demostrado hasta aquí, sin suponer ninguna propiedad. La definición es por una serie, y se hace directamente para números complejos, porque así el seno y el coseno se definen después con las mismas demostraciones.
+
+::: {#def-exponencial}
+## La función exponencial
+
+Para $z\in\mathbb{C}$ se define $\exp(z):=\sum_{n=0}^{\infty}\dfrac{z^n}{n!}$.
+
+:::
+
+Primero hay que probar que la serie converge. La estrategia es compararla con una geometría.
+
+::: {#lem-exponencial-converge}
+## La serie de la exponencial converge absolutamente
+
+Para todo $z\in\mathbb{C}$, la serie $\sum_n z^n/n!$ converge absolutamente, y para $|z|\leq1$ se cumple $|\exp(z)-1-z|\leq|z|^2$.
+
+:::
+
+::: {.proof}
+Se fija $z$ y un natural $N\geq2|z|$. Para $n>N$,
+$$
+\frac{|z|^n}{n!}=\frac{|z|^N}{N!}\prod_{k=N+1}^{n}\frac{|z|}{k}\leq\frac{|z|^N}{N!}\Bigl(\frac12\Bigr)^{n-N},
+$$
+porque cada factor $|z|/k$ con $k>N\geq2|z|$ es menor que $\tfrac12$. La serie de términos $|z|^n/n!$ está dominada, desde $n>N$, por una serie geométrica de razón $\tfrac12$, y converge por la [Proposición “Criterio de comparación”](23-series-infinitas.qmd#prp-comparacion); por el [Teorema “La convergencia absoluta implica convergencia”](23-series-infinitas.qmd#thm-absoluta-implica-convergencia), válido en $\mathbb{C}$ por ser $\mathbb{C}=\mathbb{R}^2$ completo, la serie converge. Para $|z|\leq1$, $|\exp(z)-1-z|\leq\sum_{n\geq2}|z|^n/n!\leq|z|^2\sum_{n\geq2}1/n!\leq|z|^2$, pues $\sum_{n\geq2}1/n!\leq\sum_{k\geq1}2^{-k}=1$ por $n!\geq2^{n-1}$.
+
+:::
+
+La propiedad central es que la exponencial convierte sumas en productos. Su demostración usa el producto de series, que exige la convergencia absoluta.
+
+::: {#lem-producto-series}
+## Producto de Cauchy de series absolutamente convergentes
+
+Si $\sum a_n$ y $\sum b_n$ convergen absolutamente, con $c_n:=\sum_{k=0}^{n}a_kb_{n-k}$, entonces $\sum c_n$ converge y $\sum_nc_n=\bigl(\sum_na_n\bigr)\bigl(\sum_nb_n\bigr)$.
+
+:::
+
+::: {.proof}
+Sean $A_N,B_N,C_N$ las sumas parciales hasta $N$ y $A,B$ las sumas. El producto $A_NB_N$ contiene todos los términos $a_jb_k$ con $j,k\leq N$, y $C_N$ los que cumplen $j+k\leq N$, de modo que $A_NB_N-C_N=\sum a_jb_k$ sobre los pares con $j,k\leq N$ y $j+k>N$. En cada uno de esos pares, $j>N/2$ o $k>N/2$, de modo que
+$$
+|A_NB_N-C_N|\leq\Bigl(\sum_{j>N/2}|a_j|\Bigr)\Bigl(\sum_k|b_k|\Bigr)+\Bigl(\sum_j|a_j|\Bigr)\Bigl(\sum_{k>N/2}|b_k|\Bigr)\xrightarrow[N\to\infty]{}0,
+$$
+porque las colas de una serie convergente tienden a cero. Como $A_NB_N\to AB$, resulta $C_N\to AB$.
+
+:::
+
+::: {#prp-ecuacion-funcional}
+## Ecuación funcional de la exponencial
+
+Para $z,w\in\mathbb{C}$: (i) $\exp(z+w)=\exp(z)\exp(w)$; (ii) $\exp(0)=1$ y $\exp(z)\neq0$, con $\exp(-z)=1/\exp(z)$; (iii) $\exp(\bar z)=\overline{\exp(z)}$.
+
+:::
+
+::: {.proof}
+Para (i), el producto de Cauchy de $\sum z^k/k!$ y $\sum w^j/j!$ tiene términos $c_n=\sum_{k=0}^{n}\dfrac{z^kw^{n-k}}{k!(n-k)!}=\dfrac1{n!}\sum_{k=0}^{n}\binom nkz^kw^{n-k}=\dfrac{(z+w)^n}{n!}$ por el [Teorema “Teorema del binomio”](06-sumatorias-potencias-y-binomio.qmd#thm-binomio) y la [Proposición “Fórmula factorial del coeficiente binomial”](06-sumatorias-potencias-y-binomio.qmd#prp-binomial-factorial), y el @lem-producto-series da la igualdad. Para (ii), $\exp(0)=1$ se lee de la serie, y por (i), $\exp(z)\exp(-z)=\exp(0)=1$, de modo que $\exp(z)\neq0$. Para (iii), el conjugado de cada sumando $z^n/n!$ es $\bar z^n/n!$, y el conjugado de una suma convergente es la suma de los conjugados.
+
+:::
+
+Restringida a los reales, la exponencial es positiva, estrictamente creciente y derivable.
+
+::: {#prp-exponencial-real}
+## La exponencial real
+
+Para $x\in\mathbb{R}$: (i) $\exp(x)>0$; (ii) $\exp(x)\geq1+x$ para $x\geq0$, y $\exp$ es estrictamente creciente; (iii) $\exp$ es derivable y $\exp'(x)=\exp(x)$; (iv) $\exp(x)\to\infty$ cuando $x\to\infty$ y $\exp(x)\to0$ cuando $x\to-\infty$; (v) $\exp$ es una biyección de $\mathbb{R}$ sobre $(0,\infty)$.
+
+:::
+
+::: {.proof}
+Para $x\geq0$ todos los términos de la serie son no negativos, de modo que $\exp(x)\geq1+x>0$; para $x<0$, $\exp(x)=1/\exp(-x)>0$ por la proposición anterior, lo que da (i) y la primera parte de (ii). Si $h>0$, $\exp(h)\geq1+h>1$, y $\exp(x+h)=\exp(x)\exp(h)>\exp(x)$, de modo que $\exp$ es estrictamente creciente.
+
+Para (iii), por el @lem-exponencial-converge, para $0<|h|\leq1$ se tiene $\bigl|\tfrac{\exp(h)-1}{h}-1\bigr|\leq|h|\to0$, de modo que $(\exp(h)-1)/h\to1$. Entonces
+$$
+\frac{\exp(x+h)-\exp(x)}{h}=\exp(x)\,\frac{\exp(h)-1}{h}\longrightarrow\exp(x).
+$$
+Para (iv), $\exp(x)\geq1+x\to\infty$ y $\exp(-x)=1/\exp(x)\to0$. Para (v), $\exp$ es continua por ser derivable, estrictamente creciente y toma valores arbitrariamente grandes y arbitrariamente cercanos a cero; dado $y>0$, existen $x_1<x_2$ con $\exp(x_1)<y<\exp(x_2)$, y el [Teorema “Teorema del valor intermedio”](30-limites-y-continuidad-de-funciones.qmd#thm-valor-intermedio) da $x\in(x_1,x_2)$ con $\exp(x)=y$.
+
+:::
+
+Con la biyección se define el logaritmo y se calcula su derivada. El cálculo exige un resultado general sobre inversas de funciones monótonas.
+
+::: {#prp-inversa-derivada}
+## Inversa de una función estrictamente monótona
+
+Sea $f:I\to J$ una biyección continua y estrictamente creciente entre intervalos, derivable en $x_0\in I$ con $f'(x_0)\neq0$. Entonces $g=f^{-1}$ es continua y derivable en $y_0=f(x_0)$, con $g'(y_0)=1/f'(x_0)$.
+
+:::
+
+::: {.proof}
+Para la continuidad en $y_0$, dado $\varepsilon>0$ con $x_0\pm\varepsilon\in I$, se tiene $f(x_0-\varepsilon)<y_0<f(x_0+\varepsilon)$ por la monotonía, y con $\delta=\min\{y_0-f(x_0-\varepsilon),\,f(x_0+\varepsilon)-y_0\}$, $|y-y_0|<\delta$ implica $f(x_0-\varepsilon)<y<f(x_0+\varepsilon)$ y, por la monotonía de $g$, $|g(y)-x_0|<\varepsilon$. Para la derivada, si $y\to y_0$ con $y\neq y_0$, entonces $x=g(y)\to x_0$, $x\neq x_0$, y
+$$
+\frac{g(y)-g(y_0)}{y-y_0}=\frac{x-x_0}{f(x)-f(x_0)}\longrightarrow\frac1{f'(x_0)} .
+$$
+
+:::
+
+::: {#def-logaritmo}
+## Logaritmo natural
+
+El ***logaritmo natural*** es la función inversa $\ln:(0,\infty)\to\mathbb{R}$ de $\exp$. Cumple $\ln(\exp(x))=x$ y $\exp(\ln y)=y$.
+
+:::
+
+Con la inversa definida, el logaritmo hereda de la ecuación funcional de la exponencial la propiedad de convertir productos en sumas, y la derivada se obtiene del resultado anterior sobre inversas.
+
+::: {#prp-logaritmo}
+## Propiedades del logaritmo
+
+Para $x,y>0$ y $n\in\mathbb{N}$: (i) $\ln1=0$ y $\ln$ es estrictamente creciente; (ii) $\ln(xy)=\ln x+\ln y$ y $\ln(x^n)=n\ln x$; (iii) $\ln$ es derivable con $\ln'(y)=1/y$ y $\ln''(y)=-1/y^2$.
+
+:::
+
+::: {.proof}
+La parte (i) se sigue de $\exp(0)=1$ y de que la inversa de una función estrictamente creciente lo es. Para (ii), $\exp(\ln x+\ln y)=\exp(\ln x)\exp(\ln y)=xy$ por la ecuación funcional, y aplicando $\ln$ se obtiene $\ln x+\ln y=\ln(xy)$; el caso de $x^n$ se sigue por inducción. Para (iii), la @prp-inversa-derivada con $f=\exp$ y $f'(\ln y)=\exp(\ln y)=y\neq0$ da $\ln'(y)=1/y$; la segunda derivada es la de $y^{-1}$, igual a $-1/y^2$ por la regla del cociente.
+
+:::
+
+Las potencias reales se definen con el logaritmo y se reducen a las usuales cuando el exponente es entero.
+
+::: {#def-potencia-real}
+## Potencia con exponente real
+
+Para $a>0$ y $x\in\mathbb{R}$, $a^x:=\exp(x\ln a)$. Para $x=n\in\mathbb{N}$, $a^n=\exp(n\ln a)=\bigl(\exp(\ln a)\bigr)^n$ por la ecuación funcional, que coincide con la potencia definida por recursión, y $(a^x)^y=a^{xy}$ y $a^{x+y}=a^xa^y$ se siguen de la misma ecuación. Para $\alpha\in\mathbb{R}$ y $x>0$, la regla de la cadena da $(x^\alpha)'=\alpha x^{\alpha-1}$.
+
+:::
+
+Por último, la exponencial es el límite de las capitalizaciones, y con ello el número $e$ de la [Nota “Sucesiones monótonas y el teorema de convergencia monótona”](20-sucesiones-monotonas.qmd) queda identificado con $\exp(1)$.
+
+::: {#prp-limite-exponencial}
+## $(1+x/n)^n\to\exp(x)$
+
+Para todo $x\in\mathbb{R}$, $\lim_{n\to\infty}(1+x/n)^n=\exp(x)$. En particular $e=\exp(1)=2.71828\ldots$
+
+:::
+
+::: {.proof}
+Por el teorema del binomio y la fórmula factorial, para $n>|x|$,
+$$
+\Bigl(1+\frac xn\Bigr)^n=\sum_{k=0}^{n}\frac{x^k}{k!}\prod_{j=0}^{k-1}\Bigl(1-\frac jn\Bigr)=:\sum_{k=0}^{\infty}t_k(n),
+$$
+con $t_k(n):=0$ para $k>n$. Cada término cumple $|t_k(n)|\leq|x|^k/k!$, porque $0\leq1-j/n\leq1$, y converge a $x^k/k!$ cuando $n\to\infty$ con $k$ fijo. Dado $\varepsilon>0$, se elige $K$ con $\sum_{k>K}|x|^k/k!<\varepsilon/3$, y luego $n_0$ tal que $\sum_{k\leq K}|t_k(n)-x^k/k!|<\varepsilon/3$ para $n\geq n_0$. Entonces
+$$
+\Bigl|\sum_{k}t_k(n)-\exp(x)\Bigr|\leq\sum_{k\leq K}\Bigl|t_k(n)-\frac{x^k}{k!}\Bigr|+\sum_{k>K}|t_k(n)|+\sum_{k>K}\frac{|x|^k}{k!}<\varepsilon .
+$$
+
+:::
+
+Con números, $\exp(1)=2.7182818\ldots$, $\exp(-1)=0.3678794\ldots=1/\exp(1)$, $\ln2=0.6931472\ldots$ y $\ln(0.5)=-\ln2$, y $(1+1/1000)^{1000}=2.7169\ldots$ está por debajo de $e$, como corresponde a una sucesión creciente que converge a él.

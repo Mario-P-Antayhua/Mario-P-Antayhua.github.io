@@ -1,0 +1,33 @@
+---
+title: "Predicción y evaluación de pronósticos"
+description: "La distribución del pronóstico a varios pasos de un modelo de espacio-estado, los criterios de evaluación de pronósticos, el diagnóstico de calibración con las innovaciones estandarizadas y la comparación de dos modelos con la diferencia de pérdidas, con un ejemplo simulado."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Predicción]
+---
+
+Un modelo de espacio-estado se construye para estimar componentes no observables, pero con frecuencia su uso final es pronosticar. Un pronóstico útil tiene dos partes: el valor central y una medida de su incertidumbre, y ambas salen directamente del modelo. Pronosticar bien no es lo mismo que estar bien especificado, y por eso los pronósticos se evalúan contra los datos que llegan después. Esta nota deduce el pronóstico a varios pasos, presenta los criterios de evaluación y los diagnósticos que el modelo mismo ofrece, y compara dos modelos con un ejemplo simulado.
+
+La predicción a varios pasos es la etapa de predicción del filtro aplicada repetidamente, sin actualizaciones, porque no se observan datos futuros.
+
+::: {#prp-pronostico-espacio-estado}
+## Pronóstico a $h$ pasos
+
+Con parámetros conocidos y la información $\mathcal{Y}_n$, el estado a $h$ pasos y la observación a $h$ pasos tienen distribución normal, $\vect{\alpha}_{n+h}\mid\mathcal{Y}_n\sim\N(\vect{a}_{n+h\mid n},\mat{P}_{n+h\mid n})$ y $\vect{y}_{n+h}\mid\mathcal{Y}_n\sim\N(\mat{Z}_{n+h}\vect{a}_{n+h\mid n}+\vect{d}_{n+h},\ \mat{Z}_{n+h}\mat{P}_{n+h\mid n}\mat{Z}_{n+h}^{\top}+\mat{H}_{n+h})$, donde para $j=1,\ldots,h$, $\vect{a}_{n+j\mid n}=\mat{T}_{n+j}\vect{a}_{n+j-1\mid n}+\vect{c}_{n+j}$ y $\mat{P}_{n+j\mid n}=\mat{T}_{n+j}\mat{P}_{n+j-1\mid n}\mat{T}_{n+j}^{\top}+\mat{R}_{n+j}\mat{Q}_{n+j}\mat{R}_{n+j}^{\top}$, con valores iniciales $\vect{a}_{n\mid n}$ y $\mat{P}_{n\mid n}$.
+
+:::
+
+::: {.proof}
+La etapa de predicción del filtro vale para cualquier distribución condicional normal del estado anterior, y las perturbaciones futuras son independientes de $\mathcal{Y}_n$ por el lema de independencia de la perturbación. Aplicándola $h$ veces, comenzando en la distribución $\N(\vect{a}_{n\mid n},\mat{P}_{n\mid n})$ de $\vect{\alpha}_n$, se obtiene la del estado a $h$ pasos. La observación se obtiene como en el teorema de la etapa de predicción.
+
+:::
+
+El intervalo de predicción del $95\,\%$ de una componente de $\vect{y}_{n+h}$ es el valor central más y menos $1.96$ desviaciones estándar, y su ancho crece con $h$ cuando el estado tiene perturbaciones. Con números, para el nivel local con $\sigma_\varepsilon^2=1$ y $\sigma_\eta^2=0.09$ en estado estacionario ($P_{n\mid n}=0.258$), la varianza del pronóstico a $h$ pasos es $0.258+0.09h+1$, es decir, $1.348$, $1.438$, $1.528$ y $1.618$ para $h=1,\ldots,4$: el pronóstico central es plano, igual al nivel filtrado, y la incertidumbre crece solo con la varianza acumulada del nivel.
+
+Para evaluar los pronósticos se compara cada uno con el dato que llegó después. El error de pronóstico a $h$ pasos desde el origen $t$ es $e_{t+h\mid t}=y_{t+h}-\hat y_{t+h\mid t}$. Se resumen con pérdidas: el error cuadrático medio, $\frac1M\sum e^2$, que penaliza los errores grandes, y el error absoluto medio, $\frac1M\sum|e|$, que es menos sensible a ellos. Como las unidades dependen de la serie, se compara con un modelo de referencia, a menudo el paseo aleatorio, cuyo pronóstico es el último dato: la razón de errores cuadráticos medios por debajo de uno indica que el modelo mejora a la referencia. La evaluación honesta usa un esquema de origen móvil: para cada fecha $t$ de un período de evaluación se filtra con los datos hasta $t$, se pronostica y se compara con el dato posterior, sin usar nunca información futura.
+
+El modelo ofrece su propio diagnóstico. Si está bien especificado y con los parámetros verdaderos, las innovaciones estandarizadas $z_t=v_t/\sqrt{F_t}$ son independientes con distribución $\N(0,1)$, por el teorema del algoritmo completo. Entonces $\sqrt T\bar z\sim\N(0,1)$ de manera exacta, porque es suma de normales independientes, y $\sum_tz_t^2\sim\chi^2_T$ por la definición de la distribución chi cuadrado de Econometría I. Una media que se aparta de cero indica sesgo, y una suma de cuadrados fuera del rango esperado ($T\pm2\sqrt{2T}$ aproximadamente) indica que las varianzas del modelo no calzan con los datos. La cobertura empírica de los intervalos también se compara con la nominal.
+
+Con números, se simuló un nivel local con $400$ datos ($\sigma_\varepsilon^2=1$, $\sigma_\eta^2=0.09$), y se evaluaron los pronósticos de las últimas $199$ fechas con el modelo (parámetros verdaderos) y con la referencia del paseo aleatorio. A un paso, el error cuadrático medio es $1.43$ para el modelo y $2.02$ para el paseo aleatorio, con razón $0.71$; los valores teóricos son $1.35$ y $2.09$. A cuatro pasos son $1.92$ y $2.51$, con razón $0.76$. Las innovaciones estandarizadas del modelo tienen $\sqrt T\bar z=-0.42$ y $\sum z^2=397.7$ para $T=398$, ambos compatibles con una normal estándar y con una chi cuadrado de media $398$, y el intervalo de predicción a un paso del $95\,\%$ cubre el dato en el $93.5\,\%$ de las fechas.
+
+La diferencia de $0.6$ entre los errores cuadráticos medios puede deberse al azar, y para saberlo se hace un contraste de igualdad de precisión. Sea $d_t=e_{1,t}^2-e_{2,t}^2$ la diferencia de pérdidas de dos modelos, y $\bar d$ su promedio. Se rechaza que ambos tengan la misma precisión si $\bar d/\sqrt{\hat\omega^2/M}$ es grande en valor absoluto, donde $\hat\omega^2$ estima la varianza de largo plazo de $d_t$ e incluye sus autocovarianzas, porque los errores de pronóstico de fechas cercanas suelen estar correlacionados. Este es el contraste de Diebold–Mariano, cuya distribución aproximada normal estándar se apoya en un teorema central del límite para sucesiones dependientes que no se demuestra en estos apuntes. En el ejemplo, $\bar d=0.595$ y el estadístico con una autocovarianza de corrección es $5.3$, mucho mayor que $2$: el modelo es claramente mejor que el paseo aleatorio, como cabe esperar de una serie generada por el propio modelo.

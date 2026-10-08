@@ -1,0 +1,78 @@
+---
+title: "Modos de convergencia"
+description: "El lema de Borel–Cantelli, la convergencia casi segura, en probabilidad y en media de orden p, las implicaciones entre ellas con contraejemplos y la conservación de la convergencia en probabilidad bajo funciones continuas."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Convergencia]
+---
+
+Un estimador es una variable aleatoria que depende del tamaño de la muestra, y su calidad se mide por lo que ocurre cuando la muestra crece. Eso exige decir qué significa que una sucesión de variables aleatorias converge a otra, y hay varias maneras razonables de hacerlo que no son equivalentes. Esta nota define tres, establece cuáles implican a cuáles y muestra con contraejemplos que las implicaciones no se invierten. La herramienta técnica es el lema de Borel–Cantelli, que traduce sumas de probabilidades en afirmaciones casi seguras. Se apoya en el cálculo con límites de la [Nota “Sucesiones y su límite”](../matematica-1/18-sucesiones-y-su-limite.qmd), en la continuidad de la probabilidad de la [Nota “Espacios de probabilidad”](01-espacios-de-probabilidad.qmd) y en las desigualdades de la [Nota “Momentos y desigualdades fundamentales”](05-momentos-y-desigualdades-fundamentales.qmd).
+
+Dada una sucesión de eventos $A_1,A_2,\ldots$, el evento «$A_n$ ocurre infinitas veces» (i.o., por *infinitely often*) es $\{A_n\text{ i.o.}\}=\bigcap_{N\geq1}\bigcup_{n\geq N}A_n$, porque un punto está en él si y solo si, para todo $N$, pertenece a algún $A_n$ con $n\geq N$.
+
+::: {#thm-borel-cantelli}
+## Lema de Borel–Cantelli
+
+(i) Si $\sum_{n}\Prob{A_n}<\infty$, entonces $\Prob{A_n\text{ i.o.}}=0$. (ii) Si los $A_n$ son mutuamente independientes y $\sum_n\Prob{A_n}=\infty$, entonces $\Prob{A_n\text{ i.o.}}=1$.
+
+:::
+
+::: {.proof}
+Para (i), los eventos $\bigcup_{n\geq N}A_n$ decrecen con $N$ hacia $\{A_n\text{ i.o.}\}$, y por la subaditividad $\Prob{\bigcup_{n\geq N}A_n}\leq\sum_{n\geq N}\Prob{A_n}$, que es la cola de una serie convergente y tiende a cero. La continuidad de la probabilidad para sucesiones decrecientes da $\Prob{A_n\text{ i.o.}}=\lim_N\Prob{\bigcup_{n\geq N}A_n}=0$. Para (ii), basta ver que el complemento $\bigcup_N\bigcap_{n\geq N}A_n^c$ tiene probabilidad cero, y para ello que cada $\bigcap_{n\geq N}A_n^c$ la tiene. Los complementos $A_n^c$ también son independientes por la [Proposición “Independencia y complementos”](02-probabilidad-condicional-e-independencia.qmd#prp-independencia-complemento), de modo que, para $M>N$, $\Prob{\bigcap_{n=N}^MA_n^c}=\prod_{n=N}^M(1-\Prob{A_n})\leq\exp\bigl(-\sum_{n=N}^M\Prob{A_n}\bigr)$, donde se usó $1-x\leq e^{-x}$, que es la desigualdad $\ln(1-x)\leq-x$ del [Corolario “Desigualdades del logaritmo y de las medias”](../matematica-1/36-convexidad-y-desigualdad-de-jensen.qmd#cor-desigualdades-log). Como la serie diverge, el exponente tiende a $-\infty$ cuando $M\to\infty$, y por la continuidad para sucesiones decrecientes $\Prob{\bigcap_{n\geq N}A_n^c}=0$.
+
+:::
+
+Con números, si $\Prob{A_n}=1/n^2$, la serie suma $\pi^2/6\approx1.645$, que es finita, de modo que casi seguramente solo un número finito de los $A_n$ ocurre. Si, en cambio, los $A_n$ son independientes con $\Prob{A_n}=1/n$, la serie armónica diverge y casi seguramente ocurren infinitos de ellos, aunque cada uno sea cada vez más improbable. Con el lema se definen y comparan las tres convergencias.
+
+::: {#def-convergencias}
+## Convergencia casi segura, en probabilidad y en media
+
+Sean $X,X_1,X_2,\ldots$ variables (o vectores) aleatorios definidos en un mismo espacio de probabilidad, y $\|\cdot\|$ la norma euclidiana. (i) $X_n\to X$ ***casi seguramente*** (a.s.) si $\Prob{\omega:X_n(\omega)\to X(\omega)}=1$. (ii) $X_n\to X$ ***en probabilidad***, $X_n\overset{p}{\to}X$, si $\Prob{\|X_n-X\|>\varepsilon}\to0$ para todo $\varepsilon>0$; si $X=c$ es constante se escribe $\plim X_n=c$. (iii) $X_n\to X$ ***en media de orden $p$***, $X_n\overset{L^p}{\to}X$, si $\E\|X_n-X\|^p\to0$, para $p\geq1$.
+
+:::
+
+La convergencia casi segura exige que la sucesión numérica $X_n(\omega)$ converja para casi todo resultado; la convergencia en probabilidad exige solo que la probabilidad de estar lejos tienda a cero en cada $n$; la convergencia en media exige que el error promedio, medido en potencia $p$, tienda a cero. La convergencia casi segura admite una reformulación en términos del peor error futuro.
+
+::: {#prp-casi-segura-caracterizacion}
+## Caracterización de la convergencia casi segura
+
+$X_n\to X$ casi seguramente si y solo si, para todo $\varepsilon>0$, $\Prob{\sup_{m\geq n}\|X_m-X\|>\varepsilon}\to0$ cuando $n\to\infty$.
+
+:::
+
+::: {.proof}
+La sucesión $X_n(\omega)$ converge a $X(\omega)$ si y solo si, para cada $\varepsilon=1/j$, $\|X_n(\omega)-X(\omega)\|\leq\varepsilon$ salvo para finitos $n$, es decir, $\omega\notin E_j:=\{\|X_n-X\|>1/j\text{ i.o.}\}$. Entonces la convergencia casi segura equivale a $\Prob{\bigcup_jE_j}=0$, que equivale a $\Prob{E_j}=0$ para todo $j$ por subaditividad y monotonía. Los eventos $G_n=\bigcup_{m\geq n}\{\|X_m-X\|>\varepsilon\}$ decrecen hacia $\{\|X_n-X\|>\varepsilon\text{ i.o.}\}$, y la continuidad de la probabilidad da $\Prob{G_n}\to\Prob{\{\|X_n-X\|>\varepsilon\text{ i.o.}\}}$. De allí, la probabilidad del evento límite es cero para todo $\varepsilon$ si y solo si $\Prob{G_n}\to0$ para todo $\varepsilon$, y $G_n=\{\sup_{m\geq n}\|X_m-X\|>\varepsilon\}$, porque un supremo supera a $\varepsilon$ si y solo si algún término lo supera.
+
+:::
+
+Las implicaciones entre los modos se resumen en el teorema siguiente, y los contraejemplos posteriores muestran que no hay otras.
+
+::: {#thm-implicaciones-convergencia}
+## Implicaciones entre los modos de convergencia
+
+(i) Si $X_n\to X$ casi seguramente, entonces $X_n\overset{p}{\to}X$. (ii) Si $X_n\overset{L^p}{\to}X$, entonces $X_n\overset{p}{\to}X$. (iii) Si $X_n\overset{L^s}{\to}X$ y $r\leq s$, entonces $X_n\overset{L^r}{\to}X$. (iv) Si $X_n\overset{p}{\to}X$, existe una subsucesión $X_{n_k}\to X$ casi seguramente. (v) Los límites en probabilidad son únicos casi seguramente: si $X_n\overset{p}{\to}X$ y $X_n\overset{p}{\to}Y$, entonces $X=Y$ casi seguramente.
+
+:::
+
+::: {.proof}
+Para (i), $\{\|X_n-X\|>\varepsilon\}\subseteq\{\sup_{m\geq n}\|X_m-X\|>\varepsilon\}$ y la probabilidad de este último evento tiende a cero por la proposición anterior. Para (ii), la desigualdad de Markov aplicada a $\|X_n-X\|^p$ da $\Prob{\|X_n-X\|>\varepsilon}\leq\E\|X_n-X\|^p/\varepsilon^p\to0$. Para (iii), la desigualdad de Lyapunov da $(\E\|X_n-X\|^r)^{1/r}\leq(\E\|X_n-X\|^s)^{1/s}\to0$. Para (iv), se eligen índices crecientes $n_1<n_2<\cdots$ con $\Prob{\|X_{n_k}-X\|>2^{-k}}<2^{-k}$, posible por la convergencia en probabilidad. Como $\sum_k2^{-k}<\infty$, el lema de Borel–Cantelli (i) da que casi seguramente $\|X_{n_k}-X\|\leq2^{-k}$ para todo $k$ suficientemente grande, y entonces $X_{n_k}\to X$ casi seguramente. Para (v), para $\varepsilon>0$, $\{\|X-Y\|>2\varepsilon\}\subseteq\{\|X_n-X\|>\varepsilon\}\cup\{\|X_n-Y\|>\varepsilon\}$, de modo que $\Prob{\|X-Y\|>2\varepsilon}\leq\Prob{\|X_n-X\|>\varepsilon}+\Prob{\|X_n-Y\|>\varepsilon}\to0$. Entonces $\Prob{\|X-Y\|>2\varepsilon}=0$ para todo $\varepsilon$, y por continuidad de la probabilidad para la unión creciente en $\varepsilon=1/j$, $\Prob{X\neq Y}=0$.
+
+:::
+
+Las implicaciones inversas fallan. Sean $A_n$ eventos independientes con $\Prob{A_n}=1/n$, que existen por el axioma de variables independientes, y $X_n=\mathbf{1}_{A_n}$. Entonces $\Prob{|X_n|>\varepsilon}\leq1/n\to0$, de modo que $X_n\overset{p}{\to}0$, pero la serie $\sum1/n$ diverge, y por Borel–Cantelli (ii) casi seguramente $X_n=1$ infinitas veces, de modo que $X_n$ no converge a cero casi seguramente. Es una convergencia en probabilidad sin convergencia casi segura. Y sean $B_n$ eventos con $\Prob{B_n}=1/n^2$ y $X_n=n^3\mathbf{1}_{B_n}$. Por Borel–Cantelli (i), casi seguramente $X_n=0$ salvo para finitos $n$, de modo que $X_n\to0$ casi seguramente, pero $\E[X_n]=n^3/n^2=n\to\infty$, de modo que no hay convergencia en media de ningún orden. La convergencia casi segura no implica la convergencia en media.
+
+La convergencia en probabilidad es la que se conserva mejor bajo las operaciones que usan los estimadores: sumas, productos, cocientes y, en general, funciones continuas.
+
+::: {#thm-aplicacion-continua-probabilidad}
+## Funciones continuas y convergencia en probabilidad
+
+Sea $\vect{X}_n\overset{p}{\to}\vect{X}$ en $\mathbb{R}^k$ y $g:\mathbb{R}^k\to\mathbb{R}^m$ continua en todos los puntos de un conjunto $C$ con $\Prob{\vect{X}\in C}=1$. Entonces $g(\vect{X}_n)\overset{p}{\to}g(\vect{X})$. En particular, si $\vect{X}_n\overset{p}{\to}\vect{X}$ e $\vect{Y}_n\overset{p}{\to}\vect{Y}$, entonces $\vect{X}_n+\vect{Y}_n\overset{p}{\to}\vect{X}+\vect{Y}$, $\vect{X}_n^{\top}\vect{Y}_n\overset{p}{\to}\vect{X}^{\top}\vect{Y}$ y, si $Y\neq0$ casi seguramente, $X_n/Y_n\overset{p}{\to}X/Y$.
+
+:::
+
+::: {.proof}
+Se procede por contradicción. Si $g(\vect{X}_n)$ no converge en probabilidad a $g(\vect{X})$, existen $\varepsilon,\delta>0$ y una subsucesión $n_j$ con $\Prob{\|g(\vect{X}_{n_j})-g(\vect{X})\|>\varepsilon}\geq\delta$. La subsucesión $\vect{X}_{n_j}$ converge en probabilidad a $\vect{X}$, de modo que la parte (iv) del teorema anterior da una subsubsucesión $\vect{X}_{n_{j_l}}\to\vect{X}$ casi seguramente. En los resultados $\omega$ de ese evento con $\vect{X}(\omega)\in C$, que tiene probabilidad uno, la continuidad de $g$ en $\vect{X}(\omega)$ da $g(\vect{X}_{n_{j_l}}(\omega))\to g(\vect{X}(\omega))$. Entonces $g(\vect{X}_{n_{j_l}})\to g(\vect{X})$ casi seguramente, y por la parte (i), en probabilidad, lo que contradice $\Prob{\|g(\vect{X}_{n_{j_l}})-g(\vect{X})\|>\varepsilon}\geq\delta$ para todo $l$. Las sumas y los productos son funciones continuas de $(\vect{x},\vect{y})$ en todo $\mathbb{R}^{2k}$, y el cociente $x/y$ es continuo en $\{y\neq0\}$, que tiene probabilidad uno para $(X,Y)$ cuando $Y\neq0$ casi seguramente. Para aplicar el resultado se usa que $(\vect{X}_n,\vect{Y}_n)\overset{p}{\to}(\vect{X},\vect{Y})$, porque $\|(\vect{X}_n,\vect{Y}_n)-(\vect{X},\vect{Y})\|\leq\|\vect{X}_n-\vect{X}\|+\|\vect{Y}_n-\vect{Y}\|$ y se aplica la subaditividad.
+
+:::
+
+Con números, si $\plim\hat\sigma_n^2=4$, entonces $\plim\hat\sigma_n=2$ porque la raíz cuadrada es continua en $4$, y $\plim\,1/\hat\sigma_n^2=1/4$. Estas reglas, que también valen para convergencia casi segura de forma inmediata, son las que permiten operar con los límites en probabilidad como si fueran números.

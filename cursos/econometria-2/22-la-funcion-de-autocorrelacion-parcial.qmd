@@ -1,0 +1,48 @@
+---
+title: "La función de autocorrelación parcial"
+description: "La autocorrelación parcial definida como el último coeficiente de la regresión lineal sobre h rezagos, su interpretación como correlación entre residuos, su nulidad después del orden p en un AR(p) y su decaimiento en un MA(1)."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+La autocorrelación $\rho(h)$ mezcla el efecto directo de $X_{t-h}$ sobre $X_t$ con el efecto indirecto que pasa por los valores intermedios. En un AR(1), $\rho(2)=\phi^2$ no es nula aunque $X_{t-2}$ solo afecta a $X_t$ a través de $X_{t-1}$. La autocorrelación parcial mide el efecto directo, aislando el rezago $h$ de los intermedios, y por eso se anula más allá del orden en un AR. Esa propiedad complementa la de la autocorrelación, que se anula más allá del orden en un MA.
+
+Sea $\{X_t\}$ estacionario con $\gamma(0)>0$ y matrices $\mat{\Gamma}_h$ definidas positivas para todo $h$, como ocurre en los AR y MA de las notas anteriores. El mejor predictor lineal de $X_t-\mu$ basado en los $h$ valores anteriores tiene coeficientes $\vect{\phi}_h=\mat{\Gamma}_h^{-1}\vect{\gamma}_h$, con $\vect{\gamma}_h=(\gamma(1),\ldots,\gamma(h))^{\top}$, que son las soluciones de las ecuaciones normales de la proyección de la [Nota “Ortogonalidad, proyección y el teorema de la mejor aproximación”](../matematica-2/05-ortogonalidad-proyeccion-y-mejor-aproximacion.qmd).
+
+::: {#def-pacf}
+## Función de autocorrelación parcial
+
+La ***autocorrelación parcial*** de orden $h\geq1$ es $\alpha(h)=\phi_{hh}$, la última componente de $\vect{\phi}_h=\mat{\Gamma}_h^{-1}\vect{\gamma}_h$. La función $h\mapsto\alpha(h)$ es la ***FACP***.
+
+:::
+
+Para $h=1$, $\alpha(1)=\gamma(1)/\gamma(0)=\rho(1)$. Para $h=2$, la regla de Cramer aplicada al sistema $\left(\begin{smallmatrix}1&\rho_1\\\rho_1&1\end{smallmatrix}\right)\left(\begin{smallmatrix}\phi_{21}\\\phi_{22}\end{smallmatrix}\right)=\left(\begin{smallmatrix}\rho_1\\\rho_2\end{smallmatrix}\right)$ da $\alpha(2)=(\rho_2-\rho_1^2)/(1-\rho_1^2)$. La definición tiene una lectura como correlación entre residuos, que justifica el nombre.
+
+::: {#prp-pacf-residuos}
+## La autocorrelación parcial como correlación entre residuos
+
+Sean $\vect{Z}=(X_{t-1},\ldots,X_{t-h+1})^{\top}$ los valores intermedios y $\hat X_t$, $\hat X_{t-h}$ las proyecciones lineales de $X_t$ y de $X_{t-h}$ sobre $\vect{Z}$ (con medias restadas). Entonces $\alpha(h)=\Corr(X_t-\hat X_t,\ X_{t-h}-\hat X_{t-h})$.
+
+:::
+
+::: {.proof}
+Se reordenan los regresores como $(\vect{Z},X_{t-h})$. La matriz $\mat{\Gamma}_h$ se particiona como $\left(\begin{smallmatrix}\mat{\Gamma}_{h-1}&\vect{r}\\\vect{r}^{\top}&\gamma(0)\end{smallmatrix}\right)$ con $\vect{r}=\Cov(\vect{Z},X_{t-h})$, y el vector del lado derecho como $(\vect{\gamma}_{h-1}^{\ast},\gamma(h))$ con $\vect{\gamma}_{h-1}^{\ast}=\Cov(\vect{Z},X_t)$. Por la fórmula de la inversa por bloques del [Teorema “Factorización por el complemento de Schur”](../matematica-2/09-matrices-particionadas-y-complemento-de-schur.qmd#thm-factorizacion-schur), la última componente de la solución es $\phi_{hh}=\bigl(\gamma(h)-\vect{r}^{\top}\mat{\Gamma}_{h-1}^{-1}\vect{\gamma}^{\ast}_{h-1}\bigr)/S$ con $S=\gamma(0)-\vect{r}^{\top}\mat{\Gamma}_{h-1}^{-1}\vect{r}$. Por otro lado, con $\hat X_t=\vect{\gamma}^{\ast\top}_{h-1}\mat{\Gamma}_{h-1}^{-1}\vect{Z}$ y $\hat X_{t-h}=\vect{r}^{\top}\mat{\Gamma}_{h-1}^{-1}\vect{Z}$, la covarianza de los residuos es $\gamma(h)-\vect{r}^{\top}\mat{\Gamma}_{h-1}^{-1}\vect{\gamma}_{h-1}^{\ast}-\vect{\gamma}_{h-1}^{\ast\top}\mat{\Gamma}_{h-1}^{-1}\vect{r}+\vect{\gamma}_{h-1}^{\ast\top}\mat{\Gamma}_{h-1}^{-1}\vect{r}=\gamma(h)-\vect{r}^{\top}\mat{\Gamma}_{h-1}^{-1}\vect{\gamma}^{\ast}_{h-1}$, el numerador anterior. La varianza del residuo de $X_{t-h}$ es $S$, y la del residuo de $X_t$ es $\gamma(0)-\vect{\gamma}^{\ast\top}_{h-1}\mat{\Gamma}_{h-1}^{-1}\vect{\gamma}^{\ast}_{h-1}$, igual a $S$ porque $\vect{\gamma}^{\ast}_{h-1}$ es $\vect{r}$ con las componentes en orden inverso y $\mat{\Gamma}_{h-1}$ es simétrica de Toeplitz, invariante ante la inversión del orden. Entonces la correlación es el numerador dividido por $S$, que es $\phi_{hh}$.
+
+:::
+
+La propiedad que hace útil a la autocorrelación parcial en un AR es su nulidad después del orden.
+
+::: {#thm-pacf-ar}
+## Autocorrelación parcial de un AR(p)
+
+Si $\{X_t\}$ es un AR(p) causal, entonces $\alpha(p)=\phi_p$ y $\alpha(h)=0$ para todo $h>p$.
+
+:::
+
+::: {.proof}
+Para $h\geq p$, sea $\vect{\phi}^{\ast}=(\phi_1,\ldots,\phi_p,0,\ldots,0)^{\top}\in\mathbb{R}^h$. Las ecuaciones de Yule–Walker para $k=1,\ldots,h$ dicen $\gamma(k)=\sum_{i=1}^p\phi_i\gamma(k-i)$, que es exactamente $\mat{\Gamma}_h\vect{\phi}^{\ast}=\vect{\gamma}_h$. Como $\mat{\Gamma}_h$ es definida positiva, la solución es única y $\vect{\phi}_h=\vect{\phi}^{\ast}$, cuya última componente es $\phi_p$ si $h=p$ y cero si $h>p$.
+
+:::
+
+Con números, el AR(2) con $\vect{\phi}=(1.2,-0.35)$ tiene $\rho(1)=0.8889$ y $\rho(2)=0.7167$, y la fórmula de $\alpha(2)$ da $(0.7167-0.7901)/(1-0.7901)=-0.35=\phi_2$; para $h\geq3$ la autocorrelación parcial es cero, mientras la autocorrelación es positiva y decae lentamente. En un MA(1) ocurre lo contrario: la autocorrelación se anula después de $h=1$, pero la autocorrelación parcial decae. Para $\theta=0.5$, la resolución de los sistemas de Yule–Walker para $h=1,\ldots,5$ da $\alpha(h)=0.400,\ -0.190,\ 0.094,\ -0.047,\ 0.023$, que alternan de signo y se reducen a la mitad aproximadamente en cada paso, coincidiendo con la expresión $\alpha(h)=-(-\theta)^h(1-\theta^2)/(1-\theta^{2h+2})$.

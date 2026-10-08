@@ -1,0 +1,63 @@
+---
+title: "Existencia de un óptimo"
+description: "Óptimos locales y globales, el teorema de Weierstrass sobre compactos, la existencia de mínimos de funciones coercivas sobre conjuntos cerrados y ejemplos donde el óptimo no existe."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Optimización]
+---
+
+El método de mínimos cuadrados minimiza una suma de residuos al cuadrado, la estimación por máxima verosimilitud maximiza una función de verosimilitud, y la predicción lineal minimiza un error cuadrático medio. En los tres casos se da por supuesto que el mejor valor existe, y antes de buscarlo con derivadas conviene saber cuándo esa suposición es cierta. Esta nota fija el vocabulario de la optimización y establece condiciones suficientes para que un óptimo exista, primero en conjuntos compactos y después en conjuntos cerrados no acotados.
+
+::: {#def-optimo}
+## Óptimo local y global
+
+Sea $D\subseteq\mathbb{R}^n$ y $f:D\to\mathbb{R}$. Un punto $\vect{x}^*\in D$ es un ***mínimo global*** de $f$ en $D$ si $f(\vect{x}^*)\leq f(\vect{x})$ para todo $\vect{x}\in D$, y es un ***mínimo local*** si existe $\delta>0$ tal que $f(\vect{x}^*)\leq f(\vect{x})$ para todo $\vect{x}\in D$ con $\|\vect{x}-\vect{x}^*\|<\delta$. El mínimo es ***estricto*** si la desigualdad es estricta para $\vect{x}\neq\vect{x}^*$. Las definiciones de ***máximo global***, ***máximo local*** y ***óptimo*** (mínimo o máximo) son análogas.
+
+:::
+
+Todo mínimo global es un mínimo local, pero el recíproco falla: la función $f(x)=x^3-3x$ tiene un mínimo local en $x=1$ con $f(1)=-2$ y, sin embargo, toma valores menores, como $f(-3)=-18$. Un método que solo examina el entorno de un punto no puede distinguir ambos casos, y por eso la distinción reaparece en cada nota de esta parte del curso.
+
+Para los conjuntos acotados y cerrados, la existencia es el contenido del teorema de los valores extremos del [Teorema “Teorema de los valores extremos”](../matematica-1/30-limites-y-continuidad-de-funciones.qmd#thm-weierstrass-valores-extremos), que se recuerda aquí con el nombre que recibe en optimización: si $K\subseteq\mathbb{R}^n$ es compacto y no vacío y $f:K\to\mathbb{R}$ es continua, existen $\vect{x}_*,\vect{x}^*\in K$ con $f(\vect{x}_*)\leq f(\vect{x})\leq f(\vect{x}^*)$ para todo $\vect{x}\in K$. Es el teorema de Weierstrass. Muchos problemas, sin embargo, se plantean en conjuntos no acotados, como todo $\mathbb{R}^n$, donde el teorema no se aplica directamente. La condición que lo repara es que la función crezca sin cota al alejarse del origen.
+
+::: {#def-coercividad}
+## Función coerciva
+
+Sea $D\subseteq\mathbb{R}^n$ no acotado. Una función $f:D\to\mathbb{R}$ es ***coerciva*** si $f(\vect{x})\to\infty$ cuando $\|\vect{x}\|\to\infty$ con $\vect{x}\in D$; es decir, para todo $M\in\mathbb{R}$ existe $r>0$ tal que $f(\vect{x})>M$ siempre que $\vect{x}\in D$ y $\|\vect{x}\|>r$.
+
+:::
+
+Una función coerciva obliga a que los puntos de valor pequeño queden dentro de una bola, y dentro de una bola se puede aplicar Weierstrass.
+
+::: {#thm-existencia-coerciva}
+## Existencia del mínimo de una función coerciva
+
+Sea $D\subseteq\mathbb{R}^n$ cerrado y no vacío, y $f:D\to\mathbb{R}$ continua y coerciva (o $D$ compacto). Entonces $f$ alcanza un mínimo global en $D$.
+
+:::
+
+::: {.proof}
+Si $D$ es compacto, es el teorema de Weierstrass. En el caso no acotado, se fija $\vect{x}_0\in D$ y se considera el conjunto de subnivel $S:=\{\vect{x}\in D:f(\vect{x})\leq f(\vect{x}_0)\}$, que es no vacío porque contiene a $\vect{x}_0$. El conjunto $S$ es acotado: por la coercividad aplicada a $M=f(\vect{x}_0)$ existe $r$ tal que $f(\vect{x})>f(\vect{x}_0)$ para $\|\vect{x}\|>r$, de modo que $S\subseteq\{\|\vect{x}\|\leq r\}$. El conjunto $S$ es cerrado: si $\vect{x}_k\in S$ y $\vect{x}_k\to\vect{x}$, entonces $\vect{x}\in D$ porque $D$ es cerrado, y la continuidad de $f$ da $f(\vect{x})=\lim f(\vect{x}_k)\leq f(\vect{x}_0)$ por el [Teorema “Caracterización de la continuidad por sucesiones”](../matematica-1/30-limites-y-continuidad-de-funciones.qmd#thm-continuidad-sucesiones), de modo que $\vect{x}\in S$. Por el teorema de Heine–Borel, $S$ es compacto, y Weierstrass da $\vect{x}_*\in S$ con $f(\vect{x}_*)\leq f(\vect{x})$ para todo $\vect{x}\in S$. Si $\vect{x}\in D\setminus S$, entonces $f(\vect{x})>f(\vect{x}_0)\geq f(\vect{x}_*)$, porque $\vect{x}_0\in S$, y por tanto $\vect{x}_*$ es un mínimo global de $f$ en $D$.
+
+:::
+
+Las formas cuadráticas definidas positivas son el caso central, porque son la función objetivo de los mínimos cuadrados.
+
+::: {#exm-cuadratica-coerciva}
+## Una forma cuadrática definida positiva es coerciva
+
+Sea $\mat{A}\in\mathbb{R}^{n\times n}$ simétrica y definida positiva y $\vect{b}\in\mathbb{R}^n$. Entonces $f(\vect{x})=\vect{x}^{\top}\mat{A}\vect{x}+\vect{b}^{\top}\vect{x}$ es coerciva en $\mathbb{R}^n$ y alcanza un mínimo global.
+
+:::
+
+Sea $\lambda_{\min}>0$ el menor valor propio de $\mat{A}$. La demostración del [Teorema “Caracterización espectral de la definición positiva”](../matematica-2/12-formas-cuadraticas-y-matrices-definidas-positivas.qmd#thm-definida-positiva-espectral) escribe $\vect{x}^{\top}\mat{A}\vect{x}=\sum_i\lambda_iy_i^2$ con $\vect{y}=\mat{Q}^{\top}\vect{x}$ y $\|\vect{y}\|=\|\vect{x}\|$, de modo que $\vect{x}^{\top}\mat{A}\vect{x}\geq\lambda_{\min}\|\vect{x}\|^2$. Por la desigualdad de Cauchy–Schwarz, $\vect{b}^{\top}\vect{x}\geq-\|\vect{b}\|\,\|\vect{x}\|$. Entonces $f(\vect{x})\geq\lambda_{\min}\|\vect{x}\|^2-\|\vect{b}\|\,\|\vect{x}\|$, que tiende a infinito con $\|\vect{x}\|$, y el teorema anterior da el mínimo. Con números, para $\mat{A}=\left(\begin{smallmatrix}1&1/2\\1/2&2\end{smallmatrix}\right)$ y $\vect{b}=(-1,0)^{\top}$ del [Ejemplo “Gradiente y hessiana de una forma cuadrática”](06-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#exm-gradiente-hessiana-cuadratica), los valores propios son las raíces de $\lambda^2-3\lambda+7/4=0$, es decir, $(3\pm\sqrt2)/2$, de modo que $\lambda_{\min}\approx0.793$, y $\|\vect{b}\|=1$. La cota $f(\vect{x})\geq0.793\|\vect{x}\|^2-\|\vect{x}\|$ es positiva para $\|\vect{x}\|>1.26$, de modo que fuera de esa bola $f$ supera cualquier valor de $f$ en el origen, que es $0$, y el mínimo está dentro de la bola.
+
+Las hipótesis del teorema no pueden eliminarse sin perder la conclusión, y los ejemplos que lo muestran indican en qué dirección falla cada una.
+
+::: {#exm-optimo-no-existe}
+## Cuando el óptimo no existe
+
+(i) $f(x)=x$ en $(0,1)$, acotado pero no cerrado, no alcanza mínimo ni máximo: para cualquier $x\in(0,1)$ existe un punto de $(0,1)$ más cercano a cada extremo excluido. (ii) $f(x)=e^x$ en $\mathbb{R}$, cerrado pero no acotado, está acotada inferiormente por $0$ pero no alcanza mínimo, porque $e^x>0$ para todo $x$ y $e^x\to0$ cuando $x\to-\infty$; la función no es coerciva. (iii) $f(x)=1/x$ en $(0,1]$ no tiene máximo, porque $f(x)\to\infty$ cuando $x\to0^+$.
+
+:::
+
+El caso (ii) es el más instructivo, porque el dominio es cerrado y la función es continua y acotada inferiormente, y aun así no hay mínimo. En problemas de estimación la situación equivalente es una función objetivo que mejora cuando algún parámetro se desplaza hacia una frontera excluida, por ejemplo una varianza que tiende a cero, y la existencia del estimador exige entonces descartar esa fuga con un argumento adicional.

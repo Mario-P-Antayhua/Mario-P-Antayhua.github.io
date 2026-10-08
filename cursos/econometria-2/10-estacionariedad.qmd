@@ -1,111 +1,46 @@
 ---
 title: "Estacionariedad"
-description: "Estacionariedad. Incluye Estacionariedad estricta, Estacionariedad débil y La estacionariedad estricta con momentos finitos implica estacionariedad débil."
+description: "La estacionariedad débil y estricta, las propiedades de la función de autocovarianza de un proceso estacionario, la equivalencia de ambas nociones para procesos gaussianos y ejemplos de procesos estacionarios y no estacionarios."
 author: "Mario Peñaloza"
-date: 2026-10-07
-categories: [Econometría II, Procesos estocásticos, estacionariedad y ergodicidad]
+date: 2026-10-08
+categories: [Econometría II, Procesos estocásticos]
 ---
 
-::: {#def-estacionariedad-estricta}
-## Estacionariedad estricta
+Con una sola trayectoria no se puede estimar la media ni la covarianza de un proceso en cada instante, porque en cada instante hay una sola observación. Para aprender algo hace falta que el proceso se comporte de manera parecida a lo largo del tiempo, de modo que observaciones de momentos distintos aporten información sobre las mismas características. Esa regularidad se llama estacionariedad, y tiene una versión sobre los momentos de segundo orden y otra sobre toda la distribución. La nota muestra qué propiedades se deducen de ella y cuándo las dos versiones coinciden.
 
-Un proceso $\{Y_t\}$ es ***estrictamente estacionario*** si,
-para todo $k\in\mathbb{N}$, todo conjunto de índices
-$t_1,\ldots,t_k\in T$ y todo desplazamiento $h$ tal que
-$t_1+h,\ldots,t_k+h\in T$, la distribución conjunta de
-$(Y_{t_1},\ldots,Y_{t_k})$ coincide exactamente con la de
-$(Y_{t_1+h},\ldots,Y_{t_k+h})$.
+::: {#def-estacionariedad}
+## Estacionariedad débil y estricta
+
+Un proceso $\{X_t\}$ con segundo momento finito es ***débilmente estacionario*** (o estacionario en covarianza) si (i) $\E[X_t]=\mu$ no depende de $t$ y (ii) $\Cov(X_t,X_{t+h})=\gamma(h)$ depende solo del desfase $h$. Es ***estrictamente estacionario*** si, para todo $n$, todos $t_1,\ldots,t_n$ y todo $h$, los vectores $(X_{t_1},\ldots,X_{t_n})$ y $(X_{t_1+h},\ldots,X_{t_n+h})$ tienen la misma distribución. La función $\gamma(h)$ es la ***función de autocovarianza*** y $\rho(h)=\gamma(h)/\gamma(0)$ la ***función de autocorrelación*** (FAC).
 
 :::
 
-La estacionariedad estricta es una condición sobre la distribución
-conjunta completa del proceso, y verificarla directamente a partir de
-datos observados es, en la práctica, inviable: exigiría conocer
-distribuciones conjuntas de cualquier orden. La condición que sí se
-puede verificar, y la que en la práctica econométrica se entiende casi
-siempre cuando se dice simplemente “estacionario”
-sin más calificativo, involucra únicamente los dos primeros momentos.
+La estacionariedad estricta con segundo momento finito implica la débil, porque la igualdad de distribuciones de $X_t$ y $X_{t+h}$ implica la igualdad de medias, y la de $(X_t,X_{t+h})$ y $(X_s,X_{s+h})$ implica la igualdad de covarianzas. El recíproco falla en general, pero se cumple para procesos gaussianos.
 
-::: {#def-estacionariedad-debil}
-## Estacionariedad débil
+::: {#prp-gaussiano-estacionario}
+## Estacionariedad en procesos gaussianos
 
-Un proceso $\{Y_t\}$ con segundo momento finito es
-***débilmente estacionario***, o
-***estacionario en covarianza***, si: (i) $\mu_t=\mu$ para
-todo $t$, una constante que no depende de $t$; (ii)
-$\gamma(t,s)$ depende de $t$ y $s$ únicamente a través de la diferencia
-$t-s$, de modo que se puede escribir $\gamma(t,s)=\gamma(t-s)$ como
-función de un solo argumento.
-
-:::
-
-Bajo estacionariedad débil se escribe $\autocov{j}:=\gamma(j)$ para la
-***autocovarianza de orden $j$***, la covarianza entre
-cualquier par de observaciones separadas exactamente $j$ periodos, y
-$\autocorr{j}:=\autocov{j}/\autocov{0}$ para la
-***autocorrelación de orden $j$***, ambas ya sin dependencia
-de $t$: esta es la propiedad que permite, finalmente, estimar
-$\autocov{j}$ promediando sobre todos los pares de observaciones de la
-trayectoria separados $j$ periodos, en lugar de necesitar múltiples
-realizaciones del proceso.
-
-::: {#prp-estricta-implica-debil}
-## La estacionariedad estricta con momentos finitos implica estacionariedad débil
-
-Si $\{Y_t\}$ es estrictamente estacionario y $\Esp{Y_t^2}<\infty$ para
-todo $t$, entonces $\{Y_t\}$ es débilmente estacionario.
+Un proceso es ***gaussiano*** si todos sus vectores finito-dimensionales son normales multivariantes. Un proceso gaussiano es débilmente estacionario si y solo si es estrictamente estacionario.
 
 :::
 
 ::: {.proof}
-Por la @def-estacionariedad-estricta aplicada a $k=1$, la
-distribución de $Y_t$ coincide con la de $Y_{t+h}$ para todo $h$, en
-particular con la de $Y_0$; como la esperanza es una función de la
-distribución únicamente, $\mu_t=\Esp{Y_t}=\Esp{Y_0}=\mu_0$ para todo
-$t$, una constante que no depende de $t$. Aplicando la definición a
-$k=2$ con índices $t,s$ y desplazamiento $h=-s$, la distribución
-conjunta de $(Y_t,Y_s)$ coincide con la de $(Y_{t-s},Y_0)$, y como la
-covarianza es también una función de la distribución conjunta
-únicamente,
-$\gamma(t,s)=\Cov(Y_t,Y_s)=\Cov(Y_{t-s},Y_0)=\gamma(t-s,0)$, que depende
-de $t$ y $s$ solo a través de $t-s$. Ambas condiciones de la
-@def-estacionariedad-debil quedan verificadas.
+La implicación de estricta a débil es la ya vista. Recíprocamente, sea el proceso gaussiano débilmente estacionario. Para $t_1,\ldots,t_n$ y $h$, el vector $(X_{t_1+h},\ldots,X_{t_n+h})$ es normal con media $\mu\mathbf{1}$ y covarianza $\bigl(\gamma(t_i-t_j)\bigr)_{i,j}$, la misma que la de $(X_{t_1},\ldots,X_{t_n})$. Una normal multivariante queda determinada por su media y su covarianza, por la definición con densidad (o con la representación de la normal cuando la covarianza es singular), y entonces los dos vectores tienen la misma distribución.
 
 :::
 
-El recíproco de esta proposición es falso: existen procesos débilmente
-estacionarios que no son estrictamente estacionarios, porque la
-estacionariedad débil solo restringe los dos primeros momentos y nada
-impide que momentos de orden superior, como la asimetría, cambien con
-$t$. Cuando el proceso es conjuntamente normal, sin embargo, la
-distribución completa queda determinada por sus dos primeros momentos
-por la [Definición “Distribución normal multivariante”](../econometria-1/11-la-distribucion-normal-multivariante.qmd#def-normal-multivariante) de la
-[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd), y en ese caso particular estacionariedad
-débil y estricta coinciden.
+Los procesos estacionarios tienen una función de autocovarianza con propiedades específicas, que se deducen de las de la nota anterior.
 
 ::: {#prp-propiedades-autocovarianza}
-## Propiedades de la función de autocovarianza
+## Propiedades de la autocovarianza de un proceso estacionario
 
-Para un proceso débilmente estacionario, la función de autocovarianza
-satisface: (i) $\autocov{0}\geq 0$; (ii) $|\autocov{j}|\leq\autocov{0}$
-para todo $j$; (iii) $\autocov{j}=\autocov{-j}$ (simetría).
+Si $\{X_t\}$ es débilmente estacionario con autocovarianza $\gamma$, entonces: (i) $\gamma(0)=\Var(X_t)\geq0$; (ii) $\gamma(-h)=\gamma(h)$; (iii) $|\gamma(h)|\leq\gamma(0)$, de modo que $|\rho(h)|\leq1$ si $\gamma(0)>0$; (iv) para todo $n$, la matriz de Toeplitz $\mat{\Gamma}_n=\bigl(\gamma(i-j)\bigr)_{i,j=1}^n$ es simétrica y semidefinida positiva.
 
 :::
 
 ::: {.proof}
-La propiedad (i) es inmediata, porque $\autocov{0}=\Var(Y_t)\geq 0$ por
-la [Definición “Momentos y varianza”](../econometria-1/04-esperanza-matematica-y-momentos.qmd#def-momentos-varianza) de la [Sección “Espacios de probabilidad”](../econometria-1/01-espacios-de-probabilidad.qmd). La
-propiedad (ii) es la desigualdad de Cauchy–Schwarz de la
-[Lema “Desigualdad de Cauchy–Schwarz”](../matematica-2/04-espacios-con-producto-interno.qmd#lem-cauchy-schwarz), aplicada en el espacio de variables
-aleatorias con producto interno $\langle U,V\rangle=\Cov(U,V)$ ya usado
-en la [Proposición “La correlación está acotada entre -1 y 1”](../econometria-1/10-covarianza-y-correlacion-entre-dos-variables.qmd#prp-correlacion-acotada) de la
-[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd), a $Y_t-\mu$ y $Y_{t-j}-\mu$:
-$|\autocov{j}|=|\Cov(Y_t,Y_{t-j})|\leq
-\sqrt{\Var(Y_t)}\sqrt{\Var(Y_{t-j})}=\autocov{0}$, usando la
-estacionariedad para igualar ambas varianzas a $\autocov{0}$. La
-propiedad (iii) se sigue directamente de la simetría de la covarianza,
-$\Cov(Y_t,Y_{t-j})=\Cov(Y_{t-j},Y_t)$, y de reescribir el lado derecho
-como autocovarianza de orden $-j$ tomando $t-j$ como el nuevo punto de
-referencia.
+El inciso (i) es la definición. Para (ii), $\gamma(-h)=\Cov(X_t,X_{t-h})=\Cov(X_{t-h},X_t)=\gamma(h)$ por la simetría de la covarianza y la estacionariedad. Para (iii), la desigualdad de Cauchy–Schwarz da $|\Cov(X_t,X_{t+h})|\leq\sqrt{\Var(X_t)\Var(X_{t+h})}=\gamma(0)$. Para (iv), $\mat{\Gamma}_n$ es la matriz de covarianzas del vector $(X_1,\ldots,X_n)$, y se aplica la proposición de la nota anterior.
 
 :::
+
+Con números, para el proceso periódico de la nota anterior, $\gamma(h)=\cos(\pi h/3)$ cumple $\gamma(0)=1$, $\gamma(\pm1)=0.5$, $\gamma(\pm2)=-0.5$, y $\det\mat{\Gamma}_3=0$, porque el proceso solo tiene dos fuentes de aleatoriedad. En cambio, la función $\gamma(0)=1$, $\gamma(\pm1)=0.9$, $\gamma(\pm2)=0$ no puede ser la autocovarianza de ningún proceso estacionario, porque el determinante de $\mat{\Gamma}_3$ es $1(1-0.81)-0.9(0.9-0)+0=-0.62<0$. Los procesos no estacionarios abundan en economía: el paseo aleatorio tiene varianza $\sigma^2t$ que depende del tiempo, y cualquier proceso con tendencia determinista tiene media que cambia con $t$.

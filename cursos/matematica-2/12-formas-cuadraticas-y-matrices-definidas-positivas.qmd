@@ -1,0 +1,89 @@
+---
+title: "Formas cuadráticas y matrices definidas positivas"
+description: "Formas cuadráticas, matrices definidas y semidefinidas positivas, su caracterización por los valores propios, el caso de XᵀX, la raíz cuadrada, la caracterización por el complemento de Schur y la matriz de proyección."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
+---
+
+La diagonalización ortogonal de una matriz simétrica permite decidir, sin evaluar una función en todas las direcciones, si una forma cuadrática es siempre positiva, siempre negativa o cambia de signo según la dirección. Esa decisión es la que determina si un punto crítico es un mínimo, y es también la estructura exacta que tienen las matrices de varianzas y covarianzas.
+
+::: {#def-forma-cuadratica}
+## Forma cuadrática y matriz definida positiva
+
+Dada $\mat{A}\in\mathbb{R}^{n\times n}$ simétrica, la ***forma cuadrática*** asociada es $q(\vect{x}):=\vect{x}^{\top}\mat{A}\vect{x}$. Se dice que $\mat{A}$ es ***definida positiva***, lo que se escribe $\mat{A}\succ0$, si $q(\vect{x})>0$ para todo $\vect{x}\neq\vect{0}$, y ***semidefinida positiva***, $\mat{A}\succeq0$, si $q(\vect{x})\geq0$ para todo $\vect{x}$. Se escribe $\mat{A}\succeq\mat{B}$ cuando $\mat{A}-\mat{B}\succeq0$.
+
+:::
+
+Decidir si una matriz es definida positiva con la definición exigiría examinar todos los vectores; el resultado siguiente reduce la pregunta a una condición sobre los valores propios.
+
+::: {#thm-definida-positiva-espectral}
+## Caracterización espectral de la definición positiva
+
+Una matriz simétrica $\mat{A}$ es definida positiva si y solo si todos sus valores propios son estrictamente positivos, y es semidefinida positiva si y solo si todos son no negativos.
+
+:::
+
+::: {.proof}
+Se prueba el caso definido positivo; el semidefinido es idéntico con desigualdades no estrictas. Por el [Corolario “Diagonalización ortogonal y cota de Rayleigh”](11-valores-propios-y-teorema-espectral.qmd#cor-diagonalizacion-ortogonal), $\mat{A}=\mat{Q}\mat{\Lambda}\mat{Q}^{\top}$ con $\mat{Q}$ ortogonal. Para $\vect{x}\neq\vect{0}$ se define $\vect{y}:=\mat{Q}^{\top}\vect{x}$, que es no nulo porque $\|\vect{y}\|=\|\vect{x}\|$, y
+$$
+q(\vect{x})=\vect{x}^{\top}\mat{Q}\mat{\Lambda}\mat{Q}^{\top}\vect{x}=\vect{y}^{\top}\mat{\Lambda}\vect{y}=\sum_{i=1}^{n}\lambda_iy_i^2 .
+$$ {#eq-forma-cuadratica-diagonal}
+Si todos los $\lambda_i>0$, la suma es estrictamente positiva para todo $\vect{y}\neq\vect{0}$, y $\mat{A}$ es definida positiva. Recíprocamente, si algún $\lambda_j\leq0$, tomando $\vect{x}=\mat{Q}\vect{e}_j$ se obtiene $\vect{y}=\vect{e}_j$ y $q(\vect{x})=\lambda_j\leq0$ con $\vect{x}\neq\vect{0}$, lo que contradice la definición positiva.
+
+:::
+
+El teorema tiene consecuencias inmediatas que se usan sin cesar. Una matriz definida positiva tiene todos sus valores propios positivos, de modo que su determinante, que es su producto, es positivo y la matriz es invertible; y su inversa $\mat{Q}\mat{\Lambda}^{-1}\mat{Q}^{\top}$ tiene valores propios $1/\lambda_i>0$, de modo que también es definida positiva. Además, una matriz semidefinida positiva tiene una raíz cuadrada.
+
+::: {#prp-raiz-cuadrada-matricial}
+## Raíz cuadrada de una matriz semidefinida positiva
+
+Si $\mat{A}\succeq0$, existe una matriz simétrica $\mat{A}^{1/2}\succeq0$ con $\mat{A}^{1/2}\mat{A}^{1/2}=\mat{A}$. Si $\mat{A}\succ0$, entonces $\mat{A}^{1/2}\succ0$ es invertible.
+
+:::
+
+::: {.proof}
+Con $\mat{A}=\mat{Q}\mat{\Lambda}\mat{Q}^{\top}$ y $\lambda_i\geq0$, se define $\mat{A}^{1/2}:=\mat{Q}\mat{\Lambda}^{1/2}\mat{Q}^{\top}$ con $\mat{\Lambda}^{1/2}=\operatorname{diag}(\sqrt{\lambda_i})$, que existe por el [Teorema “Existencia de raíces cuadradas”](../matematica-1/16-los-reales-el-axioma-de-completitud.qmd#thm-existe-raiz-2). Es simétrica, porque $(\mat{Q}\mat{\Lambda}^{1/2}\mat{Q}^{\top})^{\top}=\mat{Q}\mat{\Lambda}^{1/2}\mat{Q}^{\top}$, y $\mat{A}^{1/2}\mat{A}^{1/2}=\mat{Q}\mat{\Lambda}^{1/2}\mat{Q}^{\top}\mat{Q}\mat{\Lambda}^{1/2}\mat{Q}^{\top}=\mat{Q}\mat{\Lambda}\mat{Q}^{\top}=\mat{A}$. Sus valores propios $\sqrt{\lambda_i}$ son no negativos, de modo que es semidefinida positiva, y positivos si $\mat{A}\succ0$.
+
+:::
+
+La matriz $\mat{X}^{\top}\mat{X}$ aparece en toda regresión, y su carácter definido o semidefinido se decide con la independencia de las columnas de $\mat{X}$.
+
+::: {#prp-xtx-definida}
+## La matriz $\mat{X}^{\top}\mat{X}$
+
+Para $\mat{X}\in\mathbb{R}^{n\times k}$: (i) $\mat{X}^{\top}\mat{X}\succeq0$. (ii) $\mat{X}^{\top}\mat{X}\succ0$ si y solo si las columnas de $\mat{X}$ son linealmente independientes, y en ese caso $\mat{X}^{\top}\mat{X}$ es invertible.
+
+:::
+
+::: {.proof}
+La matriz es simétrica por la propiedad de la transpuesta del producto, y para $\vect{a}\in\mathbb{R}^k$, $\vect{a}^{\top}\mat{X}^{\top}\mat{X}\vect{a}=(\mat{X}\vect{a})^{\top}(\mat{X}\vect{a})=\|\mat{X}\vect{a}\|^2\geq0$, lo que prueba (i). Para (ii), $\|\mat{X}\vect{a}\|^2=0$ equivale a $\mat{X}\vect{a}=\vect{0}$, y para $\vect{a}\neq\vect{0}$ esto ocurre si y solo si las columnas son dependientes. Por lo tanto la forma es estrictamente positiva sobre $\vect{a}\neq\vect{0}$ si y solo si las columnas son independientes; en ese caso todos los valores propios son positivos y la matriz es invertible.
+
+:::
+
+Una matriz particionada es semidefinida positiva si y solo si lo es su complemento de Schur, lo que permite probar propiedades de una matriz grande mediante propiedades de una más pequeña.
+
+::: {#prp-schur-definida}
+## Caracterización por el complemento de Schur
+
+Sea $\mat{M}=\begin{pmatrix}\mat{A}&\mat{B}\\\mat{B}^{\top}&\mat{D}\end{pmatrix}$ simétrica con $\mat{A}\succ0$ y $\mat{S}=\mat{D}-\mat{B}^{\top}\mat{A}^{-1}\mat{B}$. Entonces $\mat{M}\succ0$ si y solo si $\mat{S}\succ0$, y $\mat{M}\succeq0$ si y solo si $\mat{S}\succeq0$.
+
+:::
+
+::: {.proof}
+Por el [Teorema “Factorización por el complemento de Schur”](09-matrices-particionadas-y-complemento-de-schur.qmd#thm-factorizacion-schur) con $\mat{C}=\mat{B}^{\top}$, $\mat{M}=\mat{L}\begin{pmatrix}\mat{A}&\mat{0}\\\mat{0}&\mat{S}\end{pmatrix}\mat{L}^{\top}$ con $\mat{L}=\begin{pmatrix}\Imat&\mat{0}\\\mat{B}^{\top}\mat{A}^{-1}&\Imat\end{pmatrix}$ invertible, porque la transpuesta del tercer factor es $\mat{L}$. Para $\vect{z}=(\vect{x},\vect{y})$ y $\vect{w}=\mat{L}^{\top}\vect{z}$, $\vect{z}^{\top}\mat{M}\vect{z}=\vect{w}^{\top}\operatorname{diag}(\mat{A},\mat{S})\vect{w}=\vect{w}_1^{\top}\mat{A}\vect{w}_1+\vect{w}_2^{\top}\mat{S}\vect{w}_2$, con $\vect{w}_2=\vect{y}$ y $\vect{w}_1=\vect{x}+\mat{A}^{-1}\mat{B}\vect{y}$. Como $\vect{z}\mapsto\vect{w}$ es biyectiva, $\vect{z}\neq\vect{0}$ equivale a $\vect{w}\neq\vect{0}$. Si $\mat{S}\succ0$, la suma es positiva para $\vect{w}\neq\vect{0}$, porque $\mat{A}\succ0$; si $\mat{S}$ no es definida positiva, existe $\vect{y}\neq\vect{0}$ con $\vect{y}^{\top}\mat{S}\vect{y}\leq0$, y con $\vect{x}=-\mat{A}^{-1}\mat{B}\vect{y}$ se obtiene $\vect{w}_1=\vect{0}$ y $\vect{z}^{\top}\mat{M}\vect{z}=\vect{y}^{\top}\mat{S}\vect{y}\leq0$. El caso semidefinido es análogo con desigualdades no estrictas.
+
+:::
+
+Para cerrar, la matriz de proyección sobre el espacio columna de $\mat{X}$ reúne las ideas de esta y de las notas anteriores.
+
+::: {#exm-matriz-proyeccion}
+## La matriz de proyección
+
+Sea $\mat{X}\in\mathbb{R}^{n\times k}$ con columnas linealmente independientes, de modo que $\mat{X}^{\top}\mat{X}$ es invertible, y sea $\mat{P}:=\mat{X}(\mat{X}^{\top}\mat{X})^{-1}\mat{X}^{\top}$. Entonces $\mat{P}$ es simétrica, $\mat{P}\mat{P}=\mat{P}$ (idempotente), representa la proyección ortogonal sobre el espacio columna $\operatorname{Im}(\mat{X})$, sus valores propios son $0$ y $1$, y $\tr(\mat{P})=k$.
+
+:::
+
+La simetría se sigue de la transpuesta del producto y de que $(\mat{X}^{\top}\mat{X})^{-1}$ es simétrica; la idempotencia, de que $\mat{X}^{\top}\mat{X}(\mat{X}^{\top}\mat{X})^{-1}=\Imat$ en el producto $\mat{P}\mat{P}$. Para ver que $\mat{P}\vect{v}$ es la proyección de $\vect{v}$ sobre $\operatorname{Im}(\mat{X})$, se verifican las dos condiciones de la [Proposición “Existencia y unicidad de la proyección ortogonal”](05-ortogonalidad-proyeccion-y-mejor-aproximacion.qmd#prp-proyeccion-existencia): $\mat{P}\vect{v}=\mat{X}\bigl[(\mat{X}^{\top}\mat{X})^{-1}\mat{X}^{\top}\vect{v}\bigr]\in\operatorname{Im}(\mat{X})$, y $\mat{X}^{\top}(\vect{v}-\mat{P}\vect{v})=\mat{X}^{\top}\vect{v}-\mat{X}^{\top}\mat{X}(\mat{X}^{\top}\mat{X})^{-1}\mat{X}^{\top}\vect{v}=\vect{0}$, es decir, el residuo es ortogonal a cada columna de $\mat{X}$ y por tanto a su envoltura. Si $\mat{P}\vect{v}=\lambda\vect{v}$ con $\vect{v}\neq\vect{0}$, entonces $\lambda\vect{v}=\mat{P}\mat{P}\vect{v}=\lambda^2\vect{v}$, de modo que $\lambda\in\{0,1\}$; como $\mat{P}$ es simétrica, es diagonalizable por la base ortonormal de vectores propios, donde el valor propio $1$ corresponde a los vectores de $\operatorname{Im}(\mat{X})$, que $\mat{P}$ deja fijos, de dimensión $k$, y el valor propio $0$ a los del complemento ortogonal, de dimensión $n-k$. Por la traza de la diagonalización, $\tr(\mat{P})=k$.
+
+Con números, para $\mat{X}$ con columnas $(1,1,1)$ y $(0,1,2)$, $\mat{X}^{\top}\mat{X}=\left(\begin{smallmatrix}3&3\\3&5\end{smallmatrix}\right)$ con determinante $6$ e inversa $\tfrac16\left(\begin{smallmatrix}5&-3\\-3&3\end{smallmatrix}\right)$. La proyección de $\vect{y}=(1,3,2)$ es $\mat{X}\hat{\vect{\beta}}$ con $\hat{\vect{\beta}}=(\mat{X}^{\top}\mat{X})^{-1}\mat{X}^{\top}\vect{y}=\tfrac16\left(\begin{smallmatrix}5&-3\\-3&3\end{smallmatrix}\right)(6,7)^{\top}=(1.5,\ 0.5)^{\top}$, de modo que el ajuste es $(1.5,2,2.5)$ y el residuo $(-0.5,1,-0.5)$, que cumple $\mat{X}^{\top}\vect{e}=(0,0)^{\top}$. Es la recta de mínimos cuadrados, y $\tr(\mat{P})=2=k$.

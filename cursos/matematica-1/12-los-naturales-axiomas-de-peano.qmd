@@ -1,0 +1,111 @@
+---
+title: "Los naturales: axiomas de Peano y aritmética"
+description: "Los números naturales a partir de tres axiomas, la definición recursiva de la suma y el producto, y las propiedades aritméticas y de orden que se demuestran por inducción."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sistemas numéricos]
+---
+
+Hasta aquí los números naturales, los enteros y los reales se han usado con su aritmética habitual. Esta nota y las siguientes los construyen con rigor, uno a partir del anterior, de modo que cada propiedad que se invoque después quede demostrada. La estrategia es acumulativa: los naturales $\mathbb{N}$ se aceptan mediante tres axiomas; los enteros $\mathbb{Z}$ aparecen porque en $\mathbb{N}$ no toda ecuación $x+a=b$ tiene solución; los racionales $\mathbb{Q}$, porque en $\mathbb{Z}$ no toda ecuación $ax=b$ con $a\neq0$ la tiene; los reales $\mathbb{R}$, porque $\mathbb{Q}$ no resuelve $x^2=2$; y los complejos $\mathbb{C}$, porque $\mathbb{R}$ no resuelve $x^2=-1$.
+
+Los naturales no se construyen a partir de nada anterior: se postulan con un conjunto reducido de axiomas que fijan su comportamiento sin apelar a ninguna noción previa de número. Los dos primeros axiomas fijan una estructura mínima de sucesor, sin repeticiones ni puntos de partida espurios; el tercero es el principio de inducción de la [Nota “El principio de inducción matemática”](05-el-principio-de-induccion-matematica.qmd), que aquí se adopta como axioma.
+
+::: {#ax-peano .callout-important appearance="simple" title="Axioma: Peano"}
+El conjunto $\mathbb{N}$ tiene un elemento distinguido $1\in\mathbb{N}$ y una función sucesor $s:\mathbb{N}\to\mathbb{N}$ que cumplen:
+
+**(P1)** No existe $n\in\mathbb{N}$ con $s(n)=1$.
+
+**(P2)** $s$ es inyectiva: si $s(m)=s(n)$, entonces $m=n$.
+
+**(P3)** Si $S\subseteq\mathbb{N}$ cumple $1\in S$ y, para todo $n\in S$, también $s(n)\in S$, entonces $S=\mathbb{N}$.
+
+:::
+
+El axioma (P1) garantiza que $1$ no es sucesor de nadie y puede servir de punto de arranque; (P2) impide que dos naturales distintos tengan el mismo sucesor, de modo que la cadena $1,\,s(1),\,s(s(1)),\ldots$ no se repite; y (P3) convierte esa estructura mínima en $\mathbb{N}$, porque excluye cualquier elemento que no se alcance desde $1$ por sucesores. Una consecuencia inmediata de (P3), que se usa sin cesar, es que todo natural distinto de $1$ es el sucesor de algún natural.
+
+::: {#lem-sucesor-de-alguno}
+## Todo natural distinto de 1 es sucesor
+
+Si $a\in\mathbb{N}$ y $a\neq1$, existe $m\in\mathbb{N}$ con $a=s(m)$.
+
+:::
+
+::: {.proof}
+Sea $S$ el conjunto formado por $1$ y por los naturales que son sucesores de algún natural. Contiene a $1$ por definición; y si $n\in S$, entonces $s(n)$ es sucesor de $n$, de modo que $s(n)\in S$. Por (P3), $S=\mathbb{N}$, es decir, todo natural es $1$ o es un sucesor.
+
+:::
+
+Para definir la suma y el producto hace falta poder definir funciones por recursión, y ese principio se deduce de los tres axiomas.
+
+::: {#thm-recursion}
+## Teorema de recursión
+
+Sean $X$ un conjunto, $x_0\in X$ y $g:X\to X$. Existe una única función $h:\mathbb{N}\to X$ con $h(1)=x_0$ y $h(s(n))=g(h(n))$ para todo $n$.
+
+:::
+
+::: {.proof}
+Se llama *cerrada* a una relación $R\subseteq\mathbb{N}\times X$ si $(1,x_0)\in R$ y $(n,x)\in R$ implica $(s(n),g(x))\in R$. La relación $\mathbb{N}\times X$ es cerrada, y la intersección $H$ de todas las relaciones cerradas también lo es. Se afirma que, para cada $n$, existe exactamente un $x$ con $(n,x)\in H$. Sea $S$ el conjunto de los $n$ para los que esto ocurre.
+
+Para $n=1$, el par $(1,x_0)$ está en $H$. Si hubiera otro par $(1,y)\in H$ con $y\neq x_0$, la relación $H\setminus\{(1,y)\}$ sería cerrada, porque conserva $(1,x_0)$ y, si contiene a $(n,x)$, contiene a $(s(n),g(x))$ ya que $s(n)\neq1$ por (P1); esto contradice que $H$ sea la menor relación cerrada. Entonces $1\in S$.
+
+Sea ahora $n\in S$, con $x$ el único valor tal que $(n,x)\in H$. Como $H$ es cerrada, $(s(n),g(x))\in H$. Si hubiera otro par $(s(n),y)\in H$ con $y\neq g(x)$, la relación $H\setminus\{(s(n),y)\}$ sería cerrada: conserva $(1,x_0)$ porque $s(n)\neq1$; y si contiene a $(m,z)$, entonces $(s(m),g(z))\in H$ y es distinto de $(s(n),y)$, ya que $s(m)=s(n)$ obligaría a $m=n$ por (P2), luego a $z=x$ y a $g(z)=g(x)\neq y$. De nuevo se contradice la minimalidad de $H$, y $s(n)\in S$. Por (P3), $S=\mathbb{N}$, de modo que $h(n):=$ el único $x$ con $(n,x)\in H$ define una función que cumple las dos condiciones del enunciado.
+
+Para la unicidad, si $h'$ cumple las mismas condiciones, el conjunto $\{n:h(n)=h'(n)\}$ contiene a $1$ y es cerrado bajo $s$, porque $h(s(n))=g(h(n))=g(h'(n))=h'(s(n))$; por (P3) es todo $\mathbb{N}$.
+
+:::
+
+Con la recursión se definen la suma y el producto: para cada $a$ fijo, $a+1:=s(a)$ y $a+s(b):=s(a+b)$; y $a\cdot1:=a$ y $a\cdot s(b):=a\cdot b+a$. La primera usa $X=\mathbb{N}$, $x_0=s(a)$ y $g=s$; la segunda, $x_0=a$ y $g(x)=x+a$.
+
+::: {#prp-aritmetica-n}
+## Propiedades de la suma y del producto en $\mathbb{N}$
+
+Para todos $a,b,c\in\mathbb{N}$: (i) $(a+b)+c=a+(b+c)$; (ii) $a+b=b+a$; (iii) si $a+c=b+c$, entonces $a=b$; (iv) $a\cdot(b+c)=a\cdot b+a\cdot c$; (v) $(a\cdot b)\cdot c=a\cdot(b\cdot c)$; (vi) $a\cdot b=b\cdot a$.
+
+:::
+
+::: {.proof}
+Todas se prueban por inducción sobre la última variable, es decir, aplicando (P3) al conjunto de los valores de esa variable para los que la igualdad vale con $a,b$ fijos.
+
+Para (i), con $c=1$: $(a+b)+1=s(a+b)=a+s(b)=a+(b+1)$. Si vale para $c$, entonces $(a+b)+s(c)=s((a+b)+c)=s(a+(b+c))=a+s(b+c)=a+(b+s(c))$.
+
+Para (ii) hacen falta dos hechos previos. El primero es $1+a=s(a)$: para $a=1$, $1+1=s(1)$; y si vale para $a$, $1+s(a)=s(1+a)=s(s(a))$. El segundo es $s(a)+b=s(a+b)$: para $b=1$, $s(a)+1=s(s(a))=s(a+1)$; y si vale para $b$, $s(a)+s(b)=s(s(a)+b)=s(s(a+b))=s(a+s(b))$. Con ellos, para $b=1$: $a+1=s(a)=1+a$; y si $a+b=b+a$, entonces $a+s(b)=s(a+b)=s(b+a)=s(b)+a$.
+
+Para (iii), con $c=1$ la hipótesis es $s(a)=s(b)$, y (P2) da $a=b$. Si vale para $c$ y $a+s(c)=b+s(c)$, entonces $s(a+c)=s(b+c)$, (P2) da $a+c=b+c$ y la hipótesis de inducción da $a=b$.
+
+Para (iv), con $c=1$: $a\cdot(b+1)=a\cdot s(b)=a\cdot b+a=a\cdot b+a\cdot1$. Si vale para $c$: $a\cdot(b+s(c))=a\cdot s(b+c)=a\cdot(b+c)+a=(a\cdot b+a\cdot c)+a=a\cdot b+(a\cdot c+a)=a\cdot b+a\cdot s(c)$, usando (i).
+
+Para (v), con $c=1$ ambos lados son $a\cdot b$. Si vale para $c$: $(a\cdot b)\cdot s(c)=(a\cdot b)\cdot c+a\cdot b=a\cdot(b\cdot c)+a\cdot b=a\cdot(b\cdot c+b)=a\cdot(b\cdot s(c))$, usando (iv).
+
+Para (vi) hacen falta $1\cdot b=b$, que se prueba por inducción en $b$ ($1\cdot1=1$ y $1\cdot s(b)=1\cdot b+1=b+1$), y $s(a)\cdot b=a\cdot b+b$, que se prueba por inducción en $b$ con $s(a)\cdot1=s(a)=a+1$ y $s(a)\cdot s(b)=s(a)\cdot b+s(a)=(a\cdot b+b)+(a+1)=(a\cdot b+a)+(b+1)=a\cdot s(b)+s(b)$, usando (i) y (ii). Con ellos, $a\cdot1=a=1\cdot a$, y si $a\cdot b=b\cdot a$, entonces $a\cdot s(b)=a\cdot b+a=b\cdot a+a=s(b)\cdot a$.
+
+:::
+
+El orden de $\mathbb{N}$ se define a partir de la suma, y las propiedades anteriores bastan para probar que es total.
+
+::: {#def-orden-n}
+## Orden en $\mathbb{N}$
+
+Para $a,b\in\mathbb{N}$ se escribe $a<b$ si existe $c\in\mathbb{N}$ con $b=a+c$, y $a\leq b$ si $a<b$ o $a=b$.
+
+:::
+
+La definición reduce el orden a la suma, de modo que cada propiedad del orden se obtiene de una propiedad de la suma ya demostrada; las que siguen son las que se usarán en todas las construcciones posteriores.
+
+::: {#prp-orden-n}
+## El orden de $\mathbb{N}$ es total y compatible con las operaciones
+
+Para $a,b,c\in\mathbb{N}$: (i) *(tricotomía)* se cumple exactamente una de $a<b$, $a=b$, $b<a$; (ii) *(transitividad)* si $a<b$ y $b<c$, entonces $a<c$; (iii) si $a<b$, entonces $a+c<b+c$ y $a\cdot c<b\cdot c$; (iv) $1\leq a$.
+
+:::
+
+::: {.proof}
+La transitividad (ii) es inmediata: si $b=a+d$ y $c=b+e$, entonces $c=a+(d+e)$ por la asociatividad. Para (iii), si $b=a+d$, entonces $b+c=(a+c)+d$ usando conmutatividad y asociatividad, y $b\cdot c=a\cdot c+d\cdot c$ por la distributividad.
+
+Para (iv), el conjunto de los $a$ con $1\leq a$ contiene a $1$, y si contiene a $a$, entonces $s(a)=a+1>a\geq1$ por (ii), de modo que por (P3) es todo $\mathbb{N}$.
+
+Para (i), se prueba primero que a lo sumo una opción ocurre. Si $a=b$ y $a<b$, entonces $a=a+c$ para algún $c$; esto es imposible, porque el conjunto de los $a$ con $a\neq a+c$ para todo $c$ contiene a $1$ (ya que $1+c=s(c)\neq 1$ por (P1)) y es cerrado bajo $s$ (si $s(a)=s(a)+c=s(a+c)$, (P2) da $a=a+c$). Si $a<b$ y $b<a$, la transitividad daría $a<a$, que se acaba de excluir. Falta probar que al menos una ocurre: sea $S$ el conjunto de los $a$ tales que, para todo $b$, se cumple una de las tres opciones. Contiene a $1$, porque por (iv) o $b=1$ o $b>1$, es decir, $1=b$ o $1<b$. Si $a\in S$ y $b$ es cualquiera: si $b<a$ o $b=a$, entonces $b<s(a)$; si $a<b$, escrito $b=a+d$, entonces $d=1$ (y $b=s(a)$) o $d=s(m)$ para algún $m$ por el [Lema “Todo natural distinto de 1 es sucesor”](#lem-sucesor-de-alguno), y en ese caso $b=s(a)+m>s(a)$. Entonces $s(a)\in S$ y, por (P3), $S=\mathbb{N}$.
+
+:::
+
+Con la aritmética y el orden de $\mathbb{N}$ establecidos, aparece de inmediato la primera limitación que motiva la nota siguiente: en $\mathbb{N}$ la ecuación $x+5=3$ no tiene solución, porque ningún natural sumado a $5$ produce $3$, ya que $5+c>5>3$. Reparar esa carencia sin perder ninguna de las propiedades ya obtenidas es el problema que resuelve la construcción de los enteros.

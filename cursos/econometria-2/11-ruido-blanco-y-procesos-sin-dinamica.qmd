@@ -1,0 +1,43 @@
+---
+title: "Ruido blanco y procesos sin dinámica"
+description: "El ruido blanco como bloque básico de los modelos de series de tiempo, su diferencia con una sucesión independiente, un ejemplo de ruido blanco no independiente y el proceso de media constante más ruido."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Procesos estocásticos]
+---
+
+El proceso estacionario más sencillo es el que no tiene memoria: cada observación es una perturbación sin relación lineal con las demás. Se llama ruido blanco, y es el ladrillo con el que se construyen todos los modelos de series de tiempo, porque representa la parte impredecible de una serie. Esta nota lo define, lo distingue de una sucesión independiente, y estudia el proceso más simple que se construye con él.
+
+::: {#def-ruido-blanco}
+## Ruido blanco
+
+Un proceso $\{\varepsilon_t\}$ es un ***ruido blanco*** de varianza $\sigma^2$, $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$, si $\E[\varepsilon_t]=0$, $\Var(\varepsilon_t)=\sigma^2<\infty$ y $\Cov(\varepsilon_t,\varepsilon_s)=0$ para $t\neq s$. Es un ***ruido blanco independiente*** si además las variables son iid, y un ***ruido blanco gaussiano*** si es iid con distribución normal.
+
+:::
+
+Un ruido blanco es estacionario, con $\gamma(0)=\sigma^2$ y $\gamma(h)=0$ para $h\neq0$, de modo que su función de autocorrelación es $\rho(h)=0$ para todo $h\neq0$. Un ruido blanco gaussiano es independiente, porque una normal multivariante con covarianza diagonal tiene coordenadas independientes, por la caracterización de la [Nota “La distribución normal multivariante”](../econometria-1/13-la-distribucion-normal-multivariante.qmd). Fuera del caso gaussiano, la ausencia de correlación no implica independencia, y el siguiente ejemplo lo muestra con un ruido blanco cuyos cuadrados están correlacionados.
+
+::: {#exm-ruido-blanco-dependiente}
+## Un ruido blanco que no es independiente
+
+Sean $Z_t$ iid $\N(0,1)$ y $\varepsilon_t=Z_tZ_{t-1}$. Entonces $\{\varepsilon_t\}$ es un ruido blanco con $\sigma^2=1$, pero $\Cov(\varepsilon_t^2,\varepsilon_{t+1}^2)=2\neq0$.
+
+:::
+
+En efecto, $\E[\varepsilon_t]=\E[Z_t]\E[Z_{t-1}]=0$ y $\E[\varepsilon_t^2]=\E[Z_t^2]\E[Z_{t-1}^2]=1$ por la factorización de la esperanza de variables independientes. Para $h\geq1$, $\E[\varepsilon_t\varepsilon_{t+h}]=\E[Z_{t-1}Z_tZ_{t+h-1}Z_{t+h}]$, y como $Z_{t+h}$ es independiente de las demás y tiene media cero, la esperanza es cero. Para los cuadrados, $\E[\varepsilon_t^2\varepsilon_{t+1}^2]=\E[Z_{t-1}^2Z_t^4Z_{t+1}^2]=1\cdot3\cdot1=3$, usando $\E[Z^4]=3$, y como $\E[\varepsilon_t^2]=1$, $\Cov(\varepsilon_t^2,\varepsilon_{t+1}^2)=3-1=2$. Que el cuadrado de hoy prediga el cuadrado de mañana es la propiedad de agrupamiento de la volatilidad de los precios financieros, y por eso la distinción entre ruido blanco e independencia importa en las aplicaciones.
+
+El proceso de media constante más ruido es el modelo más simple con un parámetro: $X_t=\mu+\varepsilon_t$. Es estacionario, con media $\mu$ y la autocovarianza del ruido, y no tiene dinámica porque su pasado no ayuda a predecir su futuro.
+
+::: {#prp-media-ruido}
+## Media muestral del ruido blanco
+
+Si $X_t=\mu+\varepsilon_t$ con $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$, la media muestral $\bar X_T=\tfrac1T\sum_{t=1}^TX_t$ cumple $\E[\bar X_T]=\mu$, $\Var(\bar X_T)=\sigma^2/T$ y $\bar X_T\overset{p}{\to}\mu$.
+
+:::
+
+::: {.proof}
+La media es $\mu$ por la linealidad. Como las covarianzas entre distintos instantes son cero, la varianza de la suma es la suma de las varianzas, $T\sigma^2$, y la de la media es $\sigma^2/T$. La convergencia en probabilidad es la ley débil de los grandes números con varianza finita del [Teorema “Ley débil de los grandes números con varianza finita”](../econometria-1/16-leyes-de-los-grandes-numeros.qmd#thm-lgn-debil-l2).
+
+:::
+
+Con números, si $\sigma^2=4$ y $T=100$, la desviación estándar de la media es $0.2$. En un proceso con dinámica, las covarianzas entre observaciones distintas no son cero y la varianza de la media depende de ellas.

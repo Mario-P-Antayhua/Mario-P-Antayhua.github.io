@@ -1,0 +1,90 @@
+---
+title: "Polinomios y el teorema fundamental del álgebra"
+description: "Raíces de polinomios, el teorema del factor, las raíces complejas conjugadas de un polinomio real y la demostración del teorema fundamental del álgebra con el argumento del módulo mínimo."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sistemas numéricos]
+---
+
+Los polinomios aparecen de forma constante en el análisis de series de tiempo: el polinomio en el operador de rezago de un proceso autorregresivo decide si el proceso es estable, y esa decisión depende de dónde están sus raíces. Para hablar de ellas sin restricción hacen falta los números complejos, y el teorema que garantiza que un polinomio de grado $n$ tiene exactamente $n$ raíces complejas se demuestra aquí con las herramientas de continuidad, compacidad y forma polar ya construidas.
+
+::: {#def-polinomio}
+## Polinomio y raíz
+
+Un ***polinomio*** de grado $n$ es una función $p:\mathbb{C}\to\mathbb{C}$ de la forma $p(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_1z+a_0$ con $a_n\neq0$. Un número $a$ es una ***raíz*** de $p$ si $p(a)=0$.
+
+:::
+
+Un polinomio es continuo por la [Proposición “Operaciones que preservan la continuidad”](30-limites-y-continuidad-de-funciones.qmd#prp-continuidad-operaciones), que se aplica a funciones de $\mathbb{C}=\mathbb{R}^2$. La primera propiedad relaciona raíces y factores.
+
+::: {#prp-teorema-factor}
+## Teorema del factor
+
+Si $a$ es raíz de un polinomio $p$ de grado $n\geq1$, entonces $p(z)=(z-a)\,q(z)$ para un polinomio $q$ de grado $n-1$.
+
+:::
+
+::: {.proof}
+Para cada $k\geq1$, la suma geométrica finita de la [Proposición “Suma geométrica finita”](06-sumatorias-potencias-y-binomio.qmd#prp-suma-geometrica) da la identidad $z^k-a^k=(z-a)\sum_{j=0}^{k-1}z^ja^{k-1-j}$. Como $p(a)=0$,
+$$
+p(z)=p(z)-p(a)=\sum_{k=1}^{n}a_k\bigl(z^k-a^k\bigr)=(z-a)\sum_{k=1}^{n}a_k\sum_{j=0}^{k-1}z^ja^{k-1-j},
+$$
+y el último factor es un polinomio en $z$ cuyo término de mayor grado es $a_nz^{n-1}$.
+
+:::
+
+Para polinomios con coeficientes reales, las raíces no reales vienen en pares.
+
+::: {#prp-raices-conjugadas}
+## Raíces conjugadas de un polinomio real
+
+Si $p$ tiene coeficientes reales y $a$ es una raíz, entonces $\bar a$ es una raíz.
+
+:::
+
+::: {.proof}
+Como los coeficientes son reales, $\overline{a_k}=a_k$, y el conjugado de una suma y de un producto es la suma y el producto de los conjugados, por la [Proposición “$\mathbb{C}$ es un cuerpo y el módulo es una norma multiplicativa”](17-los-complejos.qmd#prp-complejos-cuerpo)(ii). Entonces $p(\bar a)=\overline{p(a)}=\bar0=0$.
+
+:::
+
+El teorema central afirma que ningún polinomio no constante carece de raíces. La demostración tiene tres pasos: el módulo del polinomio crece sin cota lejos del origen, de modo que alcanza un mínimo; ese mínimo debe ser cero, porque si no lo fuera se podría descender; y el descenso usa que los números complejos tienen raíces de cualquier orden.
+
+::: {#thm-fundamental-algebra}
+## Teorema fundamental del álgebra
+
+Todo polinomio de grado $n\geq1$ con coeficientes complejos tiene al menos una raíz en $\mathbb{C}$.
+
+:::
+
+::: {.proof}
+Sea $p(z)=\sum_{k=0}^{n}a_kz^k$ con $a_n\neq0$.
+
+*Paso 1: $|p(z)|\to\infty$ cuando $|z|\to\infty$.* Sea $S=\sum_{k<n}|a_k|$. Para $|z|\geq1$, por la desigualdad triangular, $|p(z)|\geq|a_n||z|^n-S|z|^{n-1}=|z|^{n-1}\bigl(|a_n||z|-S\bigr)$, y si además $|z|\geq2S/|a_n|$, entonces $|a_n||z|-S\geq|a_n||z|/2$, de modo que $|p(z)|\geq|a_n||z|^n/2$, que tiende a infinito con $|z|$. Existe entonces $R\geq1$ tal que $|p(z)|>|p(0)|$ para todo $|z|>R$.
+
+*Paso 2: el módulo alcanza un mínimo.* La función $z\mapsto|p(z)|$ es continua en el disco cerrado $\{|z|\leq R\}\subseteq\mathbb{R}^2$, que es cerrado y acotado, y por tanto compacto por el [Teorema “Teorema de Heine–Borel”](28-conjuntos-compactos-y-el-teorema-de-heine-borel.qmd#thm-heine-borel). Por el [Teorema “Teorema de los valores extremos”](30-limites-y-continuidad-de-funciones.qmd#thm-weierstrass-valores-extremos) existe $z_0$ en el disco con $|p(z_0)|\leq|p(z)|$ para todo $|z|\leq R$. Como $|p(0)|\geq|p(z_0)|$ y $|p(z)|>|p(0)|$ fuera del disco, $|p(z_0)|$ es el mínimo global de $|p|$ en $\mathbb{C}$.
+
+*Paso 3: el mínimo es cero.* Se razona por contradicción: supóngase $p(z_0)\neq0$. Por el teorema del binomio, $p(z_0+w)$ es un polinomio en $w$, y se define $q(w):=p(z_0+w)/p(z_0)$, con $q(0)=1$ y $q(w)=1+c_kw^k+c_{k+1}w^{k+1}+\cdots+c_nw^n$, donde $k\geq1$ es el menor índice con $c_k\neq0$; ese índice existe porque el coeficiente de $w^n$ es $a_n/p(z_0)\neq0$. Por el [Corolario “Fórmula de De Moivre y raíces”](34-seno-coseno-y-forma-polar.qmd#cor-de-moivre) existe $u\in\mathbb{C}$ con $u^k=-1/c_k$, de modo que $c_ku^k=-1$. Para $0<t<1$,
+$$
+q(tu)=1-t^k+\sum_{j>k}c_ju^jt^j,
+\qquad
+|q(tu)|\leq(1-t^k)+C\,t^{k+1},\quad C:=\sum_{j>k}|c_j||u|^j,
+$$
+porque $t^j\leq t^{k+1}$ para $j>k$. Si $C=0$, $|q(tu)|\leq1-t^k<1$. Si $C>0$, para $t<\min\{1,1/C\}$ resulta $Ct^{k+1}<t^k$ y $|q(tu)|<1$. En ambos casos $|p(z_0+tu)|=|p(z_0)||q(tu)|<|p(z_0)|$, lo que contradice que $|p(z_0)|$ sea el mínimo. Por lo tanto $p(z_0)=0$.
+
+:::
+
+La conclusión de que existe una raíz se extiende, aplicando el teorema del factor repetidamente, a la factorización completa.
+
+::: {#cor-factorizacion-completa}
+## Factorización en factores lineales
+
+Todo polinomio de grado $n\geq1$ se escribe $p(z)=a_n(z-z_1)(z-z_2)\cdots(z-z_n)$, con $z_1,\ldots,z_n\in\mathbb{C}$ no necesariamente distintos, y no tiene más raíces que esas. Si los coeficientes son reales, $p$ se factoriza además en polinomios reales de grado uno y de grado dos sin raíces reales.
+
+:::
+
+::: {.proof}
+Se induce sobre $n$. Para $n=1$, $p(z)=a_1(z-z_1)$ con $z_1=-a_0/a_1$. Si vale para $n-1$, el teorema fundamental da una raíz $z_n$ de $p$, y el teorema del factor da $p(z)=(z-z_n)q(z)$ con $q$ de grado $n-1$, al que se aplica la hipótesis; el coeficiente principal de $q$ es $a_n$. Si $p(a)=0$, entonces $0=a_n\prod(a-z_j)$, de modo que algún factor es cero y $a$ es uno de los $z_j$, porque un producto de complejos es cero solo si un factor lo es. Para coeficientes reales, las raíces no reales vienen en pares $\{z_j,\bar z_j\}$ por la @prp-raices-conjugadas, y $(z-z_j)(z-\bar z_j)=z^2-2\operatorname{Re}(z_j)z+|z_j|^2$ es un polinomio real de grado dos sin raíces reales.
+
+:::
+
+Con números, $z^2-2z+2$ tiene raíces $1\pm i$, porque $(z-1)^2+1=0$ da $z-1=\pm i$, y se factoriza como $(z-1-i)(z-1+i)$. El polinomio $z^3-1$ tiene la raíz $1$ y, por el teorema del factor, $z^3-1=(z-1)(z^2+z+1)$, cuyas raíces son $\exp(\pm2\pi i/3)=-\tfrac12\pm\tfrac{\sqrt3}2i$, las raíces cúbicas de la unidad de la fórmula de De Moivre, todas de módulo $1$.

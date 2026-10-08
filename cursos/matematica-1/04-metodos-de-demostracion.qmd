@@ -1,8 +1,8 @@
 ---
 title: "Métodos de demostración"
-description: "Con el lenguaje ya construido, corresponde ocuparse de lo que ese lenguaje sirve para escribir."
+description: "Los cinco métodos básicos de demostración, directa, por contrarrecíproco, por contradicción, por casos y por contraejemplo, con un resultado de cada uno."
 author: "Mario Peñaloza"
-date: 2026-10-07
+date: 2026-10-08
 categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
 ---
 
@@ -16,7 +16,7 @@ La mayor parte de los resultados matemáticos tiene la forma de un
 condicional, $p\rightarrow q$, o de una afirmación cuantificada
 universalmente sobre condicionales. Esto no es casualidad ni convención
 estilística: es lo que hace que las equivalencias lógicas de las dos
-subsecciones anteriores dejen de ser un ejercicio aislado y se conviertan en
+notas anteriores dejen de ser un ejercicio aislado y se conviertan en
 las reglas que determinan qué estructura puede adoptar una demostración
 válida de cada tipo de enunciado. Se presentan a continuación los cinco
 métodos que se usarán en todo lo que sigue.
@@ -26,7 +26,7 @@ métodos que se usarán en todo lo que sigue.
 El método más elemental para probar $p\rightarrow q$ consiste en explotar
 directamente la tabla de verdad del condicional. Como $p\rightarrow q$ es
 automáticamente verdadera cuando $p$ es falsa, según se estableció en la
-[Tabla “Tablas de verdad y equivalencias lógicas”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#tbl-conectores), ese caso no requiere ninguna verificación; basta
+[Tabla “Tablas de verdad de los cinco conectores lógicos.”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#tbl-conectores), ese caso no requiere ninguna verificación; basta
 entonces considerar el caso en que $p$ es verdadera y, a partir de esa
 suposición, deducir mediante una cadena de pasos válidos que $q$ también lo
 es.
@@ -63,15 +63,15 @@ como se quería probar.
 
 No siempre la hipótesis original es la más cómoda para trabajar. Cuando
 resulta más manejable partir de la negación de la tesis, conviene apoyarse en
-la [Idea central “Tablas de verdad y equivalencias lógicas”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#idea-contrarreciproco): probar $\neg q\rightarrow\neg p$ es, por la
+la [Idea central de la nota “Tablas de verdad y equivalencias lógicas”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#idea-contrarreciproco): probar $\neg q\rightarrow\neg p$ es, por la
 [Proposición “Equivalencias lógicas fundamentales”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#prp-equivalencias), exactamente lo mismo que probar $p\rightarrow q$,
 de modo que ambas formulaciones son intercambiables y puede elegirse la que
 ofrezca mejor punto de partida.
 
 ::: {#prp-cuadrado-par-implica-par}
-## La raíz cuadrada de un par es par
+## Si el cuadrado de un entero es par, el entero es par
 
-Si $n^2\in\mathbb{Z}$ es par, entonces $n$ es par.
+Si $n\in\mathbb{Z}$ y $n^2$ es par, entonces $n$ es par.
 
 :::
 
@@ -115,8 +115,7 @@ falsedad, la existencia de la contradicción obliga a concluir que la
 hipótesis de partida, $\neg p$, era falsa, y por lo tanto $p$ es verdadera.
 
 El ejemplo canónico de este método es también uno de los resultados más
-antiguos de la matemática, y volverá a usarse varias veces en las secciones
-siguientes.
+antiguos de la matemática.
 
 ::: {#thm-raiz-2-irracional}
 ## Irracionalidad de $\sqrt{2}$

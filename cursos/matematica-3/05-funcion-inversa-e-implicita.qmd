@@ -1,0 +1,71 @@
+---
+title: "Los teoremas de la función inversa y de la función implícita"
+description: "Invertibilidad local de una función con jacobiana invertible, la función implícita definida por un sistema de ecuaciones y la existencia de curvas que permanecen sobre un conjunto de nivel."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Cálculo diferencial]
+---
+
+Un conjunto definido por ecuaciones, como $\{\vect{x}:g(\vect{x})=\vect{0}\}$, no es en general una región con una descripción explícita. La optimización con restricciones necesita, sin embargo, moverse sobre él: tomar curvas que no abandonen el conjunto y derivar a lo largo de ellas. Los teoremas de esta nota garantizan que, bajo una condición de rango sobre la jacobiana, el conjunto se comporta localmente como el gráfico de una función diferenciable, y que existen curvas con cualquier velocidad compatible. La demostración se apoya en el teorema del punto fijo de una contracción de la [Nota “Sucesiones en espacios métricos, completitud y puntos fijos”](../matematica-1/27-sucesiones-en-espacios-metricos-y-completitud.qmd).
+
+Una desigualdad previa controla la variación de una función vectorial mediante su jacobiana.
+
+::: {#lem-desigualdad-valor-medio}
+## Desigualdad del valor medio para funciones vectoriales
+
+Sea $g:D\to\mathbb{R}^m$ de clase $C^1$ en un abierto $D\subseteq\mathbb{R}^n$, y $\vect{x},\vect{y}\in D$ tales que el segmento que los une está en $D$. Si $\|\mat{J}_g(\vect{z})\|_F\leq\kappa$ en ese segmento, donde $\|\mat{M}\|_F=\bigl(\sum m_{ij}^2\bigr)^{1/2}$, entonces $\|g(\vect{x})-g(\vect{y})\|\leq\kappa\|\vect{x}-\vect{y}\|$.
+
+:::
+
+::: {.proof}
+Si $g(\vect{x})=g(\vect{y})$ no hay nada que probar. Si no, sea $\vect{c}=(g(\vect{x})-g(\vect{y}))/\|g(\vect{x})-g(\vect{y})\|$ y $\phi(t):=\langle\vect{c},g(\vect{y}+t(\vect{x}-\vect{y}))\rangle$, derivable por la regla de la cadena, con $\phi(1)-\phi(0)=\|g(\vect{x})-g(\vect{y})\|$. Por el teorema del valor medio, existe $\theta\in(0,1)$ con $\|g(\vect{x})-g(\vect{y})\|=\phi'(\theta)=\langle\vect{c},\mat{J}_g(\vect{z}_\theta)(\vect{x}-\vect{y})\rangle\leq\|\mat{J}_g(\vect{z}_\theta)(\vect{x}-\vect{y})\|\leq\|\mat{J}_g(\vect{z}_\theta)\|_F\|\vect{x}-\vect{y}\|$, por la desigualdad de Cauchy–Schwarz aplicada en cada fila.
+
+:::
+
+El primer teorema afirma que una función con jacobiana invertible en un punto es localmente una biyección con inversa diferenciable.
+
+::: {#thm-funcion-inversa}
+## Teorema de la función inversa
+
+Sea $f:D\to\mathbb{R}^n$ de clase $C^1$ en un abierto $D\subseteq\mathbb{R}^n$, y $\vect{a}\in D$ con $\mat{J}_f(\vect{a})$ invertible. Existen abiertos $V\ni\vect{a}$ y $W\ni f(\vect{a})$ tales que $f:V\to W$ es biyectiva, y su inversa $h:W\to V$ es de clase $C^1$, con $\mat{J}_h(f(\vect{x}))=\mat{J}_f(\vect{x})^{-1}$.
+
+:::
+
+::: {.proof}
+*Reducción.* Sustituyendo $f$ por $\mat{J}_f(\vect{a})^{-1}\bigl(f(\vect{a}+\cdot)-f(\vect{a})\bigr)$, que es $C^1$ con jacobiana $\Imat$ en $\vect{0}$, se supone $\vect{a}=\vect{0}$, $f(\vect{0})=\vect{0}$ y $\mat{J}_f(\vect{0})=\Imat$.
+
+*Existencia de la inversa.* Sea $g(\vect{x}):=\vect{x}-f(\vect{x})$, con $\mat{J}_g(\vect{0})=\mat{0}$. Por la continuidad de $\mat{J}_g$, existe $r>0$ con $\|\mat{J}_g(\vect{x})\|_F\leq\tfrac12$ en la bola cerrada $\bar B_r$ y con $\mat{J}_f(\vect{x})$ invertible allí (el determinante es continuo y vale $1$ en $\vect{0}$). Por el @lem-desigualdad-valor-medio, $\|g(\vect{x})-g(\vect{y})\|\leq\tfrac12\|\vect{x}-\vect{y}\|$ en $\bar B_r$, y en particular $\|g(\vect{x})\|\leq r/2$ si $\vect{x}\in\bar B_r$. Para $\|\vect{y}\|<r/2$ se define $T_{\vect{y}}(\vect{x}):=\vect{y}+g(\vect{x})$, que aplica $\bar B_r$ en sí misma (porque $\|T_{\vect{y}}(\vect{x})\|<r/2+r/2$) y es una contracción con constante $\tfrac12$. Como $\bar B_r$ es cerrado en $\mathbb{R}^n$, es completo, y el [Teorema “Teorema del punto fijo de una contracción”](../matematica-1/27-sucesiones-en-espacios-metricos-y-completitud.qmd#thm-punto-fijo) da un único $\vect{x}\in\bar B_r$ con $\vect{x}=\vect{y}+\vect{x}-f(\vect{x})$, es decir, $f(\vect{x})=\vect{y}$. Sea $W=B_{r/2}$ y $V=B_r\cap f^{-1}(W)$, abierto por ser $f$ continua; $f$ es biyectiva de $V$ en $W$ (el punto fijo está en $B_r$ porque $\|\vect{x}\|\leq\|\vect{y}\|+\|g(\vect{x})\|<r$).
+
+*Continuidad y diferenciabilidad de la inversa.* Para $\vect{x},\vect{x}'\in V$, $\|\vect{x}-\vect{x}'\|\leq\|f(\vect{x})-f(\vect{x}')\|+\|g(\vect{x})-g(\vect{x}')\|\leq\|f(\vect{x})-f(\vect{x}')\|+\tfrac12\|\vect{x}-\vect{x}'\|$, de donde $\|\vect{x}-\vect{x}'\|\leq2\|f(\vect{x})-f(\vect{x}')\|$ y la inversa $h$ es continua. Sea $\vect{x}_0\in V$, $\vect{y}_0=f(\vect{x}_0)$ y $\mat{J}=\mat{J}_f(\vect{x}_0)$, invertible. Por la diferenciabilidad de $f$, $f(\vect{x})-\vect{y}_0=\mat{J}(\vect{x}-\vect{x}_0)+\vect{\rho}(\vect{x})$ con $\|\vect{\rho}(\vect{x})\|/\|\vect{x}-\vect{x}_0\|\to0$. Con $\vect{x}=h(\vect{y})$ y despejando, $h(\vect{y})-h(\vect{y}_0)=\mat{J}^{-1}(\vect{y}-\vect{y}_0)-\mat{J}^{-1}\vect{\rho}(h(\vect{y}))$. Como $\|h(\vect{y})-h(\vect{y}_0)\|\leq2\|\vect{y}-\vect{y}_0\|$ y $h(\vect{y})\to\vect{x}_0$ cuando $\vect{y}\to\vect{y}_0$, $\|\mat{J}^{-1}\vect{\rho}(h(\vect{y}))\|/\|\vect{y}-\vect{y}_0\|\to0$, de modo que $h$ es diferenciable en $\vect{y}_0$ con jacobiana $\mat{J}^{-1}$. Finalmente $\mat{J}_h(\vect{y})=\mat{J}_f(h(\vect{y}))^{-1}$ es continua, porque $h$ y $\mat{J}_f$ lo son y las entradas de una inversa son cocientes de determinantes, funciones continuas de las entradas, de modo que $h$ es $C^1$.
+
+:::
+
+El teorema de la función implícita traduce lo anterior a un sistema de ecuaciones que se resuelve para algunas variables en función de las demás.
+
+::: {#thm-funcion-implicita}
+## Teorema de la función implícita
+
+Sea $F:D\to\mathbb{R}^m$ de clase $C^1$ en un abierto $D\subseteq\mathbb{R}^{p}\times\mathbb{R}^m$, con puntos escritos $(\vect{x},\vect{y})$, y $(\vect{a},\vect{b})\in D$ con $F(\vect{a},\vect{b})=\vect{0}$ y la matriz $\mat{F}_{\vect{y}}:=\bigl(\partial F_i/\partial y_j\bigr)(\vect{a},\vect{b})\in\mathbb{R}^{m\times m}$ invertible. Existen un entorno $V$ de $(\vect{a},\vect{b})$, un abierto $A\ni\vect{a}$ y una única función $\vect{\varphi}:A\to\mathbb{R}^m$ de clase $C^1$ tal que $(\vect{x},\vect{\varphi}(\vect{x}))\in V$, $F(\vect{x},\vect{\varphi}(\vect{x}))=\vect{0}$ para todo $\vect{x}\in A$ y $\vect{\varphi}(\vect{a})=\vect{b}$; además $\mat{J}_{\vect{\varphi}}(\vect{a})=-\mat{F}_{\vect{y}}^{-1}\mat{F}_{\vect{x}}$, con $\mat{F}_{\vect{x}}=\bigl(\partial F_i/\partial x_j\bigr)(\vect{a},\vect{b})$.
+
+:::
+
+::: {.proof}
+Se define $G(\vect{x},\vect{y}):=(\vect{x},F(\vect{x},\vect{y}))$ de $D$ en $\mathbb{R}^{p+m}$, de clase $C^1$, con jacobiana por bloques $\begin{pmatrix}\Imat&\mat{0}\\\mat{F}_{\vect{x}}&\mat{F}_{\vect{y}}\end{pmatrix}$, cuyo determinante es $\det\mat{F}_{\vect{y}}\neq0$ por el lema de determinante por bloques. Por el teorema de la función inversa, $G$ es una biyección $C^1$ de un abierto $V\ni(\vect{a},\vect{b})$ sobre un abierto $W\ni(\vect{a},\vect{0})$ con inversa $C^1$ de la forma $(\vect{x},\vect{z})\mapsto(\vect{x},H(\vect{x},\vect{z}))$, porque $G$ preserva la primera componente. Sea $A=\{\vect{x}:(\vect{x},\vect{0})\in W\}$, abierto, y $\vect{\varphi}(\vect{x}):=H(\vect{x},\vect{0})$. Entonces $G(\vect{x},\vect{\varphi}(\vect{x}))=(\vect{x},\vect{0})$, es decir, $F(\vect{x},\vect{\varphi}(\vect{x}))=\vect{0}$, y $\vect{\varphi}$ es $C^1$. La unicidad dentro de $V$ se sigue de la inyectividad de $G$. Derivando $F(\vect{x},\vect{\varphi}(\vect{x}))=\vect{0}$ por la regla de la cadena en $\vect{a}$, $\mat{F}_{\vect{x}}+\mat{F}_{\vect{y}}\mat{J}_{\vect{\varphi}}(\vect{a})=\mat{0}$, de donde la fórmula de la jacobiana.
+
+:::
+
+Con una sola ecuación, $F(x,y)=x^2+y^2-1$ en $(a,b)=(0,1)$ cumple $F_y=2b=2\neq0$, de modo que cerca de $(0,1)$ la circunferencia es el gráfico de $y=\varphi(x)=\sqrt{1-x^2}$, con $\varphi'(0)=-F_x/F_y=-0/2=0$. En $(1,0)$, en cambio, $F_y=0$ y el teorema no aplica: la circunferencia no es allí el gráfico de una función de $x$.
+
+La consecuencia que usa la optimización con restricciones es la existencia de curvas sobre un conjunto de nivel con una velocidad inicial prescrita.
+
+::: {#cor-curvas-restriccion}
+## Curvas que respetan una restricción
+
+Sea $g:D\to\mathbb{R}^m$ de clase $C^1$ en un abierto $D\subseteq\mathbb{R}^n$ con $m<n$, $g(\vect{x}^*)=\vect{0}$ y $\rango\mat{J}_g(\vect{x}^*)=m$. Para todo $\vect{u}\in\mathbb{R}^n$, existe una curva $\vect{x}:(-\tau,\tau)\to D$ de clase $C^1$ con $\vect{x}(0)=\vect{x}^*$, $\vect{x}'(0)=\vect{u}$ y $g(\vect{x}(t))=t\,\mat{J}_g(\vect{x}^*)\vect{u}$ para todo $t$. En particular, si $\mat{J}_g(\vect{x}^*)\vect{u}=\vect{0}$, la curva cumple $g(\vect{x}(t))=\vect{0}$.
+
+:::
+
+::: {.proof}
+Como $\mat{J}_g(\vect{x}^*)$ tiene rango $m$, tiene $m$ columnas linealmente independientes, y reordenando las variables se escribe $\vect{x}=(\vect{x}_1,\vect{y})$ con $\vect{y}\in\mathbb{R}^m$ las variables de esas columnas, de modo que $\mat{G}_{\vect{y}}=\bigl(\partial g_i/\partial y_j\bigr)(\vect{x}^*)$ es invertible. Sea $\vect{c}:=\mat{J}_g(\vect{x}^*)\vect{u}$, y se escribe $\vect{u}=(\vect{u}_1,\vect{u}_y)$. Se aplica el teorema de la función implícita a $F(\vect{x}_1,t,\vect{y}):=g(\vect{x}_1,\vect{y})-t\vect{c}$, con $F(\vect{x}_1^*,0,\vect{y}^*)=\vect{0}$ y $F_{\vect{y}}=\mat{G}_{\vect{y}}$ invertible: existe una función $C^1$ $\vect{\varphi}(\vect{x}_1,t)$ con $g(\vect{x}_1,\vect{\varphi}(\vect{x}_1,t))=t\vect{c}$ y $\vect{\varphi}(\vect{x}_1^*,0)=\vect{y}^*$. La curva $\vect{x}(t):=\bigl(\vect{x}_1^*+t\vect{u}_1,\ \vect{\varphi}(\vect{x}_1^*+t\vect{u}_1,t)\bigr)$ cumple $g(\vect{x}(t))=t\vect{c}$ y $\vect{x}(0)=\vect{x}^*$. Su velocidad en $0$ tiene primera componente $\vect{u}_1$, y la segunda, $\vect{v}$, satisface $\mat{J}_g(\vect{x}^*)\vect{x}'(0)=\vect{c}$ por derivar $g(\vect{x}(t))=t\vect{c}$ con la regla de la cadena, es decir, $\mat{G}_{\vect{x}_1}\vect{u}_1+\mat{G}_{\vect{y}}\vect{v}=\vect{c}=\mat{G}_{\vect{x}_1}\vect{u}_1+\mat{G}_{\vect{y}}\vect{u}_y$; la invertibilidad de $\mat{G}_{\vect{y}}$ da $\vect{v}=\vect{u}_y$, de modo que $\vect{x}'(0)=\vect{u}$.
+
+:::

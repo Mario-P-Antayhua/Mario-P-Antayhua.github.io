@@ -1,0 +1,47 @@
+---
+title: "Suavizado"
+description: "Las tres familias de estimación del estado según la información usada, la recursión hacia atrás del suavizador de intervalo fijo demostrada con la independencia condicional del futuro, la reducción de la varianza respecto del filtro y un ejemplo numérico."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Filtro de Kalman]
+---
+
+El filtro estima el estado en $t$ con los datos hasta $t$, lo que sirve para decidir en tiempo real. Una vez que se tiene toda la muestra, interesa en cambio la mejor estimación del estado pasado, y para ella son informativos también los datos posteriores: una observación de mañana dice algo sobre el nivel de hoy, porque el nivel cambia poco de un período a otro. Estimar el estado con toda la muestra se llama suavizar. Esta nota deduce la recursión que lo hace y muestra cuánto gana frente al filtro.
+
+Según la información usada para estimar $\vect{\alpha}_t$ se distinguen tres tareas. La ***predicción*** usa datos hasta $s<t$, $\E[\vect{\alpha}_t\mid\mathcal{Y}_s]$. El ***filtrado*** usa datos hasta $t$, $\E[\vect{\alpha}_t\mid\mathcal{Y}_t]$. El ***suavizado*** usa datos posteriores a $t$: de intervalo fijo cuando se usa toda la muestra, $\E[\vect{\alpha}_t\mid\mathcal{Y}_n]$, de punto fijo cuando se estima un instante dado con una muestra que crece, y de rezago fijo cuando se usan los $\ell$ datos siguientes. Aquí se trata el de intervalo fijo, con notación $\vect{a}_{t\mid n}=\E[\vect{\alpha}_t\mid\mathcal{Y}_n]$ y $\mat{P}_{t\mid n}=\Var(\vect{\alpha}_t\mid\mathcal{Y}_n)$.
+
+La recursión usa un hecho estructural del modelo: dado el estado de mañana, los datos futuros no dependen del estado de hoy ni de los datos pasados.
+
+::: {#lem-independencia-condicional-futuro}
+## Independencia condicional de los datos futuros
+
+Sea $\mathcal{Y}^+=(\vect{y}_{t+1},\ldots,\vect{y}_n)$. Dado $\vect{\alpha}_{t+1}$, el vector $\mathcal{Y}^+$ es independiente de $(\vect{\alpha}_t,\mathcal{Y}_t)$.
+
+:::
+
+::: {.proof}
+Iterando la ecuación de transición, cada $\vect{\alpha}_s$ con $s\geq t+1$ es una función afín de $\vect{\alpha}_{t+1}$ y de las perturbaciones $\vect{\eta}_{t+2},\ldots,\vect{\eta}_s$, y cada $\vect{y}_s$ con $s\geq t+1$ lo es de $\vect{\alpha}_s$ y $\vect{\varepsilon}_s$. Entonces $\mathcal{Y}^+=\vect{G}(\vect{\alpha}_{t+1},\vect{W})$ con $\vect{W}=(\vect{\eta}_{t+2},\ldots,\vect{\eta}_n,\vect{\varepsilon}_{t+1},\ldots,\vect{\varepsilon}_n)$. El vector $\vect{W}$ es independiente de $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_{t+1},\vect{\varepsilon}_1,\ldots,\vect{\varepsilon}_t)$, y $(\vect{\alpha}_t,\mathcal{Y}_t,\vect{\alpha}_{t+1})$ es función de estas últimas variables. Dado $\vect{\alpha}_{t+1}$, la ley de $\mathcal{Y}^+$ solo depende de $\vect{W}$, que es independiente de $(\vect{\alpha}_t,\mathcal{Y}_t)$.
+
+:::
+
+::: {#thm-suavizado}
+## Recursión del suavizador de intervalo fijo
+
+Supóngase $\mat{P}_{t+1\mid t}$ invertible. Con $\mat{J}_t=\mat{P}_{t\mid t}\mat{T}_{t+1}^{\top}\mat{P}_{t+1\mid t}^{-1}$, para $t=n-1,\ldots,1$,
+$$
+\vect{a}_{t\mid n}=\vect{a}_{t\mid t}+\mat{J}_t\bigl(\vect{a}_{t+1\mid n}-\vect{a}_{t+1\mid t}\bigr),\qquad\mat{P}_{t\mid n}=\mat{P}_{t\mid t}+\mat{J}_t\bigl(\mat{P}_{t+1\mid n}-\mat{P}_{t+1\mid t}\bigr)\mat{J}_t^{\top},
+$$ {#eq-suavizado}
+con valor inicial $\vect{a}_{n\mid n}$ y $\mat{P}_{n\mid n}$ del filtro. Además $\mat{P}_{t\mid n}\preceq\mat{P}_{t\mid t}$.
+
+:::
+
+::: {.proof}
+Dados $\mathcal{Y}_t$, el par $(\vect{\alpha}_t,\vect{\alpha}_{t+1})$ es normal con medias $(\vect{a}_{t\mid t},\vect{a}_{t+1\mid t})$ y covarianza cruzada $\Cov(\vect{\alpha}_t,\vect{\alpha}_{t+1}\mid\mathcal{Y}_t)=\mat{P}_{t\mid t}\mat{T}_{t+1}^{\top}$, porque $\vect{\alpha}_{t+1}=\mat{T}_{t+1}\vect{\alpha}_t+\vect{c}_{t+1}+\mat{R}_{t+1}\vect{\eta}_{t+1}$ con $\vect{\eta}_{t+1}$ independiente. Por la fórmula de la normal condicional, $\vect{\alpha}_t\mid(\vect{\alpha}_{t+1},\mathcal{Y}_t)\sim\N\bigl(\vect{a}_{t\mid t}+\mat{J}_t(\vect{\alpha}_{t+1}-\vect{a}_{t+1\mid t}),\ \mat{P}_{t\mid t}-\mat{J}_t\mat{P}_{t+1\mid t}\mat{J}_t^{\top}\bigr)$. Por el lema, agregar los datos futuros no cambia esa distribución: $\vect{\alpha}_t\mid(\vect{\alpha}_{t+1},\mathcal{Y}_n)$ tiene la misma ley. Como $\vect{\alpha}_{t+1}\mid\mathcal{Y}_n\sim\N(\vect{a}_{t+1\mid n},\mat{P}_{t+1\mid n})$, la ley de las esperanzas iteradas da $\vect{a}_{t\mid n}=\vect{a}_{t\mid t}+\mat{J}_t(\vect{a}_{t+1\mid n}-\vect{a}_{t+1\mid t})$, y la descomposición de la varianza da $\mat{P}_{t\mid n}=\bigl(\mat{P}_{t\mid t}-\mat{J}_t\mat{P}_{t+1\mid t}\mat{J}_t^{\top}\bigr)+\mat{J}_t\mat{P}_{t+1\mid n}\mat{J}_t^{\top}$, que es la fórmula enunciada. Para la reducción, la descomposición de la varianza condicional en $\mathcal{Y}_t$ da $\mat{P}_{t\mid t}=\E[\Var(\vect{\alpha}_t\mid\mathcal{Y}_n)\mid\mathcal{Y}_t]+\Var(\E[\vect{\alpha}_t\mid\mathcal{Y}_n]\mid\mathcal{Y}_t)=\mat{P}_{t\mid n}+(\text{una matriz semidefinida positiva})$, porque $\mat{P}_{t\mid n}$ no depende de los datos.
+
+:::
+
+La matriz $\mat{J}_t$ pesa cuánto del desacuerdo entre la estimación de mañana con toda la muestra y su predicción se traslada a hoy. Con números, para el nivel local con los cinco datos de la nota anterior, la recursión parte de $a_{5\mid5}=1.4874$ y $P_{5\mid5}=0.5015$. Para $t=4$: $J_4=P_{4\mid4}/P_{5\mid4}=0.5059/1.0059=0.5029$, $a_{4\mid5}=1.5753+0.5029(1.4874-1.5753)=1.5311$ y $P_{4\mid5}=0.5059+0.5029^2(0.5015-1.0059)=0.3783$. Siguiendo hacia atrás se obtiene
+$$
+\vect{a}_{\cdot\mid5}=(1.1965,\ 1.1947,\ 1.3903,\ 1.5311,\ 1.4874),\qquad\mat{P}_{\cdot\mid5}=(0.5015,\ 0.3783,\ 0.3548,\ 0.3783,\ 0.5015),
+$$
+frente a los filtrados $(1.2000,\ 0.9600,\ 1.2429,\ 1.5753,\ 1.4874)$ con varianzas $(1.0,\ 0.6,\ 0.5238,\ 0.5059,\ 0.5015)$. En el último período el suavizado coincide con el filtrado. En los demás, las varianzas son menores, y la reducción es mayor en el medio de la muestra, donde hay datos a ambos lados, que en los extremos. La primera estimación pasa de varianza $1.0$ a $0.50$ porque los cuatro datos siguientes informan sobre el nivel inicial, y la estimación de $t=2$ sube de $0.96$ a $1.19$ por el efecto de los datos posteriores, que son más altos.

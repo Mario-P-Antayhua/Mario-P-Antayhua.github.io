@@ -1,0 +1,82 @@
+---
+title: "El criterio de Cauchy"
+description: "Sucesiones de Cauchy y el teorema que las identifica con las sucesiones convergentes de reales."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sucesiones y series]
+---
+
+Todos los resultados anteriores, con la excepción parcial del teorema de
+convergencia monótona, requieren conocer de antemano el candidato a límite
+para verificar la convergencia. El criterio que sigue permite decidir si una
+sucesión converge examinando únicamente cómo se comparan sus propios
+términos entre sí, sin necesidad de adivinar el límite, y su generalidad lo
+hace aplicable a sucesiones para las cuales ni la monotonía ni una fórmula
+cerrada están disponibles.
+
+::: {#def-cauchy}
+## Sucesión de Cauchy
+
+Una sucesión $(x_n)$ es de ***Cauchy*** si para todo
+$\varepsilon>0$ existe $N\in\mathbb{N}$ tal que, para todos $m,n\geq N$, se
+cumple $|x_n-x_m|<\varepsilon$.
+
+:::
+
+La diferencia con la definición de límite es sutil pero decisiva: en lugar
+de comparar cada término con un supuesto límite $x$, la condición de Cauchy
+compara los términos de la sucesión entre sí, dos a la vez, sin que ningún
+número externo a la sucesión intervenga en el enunciado. Esa característica
+es la que permite verificar la convergencia sin
+disponer del límite.
+
+::: {#thm-criterio-cauchy}
+## Criterio de Cauchy
+
+Una sucesión de números reales converge si y solo si es de Cauchy.
+
+:::
+
+::: {.proof}
+**Convergente implica Cauchy.** Supóngase $x_n\to x$. Dado
+$\varepsilon>0$, existe $N$ tal que $|x_n-x|<\varepsilon/2$ para todo
+$n\geq N$. Para cualesquiera $m,n\geq N$, la desigualdad triangular da
+
+$$
+|x_n-x_m| \leq |x_n-x|+|x-x_m| < \frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon.
+$$
+
+**Cauchy implica convergente.** Supóngase que $(x_n)$ es de Cauchy.
+Primero se prueba que está acotada: tomando $\varepsilon=1$ en la
+@def-cauchy, existe $N$ tal que $|x_n-x_N|<1$ para todo $n\geq N$, de
+donde $|x_n|<|x_N|+1$ para esos $n$, y junto con los finitos términos
+anteriores a $N$, la sucesión completa está acotada.
+
+Por el [Teorema “Teorema de Bolzano–Weierstrass”](21-subsucesiones-y-bolzano-weierstrass.qmd#thm-bolzano-weierstrass), existe una subsucesión
+$(x_{n_k})$ convergente a algún $x\in\mathbb{R}$. Se afirma que la sucesión
+completa converge a ese mismo $x$. Dado $\varepsilon>0$, por ser de Cauchy
+existe $N_1$ tal que $|x_n-x_m|<\varepsilon/2$ para $m,n\geq N_1$; y por la
+convergencia de la subsucesión, existe $k$ suficientemente grande tal que
+$n_k\geq N_1$ y $|x_{n_k}-x|<\varepsilon/2$. Entonces, para todo $n\geq N_1$,
+
+$$
+|x_n-x| \leq |x_n-x_{n_k}|+|x_{n_k}-x| < \frac{\varepsilon}{2}+\frac{\varepsilon}{2}=\varepsilon,
+$$
+
+donde el primer término usa que tanto $n$ como $n_k$ son mayores o iguales
+que $N_1$, de modo que la propiedad de Cauchy se aplica entre ellos. Por lo
+tanto $x_n\to x$.
+
+:::
+
+Vale la pena notar cómo se articulan, en esta única demostración, casi todos
+los resultados construidos hasta aquí en la nota: la desigualdad
+triangular, la acotación como consecuencia de una condición local, y el
+teorema de Bolzano–Weierstrass para producir el candidato a límite que la
+propia definición de Cauchy se negaba a revelar directamente. La primera
+mitad de la demostración, que toda sucesión convergente es de Cauchy, es
+sencilla y no usa la completitud de $\mathbb{R}$ en ningún paso; es la
+segunda mitad, el recíproco, la que sí depende de ella de manera esencial,
+como se explica a continuación.
+
+La primera mitad de la demostración, que toda sucesión convergente es de Cauchy, no usa la completitud de $\mathbb{R}$; es la segunda mitad la que depende de ella de manera esencial. El criterio de Cauchy es, en el fondo, una reformulación del axioma de completitud en el lenguaje de las sucesiones, y falla en $\mathbb{Q}$ exactamente donde falló el supremo en la [Proposición “El conjunto $S=\{r\in\mathbb{Q}:r>0,\ r^2<2\}$ no tiene supremo en $\mathbb{Q}$”](15-por-que-los-racionales-no-bastan.qmd#prp-no-sup-en-q). Los truncamientos decimales de $\sqrt2$, $a_n$ con $n$ cifras decimales, forman una sucesión de racionales de Cauchy, porque dos truncamientos que coinciden en $n$ cifras difieren en menos de $10^{-n}$; y no converge a ningún racional, porque su límite en $\mathbb{R}$ es $\sqrt2$, que no es racional.

@@ -1,0 +1,68 @@
+---
+title: "Espacios métricos"
+description: "La distancia como estructura abstracta: axiomas de una métrica, la distancia euclidiana de ℝᵏ con la desigualdad de Cauchy–Schwarz, y otros ejemplos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Topología de la recta y del espacio]
+---
+
+Las nociones de cercanía y de límite que la [Nota “Sucesiones y su límite”](18-sucesiones-y-su-limite.qmd) desarrolló para sucesiones de reales dependen de una sola herramienta: la distancia $|x-y|$ entre dos reales. Esta nota extrae esa herramienta de su contexto y la convierte en el objeto de estudio, lo que permite hablar de vecindad, de convergencia y de compacidad en cualquier conjunto donde tenga sentido medir distancias, no solamente en $\mathbb{R}$. En particular, permite tratar el espacio $\mathbb{R}^k$ de los vectores de $k$ coordenadas, donde viven los parámetros de un modelo.
+
+::: {#def-espacio-metrico}
+## Espacio métrico
+
+Un ***espacio métrico*** es un conjunto $X$ junto con una función $d:X\times X\to\mathbb{R}$, llamada ***métrica*** o ***distancia***, que cumple, para todos $p,q,r\in X$:
+
+(i) $d(p,q)\geq 0$, con igualdad si y solo si $p=q$;
+
+(ii) $d(p,q)=d(q,p)$;
+
+(iii) $d(p,q)\leq d(p,r)+d(r,q)$ (desigualdad triangular).
+
+:::
+
+Las tres condiciones son las propiedades de la distancia usual de $\mathbb{R}$, y se declaran suficientes para que cualquier función que las cumpla merezca llamarse distancia. De ellas, la desigualdad triangular es la única que exige algo de verificar, porque la no negatividad y la simetría suelen ser evidentes en la fórmula; su lectura geométrica es que ir de $p$ a $q$ nunca es más corto pasando por un tercer punto $r$ que directamente.
+
+El primer ejemplo es el que motivó la definición. La función $d(x,y)=|x-y|$ en $\mathbb{R}$ y la función $d(z,w)=|z-w|$ en $\mathbb{C}$ son métricas, por la [Proposición “Propiedades del valor absoluto”](16-los-reales-el-axioma-de-completitud.qmd#prp-valor-absoluto)(iv) y por la [Proposición “$\mathbb{C}$ es un cuerpo y el módulo es una norma multiplicativa”](17-los-complejos.qmd#prp-complejos-cuerpo)(v), respectivamente. El segundo ejemplo, el de $\mathbb{R}^k$, requiere una desigualdad previa.
+
+Un punto de $\mathbb{R}^k$ es una lista $\vect{x}=(x_1,\ldots,x_k)$ de reales; la suma $\vect{x}+\vect{y}$ y el producto $\alpha\vect{x}$ se calculan coordenada a coordenada. Se definen el ***producto escalar*** $\langle\vect{x},\vect{y}\rangle:=\sum_{i=1}^{k}x_iy_i$ y la ***norma euclidiana*** $\|\vect{x}\|:=\sqrt{\langle\vect{x},\vect{x}\rangle}$, que existe por el [Teorema “Existencia de raíces cuadradas”](16-los-reales-el-axioma-de-completitud.qmd#thm-existe-raiz-2), pues $\langle\vect{x},\vect{x}\rangle=\sum x_i^2\geq0$.
+
+::: {#lem-cauchy-schwarz-rk}
+## Desigualdad de Cauchy–Schwarz en $\mathbb{R}^k$
+
+Para todos $\vect{x},\vect{y}\in\mathbb{R}^k$, $|\langle\vect{x},\vect{y}\rangle|\leq\|\vect{x}\|\,\|\vect{y}\|$.
+
+:::
+
+::: {.proof}
+Si $\vect{y}=\vect{0}$, ambos lados son cero. Si $\vect{y}\neq\vect{0}$, se evalúa la suma de cuadrados $\sum_i(x_i-ty_i)^2\geq0$ en el valor $t=\langle\vect{x},\vect{y}\rangle/\|\vect{y}\|^2$. Al desarrollar,
+$$
+0\leq\|\vect{x}\|^2-2t\langle\vect{x},\vect{y}\rangle+t^2\|\vect{y}\|^2
+=\|\vect{x}\|^2-\frac{\langle\vect{x},\vect{y}\rangle^2}{\|\vect{y}\|^2}.
+$$
+Multiplicando por $\|\vect{y}\|^2>0$ resulta $\langle\vect{x},\vect{y}\rangle^2\leq\|\vect{x}\|^2\|\vect{y}\|^2$, y tomar raíces cuadradas, que es lícito por el [Lema “Monotonía del cuadrado en $\mathbb{R}$”](16-los-reales-el-axioma-de-completitud.qmd#lem-monotonia-cuadrado-r), da la desigualdad.
+
+:::
+
+::: {#prp-metrica-euclidiana}
+## La distancia euclidiana es una métrica
+
+La función $d(\vect{x},\vect{y}):=\|\vect{x}-\vect{y}\|$ es una métrica en $\mathbb{R}^k$.
+
+:::
+
+::: {.proof}
+La no negatividad y la simetría son inmediatas: $d(\vect{x},\vect{y})=0$ equivale a $\sum(x_i-y_i)^2=0$, que solo ocurre si todos los sumandos, no negativos, son cero; y $(x_i-y_i)^2=(y_i-x_i)^2$. Para la desigualdad triangular, sean $\vect{u}=\vect{x}-\vect{z}$ y $\vect{v}=\vect{z}-\vect{y}$, de modo que $\vect{x}-\vect{y}=\vect{u}+\vect{v}$. Por la desigualdad de Cauchy–Schwarz,
+$$
+\|\vect{u}+\vect{v}\|^2=\|\vect{u}\|^2+2\langle\vect{u},\vect{v}\rangle+\|\vect{v}\|^2\leq\|\vect{u}\|^2+2\|\vect{u}\|\,\|\vect{v}\|+\|\vect{v}\|^2=(\|\vect{u}\|+\|\vect{v}\|)^2,
+$$
+y tomando raíz cuadrada, $d(\vect{x},\vect{y})\leq d(\vect{x},\vect{z})+d(\vect{z},\vect{y})$.
+
+:::
+
+Con números, para $\vect{x}=(1,2)$ y $\vect{y}=(4,6)$, $d(\vect{x},\vect{y})=\sqrt{9+16}=5$; con $\vect{z}=(4,2)$, $d(\vect{x},\vect{z})=3$ y $d(\vect{z},\vect{y})=4$, y la desigualdad triangular se cumple como $5\leq3+4$. La definición no exige que los elementos sean números: sobre cualquier conjunto $X$, la función $d(p,q)=0$ si $p=q$ y $d(p,q)=1$ si $p\neq q$ es una métrica, llamada discreta, porque $d(p,q)\leq1\leq d(p,r)+d(r,q)$ cuando $p\neq q$ ya que al menos uno de los sumandos vale $1$. Todo resultado que se demuestre solo con las tres condiciones de la @def-espacio-metrico vale a la vez en $\mathbb{R}$, en $\mathbb{R}^k$ y en cualquier otro espacio métrico, sin repetir el argumento.
+
+::: {#nota-subespacio-metrico .callout-note appearance="simple" title="Nota: todo subconjunto hereda la métrica"}
+Si $X$ es un espacio métrico y $Y\subseteq X$, entonces $Y$ es un espacio métrico con la misma función $d$ restringida a $Y\times Y$, porque las tres condiciones se siguen cumpliendo al restringir $p,q,r$ a $Y$. La circunferencia unitaria de $\mathbb{R}^2$, por ejemplo, es un espacio métrico por derecho propio, con la distancia euclidiana del plano restringida a sus puntos.
+
+:::

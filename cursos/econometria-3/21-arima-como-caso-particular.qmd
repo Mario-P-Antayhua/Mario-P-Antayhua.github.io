@@ -1,0 +1,33 @@
+---
+title: "ARIMA como caso particular"
+description: "La representación de un proceso ARMA(p,q) en forma de espacio-estado con estado de dimensión máxima entre p y q+1, la incorporación de diferencias, y la relación entre los modelos estructurales y los ARIMA como casos con restricciones sobre los parámetros."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Modelos estructurales]
+---
+
+Los modelos ARIMA y los modelos de espacio-estado se desarrollaron por separado y se suelen presentar como alternativas. Esta nota muestra que son el mismo marco: todo proceso ARMA, y por tanto todo ARIMA, se escribe como un modelo de espacio-estado, y los modelos estructurales de componentes no observables son procesos ARIMA con restricciones sobre sus parámetros. La consecuencia práctica es que el filtro de Kalman calcula la verosimilitud exacta de un ARIMA, incluso con datos faltantes, y que se pueden comparar ambos enfoques con la misma herramienta.
+
+Las notas de construcción mostraron representaciones del AR(2) y del MA(1) con estados de dimensión dos. El caso general usa un estado de dimensión $r=\max\{p,q+1\}$.
+
+::: {#thm-arma-espacio-estado}
+## Representación de espacio-estado de un ARMA
+
+Sea $y_t=\sum_{j=1}^p\phi_jy_{t-j}+\varepsilon_t+\sum_{j=1}^q\theta_j\varepsilon_{t-j}$ con $\varepsilon_t\sim\N(0,\sigma^2)$, con $\phi_j=0$ para $j>p$ y $\theta_j=0$ para $j>q$ y $r=\max\{p,q+1\}$. El modelo de espacio-estado con $m=r$, $\mat{Z}=(1,0,\ldots,0)$, $\mat{H}=0$, $\mat{R}=(1,\theta_1,\ldots,\theta_{r-1})^{\top}$, $\mat{Q}=\sigma^2$ y
+$$
+\mat{T}=\begin{pmatrix}\phi_1&1&0&\cdots&0\\\phi_2&0&1&\cdots&0\\\vdots&&&\ddots&\\\phi_{r-1}&0&0&\cdots&1\\\phi_r&0&0&\cdots&0\end{pmatrix}
+$$
+genera un proceso $y_t=\alpha_{1t}$ que es un ARMA(p,q) con esos parámetros.
+
+:::
+
+::: {.proof}
+La fila $j$ de la transición dice $\alpha_{jt}=\phi_j\alpha_{1,t-1}+\alpha_{j+1,t-1}+\theta_{j-1}\varepsilon_t$ para $j=1,\ldots,r$, con $\theta_0=1$ y $\alpha_{r+1,t}=0$. Se sustituye de manera sucesiva: $\alpha_{1t}=\phi_1\alpha_{1,t-1}+\alpha_{2,t-1}+\varepsilon_t$, y $\alpha_{2,t-1}=\phi_2\alpha_{1,t-2}+\alpha_{3,t-2}+\theta_1\varepsilon_{t-1}$, y así hasta $\alpha_{r,t-r+1}=\phi_r\alpha_{1,t-r}+\theta_{r-1}\varepsilon_{t-r+1}$. Entonces $\alpha_{1t}=\sum_{j=1}^r\phi_j\alpha_{1,t-j}+\varepsilon_t+\sum_{j=1}^{r-1}\theta_j\varepsilon_{t-j}$, que con $\phi_j=0$ para $j>p$ y $\theta_j=0$ para $j>q$ es la ecuación del ARMA(p,q).
+
+:::
+
+Con números, para el ARMA(1,1) con $\phi=0.8$ y $\theta=0.4$, $r=2$, $\mat{T}=\left(\begin{smallmatrix}0.8&1\\0&0\end{smallmatrix}\right)$ y $\mat{R}=(1,0.4)^{\top}$. La solución de la ecuación de Lyapunov para el estado es $\mat{\Sigma}_{\alpha}=\left(\begin{smallmatrix}5&0.4\\0.4&0.16\end{smallmatrix}\right)$, de modo que $\gamma(0)=5$, y las autocovarianzas $\gamma(1)=(\mat{T}\mat{\Sigma}_{\alpha})_{11}=4.4$ y $\gamma(2)=(\mat{T}^2\mat{\Sigma}_{\alpha})_{11}=3.52$ coinciden con las del ARMA(1,1) de Econometría II ($\gamma(1)=4.4$ y $\gamma(2)=0.8\cdot4.4$). Con esta representación, la verosimilitud exacta de un ARMA gaussiano se calcula con el filtro, con la inicialización estacionaria, y el resultado es el mismo que el de la descomposición del error de predicción de Econometría II, porque son la misma factorización de la matriz de covarianzas.
+
+Un proceso integrado se obtiene acumulando un ARMA. Si $w_t=\Delta y_t$ es un ARMA con estado $\vect{\alpha}_t$ y $w_t=\mat{Z}\vect{\alpha}_t$, entonces $y_t=y_{t-1}+\mat{Z}\vect{\alpha}_t$, y el estado aumentado $\vect{\alpha}^*_t=(\vect{\alpha}_t^{\top},y_{t-1})^{\top}$ cumple $\vect{\alpha}^*_t=\left(\begin{smallmatrix}\mat{T}&\mat{0}\\\mat{Z}&1\end{smallmatrix}\right)\vect{\alpha}^*_{t-1}+\left(\begin{smallmatrix}\mat{R}\\0\end{smallmatrix}\right)\varepsilon_t$ con medición $y_t=(\mat{Z},1)\vect{\alpha}^*_t$. En efecto, la última componente de $\vect{\alpha}^*_t$ es $y_{t-1}=\mat{Z}\vect{\alpha}_{t-1}+y_{t-2}$, y la medición suma $\mat{Z}\vect{\alpha}_t+y_{t-1}=w_t+y_{t-1}=y_t$. La componente $y_{t-1}$ no es estacionaria y se inicializa de manera difusa, mientras que la parte ARMA se inicializa con su distribución estacionaria. Cada diferencia adicional agrega un estado.
+
+Los modelos estructurales son, entonces, procesos ARIMA, pero con restricciones. El nivel local es un ARIMA(0,1,1) con $\theta\in(-1,0)$ y no con cualquier $\theta$, como se demostró en la nota del nivel local. La autocorrelación de la serie diferenciada es $\rho(1)=-\sigma_\varepsilon^2/(\sigma_\eta^2+2\sigma_\varepsilon^2)$, que está en $[-1/2,0]$, mientras que un MA(1) cualquiera tiene $\rho(1)\in[-1/2,1/2]$. El modelo estructural excluye autocorrelaciones positivas, que corresponderían a $\sigma_\varepsilon^2<0$. De la misma manera, la tendencia lineal local es un ARIMA(0,2,2) cuyas autocovarianzas de la segunda diferencia, $(\sigma_\zeta^2+2\sigma_\eta^2+6\sigma_\varepsilon^2,\ -\sigma_\eta^2-4\sigma_\varepsilon^2,\ \sigma_\varepsilon^2)$, dependen de tres varianzas no negativas, mientras que los coeficientes de un MA(2) general no tienen restricción de signo. Las restricciones hacen al modelo estructural más parsimonioso y le dan interpretación a cada parámetro: cada varianza es la importancia de un componente. La ventaja del ARIMA es la flexibilidad, y la del modelo estructural es la interpretación. El filtro de Kalman permite usar cualquiera de los dos y comparar sus verosimilitudes.

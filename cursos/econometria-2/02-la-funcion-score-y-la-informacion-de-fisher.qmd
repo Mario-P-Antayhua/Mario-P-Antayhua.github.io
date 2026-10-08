@@ -1,0 +1,50 @@
+---
+title: "La función score y la información de Fisher"
+description: "El score de una observación, las condiciones de regularidad, la media cero del score, la igualdad de la información de Fisher entre varianza del score y menos esperanza de la hessiana, y su cálculo en ejemplos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Verosimilitud]
+---
+
+La curvatura de la log-verosimilitud cerca del parámetro verdadero determina qué tan bien se puede estimar: si la función es muy aguda, los datos distinguen bien valores cercanos del parámetro, y si es plana, no. La información de Fisher mide esa curvatura en promedio, y resulta ser también la varianza del gradiente de la log-verosimilitud. Esa doble lectura es el hecho central que se demuestra aquí, y se apoya en la derivación bajo el signo de esperanza de la [Proposición “Derivación bajo el signo de esperanza”](../econometria-1/04-el-calculo-de-esperanzas.qmd#prp-derivar-esperanza).
+
+::: {#def-score}
+## Score e información de Fisher
+
+Sea $f(x;\vect{\theta})$ una familia de densidades con $\ln f$ dos veces diferenciable en $\vect{\theta}$. El ***score*** de una observación es el vector $\vect{s}(x;\vect{\theta})=\nabla_{\vect{\theta}}\ln f(x;\vect{\theta})$ y la ***hessiana*** de una observación es $\mat{H}(x;\vect{\theta})=\nabla^2_{\vect{\theta}}\ln f(x;\vect{\theta})$. La ***información de Fisher*** es $\mat{I}(\vect{\theta})=\Var_{\vect{\theta}}\bigl(\vect{s}(X;\vect{\theta})\bigr)$, cuando existe.
+
+:::
+
+El subíndice de la esperanza indica que $X$ tiene densidad $f(\cdot;\vect{\theta})$. Para que la derivada y la integral conmuten hacen falta condiciones de regularidad, que se enuncian de modo que se puedan verificar en los ejemplos.
+
+::: {#def-regularidad}
+## Condiciones de regularidad
+
+La familia es ***regular*** en $\vect{\theta}_0$, un punto interior de $\Theta$, si: (R1) el conjunto $\{x:f(x;\vect{\theta})>0\}$ no depende de $\vect{\theta}$; (R2) $f(x;\vect{\theta})$ es dos veces continuamente diferenciable en $\vect{\theta}$ en una vecindad $N$ de $\vect{\theta}_0$, para todo $x$ del soporte; (R3) existen funciones $G_1,G_2\geq0$ con $\int G_1(x)\,dx<\infty$ y $\int G_2(x)\,dx<\infty$ tales que $\|\nabla_{\vect{\theta}}f(x;\vect{\theta})\|\leq G_1(x)$ y $\|\nabla^2_{\vect{\theta}}f(x;\vect{\theta})\|\leq G_2(x)$ para todo $\vect{\theta}\in N$.
+
+:::
+
+Las condiciones (R1) y (R3) permiten derivar bajo el signo de integral la identidad que dice que una densidad suma uno, y de esa derivación salen las dos propiedades centrales del score.
+
+::: {#thm-igualdad-informacion}
+## Media cero del score e igualdad de la información
+
+Bajo las condiciones de regularidad en $\vect{\theta}_0$, con $\vect{s}$ y $\mat{H}$ evaluadas en $\vect{\theta}_0$, $\E[\vect{s}(X;\vect{\theta}_0)]=\vect{0}$ y $\mat{I}(\vect{\theta}_0)=\E[\vect{s}\vect{s}^{\top}]=-\E[\mat{H}(X;\vect{\theta}_0)]$.
+
+:::
+
+::: {.proof}
+Para $\vect{\theta}\in N$ se escribe $1=\int f(x;\vect{\theta})\,dx=\E_{\vect{\theta}_0}\bigl[f(X;\vect{\theta})/f(X;\vect{\theta}_0)\bigr]$, donde la esperanza se toma sobre el soporte común por (R1). La función $g(x,\vect{\theta})=f(x;\vect{\theta})/f(x;\vect{\theta}_0)$ es derivable en $\vect{\theta}$ con $\|\nabla g\|\leq G_1(x)/f(x;\vect{\theta}_0)$, cuya esperanza bajo $\vect{\theta}_0$ es $\int G_1<\infty$. La [Proposición “Derivación bajo el signo de esperanza”](../econometria-1/04-el-calculo-de-esperanzas.qmd#prp-derivar-esperanza), aplicada coordenada a coordenada, da $\vect{0}=\E_{\vect{\theta}_0}\bigl[\nabla f(X;\vect{\theta}_0)/f(X;\vect{\theta}_0)\bigr]=\E[\vect{s}(X;\vect{\theta}_0)]$, porque $\nabla f/f=\nabla\ln f$. Derivando otra vez, con la cota $G_2$, $\mat{0}=\E_{\vect{\theta}_0}\bigl[\nabla^2f(X;\vect{\theta}_0)/f(X;\vect{\theta}_0)\bigr]$. Como $\nabla^2f/f=\mat{H}+\vect{s}\vect{s}^{\top}$, pues $\nabla^2f=\nabla(f\,\vect{s})=f\,\mat{H}+f\,\vect{s}\vect{s}^{\top}$, resulta $\E[\mat{H}]=-\E[\vect{s}\vect{s}^{\top}]$. La varianza del score es $\E[\vect{s}\vect{s}^{\top}]$ porque su media es cero.
+
+:::
+
+La información de una muestra de $n$ observaciones iid es la suma de las informaciones individuales, porque el score de la muestra es la suma de scores independientes y la varianza de una suma de independientes es la suma de varianzas, de modo que es $n\,\mat{I}(\vect{\theta}_0)$. Tres ejemplos fijan ideas.
+
+::: {#exm-informacion-ejemplos}
+## Información de Fisher de Bernoulli, exponencial y normal
+
+(i) Bernoulli($p$): $\ln f=x\ln p+(1-x)\ln(1-p)$, $s=\tfrac xp-\tfrac{1-x}{1-p}$, $I(p)=\dfrac1{p(1-p)}$. (ii) Exponencial($\lambda$): $\ln f=\ln\lambda-\lambda x$, $s=\tfrac1\lambda-x$, $I(\lambda)=\dfrac1{\lambda^2}$. (iii) $\N(\mu,\sigma^2)$ con $\sigma^2$ conocida: $s=(x-\mu)/\sigma^2$, $I(\mu)=1/\sigma^2$.
+
+:::
+
+Para (ii), $\E[s]=1/\lambda-\E[X]=0$ y $\Var(s)=\Var(X)=1/\lambda^2$, que coincide con $-\E[H]=-\E[-1/\lambda^2]=1/\lambda^2$, como asegura el teorema. Con $\lambda=2$, $I(\lambda)=0.25$. Para (i), $\E[s]=0$ porque $\E[X]=p$, y $\Var(s)=\Var(X)/(p(1-p))^2=1/(p(1-p))$; con $p=0.3$ la información es $4.76$, y es máxima cerca de los extremos $p=0$ y $p=1$, donde un pequeño cambio del parámetro altera mucho la distribución. Para (iii), $\Var(s)=\sigma^2/\sigma^4=1/\sigma^2$: cuanto menor es la varianza de las observaciones, más informativa es cada una sobre la media.
