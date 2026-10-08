@@ -1,0 +1,48 @@
+---
+title: "Predicción lineal óptima en modelos ARMA"
+description: "El mejor predictor lineal a h pasos de un ARMA causal e invertible, su error y su error cuadrático medio en función de los coeficientes de la media móvil infinita, las recursiones de pronóstico y los intervalos de predicción."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Predicción]
+---
+
+El objetivo de modelar una serie suele ser predecirla. Con el error cuadrático medio como criterio, el mejor predictor lineal de un valor futuro basado en todo el pasado es la proyección sobre el espacio generado por las observaciones hasta hoy. Para un ARMA causal e invertible esa proyección se calcula en forma cerrada: los choques futuros son impredecibles y los pasados se conocen, porque se recuperan de los datos. Esta nota obtiene el pronóstico, su error y las recursiones para calcularlo.
+
+Sea $\{X_t\}$ un ARMA causal e invertible con media $\mu$ y ruido blanco $\varepsilon_t$ de varianza $\sigma^2$, y sea $H_t$ el subespacio cerrado generado por $\{X_s:s\leq t\}$. El ***pronóstico lineal óptimo a $h$ pasos*** es $\hat X_{t+h|t}=\mu+P_{H_t}(X_{t+h}-\mu)$, y su error es $e_t(h)=X_{t+h}-\hat X_{t+h|t}$.
+
+::: {#thm-prediccion-arma}
+## Pronóstico y error de predicción de un ARMA
+
+Con $\psi_j$ los coeficientes de la representación causal, para $h\geq1$:
+$$
+\hat X_{t+h|t}=\mu+\sum_{j=h}^{\infty}\psi_j\varepsilon_{t+h-j},\qquad e_t(h)=\sum_{j=0}^{h-1}\psi_j\varepsilon_{t+h-j},\qquad\E[e_t(h)^2]=\sigma^2\sum_{j=0}^{h-1}\psi_j^2 .
+$$ {#eq-pronostico-arma}
+El error cuadrático medio crece con $h$ y converge a $\gamma(0)=\sigma^2\sum_j\psi_j^2$, la varianza no condicional, mientras que $\hat X_{t+h|t}\to\mu$ en media cuadrática.
+
+:::
+
+::: {.proof}
+Se escribe $X_{t+h}-\mu=\sum_{j=0}^{h-1}\psi_j\varepsilon_{t+h-j}+\sum_{j\geq h}\psi_j\varepsilon_{t+h-j}$. La segunda suma contiene solo choques $\varepsilon_s$ con $s\leq t$, que pertenecen a $H_t$ por la invertibilidad, de modo que la suma está en $H_t$. La primera contiene choques $\varepsilon_{t+k}$ con $k\geq1$, y cada uno es ortogonal a $H_{t+k-1}\supseteq H_t$ porque es la innovación de Wold, de modo que la suma es ortogonal a $H_t$. Por el teorema de la proyección, la segunda suma es la proyección y la primera el error. Los choques son ortogonales entre sí, y su varianza es $\sigma^2\sum_{j<h}\psi_j^2$. Cuando $h\to\infty$, la suma crece a $\sigma^2\sum_j\psi_j^2$, y $\|\hat X_{t+h|t}-\mu\|^2=\sigma^2\sum_{j\geq h}\psi_j^2\to0$ por ser cola de una serie convergente.
+
+:::
+
+En la práctica, los choques pasados no se observan, pero se calculan de los datos. Para un AR(p) el pronóstico se calcula con la misma ecuación del modelo.
+
+::: {#prp-recursion-pronostico}
+## Recursión de pronóstico
+
+Para un ARMA causal e invertible, sea $\hat X_{t+k|t}=X_{t+k}$ y $\hat\varepsilon_{t+k}=\varepsilon_{t+k}$ para $k\leq0$, y $\hat\varepsilon_{t+k}=0$ para $k\geq1$. Entonces, para $h\geq1$,
+$$
+\hat X_{t+h|t}-\mu=\sum_{i=1}^p\phi_i\bigl(\hat X_{t+h-i|t}-\mu\bigr)+\sum_{j=0}^q\theta_j\hat\varepsilon_{t+h-j},\qquad\theta_0=1 .
+$$ {#eq-recursion-pronostico}
+
+:::
+
+::: {.proof}
+Se aplica la proyección $P_{H_t}$, que es lineal, a la ecuación $X_{t+h}-\mu=\sum_i\phi_i(X_{t+h-i}-\mu)+\sum_j\theta_j\varepsilon_{t+h-j}$. La proyección de $X_{t+h-i}-\mu$ es $\hat X_{t+h-i|t}-\mu$ si $h-i\geq1$, y es la variable misma si $h-i\leq0$ porque pertenece a $H_t$. La proyección de $\varepsilon_{t+h-j}$ es el mismo choque si $h-j\leq0$, que está en $H_t$ por invertibilidad, y es cero si $h-j\geq1$ porque es ortogonal a $H_t$.
+
+:::
+
+Con números, para un AR(1) con $\phi=0.8$, $\mu=0$ y $\sigma^2=1$, con $X_t=2$ observado, los pronósticos son $1.6,\ 1.28,\ 1.024,\ldots$ ($2\cdot0.8^h$), y los errores cuadráticos medios son $1,\ 1.64,\ 2.05,\ldots$, que convergen a $\gamma(0)=2.78$. Un intervalo de predicción a dos pasos, bajo errores gaussianos, es $1.28\pm1.96\sqrt{1.64}=[-1.23,\,3.79]$. Para un MA(1) con $\theta=0.5$, el pronóstico a un paso es $\mu+\theta\varepsilon_t$, y para $h\geq2$ es simplemente $\mu$, porque la memoria del proceso es de un período: con $\varepsilon_t=0.4$ y $\mu=0$ el pronóstico a un paso es $0.2$, con error cuadrático medio $1$, y a dos o más pasos es $0$, con error cuadrático medio $1.25=\gamma(0)$.
+
+En el ARMA(1,1) con $\phi=0.8$, $\theta=0.4$, $\mu=0$ y $\sigma^2=1$, la recursión da $\hat X_{t+1|t}=0.8X_t+0.4\varepsilon_t$ y $\hat X_{t+h|t}=0.8\hat X_{t+h-1|t}$ para $h\geq2$. Con $X_t=1.5$ y $\varepsilon_t=0.2$ resulta $\hat X_{t+1|t}=1.28$ y $\hat X_{t+2|t}=1.024$. Los errores cuadráticos medios, con $\psi=(1,\,1.2,\,0.96,\ldots)$, son $1$, $1+1.44=2.44$ y convergen a $\gamma(0)=5$. El choque $\varepsilon_t$ se calcula a partir de los datos con la representación autorregresiva infinita, cuyos coeficientes decaen geométricamente, de modo que basta usar un número finito de observaciones pasadas con un error de truncamiento despreciable.

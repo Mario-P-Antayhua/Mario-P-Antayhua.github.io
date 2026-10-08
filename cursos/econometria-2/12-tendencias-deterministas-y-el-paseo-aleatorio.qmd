@@ -1,0 +1,43 @@
+---
+title: "Tendencias deterministas y el paseo aleatorio"
+description: "La tendencia determinista lineal y el paseo aleatorio con deriva como dos formas de no estacionariedad, la diferencia entre choques transitorios y permanentes, y el efecto de la diferenciación."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Procesos estocásticos]
+---
+
+Muchas series económicas crecen en el tiempo, como el producto, el consumo o los precios, y por tanto no son estacionarias. Hay dos explicaciones matemáticas muy distintas de ese comportamiento. En la primera, la serie fluctúa alrededor de una tendencia determinista conocida, y los choques se disipan. En la segunda, la serie es la acumulación de todos sus choques pasados, y cada choque deja una huella permanente. Cuál de las dos describe mejor una serie determina cómo se la transforma para el análisis y qué se espera de ella a largo plazo.
+
+::: {#def-tendencia-determinista}
+## Proceso estacionario alrededor de una tendencia
+
+Un proceso $\{X_t\}$ es ***estacionario alrededor de una tendencia determinista*** si $X_t=\alpha+\beta t+Y_t$, con $Y_t$ estacionario de media cero. Su media es $\E[X_t]=\alpha+\beta t$, que depende de $t$ si $\beta\neq0$, de modo que $X_t$ no es estacionario.
+
+:::
+
+El proceso $X_t$ se vuelve estacionario restando la tendencia, y esto es lo que hace una regresión sobre una constante y una tendencia lineal. Su varianza es la de $Y_t$, constante, y las autocovarianzas de $X_t$ son las de $Y_t$. Un choque en $Y_t$ se disipa con el tiempo y la serie vuelve a su tendencia.
+
+::: {#def-paseo-aleatorio}
+## Paseo aleatorio con deriva
+
+El ***paseo aleatorio con deriva*** es el proceso $X_t=X_{t-1}+\delta+\varepsilon_t$ con $X_0$ dado (constante) y $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$. Con $\delta=0$ es el paseo aleatorio simple.
+
+:::
+
+Por sustitución recursiva, $X_t=X_0+\delta t+\sum_{j=1}^t\varepsilon_j$: la serie es la tendencia determinista $X_0+\delta t$ más la acumulación de todos los choques. Sus momentos se obtienen directamente.
+
+::: {#prp-momentos-paseo}
+## Momentos del paseo aleatorio
+
+Para el paseo aleatorio con deriva, $\E[X_t]=X_0+\delta t$, $\Var(X_t)=\sigma^2t$ y $\Cov(X_s,X_t)=\sigma^2\min\{s,t\}$, de modo que $\Corr(X_s,X_t)=\sqrt{s/t}$ para $s\leq t$. La primera diferencia $\Delta X_t=X_t-X_{t-1}=\delta+\varepsilon_t$ es estacionaria.
+
+:::
+
+::: {.proof}
+De la expresión acumulada, $\E[X_t]=X_0+\delta t$ por la linealidad, y las covarianzas son las de las sumas parciales de ruido blanco, $\Cov(\sum_{j\leq s}\varepsilon_j,\sum_{j\leq t}\varepsilon_j)=\sigma^2\min\{s,t\}$, porque solo los términos comunes aportan. La correlación es $\sigma^2s/\sqrt{\sigma^2s\cdot\sigma^2t}=\sqrt{s/t}$. La diferencia $\delta+\varepsilon_t$ tiene media $\delta$ y autocovarianza la del ruido blanco, ambas independientes del tiempo.
+
+:::
+
+Los dos modelos se distinguen por el efecto de un choque. En el modelo con tendencia determinista, un choque $\varepsilon$ en $t$ afecta a $X_t$ y se disipa; el pronóstico a largo plazo es la tendencia. En el paseo aleatorio, el mismo choque se suma a todos los valores futuros, $X_{t+k}=X_t+\cdots$, y el pronóstico a largo plazo cambia permanentemente. Además, la incertidumbre del pronóstico es acotada en el primer caso y crece sin límite en el segundo: el error de pronóstico a $k$ pasos de un paseo aleatorio tiene varianza $k\sigma^2$.
+
+Con números, sea $\sigma=1$. En el paseo aleatorio, $\Var(X_{100})=100$ y la desviación estándar es $10$, mientras que $\Corr(X_{50},X_{100})=\sqrt{50/100}=0.707$, alta aunque las observaciones estén separadas por cincuenta pasos. En el modelo estacionario alrededor de tendencia con $Y_t$ ruido blanco, la desviación estándar es $1$ en todo instante y la correlación entre $X_{50}$ y $X_{100}$ es cero. Con $\delta=0.5$, el pronóstico a 100 pasos del paseo con deriva desde $X_0=0$ es $50\pm1.96\cdot10$, es decir, entre $30.4$ y $69.6$ con probabilidad aproximada de $0.95$ si los choques son normales, un intervalo diez veces más ancho que el del modelo con tendencia determinista.

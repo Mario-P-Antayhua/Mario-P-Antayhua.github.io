@@ -12,7 +12,7 @@ listing:
 
 <p class="estado">En proceso</p>
 
-Aquí desarrollo el cálculo en varias variables y la optimización: la matriz hessiana y la aproximación de Taylor, la diferenciación bajo el signo de la integral, y los problemas con restricciones de igualdad y de desigualdad, con sus métodos numéricos.
+Aquí desarrollo el cálculo integral y diferencial en varias variables y la optimización. Empiezo con la integral de Riemann, el teorema fundamental del cálculo y las integrales impropias, sigo con la diferenciación, los teoremas de la función inversa e implícita, la aproximación de Taylor y la regla de Leibniz, y termino con la existencia de óptimos, las condiciones sin restricciones, los problemas con restricciones de igualdad y de desigualdad y los métodos numéricos. Cada nota se apoya solo en las anteriores y en Matemática I y II.
 
 ## Notas {.unnumbered}
 

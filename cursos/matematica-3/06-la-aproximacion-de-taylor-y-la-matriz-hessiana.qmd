@@ -1,0 +1,66 @@
+---
+title: "La aproximación de Taylor y la matriz hessiana"
+description: "Derivadas parciales de segundo orden, la igualdad de las parciales cruzadas, la matriz hessiana, la fórmula de Taylor de segundo orden en varias variables y el gradiente y la hessiana de una forma cuadrática."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Cálculo diferencial]
+---
+
+El gradiente da la mejor aproximación lineal de $f$ cerca de un punto. Para distinguir un mínimo de un máximo o de un punto de silla, esa aproximación no basta, porque su segunda derivada es idénticamente nula. Hace falta una aproximación cuadrática, y el objeto que reúne toda la información de segundo orden es la matriz hessiana.
+
+::: {#def-hessiana}
+## Matriz hessiana
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$ con derivadas parciales de segundo orden. La ***matriz hessiana*** de $f$ en $\vect{p}\in D$ es $\mat{H}_f(\vect{p})\in\mathbb{R}^{n\times n}$ con entradas $(\mat{H}_f(\vect{p}))_{ij}:=\dfrac{\partial^2f}{\partial x_i\partial x_j}(\vect{p})$. La función es de ***clase $C^2$*** si todas esas parciales existen y son continuas.
+
+:::
+
+Nada en la definición obliga a que $\partial^2f/\partial x_i\partial x_j$ coincida con $\partial^2f/\partial x_j\partial x_i$, es decir, a que el orden de derivación sea irrelevante. Que lo sea bajo una condición de continuidad es un hecho que no se puede dar por sentado, y tiene una consecuencia fundamental: si la hessiana es simétrica, toda la teoría espectral de la [Nota “Valores propios, triangularización y teorema espectral”](../matematica-2/11-valores-propios-y-teorema-espectral.qmd) se aplica a ella.
+
+::: {#thm-schwarz-clairaut}
+## Igualdad de las derivadas parciales cruzadas
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$ con $\partial f/\partial x_1,\partial f/\partial x_2$ y las parciales cruzadas $\partial^2f/\partial x_i\partial x_j$ y $\partial^2f/\partial x_j\partial x_i$ existentes en una vecindad de $\vect{p}$ y continuas en $\vect{p}$. Entonces ambas parciales cruzadas coinciden en $\vect{p}$. En consecuencia, si $f$ es de clase $C^2$, $\mat{H}_f$ es simétrica.
+
+:::
+
+::: {.proof}
+Basta considerar dos variables, $(x_i,x_j)=(x,y)$, fijando las demás coordenadas, con $\vect{p}=(p_1,p_2)$. Se forma el cociente de diferencias de segundo orden
+$$
+\Delta(h,k):=f(p_1+h,p_2+k)-f(p_1+h,p_2)-f(p_1,p_2+k)+f(p_1,p_2)
+$$
+y se calcula de dos maneras. Con $\phi(x):=f(x,p_2+k)-f(x,p_2)$, $\Delta(h,k)=\phi(p_1+h)-\phi(p_1)$, y el [Teorema “Teorema de Rolle y del valor medio”](../matematica-1/31-la-derivada-de-una-variable.qmd#thm-valor-medio) da $c_1$ entre $p_1$ y $p_1+h$ con $\Delta(h,k)=h\,\phi'(c_1)=h\bigl[\tfrac{\partial f}{\partial x}(c_1,p_2+k)-\tfrac{\partial f}{\partial x}(c_1,p_2)\bigr]$. Aplicando de nuevo el teorema del valor medio a $y\mapsto\tfrac{\partial f}{\partial x}(c_1,y)$ entre $p_2$ y $p_2+k$, existe $c_2$ con
+$$
+\Delta(h,k)=hk\,\frac{\partial^2f}{\partial y\,\partial x}(c_1,c_2).
+$$ {#eq-schwarz-clairaut-1}
+Agrupando $\Delta(h,k)$ primero en la segunda coordenada y después en la primera se obtiene, simétricamente, $(c_1',c_2')$ con $\Delta(h,k)=hk\,\partial^2f/\partial x\,\partial y(c_1',c_2')$. Igualando ambas expresiones y dividiendo por $hk\neq0$, al hacer $h,k\to0$ los puntos $(c_1,c_2)$ y $(c_1',c_2')$ convergen a $\vect{p}$, porque están acotados entre $p_1$ y $p_1+h$, y entre $p_2$ y $p_2+k$; la continuidad de ambas parciales cruzadas en $\vect{p}$ permite pasar al límite y concluir que coinciden en $\vect{p}$.
+
+:::
+
+Con la simetría, la aproximación cuadrática de $f$ queda determinada por el valor, el gradiente y la hessiana en el punto.
+
+::: {#thm-taylor-segundo-orden}
+## Fórmula de Taylor de segundo orden
+
+Sea $D\subseteq\mathbb{R}^n$ abierto, $f:D\to\mathbb{R}$ de clase $C^2$ y $\vect{p}\in D$. Para $\vect{h}$ pequeño, existe $\theta\in(0,1)$ con $f(\vect{p}+\vect{h})=f(\vect{p})+\langle\nabla f(\vect{p}),\vect{h}\rangle+\tfrac12\vect{h}^{\top}\mat{H}_f(\vect{p}+\theta\vect{h})\vect{h}$, y
+$$
+f(\vect{p}+\vect{h})=f(\vect{p})+\langle\nabla f(\vect{p}),\vect{h}\rangle+\tfrac12\vect{h}^{\top}\mat{H}_f(\vect{p})\vect{h}+R(\vect{h}),\qquad\frac{R(\vect{h})}{\|\vect{h}\|^2}\xrightarrow[\vect{h}\to\vect{0}]{}0 .
+$$ {#eq-taylor-segundo-orden}
+
+:::
+
+::: {.proof}
+Se define $g(t):=f(\vect{p}+t\vect{h})$ para $t\in[0,1]$, con $\vect{h}$ lo bastante pequeño para que el segmento quede en $D$. Como $f$ es $C^2$, la regla de la cadena da $g'(t)=\langle\nabla f(\vect{p}+t\vect{h}),\vect{h}\rangle$ y, derivando de nuevo, $g''(t)=\vect{h}^{\top}\mat{H}_f(\vect{p}+t\vect{h})\vect{h}$, continua en $t$. El teorema de Taylor con resto de Lagrange para $g$ con $n=1$ da $\theta\in(0,1)$ con $g(1)=g(0)+g'(0)+\tfrac12g''(\theta)$, que es la primera fórmula. Para la segunda, $R(\vect{h})=\tfrac12\vect{h}^{\top}\bigl[\mat{H}_f(\vect{p}+\theta\vect{h})-\mat{H}_f(\vect{p})\bigr]\vect{h}$, y por la desigualdad de Cauchy–Schwarz $|R(\vect{h})|\leq\tfrac12\|\mat{H}_f(\vect{p}+\theta\vect{h})-\mat{H}_f(\vect{p})\|_F\,\|\vect{h}\|^2$. Como $\|\theta\vect{h}\|\leq\|\vect{h}\|\to0$ y $\mat{H}_f$ es continua en $\vect{p}$, la norma de la diferencia tiende a cero.
+
+:::
+
+Un caso con fórmula exacta es el de las formas cuadráticas, que describen la suma de cuadrados de una regresión.
+
+::: {#exm-gradiente-hessiana-cuadratica}
+## Gradiente y hessiana de una forma cuadrática
+
+Sea $\mat{A}\in\mathbb{R}^{n\times n}$ simétrica, $\vect{b}\in\mathbb{R}^n$ y $f(\vect{x}):=\vect{x}^{\top}\mat{A}\vect{x}+\vect{b}^{\top}\vect{x}$. Entonces $\nabla f(\vect{x})=2\mat{A}\vect{x}+\vect{b}$ y $\mat{H}_f(\vect{x})=2\mat{A}$ para todo $\vect{x}$.
+
+:::
+
+En efecto, $f(\vect{x})=\sum_{j,k}a_{jk}x_jx_k+\sum_jb_jx_j$, y derivando respecto de $x_i$ (cada $x_i$ aparece como $x_j$ y como $x_k$), $\partial f/\partial x_i=\sum_ka_{ik}x_k+\sum_ja_{ji}x_j+b_i=2\sum_ka_{ik}x_k+b_i$ por la simetría; derivando una vez más respecto de $x_l$, $\partial^2f/\partial x_l\partial x_i=2a_{il}$. Como la hessiana es constante, la fórmula de Taylor es exacta: $f(\vect{p}+\vect{h})=f(\vect{p})+\langle\nabla f(\vect{p}),\vect{h}\rangle+\vect{h}^{\top}\mat{A}\vect{h}$, sin resto. Con números, para $f(x_1,x_2)=x_1^2+x_1x_2+2x_2^2-x_1$, que corresponde a $\mat{A}=\left(\begin{smallmatrix}1&1/2\\1/2&2\end{smallmatrix}\right)$ y $\vect{b}=(-1,0)^{\top}$, el gradiente es $(2x_1+x_2-1,\ x_1+4x_2)$ y la hessiana es $\left(\begin{smallmatrix}2&1\\1&4\end{smallmatrix}\right)=2\mat{A}$.

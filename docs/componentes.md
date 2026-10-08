@@ -1,6 +1,6 @@
 # Componentes de las notas (sintaxis de Quarto)
 
-Guía rápida para escribir y para pedir cambios. Ejemplo completo y renderizado: `cursos/econometria-3/nivel-local.qmd`.
+Guía rápida para escribir y para pedir cambios. Ejemplo completo y renderizado: `cursos/econometria-3/17-modelo-de-nivel-local.qmd`.
 
 ## Encabezado de cada nota
 

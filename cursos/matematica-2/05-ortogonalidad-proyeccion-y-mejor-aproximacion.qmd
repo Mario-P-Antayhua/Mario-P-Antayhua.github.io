@@ -1,0 +1,131 @@
+---
+title: "Ortogonalidad, proyección y el teorema de la mejor aproximación"
+description: "Complemento ortogonal, bases ortonormales y el proceso de Gram–Schmidt, la proyección ortogonal sobre un subespacio de dimensión finita, y su caracterización como el punto más cercano."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
+---
+
+Con el subespacio, la norma y la ortogonalidad disponibles, se puede plantear y resolver un problema geométrico que es también el problema central de buena parte de la econometría, todavía en un lenguaje que no menciona variables aleatorias: dado un vector $\vect{v}\in V$ y un subespacio $S\subseteq V$, ¿cuál es el punto de $S$ más cercano a $\vect{v}$? La respuesta pasa primero por identificar, para cada subespacio, el conjunto de los vectores que son ortogonales a todos sus elementos.
+
+::: {#def-complemento-ortogonal}
+## Complemento ortogonal
+
+Sea $V$ un espacio con producto interno y $S\subseteq V$. El ***complemento ortogonal*** de $S$ es $S^{\perp}:=\{\vect{v}\in V:\langle\vect{v},\vect{s}\rangle=0\ \text{para todo }\vect{s}\in S\}$.
+
+:::
+
+El complemento ortogonal reúne los vectores que no tienen componente alguna en las direcciones de $S$, y antes de usarlo como espacio por derecho propio hay que comprobar que, en efecto, es un subespacio.
+
+::: {#prp-complemento-subespacio}
+## $S^{\perp}$ es un subespacio
+
+Para todo $S\subseteq V$, $S^{\perp}$ es un subespacio de $V$, y si $S$ es un subespacio, $S\cap S^{\perp}=\{\vect{0}\}$.
+
+:::
+
+::: {.proof}
+Se aplica la [Proposición “Criterio de subespacio”](01-espacios-vectoriales-y-subespacios.qmd#prp-criterio-subespacio). El conjunto $S^{\perp}$ contiene a $\vect{0}$, porque $\langle\vect{0},\vect{s}\rangle=0\cdot\langle\vect{s},\vect{s}\rangle=0$. Si $\vect{u},\vect{v}\in S^{\perp}$ y $\alpha,\beta\in\mathbb{R}$, para todo $\vect{s}\in S$ la bilinealidad da $\langle\alpha\vect{u}+\beta\vect{v},\vect{s}\rangle=\alpha\cdot0+\beta\cdot0=0$, de modo que $\alpha\vect{u}+\beta\vect{v}\in S^{\perp}$. Para la última afirmación, si $\vect{v}\in S\cap S^{\perp}$, es ortogonal a sí mismo, $\langle\vect{v},\vect{v}\rangle=0$, y la definición positiva da $\vect{v}=\vect{0}$.
+
+:::
+
+La construcción explícita del punto de $S$ más cercano a $\vect{v}$ es sencilla cuando $S$ tiene una base cuyos elementos son perpendiculares entre sí y de norma uno.
+
+::: {#def-base-ortonormal}
+## Conjunto y base ortonormales
+
+Los vectores $\vect{e}_1,\ldots,\vect{e}_k$ forman un conjunto ***ortonormal*** si $\langle\vect{e}_i,\vect{e}_j\rangle=1$ para $i=j$ y $0$ para $i\neq j$. Si además generan un subespacio $S$, son una ***base ortonormal*** de $S$.
+
+:::
+
+Todo conjunto ortonormal es linealmente independiente: si $\sum\alpha_i\vect{e}_i=\vect{0}$, tomando el producto interno con $\vect{e}_j$ se obtiene $\alpha_j=0$. Toda base de un subespacio de dimensión finita puede convertirse en una base ortonormal, y la construcción es lo que garantiza que la proyección existe.
+
+::: {#prp-gram-schmidt}
+## Proceso de Gram–Schmidt
+
+Sea $\{\vect{w}_1,\ldots,\vect{w}_k\}$ linealmente independiente en $V$. Existe un conjunto ortonormal $\{\vect{e}_1,\ldots,\vect{e}_k\}$ con $\operatorname{gen}\{\vect{e}_1,\ldots,\vect{e}_j\}=\operatorname{gen}\{\vect{w}_1,\ldots,\vect{w}_j\}$ para cada $j$. En consecuencia, todo subespacio de dimensión finita tiene una base ortonormal.
+
+:::
+
+::: {.proof}
+Se construyen los $\vect{e}_j$ por inducción sobre $j$. Para $j=1$, $\vect{w}_1\neq\vect{0}$ por la independencia, y $\vect{e}_1:=\vect{w}_1/\|\vect{w}_1\|$ tiene norma uno y genera lo mismo que $\vect{w}_1$. Supóngase construidos $\vect{e}_1,\ldots,\vect{e}_{j-1}$, ortonormales con la misma envoltura que $\vect{w}_1,\ldots,\vect{w}_{j-1}$. Se resta de $\vect{w}_j$ su componente en esa envoltura,
+$$
+\vect{z}_j:=\vect{w}_j-\sum_{i=1}^{j-1}\langle\vect{w}_j,\vect{e}_i\rangle\,\vect{e}_i .
+$$
+Para cada $l<j$, $\langle\vect{z}_j,\vect{e}_l\rangle=\langle\vect{w}_j,\vect{e}_l\rangle-\sum_i\langle\vect{w}_j,\vect{e}_i\rangle\langle\vect{e}_i,\vect{e}_l\rangle=\langle\vect{w}_j,\vect{e}_l\rangle-\langle\vect{w}_j,\vect{e}_l\rangle=0$, de modo que $\vect{z}_j$ es ortogonal a todos los $\vect{e}_l$ con $l<j$. Además $\vect{z}_j\neq\vect{0}$, porque si fuera cero, $\vect{w}_j$ estaría en $\operatorname{gen}\{\vect{e}_1,\ldots,\vect{e}_{j-1}\}=\operatorname{gen}\{\vect{w}_1,\ldots,\vect{w}_{j-1}\}$, lo que contradice la independencia. Se define $\vect{e}_j:=\vect{z}_j/\|\vect{z}_j\|$. El conjunto $\{\vect{e}_1,\ldots,\vect{e}_j\}$ es ortonormal, y como $\vect{w}_j=\vect{z}_j+\sum_{i<j}\langle\vect{w}_j,\vect{e}_i\rangle\vect{e}_i$ está en la envoltura de los $\vect{e}$, y $\vect{e}_j$ está en la de los $\vect{w}$, las envolturas coinciden. La última afirmación aplica el proceso a una base del subespacio.
+
+:::
+
+Con una base ortonormal disponible, la proyección se escribe de forma explícita.
+
+::: {#prp-proyeccion-existencia}
+## Existencia y unicidad de la proyección ortogonal
+
+Sea $S\subseteq V$ un subespacio de dimensión finita $k$, con base ortonormal $\{\vect{e}_1,\ldots,\vect{e}_k\}$, y sea $\vect{v}\in V$. Defínase
+$$
+\hat{\vect{v}}:=\sum_{i=1}^{k}\langle\vect{v},\vect{e}_i\rangle\,\vect{e}_i .
+$$ {#eq-proyeccion-formula}
+Entonces $\hat{\vect{v}}\in S$, $\vect{v}-\hat{\vect{v}}\in S^{\perp}$, y $\hat{\vect{v}}$ es el único elemento de $S$ con esta propiedad.
+
+:::
+
+::: {.proof}
+Que $\hat{\vect{v}}\in S$ es inmediato, por ser combinación lineal de la base de $S$. Para ver que $\vect{v}-\hat{\vect{v}}\in S^{\perp}$ basta comprobar la ortogonalidad frente a cada vector de la base, porque se extiende por bilinealidad a todo $S$. Para cada $j$,
+$$
+\begin{aligned}
+\langle\vect{v}-\hat{\vect{v}},\,\vect{e}_j\rangle &= \langle\vect{v},\vect{e}_j\rangle-\sum_{i=1}^{k}\langle\vect{v},\vect{e}_i\rangle\langle\vect{e}_i,\vect{e}_j\rangle \\
+\langle\vect{v}-\hat{\vect{v}},\,\vect{e}_j\rangle &= \langle\vect{v},\vect{e}_j\rangle-\langle\vect{v},\vect{e}_j\rangle=0,
+\end{aligned}
+$$
+porque por la ortonormalidad la suma se reduce a su único término no nulo. Para la unicidad, si $\vect{w}\in S$ también cumple $\vect{v}-\vect{w}\in S^{\perp}$, entonces $\hat{\vect{v}}-\vect{w}=(\vect{v}-\vect{w})-(\vect{v}-\hat{\vect{v}})\in S^{\perp}$ y a la vez está en $S$; por la @prp-complemento-subespacio, $\hat{\vect{v}}-\vect{w}=\vect{0}$.
+
+:::
+
+Al vector $\hat{\vect{v}}$ se le llama la ***proyección ortogonal*** de $\vect{v}$ sobre $S$. Falta probar que resuelve el problema de distancia mínima.
+
+::: {#thm-mejor-aproximacion-general}
+## Teorema de la mejor aproximación
+
+Sea $S\subseteq V$ un subespacio de dimensión finita y $\vect{v}\in V$. Entre todos los $\vect{s}\in S$, la distancia $\|\vect{v}-\vect{s}\|$ alcanza su mínimo exactamente cuando $\vect{s}=\hat{\vect{v}}$, y ningún otro elemento de $S$ lo alcanza.
+
+:::
+
+::: {.proof}
+La estrategia consiste en descomponer el error $\vect{v}-\vect{s}$, para un $\vect{s}\in S$ arbitrario, en dos partes ortogonales entre sí y aplicar el teorema de Pitágoras. Sumando y restando $\hat{\vect{v}}$,
+$$
+\vect{v}-\vect{s}=\underbrace{(\vect{v}-\hat{\vect{v}})}_{\text{en }S^{\perp}}+\underbrace{(\hat{\vect{v}}-\vect{s})}_{\text{en }S}.
+$$ {#eq-descomposicion-error}
+El primer sumando está en $S^{\perp}$ por la proposición anterior, y el segundo está en $S$ por ser diferencia de dos elementos de $S$; son ortogonales entre sí, y el [Teorema “Teorema de Pitágoras generalizado”](04-espacios-con-producto-interno.qmd#thm-pitagoras) da
+$$
+\|\vect{v}-\vect{s}\|^2=\|\vect{v}-\hat{\vect{v}}\|^2+\|\hat{\vect{v}}-\vect{s}\|^2.
+$$ {#eq-pitagoras-error}
+Como $\|\hat{\vect{v}}-\vect{s}\|^2\geq0$, resulta $\|\vect{v}-\vect{s}\|\geq\|\vect{v}-\hat{\vect{v}}\|$ para todo $\vect{s}\in S$, con igualdad si y solo si $\hat{\vect{v}}-\vect{s}=\vect{0}$ por la definición positiva.
+
+:::
+
+::: {#cor-principio-ortogonalidad}
+## Principio de ortogonalidad
+
+Un elemento $\vect{s}^{*}\in S$ minimiza $\|\vect{v}-\vect{s}\|$ sobre $\vect{s}\in S$ si y solo si $\vect{v}-\vect{s}^{*}\in S^{\perp}$.
+
+:::
+
+::: {.proof}
+Si $\vect{v}-\vect{s}^{*}\in S^{\perp}$, la unicidad de la @prp-proyeccion-existencia da $\vect{s}^{*}=\hat{\vect{v}}$, que es minimizador por el teorema. Recíprocamente, si $\vect{s}^{*}$ minimiza, la unicidad del minimizador del teorema fuerza $\vect{s}^{*}=\hat{\vect{v}}$, y $\vect{v}-\hat{\vect{v}}\in S^{\perp}$ por construcción.
+
+:::
+
+El principio de ortogonalidad reformula en una sola equivalencia lo obtenido: buscar el elemento de $S$ más cercano a $\vect{v}$ y buscar el elemento de $S$ cuyo error sea ortogonal a todo $S$ son el mismo problema escrito con dos vocabularios. Basta reconocer un producto interno y un subespacio de dimensión finita para tener existencia, unicidad y caracterización de la mejor aproximación. Un caso particular es que todo vector se descompone de forma única como $\vect{v}=\hat{\vect{v}}+(\vect{v}-\hat{\vect{v}})$ con la primera parte en $S$ y la segunda en $S^{\perp}$.
+
+::: {#exm-proyeccion-r3}
+## Proyección ortogonal sobre un plano en $\mathbb{R}^3$
+
+Sea $S=\operatorname{gen}\{\vect{e}_1,\vect{e}_2\}\subseteq\mathbb{R}^3$ el plano generado por $\vect{e}_1=(1,0,0)$ y $\vect{e}_2=(0,1,0)$, con el producto escalar usual, y sea $\vect{v}=(2,3,4)$. La proyección es
+$$
+\hat{\vect{v}}=\langle\vect{v},\vect{e}_1\rangle\vect{e}_1+\langle\vect{v},\vect{e}_2\rangle\vect{e}_2=2(1,0,0)+3(0,1,0)=(2,3,0),
+$$
+de modo que conserva las dos primeras coordenadas y anula la tercera, la componente normal al plano. El residuo $\vect{v}-\hat{\vect{v}}=(0,0,4)$ cumple $\langle\vect{v}-\hat{\vect{v}},\vect{e}_1\rangle=0=\langle\vect{v}-\hat{\vect{v}},\vect{e}_2\rangle$, y por el teorema de la mejor aproximación ningún otro punto del plano está más cerca de $\vect{v}$: la distancia mínima es $\|(0,0,4)\|=4$, y por ejemplo el punto $(2,2,0)\in S$ está a $\sqrt{0+1+16}=\sqrt{17}>4$, como establece la identidad de Pitágoras $17=16+1$. La @fig-proyeccion-r3 lo ilustra.
+
+:::
+
+![La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.](../../assets/img/fig/matematica-2-05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo-1.svg){#fig-proyeccion-r3 fig-alt="Un plano horizontal, un vector fuera de él y su proyección ortogonal sobre el plano, unidos por un segmento vertical discontinuo."}

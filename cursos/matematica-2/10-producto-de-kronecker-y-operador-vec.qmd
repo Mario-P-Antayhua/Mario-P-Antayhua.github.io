@@ -1,0 +1,52 @@
+---
+title: "El producto de Kronecker y el operador vec"
+description: "El producto de Kronecker, el operador vec que apila las columnas de una matriz, sus reglas de cálculo y la forma vectorial de una ecuación matricial lineal."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
+---
+
+Una ecuación matricial como $\mat{X}=\mat{A}\mat{X}\mat{A}^{\top}+\mat{Q}$, en la que la incógnita es una matriz que aparece multiplicada por ambos lados, no tiene la forma $\mat{M}\vect{x}=\vect{b}$ de los sistemas lineales de la [Nota “Matrices como transformaciones lineales, rango y sistemas de ecuaciones”](07-matrices-transformaciones-lineales-y-rango.qmd). Dos herramientas permiten reescribirla en esa forma: el operador $\vecop$, que ordena las entradas de una matriz en un vector, y el producto de Kronecker, que representa la multiplicación por ambos lados como una sola matriz. Su uso característico es decidir cuándo una ecuación de ese tipo tiene solución única.
+
+::: {#def-kronecker-vec}
+## Producto de Kronecker y operador vec
+
+El ***producto de Kronecker*** de $\mat{A}\in\mathbb{R}^{m\times n}$ y $\mat{B}\in\mathbb{R}^{p\times q}$ es la matriz por bloques $\mat{A}\otimes\mat{B}\in\mathbb{R}^{mp\times nq}$ cuyo bloque $(i,j)$ es $a_{ij}\mat{B}$. El operador ***vec*** de $\mat{X}\in\mathbb{R}^{m\times n}$ es el vector $\vecop(\mat{X})\in\mathbb{R}^{mn}$ que apila las columnas de $\mat{X}$ una debajo de otra.
+
+:::
+
+Con números, para $\mat{A}=\left(\begin{smallmatrix}1&2\\0&1\end{smallmatrix}\right)$ y $\mat{B}=\left(\begin{smallmatrix}1&1\\0&2\end{smallmatrix}\right)$,
+$$
+\mat{A}\otimes\mat{B}=\begin{pmatrix}1\cdot\mat{B}&2\cdot\mat{B}\\0\cdot\mat{B}&1\cdot\mat{B}\end{pmatrix}=\begin{pmatrix}1&1&2&2\\0&2&0&4\\0&0&1&1\\0&0&0&2\end{pmatrix},
+$$
+y para $\mat{X}=\left(\begin{smallmatrix}1&0\\2&1\end{smallmatrix}\right)$, $\vecop(\mat{X})=(1,2,0,1)^{\top}$. Las dos reglas de cálculo siguientes son las que se usan en la práctica.
+
+::: {#prp-reglas-kronecker}
+## Reglas del producto de Kronecker y del operador vec
+
+Siempre que los tamaños sean compatibles: (i) $(\mat{A}\otimes\mat{B})(\mat{C}\otimes\mat{D})=(\mat{A}\mat{C})\otimes(\mat{B}\mat{D})$; (ii) $(\mat{A}\otimes\mat{B})^{\top}=\mat{A}^{\top}\otimes\mat{B}^{\top}$; (iii) $\vecop(\mat{A}\mat{X}\mat{B})=(\mat{B}^{\top}\otimes\mat{A})\vecop(\mat{X})$.
+
+:::
+
+::: {.proof}
+Para (i), el bloque $(i,k)$ del producto es $\sum_j(a_{ij}\mat{B})(c_{jk}\mat{D})=\bigl(\sum_ja_{ij}c_{jk}\bigr)\mat{B}\mat{D}$, que es el bloque $(i,k)$ de $(\mat{A}\mat{C})\otimes(\mat{B}\mat{D})$, por la [Proposición “Producto por bloques”](09-matrices-particionadas-y-complemento-de-schur.qmd#prp-producto-bloques). Para (ii), el bloque $(i,j)$ de $(\mat{A}\otimes\mat{B})^{\top}$ es la transpuesta del bloque $(j,i)$ de $\mat{A}\otimes\mat{B}$, es decir, $(a_{ji}\mat{B})^{\top}=a_{ji}\mat{B}^{\top}$, que es el bloque $(i,j)$ de $\mat{A}^{\top}\otimes\mat{B}^{\top}$.
+
+Para (iii), la $j$-ésima columna de $\mat{A}\mat{X}\mat{B}$ es $\mat{A}\mat{X}\vect{b}_j$, donde $\vect{b}_j$ es la $j$-ésima columna de $\mat{B}$. Escribiendo $\mat{X}\vect{b}_j=\sum_kb_{kj}\vect{x}_k$, con $\vect{x}_k$ las columnas de $\mat{X}$, se obtiene $\mat{A}\mat{X}\vect{b}_j=\sum_kb_{kj}\mat{A}\vect{x}_k$. Esta es la $j$-ésima fila de bloques del producto $(\mat{B}^{\top}\otimes\mat{A})\vecop(\mat{X})$, cuyo bloque $(j,k)$ es $(\mat{B}^{\top})_{jk}\mat{A}=b_{kj}\mat{A}$ y que multiplica al bloque $\vect{x}_k$ de $\vecop(\mat{X})$.
+
+:::
+
+Para $\mat{X}$ de arriba, $\mat{A}\mat{X}\mat{B}=\left(\begin{smallmatrix}5&9\\2&4\end{smallmatrix}\right)$ y $\vecop(\mat{A}\mat{X}\mat{B})=(5,2,9,4)^{\top}$; por otro lado, $\mat{B}^{\top}\otimes\mat{A}=\left(\begin{smallmatrix}1&2&0&0\\0&1&0&0\\1&2&2&4\\0&1&0&2\end{smallmatrix}\right)$ multiplicada por $(1,2,0,1)^{\top}$ da $(1+4,\ 2,\ 1+4+0+4,\ 2+2)^{\top}=(5,2,9,4)^{\top}$, el mismo vector.
+
+::: {#cor-ecuacion-lyapunov}
+## Forma vectorial de una ecuación matricial
+
+Sean $\mat{A}\in\mathbb{R}^{n\times n}$ y $\mat{Q}\in\mathbb{R}^{n\times n}$. La ecuación $\mat{X}=\mat{A}\mat{X}\mat{A}^{\top}+\mat{Q}$ en la incógnita $\mat{X}\in\mathbb{R}^{n\times n}$ equivale al sistema lineal $\bigl(\Imat-\mat{A}\otimes\mat{A}\bigr)\vecop(\mat{X})=\vecop(\mat{Q})$. En particular, tiene solución única para todo $\mat{Q}$ si y solo si la matriz $\Imat-\mat{A}\otimes\mat{A}$ es invertible.
+
+:::
+
+::: {.proof}
+Se aplica $\vecop$ a ambos lados. Por la regla (iii) con $\mat{B}=\mat{A}^{\top}$, $\vecop(\mat{A}\mat{X}\mat{A}^{\top})=(\mat{A}\otimes\mat{A})\vecop(\mat{X})$, de modo que la ecuación equivale a $\vecop(\mat{X})-(\mat{A}\otimes\mat{A})\vecop(\mat{X})=\vecop(\mat{Q})$. Como $\vecop$ es una biyección lineal entre $\mathbb{R}^{n\times n}$ y $\mathbb{R}^{n^2}$, la ecuación tiene solución única para todo $\mat{Q}$ si y solo si el sistema la tiene para todo vector del lado derecho, es decir, por la [Proposición “Existencia y unicidad en un sistema lineal”](07-matrices-transformaciones-lineales-y-rango.qmd#prp-sistemas-lineales), si y solo si $\ker(\Imat-\mat{A}\otimes\mat{A})=\{\vect{0}\}$, que para una matriz cuadrada equivale a ser invertible por el [Teorema “Caracterización de la invertibilidad”](08-el-determinante-y-la-invertibilidad.qmd#thm-caracterizacion-invertibilidad).
+
+:::
+
+Con $n=1$ y $\mat{A}=(a)$, la ecuación es $x=a^2x+q$ y la matriz $1-a\otimes a=1-a^2$ es invertible si y solo si $a^2\neq1$, con solución $x=q/(1-a^2)$.

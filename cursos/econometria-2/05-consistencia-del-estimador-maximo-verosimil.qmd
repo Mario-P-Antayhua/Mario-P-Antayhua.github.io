@@ -1,0 +1,25 @@
+---
+title: "Consistencia del estimador de máxima verosimilitud"
+description: "La consistencia del estimador de máxima verosimilitud bajo compacidad del espacio de parámetros, continuidad, dominancia e identificación, demostrada con la ley uniforme de los grandes números y la desigualdad de información."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Verosimilitud]
+---
+
+Un estimador es consistente si converge en probabilidad al parámetro verdadero cuando la muestra crece. Es la propiedad mínima que se exige, porque un estimador inconsistente no mejora con más datos. El argumento tiene dos piezas que ya se han demostrado: la log-verosimilitud esperada tiene un máximo único en el valor verdadero, por la [Nota “La desigualdad de información y la identificación”](03-la-desigualdad-de-informacion-y-la-identificacion.qmd), y la log-verosimilitud muestral converge a ella uniformemente, por la [Nota “La ley uniforme de los grandes números”](04-la-ley-uniforme-de-los-grandes-numeros.qmd). Si dos funciones están uniformemente cerca, sus puntos de máximo están cerca cuando el máximo de la límite es nítido.
+
+::: {#thm-consistencia-emv}
+## Consistencia del estimador de máxima verosimilitud
+
+Sean $X_1,X_2,\ldots$ iid con densidad $f(x;\vect{\theta}_0)$ y supóngase: (C1) $\Theta\subseteq\mathbb{R}^k$ es compacto; (C2) $\ln f(x;\vect{\theta})$ es continua en $\vect{\theta}$ para cada $x$ del soporte; (C3) $\E\bigl[\sup_{\vect{\theta}\in\Theta}|\ln f(X;\vect{\theta})|\bigr]<\infty$; (C4) el modelo está identificado en $\vect{\theta}_0$. Si $\hat{\vect{\theta}}_n$ maximiza $\ell_n$ en $\Theta$, entonces $\hat{\vect{\theta}}_n\overset{p}{\to}\vect{\theta}_0$.
+
+:::
+
+::: {.proof}
+Sea $Q(\vect{\theta})=\E[\ln f(X;\vect{\theta})]$. Por (C1)–(C3), la ley uniforme de los grandes números da que $Q$ es continua y $\sup_{\vect{\theta}}|\ell_n(\vect{\theta})-Q(\vect{\theta})|\overset{p}{\to}0$. Por (C4), el corolario de la desigualdad de información da que $\vect{\theta}_0$ es el único maximizador de $Q$. Fijado $\varepsilon>0$, sea $K=\{\vect{\theta}\in\Theta:\|\vect{\theta}-\vect{\theta}_0\|\geq\varepsilon\}$, compacto como cerrado dentro de un compacto. Si $K$ es vacío no hay nada que probar. Si no, $Q$ alcanza su máximo en $K$ por el teorema de los valores extremos, en un punto $\vect{\theta}_1\neq\vect{\theta}_0$, y entonces $\eta:=Q(\vect{\theta}_0)-\max_KQ=Q(\vect{\theta}_0)-Q(\vect{\theta}_1)>0$. Sea $A_n=\{\sup_{\vect{\theta}}|\ell_n-Q|<\eta/2\}$, con $\Prob{A_n}\to1$. En $A_n$, para todo $\vect{\theta}\in K$, $\ell_n(\vect{\theta})<Q(\vect{\theta})+\eta/2\leq Q(\vect{\theta}_0)-\eta/2<\ell_n(\vect{\theta}_0)$, de modo que ningún punto de $K$ puede ser el maximizador de $\ell_n$, y entonces $\|\hat{\vect{\theta}}_n-\vect{\theta}_0\|<\varepsilon$. Por tanto, $\Prob{\|\hat{\vect{\theta}}_n-\vect{\theta}_0\|<\varepsilon}\geq\Prob{A_n}\to1$.
+
+:::
+
+Las cuatro condiciones se verifican con facilidad en modelos concretos. Para la exponencial con $\Theta=[0.1,10]$, $\ln f(x;\lambda)=\ln\lambda-\lambda x$ es continua en $\lambda$, está acotada en valor absoluto por $\ln10+10x$ para $x>0$, que es integrable porque $\E[X]=1/\lambda_0<\infty$, y el modelo está identificado porque densidades con tasas distintas son distintas. Entonces $\hat\lambda_n=1/\bar X_n$ es consistente cuando $\lambda_0\in[0.1,10]$, lo que también se obtiene directamente de la ley de los grandes números y del teorema de funciones continuas. Con $\lambda_0=2$ y semilla fija, una simulación dio $\hat\lambda_n=2.06,\ 1.93,\ 1.93,\ 2.02$ para $n=10,100,1000,10\,000$.
+
+La compacidad es la condición más fuerte, y su papel es evitar que el máximo escape a la frontera del espacio. Un contraejemplo la muestra: en una mezcla de dos normales $p\N(\mu_1,\sigma_1^2)+(1-p)\N(\mu_2,\sigma_2^2)$ con $\sigma_1^2$ libre en $(0,\infty)$, la log-verosimilitud no está acotada, porque haciendo $\mu_1=x_1$ y $\sigma_1^2\to0$ el término de la primera observación crece sin cota mientras los demás se mantienen, y el estimador de máxima verosimilitud no existe. Imponer $\sigma_i^2\geq c>0$ restablece una región compacta de parámetros relevantes.

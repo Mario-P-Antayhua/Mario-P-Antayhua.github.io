@@ -1,0 +1,36 @@
+---
+title: "El filtro de Hodrick–Prescott como espacio-estado"
+description: "El filtro de Hodrick–Prescott como el suavizador de Kalman de un modelo de tendencia integrada más ciclo transitorio, la relación entre el parámetro de suavizamiento y el cociente de varianzas, y la diferencia entre la estimación en tiempo real y la final."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Modelos estructurales]
+---
+
+El filtro de Hodrick–Prescott es la herramienta más usada para separar la tendencia de una serie macroeconómica y definir su brecha. Se presenta como un problema de optimización con un parámetro $\lambda$ que se elige por convención, y sin una justificación estadística clara. Esta nota muestra que ese filtro es el suavizador de Kalman de un modelo de espacio-estado sencillo, y que el parámetro de suavizamiento es el cociente de dos varianzas. La equivalencia aclara qué supone el filtro sobre la serie y por qué su estimación en el extremo de la muestra es poco confiable.
+
+::: {#def-hp}
+## Filtro de Hodrick–Prescott
+
+Dada una serie $y_1,\ldots,y_n$ y $\lambda>0$, la tendencia del filtro de Hodrick–Prescott es el vector $\vect{\tau}=(\tau_1,\ldots,\tau_n)^{\top}$ que minimiza $\sum_{t=1}^n(y_t-\tau_t)^2+\lambda\sum_{t=3}^n(\tau_t-2\tau_{t-1}+\tau_{t-2})^2$. El ciclo es $y_t-\tau_t$.
+
+:::
+
+El primer término mide el ajuste a los datos y el segundo penaliza los cambios de la pendiente, es decir, la curvatura. Con $\lambda\to0$, la tendencia es la serie, y con $\lambda\to\infty$, es la recta de mínimos cuadrados. Con $\mat{D}$ la matriz de $(n-2)\times n$ cuya fila $i$ tiene $1,-2,1$ en las columnas $i,i+1,i+2$, el criterio es $\|\vect{y}-\vect{\tau}\|^2+\lambda\|\mat{D}\vect{\tau}\|^2$, una forma cuadrática convexa en $\vect{\tau}$ con gradiente $-2(\vect{y}-\vect{\tau})+2\lambda\mat{D}^{\top}\mat{D}\vect{\tau}$. La condición de primer orden da la solución cerrada $\vect{\tau}=(\Imat+\lambda\mat{D}^{\top}\mat{D})^{-1}\vect{y}$, bien definida porque $\Imat+\lambda\mat{D}^{\top}\mat{D}$ es definida positiva.
+
+El modelo estadístico equivalente es la tendencia lineal local sin perturbación en el nivel: $y_t=\tau_t+c_t$ con el ciclo $c_t\sim\N(0,\sigma_c^2)$ y la tendencia con segunda diferencia aleatoria, $\Delta^2\tau_t=\zeta_t\sim\N(0,\sigma_\zeta^2)$. En forma de espacio-estado, con $\vect{\alpha}_t=(\tau_t,\tau_{t-1})^{\top}$, es $\mat{Z}=(1,0)$, $\mat{H}=\sigma_c^2$, $\mat{T}=\left(\begin{smallmatrix}2&-1\\1&0\end{smallmatrix}\right)$, $\mat{R}=(1,0)^{\top}$ y $\mat{Q}=\sigma_\zeta^2$, con una inicialización difusa para $(\tau_1,\tau_0)$.
+
+::: {#thm-hp-kalman}
+## El filtro de Hodrick–Prescott es un suavizador de Kalman
+
+En el modelo anterior con inicialización difusa, la media suavizada $\E[\vect{\tau}\mid\vect{y}]$ coincide con la tendencia de Hodrick–Prescott con $\lambda=\sigma_c^2/\sigma_\zeta^2$.
+
+:::
+
+::: {.proof}
+Con una densidad a priori plana para los dos primeros valores de la tendencia, la densidad conjunta de $(\vect{\tau},\vect{y})$ es proporcional a $\exp\bigl(-\tfrac12\bigl[\sum_t(y_t-\tau_t)^2/\sigma_c^2+\sum_{t\geq3}(\Delta^2\tau_t)^2/\sigma_\zeta^2\bigr]\bigr)$, el producto de las densidades normales de los ciclos y de las segundas diferencias. La densidad de $\vect{\tau}$ dado $\vect{y}$ es proporcional a la misma expresión, la de una normal multivariante, cuya media coincide con su moda. La moda maximiza la densidad, es decir, minimiza $\tfrac1{\sigma_c^2}\bigl[\sum_t(y_t-\tau_t)^2+\tfrac{\sigma_c^2}{\sigma_\zeta^2}\sum_t(\Delta^2\tau_t)^2\bigr]$, que es el criterio de Hodrick–Prescott con $\lambda=\sigma_c^2/\sigma_\zeta^2$. La media condicional del vector de estados dados todos los datos es lo que calcula el suavizador de Kalman.
+
+:::
+
+Con números, para la serie $y=(2.0,2.6,2.9,3.8,4.1,4.4,5.4,5.1)$ y $\lambda=10$, la solución $(\Imat+10\mat{D}^{\top}\mat{D})^{-1}\vect{y}$ es la tendencia $(2.044,\,2.565,\,3.082,\,3.593,\,4.080,\,4.544,\,4.989,\,5.403)$, y el suavizador de Kalman del modelo con $\sigma_c^2=1$ y $\sigma_\zeta^2=0.1$ y una varianza inicial muy grande entrega los mismos ocho valores con cuatro decimales. La convención habitual de $\lambda=1600$ para datos trimestrales equivale a suponer que la desviación estándar del ciclo es $40$ veces la de los cambios de la pendiente de la tendencia.
+
+La equivalencia permite ver qué supone el filtro. Supone una tendencia cuya pendiente sigue un paseo aleatorio y un ciclo sin persistencia: el ciclo $c_t$ es ruido blanco, lo que es una mala descripción de un ciclo económico, que es persistente. Un modelo más realista agrega un ciclo AR(2) y estima las varianzas con los datos. Además, lo que se calcula con el filtro es la estimación en tiempo real, la que usa los datos hasta $t$, y esa estimación del extremo de la muestra es la menos confiable, porque no hay datos posteriores que informen sobre la tendencia. Para ver la magnitud, se simuló una serie trimestral de $120$ datos con tendencia suave y un ciclo AR(1) de coeficiente $0.8$, y se calculó la brecha con $\lambda=1600$ de dos maneras: con la muestra completa y con solo los datos hasta cada fecha. En las $100$ fechas desde la vigésima, la correlación entre ambas brechas es $0.74$, el valor absoluto medio de su diferencia es $0.58$, mayor que la mitad de la desviación estándar de la brecha ($1.01$), y coinciden en el signo en el $74\,\%$ de las fechas. Una brecha estimada en tiempo real se revisa mucho cuando llegan datos nuevos, y un cambio de signo de la brecha es la información que más importa a quien toma decisiones.

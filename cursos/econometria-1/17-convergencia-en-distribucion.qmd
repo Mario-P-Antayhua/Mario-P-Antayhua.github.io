@@ -1,0 +1,82 @@
+---
+title: "Convergencia en distribución"
+description: "La convergencia en distribución definida con funciones continuas y acotadas, su equivalencia con la convergencia de las funciones de distribución, su relación con la convergencia en probabilidad, la tensión de las sucesiones convergentes y la suficiencia de las funciones de prueba suaves."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Convergencia]
+---
+
+Las convergencias de la nota anterior comparan variables definidas sobre el mismo espacio de probabilidad. Para una distribución límite, como la normal en el teorema central del límite, no importa en qué espacio vive cada variable sino qué distribución tiene. La convergencia en distribución mide justamente eso: si las leyes de $X_n$ se parecen cada vez más a la de $X$. Esta nota la define, la caracteriza con funciones de distribución en el caso de una variable, la compara con la convergencia en probabilidad y prueba que basta verificarla con funciones de prueba suaves, un resultado técnico que se usa en la demostración del teorema central del límite.
+
+::: {#def-convergencia-distribucion}
+## Convergencia en distribución
+
+Una sucesión de vectores aleatorios $\vect{X}_n$ en $\mathbb{R}^k$ ***converge en distribución*** a $\vect{X}$, $\vect{X}_n\overset{d}{\to}\vect{X}$, si $\E[h(\vect{X}_n)]\to\E[h(\vect{X})]$ para toda función $h:\mathbb{R}^k\to\mathbb{R}$ continua y acotada.
+
+:::
+
+La definición compara esperanzas de funciones, no variables, y por eso las variables pueden estar definidas en espacios distintos. Para una variable, la convergencia en distribución es equivalente a una condición sobre las funciones de distribución que es la más usada en la práctica.
+
+::: {#thm-convergencia-distribucion-fda}
+## Convergencia en distribución y funciones de distribución
+
+Sean $X_n$, $X$ variables aleatorias con funciones de distribución $F_n$, $F$. Entonces $X_n\overset{d}{\to}X$ si y solo si $F_n(x)\to F(x)$ en todo punto $x$ donde $F$ es continua.
+
+:::
+
+::: {.proof}
+*Suficiencia de la definición.* Sea $x$ un punto de continuidad de $F$ y $\varepsilon>0$. Se definen $h^+(t)=1$ para $t\leq x$, $h^+(t)=0$ para $t\geq x+\varepsilon$ y lineal entre ambos, y $h^-(t)=h^+(t+\varepsilon)$, de modo que $h^-\leq\mathbf{1}_{(-\infty,x]}\leq h^+$ y ambas son continuas y acotadas. Entonces $F_n(x)\leq\E[h^+(X_n)]\to\E[h^+(X)]\leq F(x+\varepsilon)$ y $F_n(x)\geq\E[h^-(X_n)]\to\E[h^-(X)]\geq F(x-\varepsilon)$, de modo que $F(x-\varepsilon)\leq\liminf F_n(x)\leq\limsup F_n(x)\leq F(x+\varepsilon)$. Al hacer $\varepsilon\to0$ y usar la continuidad de $F$ en $x$, $F_n(x)\to F(x)$.
+
+*Necesidad.* Sea $h$ continua con $|h|\leq B$ y $\varepsilon>0$. Una función monótona tiene a lo sumo una cantidad numerable de saltos, porque los saltos mayores que $1/j$ no pueden ser más de $j$ al sumar a lo sumo uno; por tanto los puntos de continuidad de $F$ son densos. Se eligen puntos de continuidad $a<b$ con $F(a)<\varepsilon$ y $1-F(b)<\varepsilon$. Como $F_n(a)\to F(a)$ y $F_n(b)\to F(b)$, para $n$ grande $\Prob{X_n\notin(a,b]}<2\varepsilon$, y también $\Prob{X\notin(a,b]}<2\varepsilon$. La función $h$ es uniformemente continua en $[a,b]$, de modo que existe $\delta>0$ con $|h(s)-h(t)|<\varepsilon$ si $|s-t|<\delta$. Se eligen puntos de continuidad $a=t_0<t_1<\cdots<t_m=b$ con espaciamiento menor que $\delta$ y se define la función escalonada $s=\sum_ih(t_i)\mathbf{1}_{(t_{i-1},t_i]}$. Entonces $|h-s|<\varepsilon$ en $(a,b]$ y $|h-s|\leq B$ fuera, de modo que $\E|h(X_n)-s(X_n)|\leq\varepsilon+2B\cdot2\varepsilon$ y lo mismo para $X$. Además, $\E[s(X_n)]=\sum_ih(t_i)\bigl(F_n(t_i)-F_n(t_{i-1})\bigr)\to\E[s(X)]$ porque las $F_n$ convergen en los $t_i$. Por tanto $\limsup_n|\E[h(X_n)]-\E[h(X)]|\leq2\varepsilon(1+4B)$, y como $\varepsilon$ es arbitrario, la convergencia sigue.
+
+:::
+
+El límite en distribución es único como ley, aunque no como variable: si $X_n\overset{d}{\to}X$ y $X_n\overset{d}{\to}Y$, las funciones de distribución $F_X$ y $F_Y$ coinciden en un conjunto denso de puntos, y por la continuidad por la derecha coinciden en todos. Con números, las variables constantes $X_n=1/n$ convergen en distribución a $X=0$ aunque $F_n(0)=0$ para todo $n$ y $F(0)=1$: el punto $x=0$ es de discontinuidad de $F$ y no se exige convergencia allí. Por otra parte, la binomial $\mathrm{Bin}(1000,0.002)$ converge en distribución a una $\mathrm{Poisson}(2)$ por la [Proposición “Aproximación de Poisson”](06-distribuciones-discretas-notables.qmd#prp-poisson-limite), y las funciones de distribución en $3$ ya están cerca: $0.8573$ y $0.8571$.
+
+La relación con las convergencias de la nota anterior es unidireccional, pero se invierte cuando el límite es constante.
+
+::: {#thm-probabilidad-implica-distribucion}
+## Convergencia en probabilidad y en distribución
+
+(i) Si $\vect{X}_n\overset{p}{\to}\vect{X}$, entonces $\vect{X}_n\overset{d}{\to}\vect{X}$. (ii) Si $\vect{X}_n\overset{d}{\to}\vect{c}$ con $\vect{c}$ constante, entonces $\vect{X}_n\overset{p}{\to}\vect{c}$.
+
+:::
+
+::: {.proof}
+Para (i), sea $h$ continua con $|h|\leq B$ y $\varepsilon>0$. Se elige $R$ con $\Prob{\|\vect{X}\|>R}<\varepsilon$. Como $h$ es uniformemente continua en la bola cerrada de radio $R+1$, existe $\delta\in(0,1)$ con $|h(\vect{x})-h(\vect{y})|<\varepsilon$ si $\|\vect{x}\|,\|\vect{y}\|\leq R+1$ y $\|\vect{x}-\vect{y}\|<\delta$. Si $\|\vect{X}\|\leq R$ y $\|\vect{X}_n-\vect{X}\|<\delta$, ambos puntos están en esa bola y $|h(\vect{X}_n)-h(\vect{X})|<\varepsilon$; en el complemento de ese evento, la diferencia está acotada por $2B$. Entonces $|\E[h(\vect{X}_n)]-\E[h(\vect{X})]|\leq\varepsilon+2B\bigl(\varepsilon+\Prob{\|\vect{X}_n-\vect{X}\|\geq\delta}\bigr)$, cuyo límite superior es $\varepsilon(1+2B)$. Para (ii), sea $\varepsilon\in(0,1]$ y $h(\vect{x})=\min\{\|\vect{x}-\vect{c}\|,1\}$, continua y acotada, con $h\geq\varepsilon$ en $\{\|\vect{x}-\vect{c}\|>\varepsilon\}$. Por la desigualdad de Markov, $\Prob{\|\vect{X}_n-\vect{c}\|>\varepsilon}\leq\E[h(\vect{X}_n)]/\varepsilon\to h(\vect{c})/\varepsilon=0$.
+
+:::
+
+La implicación (i) no se invierte si el límite no es constante: si $X\sim\N(0,1)$ y $X_n=-X$ para todo $n$, entonces $X_n$ tiene la misma ley que $X$ y converge en distribución a $X$, pero $X_n-X=-2X$ no tiende a cero, y $\Prob{|X_n-X|>1}=\Prob{|X|>0.5}=0.617$ para todo $n$.
+
+Una sucesión que converge en distribución no puede perder masa hacia el infinito, y esta propiedad de tensión se usará para controlar los errores fuera de un conjunto acotado.
+
+::: {#prp-tension}
+## Tensión
+
+Si $\vect{X}_n\overset{d}{\to}\vect{X}$, para todo $\varepsilon>0$ existen $R$ y $n_0$ con $\Prob{\|\vect{X}_n\|>R}<\varepsilon$ para todo $n\geq n_0$.
+
+:::
+
+::: {.proof}
+Sea $\chi_R(\vect{x})=\min\{1,\max\{0,2-\|\vect{x}\|/R\}\}$, continua, igual a $1$ si $\|\vect{x}\|\leq R$ y a $0$ si $\|\vect{x}\|\geq2R$. Entonces $\Prob{\|\vect{X}_n\|>2R}\leq1-\E[\chi_R(\vect{X}_n)]\to1-\E[\chi_R(\vect{X})]\leq\Prob{\|\vect{X}\|>R}$. Se elige $R$ con $\Prob{\|\vect{X}\|>R}<\varepsilon/2$, lo que es posible porque $\Prob{\|\vect{X}\|>R}\to0$ cuando $R\to\infty$, y entonces existe $n_0$ con $\Prob{\|\vect{X}_n\|>2R}<\varepsilon$ para $n\geq n_0$.
+
+:::
+
+El último resultado es el que permite demostrar el teorema central del límite sin herramientas de análisis de Fourier. Dice que no hace falta verificar la convergencia de las esperanzas para todas las funciones continuas y acotadas, sino solo para las funciones suaves, que son más manejables con el desarrollo de Taylor. Una función $g:\mathbb{R}^k\to\mathbb{R}$ pertenece a $C^3_b$ si es de clase $C^3$ y ella y sus derivadas hasta el orden tres son acotadas.
+
+::: {#thm-funciones-prueba-suaves}
+## Las funciones de prueba suaves bastan
+
+Si $\E[g(\vect{X}_n)]\to\E[g(\vect{X})]$ para toda $g\in C^3_b$, entonces $\vect{X}_n\overset{d}{\to}\vect{X}$.
+
+:::
+
+::: {.proof}
+Se necesitan dos funciones auxiliares de clase $C^3$. Sea $S(t)=35t^4-84t^5+70t^6-20t^7$ para $t\in[0,1]$, $S=0$ para $t<0$ y $S=1$ para $t>1$. Se verifica que $S(0)=0$, $S(1)=35-84+70-20=1$ y $S'(t)=140t^3(1-t)^3$, de modo que $S'$, $S''$ y $S'''$ se anulan en $0$ y en $1$, y $S$ es de clase $C^3$ con derivadas acotadas. Con ella, $\chi(\vect{x})=1-S(\|\vect{x}\|^2/R^2-1)$ es de clase $C^3_b$, igual a $1$ si $\|\vect{x}\|\leq R$ y a $0$ si $\|\vect{x}\|\geq\sqrt2R$, y $\kappa(\vect{x})=c\,(1-S(\|\vect{x}\|^2))$ con $c>0$ elegida para que $\int\kappa=1$ es un núcleo de clase $C^3$ con soporte en la bola unitaria.
+
+*Tensión.* Con $\chi$ en lugar de la función lineal de la proposición anterior, el mismo argumento da, para todo $\varepsilon>0$, un $R$ con $\Prob{\|\vect{X}_n\|>\sqrt2R}<\varepsilon$ para $n$ grande, y $\Prob{\|\vect{X}\|>\sqrt2R}<\varepsilon$.
+
+*Aproximación.* Sea $h$ continua con $|h|\leq B$ y $\varepsilon>0$. Se define $h_\eta(\vect{x})=\int h(\vect{z})\eta^{-k}\kappa((\vect{x}-\vect{z})/\eta)\,d\vect{z}$. Como el núcleo es de clase $C^3$ con soporte compacto, las derivadas de $h_\eta$ hasta orden tres se calculan derivando el núcleo bajo la integral, por la convergencia dominada (E5), y están acotadas por $B\int|D^\alpha(\eta^{-k}\kappa(\cdot/\eta))|$. Entonces $h_\eta\in C^3_b$ y $|h_\eta|\leq B$. Además, $|h_\eta(\vect{x})-h(\vect{x})|\leq\sup_{\|\vect{y}\|\leq\eta}|h(\vect{x}-\vect{y})-h(\vect{x})|$, que es menor que $\varepsilon$ en la bola de radio $\sqrt2R$ para $\eta$ pequeño por la continuidad uniforme de $h$ en una bola mayor. Por tanto $\E|h_\eta(\vect{X}_n)-h(\vect{X}_n)|\leq\varepsilon+2B\Prob{\|\vect{X}_n\|>\sqrt2R}\leq\varepsilon(1+2B)$ para $n$ grande, y lo mismo para $\vect{X}$. La desigualdad triangular da $|\E[h(\vect{X}_n)]-\E[h(\vect{X})]|\leq2\varepsilon(1+2B)+|\E[h_\eta(\vect{X}_n)]-\E[h_\eta(\vect{X})]|$, y el último término tiende a cero por hipótesis. Entonces $\limsup_n|\E[h(\vect{X}_n)]-\E[h(\vect{X})]|\leq2\varepsilon(1+2B)$ para todo $\varepsilon$.
+
+:::

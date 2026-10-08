@@ -1,0 +1,55 @@
+---
+title: "La distribución normal univariante"
+description: "La densidad normal estándar y su normalización mediante la integral gaussiana, la familia de localización y escala, sus momentos calculados por partes y el cálculo de probabilidades por estandarización."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Distribuciones]
+---
+
+La distribución normal es la protagonista de la estadística por dos razones. Es el límite de las sumas normalizadas de variables aleatorias, resultado que se demostrará en esta parte del curso, y es matemáticamente cerrada: sus transformaciones lineales siguen siendo normales y sus condicionales son normales. Esta nota define la normal univariante, demuestra que su densidad integra uno con el cálculo de las integrales de Wallis de la [Nota “Integrales impropias y la integral gaussiana”](../matematica-3/03-integrales-impropias-y-la-integral-gaussiana.qmd) y calcula sus momentos.
+
+::: {#def-normal-estandar}
+## Distribución normal estándar
+
+Una variable $Z$ tiene distribución ***normal estándar***, $Z\sim\N(0,1)$, si tiene densidad $\varphi(z)=\dfrac1{\sqrt{2\pi}}e^{-z^2/2}$ para $z\in\mathbb{R}$. Su función de distribución se denota $\Phi(z)=\int_{-\infty}^z\varphi(t)\,dt$.
+
+:::
+
+Que $\varphi$ sea una densidad exige que su integral sea uno, y eso es el contenido del [Teorema “La integral gaussiana”](../matematica-3/03-integrales-impropias-y-la-integral-gaussiana.qmd#thm-integral-gaussiana). La función $\varphi$ es par y positiva, con máximo $\varphi(0)=0.3989$, y satisface una ecuación diferencial sencilla, $\varphi'(z)=-z\varphi(z)$, que es la clave para calcular los momentos.
+
+::: {#prp-momentos-normal}
+## Momentos de la normal estándar
+
+Si $Z\sim\N(0,1)$, entonces $\E|Z|^m<\infty$ para todo $m$, los momentos impares son nulos y $\E[Z^{2k}]=(2k-1)(2k-3)\cdots3\cdot1$. En particular, $\E[Z]=0$, $\Var(Z)=1$ y $\E[Z^4]=3$.
+
+:::
+
+::: {.proof}
+Para $m$ entero fijo, se elige $j$ con $2j\geq m+2$. La serie de la exponencial da $e^{z^2/2}\geq(z^2/2)^j/j!$, de modo que $|z|^me^{-z^2/2}\leq j!2^j|z|^{m-2j}\leq j!2^j/z^2$ para $|z|\geq1$. Entonces $|z|^m\varphi(z)\to0$ cuando $|z|\to\infty$, y la integral de $|z|^m\varphi(z)$ converge por comparación con $1/z^2$, por la [Proposición “Criterio de comparación para integrales impropias”](../matematica-3/03-integrales-impropias-y-la-integral-gaussiana.qmd#prp-comparacion-integrales). Para los momentos impares, $z^m\varphi(z)$ es una función impar integrable, y su integral es cero. Para los pares, la integración por partes con $u=z^{m-1}$ y $v'=z\varphi(z)=-\varphi'(z)$ da, en $[-R,R]$, $\int_{-R}^Rz^m\varphi(z)\,dz=-\bigl[z^{m-1}\varphi(z)\bigr]_{-R}^{R}+(m-1)\int_{-R}^Rz^{m-2}\varphi(z)\,dz$. Cuando $R\to\infty$, el término de frontera tiende a cero, y se obtiene $\E[Z^m]=(m-1)\E[Z^{m-2}]$ para $m\geq2$. Con $\E[Z^0]=1$, esto da $\E[Z^2]=1$, $\E[Z^4]=3$, $\E[Z^6]=15$ y, en general, el producto de los impares.
+
+:::
+
+Con números, los momentos pares son $1$, $3$, $15$ y $105$ para los órdenes $2$, $4$, $6$ y $8$. La normal con media $\mu$ y varianza $\sigma^2$ se obtiene cambiando de localización y escala.
+
+::: {#def-normal}
+## Distribución normal
+
+Si $Z\sim\N(0,1)$, $\mu\in\mathbb{R}$ y $\sigma>0$, la variable $X=\mu+\sigma Z$ tiene distribución ***normal*** con media $\mu$ y varianza $\sigma^2$, $X\sim\N(\mu,\sigma^2)$.
+
+:::
+
+La definición es consistente con una densidad explícita, y con los parámetros que su nombre anuncia.
+
+::: {#prp-densidad-normal}
+## Densidad, media y varianza de la normal
+
+Si $X\sim\N(\mu,\sigma^2)$, entonces $X$ tiene densidad $f(x)=\dfrac1{\sigma\sqrt{2\pi}}\exp\Bigl(-\dfrac{(x-\mu)^2}{2\sigma^2}\Bigr)$, $\E[X]=\mu$, $\Var(X)=\sigma^2$ y $\E[(X-\mu)^4]=3\sigma^4$. Si $X\sim\N(\mu,\sigma^2)$, entonces $(X-\mu)/\sigma\sim\N(0,1)$.
+
+:::
+
+::: {.proof}
+La función de distribución de $X$ es $F_X(x)=\Prob{\mu+\sigma Z\leq x}=\Prob{Z\leq(x-\mu)/\sigma}=\Phi((x-\mu)/\sigma)$, y como $\varphi$ es continua, la primera parte del teorema fundamental del cálculo y la regla de la cadena dan $F_X'(x)=\tfrac1\sigma\varphi((x-\mu)/\sigma)$, que es la densidad enunciada. La media y la varianza se obtienen de la linealidad y de las propiedades de la varianza, $\E[\mu+\sigma Z]=\mu$ y $\Var(\mu+\sigma Z)=\sigma^2\Var(Z)=\sigma^2$, y $\E[(X-\mu)^4]=\sigma^4\E[Z^4]=3\sigma^4$. La última afirmación es la definición.
+
+:::
+
+El cálculo de probabilidades se hace por estandarización: $\Prob{a<X\leq b}=\Phi\bigl((b-\mu)/\sigma\bigr)-\Phi\bigl((a-\mu)/\sigma\bigr)$. La función $\Phi$ no tiene una expresión cerrada y se evalúa numéricamente. Con números, $\Prob{|Z|\leq1}=0.6827$, $\Prob{|Z|\leq1.96}=0.9500$ y $\Prob{|Z|\leq3}=0.9973$. Para una variable $X\sim\N(100,15^2)$, $\Prob{X>130}=\Prob{Z>2}=0.0228$ y $\Prob{85<X\leq115}=\Prob{|Z|\leq1}=0.6827$. Con $\sigma=15$, el momento central de cuarto orden es $3\cdot15^4=151\,875$.

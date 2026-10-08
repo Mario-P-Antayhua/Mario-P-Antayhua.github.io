@@ -1,0 +1,98 @@
+---
+title: "Distribuciones discretas notables"
+description: "Las distribuciones de Bernoulli, binomial, geométrica y de Poisson con sus funciones de masa, medias y varianzas calculadas, y la aproximación de la binomial por la distribución de Poisson."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Distribuciones]
+---
+
+Unas pocas distribuciones aparecen una y otra vez como modelos de conteo: éxitos en ensayos repetidos, número de intentos hasta el primer éxito, eventos raros en un intervalo. Esta nota presenta las cuatro más usadas, verifica que sus funciones de masa suman uno y calcula su media y su varianza con las herramientas de la [Nota “El cálculo de esperanzas”](04-el-calculo-de-esperanzas.qmd) y la [Nota “Momentos y desigualdades fundamentales”](05-momentos-y-desigualdades-fundamentales.qmd). Los cálculos usan el teorema del binomio de la [Nota “Sumatorias, potencias y el teorema del binomio”](../matematica-1/06-sumatorias-potencias-y-binomio.qmd) y las series de la [Nota “Series infinitas”](../matematica-1/23-series-infinitas.qmd).
+
+La más simple describe un experimento con dos resultados.
+
+::: {#def-bernoulli-binomial}
+## Distribuciones de Bernoulli y binomial
+
+Una variable $X$ tiene distribución de ***Bernoulli*** con parámetro $p\in[0,1]$ si $\Prob{X=1}=p$ y $\Prob{X=0}=1-p$. Una variable $X$ tiene distribución ***binomial*** con parámetros $n\in\mathbb{N}$ y $p\in[0,1]$, $X\sim\mathrm{Bin}(n,p)$, si $\Prob{X=k}=\binom nk p^k(1-p)^{n-k}$ para $k=0,1,\ldots,n$.
+
+:::
+
+La binomial cuenta los éxitos de $n$ ensayos de Bernoulli independientes, cada uno con probabilidad $p$: hay $\binom nk$ formas de elegir cuáles ensayos son éxitos, y cada una tiene probabilidad $p^k(1-p)^{n-k}$. Su función de masa suma uno por el teorema del binomio, $\sum_{k=0}^{n}\binom nk p^k(1-p)^{n-k}=(p+1-p)^n=1$. Sus momentos se calculan con la identidad $k\binom nk=n\binom{n-1}{k-1}$.
+
+::: {#prp-momentos-binomial}
+## Media y varianza de la binomial
+
+Si $X\sim\mathrm{Bin}(n,p)$, entonces $\E[X]=np$ y $\Var(X)=np(1-p)$. En particular, la Bernoulli ($n=1$) tiene media $p$ y varianza $p(1-p)$.
+
+:::
+
+::: {.proof}
+La identidad $k\binom nk=n\binom{n-1}{k-1}$ se verifica con la fórmula factorial: ambos lados valen $n!/((k-1)!(n-k)!)$. Entonces $\E[X]=\sum_{k=1}^{n}n\binom{n-1}{k-1}p^k(1-p)^{n-k}=np\sum_{j=0}^{n-1}\binom{n-1}{j}p^j(1-p)^{n-1-j}=np$, donde la suma restante vale uno por el teorema del binomio. Análogamente, $k(k-1)\binom nk=n(n-1)\binom{n-2}{k-2}$ da $\E[X(X-1)]=n(n-1)p^2$. Como $\E[X^2]=\E[X(X-1)]+\E[X]$, $\Var(X)=n(n-1)p^2+np-n^2p^2=np-np^2=np(1-p)$.
+
+:::
+
+Con números, para $X\sim\mathrm{Bin}(10,0.3)$, $\Prob{X=3}=\binom{10}3(0.3)^3(0.7)^7=0.2668$, la media es $3$ y la varianza $2.1$. La segunda distribución modela el número de ensayos hasta el primer éxito.
+
+::: {#def-geometrica}
+## Distribución geométrica
+
+Una variable $X$ tiene distribución ***geométrica*** con parámetro $p\in(0,1)$ si $\Prob{X=k}=(1-p)^{k-1}p$ para $k=1,2,\ldots$
+
+:::
+
+Con $q=1-p$, la función de masa suma $\sum_{k\geq1}q^{k-1}p=p/(1-q)=1$ por el [Teorema “Convergencia de la serie geométrica”](../matematica-1/23-series-infinitas.qmd#thm-serie-geometrica), y $\Prob{X\geq k}=q^{k-1}$. Sus momentos requieren sumar series de la forma $\sum kq^{k-1}$, que se manejan con sumas parciales exactas.
+
+::: {#prp-momentos-geometrica}
+## Media y varianza de la geométrica
+
+Si $X$ es geométrica con parámetro $p$, entonces $\E[X]=1/p$ y $\Var(X)=(1-p)/p^2$.
+
+:::
+
+::: {.proof}
+Se usan las sumas parciales $A_N=\sum_{k=1}^Nkq^{k-1}$ y $B_N=\sum_{k=1}^Nk^2q^{k-1}$. Multiplicando por $1-q$ y reordenando los términos, $(1-q)A_N=\sum_{k=1}^N\bigl(k-(k-1)\bigr)q^{k-1}-Nq^N=\sum_{k=1}^Nq^{k-1}-Nq^N$, y de la misma forma $(1-q)B_N=\sum_{k=1}^N\bigl(k^2-(k-1)^2\bigr)q^{k-1}-N^2q^N=2A_N-\sum_{k=1}^Nq^{k-1}-N^2q^N$. Los términos $Nq^N$ y $N^2q^N$ tienden a cero: si $\delta=1/q-1>0$, el teorema del binomio da $q^{-N}=(1+\delta)^N\geq\binom N3\delta^3$, de modo que $N^2q^N\leq N^2/\binom N3\delta^{-3}\to0$, y lo mismo para $Nq^N\leq N^2q^N$. Por el [Teorema “Convergencia de la serie geométrica”](../matematica-1/23-series-infinitas.qmd#thm-serie-geometrica), $\sum_{k\geq1}q^{k-1}=1/p$, y las dos identidades dan $A_N\to1/p^2$ y $B_N\to(2/p^2-1/p)/p=(2-p)/p^3$. Entonces $\E[X]=pA=1/p$ y $\E[X^2]=pB=(2-p)/p^2$, de modo que $\Var(X)=(2-p)/p^2-1/p^2=(1-p)/p^2$.
+
+:::
+
+Con $p=0.25$, el número esperado de ensayos hasta el primer éxito es $4$, la varianza es $12$ y $\Prob{X\geq3}=0.75^2=0.5625$. La cuarta distribución modela conteos de eventos raros.
+
+::: {#def-poisson}
+## Distribución de Poisson
+
+Una variable $X$ tiene distribución de ***Poisson*** con parámetro $\lambda>0$, $X\sim\mathrm{Poisson}(\lambda)$, si $\Prob{X=k}=e^{-\lambda}\lambda^k/k!$ para $k=0,1,2,\ldots$
+
+:::
+
+La función de masa suma uno porque $\sum_{k\geq0}\lambda^k/k!=e^{\lambda}$ por la [Definición “La función exponencial”](../matematica-1/33-exponencial-y-logaritmo.qmd#def-exponencial). Sus momentos se calculan con la misma serie.
+
+::: {#prp-momentos-poisson}
+## Media y varianza de la distribución de Poisson
+
+Si $X\sim\mathrm{Poisson}(\lambda)$, entonces $\E[X]=\Var(X)=\lambda$.
+
+:::
+
+::: {.proof}
+Como $k/k!=1/(k-1)!$ para $k\geq1$, $\E[X]=e^{-\lambda}\sum_{k\geq1}\lambda^k/(k-1)!=\lambda e^{-\lambda}\sum_{j\geq0}\lambda^j/j!=\lambda$. Como $k(k-1)/k!=1/(k-2)!$ para $k\geq2$, el mismo argumento da $\E[X(X-1)]=\lambda^2$. Entonces $\E[X^2]=\lambda^2+\lambda$ y $\Var(X)=\lambda^2+\lambda-\lambda^2=\lambda$.
+
+:::
+
+La distribución de Poisson es el límite de la binomial cuando el número de ensayos crece y la probabilidad de éxito disminuye de modo que el número esperado de éxitos permanece fijo.
+
+::: {#prp-poisson-limite}
+## Aproximación de Poisson
+
+Sea $X_n\sim\mathrm{Bin}(n,\lambda/n)$. Entonces, para cada $k\geq0$, $\Prob{X_n=k}\to e^{-\lambda}\lambda^k/k!$ cuando $n\to\infty$.
+
+:::
+
+::: {.proof}
+Para $n>\lambda$ y $p_n=\lambda/n$,
+$$
+\Prob{X_n=k}=\frac{n(n-1)\cdots(n-k+1)}{n^k}\cdot\frac{\lambda^k}{k!}\cdot\Bigl(1-\frac\lambda n\Bigr)^{n}\Bigl(1-\frac\lambda n\Bigr)^{-k}.
+$$
+El primer factor es $\prod_{j=0}^{k-1}(1-j/n)$, un producto de $k$ factores que tienden a $1$, de modo que tiende a $1$ por el teorema algebraico del límite. El factor $(1-\lambda/n)^n$ tiende a $e^{-\lambda}$ por la [Proposición “$(1+x/n)^n\to\exp(x)$”](../matematica-1/33-exponencial-y-logaritmo.qmd#prp-limite-exponencial), y $(1-\lambda/n)^{-k}\to1$. El producto de los límites es $e^{-\lambda}\lambda^k/k!$.
+
+:::
+
+Con números, para $n=1000$ y $\lambda=2$, la binomial da $\Prob{X=3}=\binom{1000}{3}(0.002)^3(0.998)^{997}=0.18063$, y la Poisson, $e^{-2}2^3/3!=0.18045$, que difieren en menos de dos diezmilésimas. Por eso la distribución de Poisson se usa para conteos de eventos raros en muchas oportunidades, como el número de siniestros diarios de una aseguradora.

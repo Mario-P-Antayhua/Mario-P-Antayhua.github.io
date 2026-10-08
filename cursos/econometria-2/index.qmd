@@ -12,7 +12,7 @@ listing:
 
 <p class="estado">En proceso</p>
 
-Aquí desarrollo la teoría de la verosimilitud y la inferencia asintótica, y después los procesos estocásticos, el operador de rezago y los modelos autorregresivos, de medias móviles y ARMA, hasta la representación de Wold.
+Aquí desarrollo la teoría de la verosimilitud y la inferencia asintótica, los procesos estocásticos y el operador de rezago, los modelos autorregresivos, de medias móviles y ARMA con su identificación, la descomposición de Wold y la predicción lineal óptima, hasta la verosimilitud gaussiana de un proceso ARMA. Cada nota se apoya solo en las anteriores, en Econometría I y en los tres cursos de Matemática.
 
 ## Notas {.unnumbered}
 

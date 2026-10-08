@@ -1,0 +1,32 @@
+---
+title: "Raíces de un polinomio de rezagos y el círculo unitario"
+description: "La factorización de un polinomio de rezagos mediante sus raíces complejas, la relación entre las raíces y los inversos que gobiernan el comportamiento del filtro, y la clasificación de las raíces según su posición respecto del círculo unitario."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Operador de rezago]
+---
+
+Si el álgebra de los polinomios de rezagos es la de los polinomios ordinarios, toda la teoría de las raíces se hereda. Lo que importa de un polinomio de rezagos es dónde están sus raíces en el plano complejo, porque de su posición respecto del círculo de radio uno depende si el filtro se puede invertir y si el proceso que define es estacionario. Esta nota factoriza el polinomio y relaciona sus raíces con los números cuyas potencias gobiernan el comportamiento de largo plazo. Usa el teorema fundamental del álgebra de la [Nota “Polinomios y el teorema fundamental del álgebra”](../matematica-1/35-polinomios-y-el-teorema-fundamental-del-algebra.qmd) y los números complejos de la [Nota “Los complejos”](../matematica-1/17-los-complejos.qmd).
+
+::: {#prp-factorizacion-raices}
+## Factorización de un polinomio de rezagos
+
+Sea $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p$ con coeficientes reales y $\phi_p\neq0$. Existen números complejos no nulos $z_1,\ldots,z_p$, las ***raíces*** de $\phi$, tales que $\phi(z)=\prod_{j=1}^p(1-z/z_j)=\prod_{j=1}^p(1-\lambda_jz)$ con $\lambda_j=1/z_j$. Las raíces no reales aparecen en pares conjugados, y los $\lambda_j$ son las raíces del ***polinomio característico*** $\lambda^p-\phi_1\lambda^{p-1}-\cdots-\phi_p$.
+
+:::
+
+::: {.proof}
+Por el teorema fundamental del álgebra y su corolario de factorización, $\phi(z)=c\prod_{j=1}^p(z-z_j)$ para una constante $c\neq0$ y raíces $z_j$. Las raíces son no nulas porque $\phi(0)=1\neq0$. Evaluando en $z=0$, $1=c\prod_j(-z_j)$, de modo que $c=1/\prod_j(-z_j)$ y $\phi(z)=\prod_j(z-z_j)/(-z_j)=\prod_j(1-z/z_j)$. Los coeficientes son reales, y por la [Proposición “Raíces conjugadas de un polinomio real”](../matematica-1/35-polinomios-y-el-teorema-fundamental-del-algebra.qmd#prp-raices-conjugadas), las raíces no reales vienen en pares conjugados. Para la última afirmación, $\lambda^p\phi(1/\lambda)=\lambda^p-\phi_1\lambda^{p-1}-\cdots-\phi_p$ y también $\lambda^p\phi(1/\lambda)=\prod_j(\lambda-\lambda_j)$, porque cada factor $(1-\lambda_j/\lambda)$ multiplicado por $\lambda$ es $\lambda-\lambda_j$.
+
+:::
+
+La posición de $z_j$ respecto del círculo unitario $\{|z|=1\}$ equivale a la de $\lambda_j=1/z_j$, porque $|\lambda_j|=1/|z_j|$: una raíz fuera del círculo ($|z_j|>1$) corresponde a $|\lambda_j|<1$, una raíz sobre el círculo a $|\lambda_j|=1$, y una raíz dentro del círculo a $|\lambda_j|>1$. Esa clasificación gobierna todo lo que sigue. Con números, para $\phi(z)=1-1.2z+0.35z^2$ las raíces son $z=2$ y $z=1.4286$, ambas reales y fuera del círculo, con $\lambda=0.5$ y $0.7$, y se verifica $(1-0.5z)(1-0.7z)=1-1.2z+0.35z^2$. Para $\phi(z)=1-z+0.5z^2$ las raíces son $z=1\pm i$, un par conjugado con módulo $\sqrt2=1.414>1$, y los $\lambda_j=(1\mp i)/2$ tienen módulo $0.707<1$.
+
+::: {#def-clasificacion-raices}
+## Raíces fuera, sobre y dentro del círculo unitario
+
+Se dice que el polinomio $\phi(L)$ tiene ***todas sus raíces fuera del círculo unitario*** si $|z_j|>1$ para todo $j$, equivalentemente, si $|\lambda_j|<1$ para todo $j$. Tiene una ***raíz unitaria*** si algún $|z_j|=1$.
+
+:::
+
+El polinomio $1-L$ tiene la raíz $z=1$, una raíz unitaria, y es el polinomio del paseo aleatorio, $(1-L)X_t=\varepsilon_t$. El polinomio $1-1.2L+0.35L^2$ tiene todas sus raíces fuera del círculo. La condición de que todas las raíces estén fuera del círculo es la que garantiza que el polinomio admita un inverso cuyos coeficientes decaen geométricamente.

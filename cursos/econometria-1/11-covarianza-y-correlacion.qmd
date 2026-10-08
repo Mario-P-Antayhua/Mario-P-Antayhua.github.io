@@ -1,0 +1,76 @@
+---
+title: "Covarianza y correlación"
+description: "La covarianza y la correlación entre dos variables, la relación entre independencia y covarianza nula, la varianza de una suma, el mejor predictor lineal y su error cuadrático medio."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Vectores aleatorios]
+---
+
+La media y la varianza resumen una variable; para dos variables hace falta un número que mida si se mueven juntas. La covarianza lo hace, y la correlación la normaliza para que no dependa de las unidades. Estas medidas capturan solo la parte lineal de la relación, y esa limitación es tan importante como su utilidad. La nota se basa en la factorización de las esperanzas de la [Nota “Vectores aleatorios y distribuciones conjuntas”](09-vectores-aleatorios-y-distribuciones-conjuntas.qmd) y en la desigualdad de Cauchy–Schwarz de la [Nota “Momentos y desigualdades fundamentales”](05-momentos-y-desigualdades-fundamentales.qmd).
+
+::: {#def-covarianza}
+## Covarianza y correlación
+
+Sean $X,Y$ con segundo momento finito y medias $\mu_X,\mu_Y$. La ***covarianza*** es $\Cov(X,Y):=\E[(X-\mu_X)(Y-\mu_Y)]$, que es finita por la desigualdad de Cauchy–Schwarz. Si $\Var(X)>0$ y $\Var(Y)>0$, la ***correlación*** es $\Corr(X,Y):=\Cov(X,Y)/\sqrt{\Var(X)\Var(Y)}$. Se dice que $X$ e $Y$ son ***no correlacionadas*** si $\Cov(X,Y)=0$.
+
+:::
+
+La covarianza es positiva cuando las dos variables tienden a estar juntas por encima o por debajo de sus medias, y negativa cuando una tiende a estar por encima si la otra está por debajo. Sus propiedades algebraicas se heredan de la linealidad de la esperanza.
+
+::: {#prp-covarianza}
+## Propiedades de la covarianza
+
+Para variables con segundo momento finito y constantes $a,b,c,d$: (i) $\Cov(X,Y)=\E[XY]-\E[X]\E[Y]$ y $\Cov(X,X)=\Var(X)$; (ii) $\Cov(X,Y)=\Cov(Y,X)$; (iii) $\Cov(aX+b,cY+d)=ac\,\Cov(X,Y)$; (iv) $\Var(X+Y)=\Var(X)+\Var(Y)+2\Cov(X,Y)$; (v) si $X$ e $Y$ son independientes, entonces $\Cov(X,Y)=0$.
+
+:::
+
+::: {.proof}
+Para (i), se expande el producto, $(X-\mu_X)(Y-\mu_Y)=XY-\mu_XY-\mu_YX+\mu_X\mu_Y$, y la linealidad da $\E[XY]-\mu_X\mu_Y$. Para (ii) basta la conmutatividad del producto. Para (iii), $aX+b-\E[aX+b]=a(X-\mu_X)$ y $cY+d-\E[cY+d]=c(Y-\mu_Y)$. Para (iv), se expande $(X+Y-\mu_X-\mu_Y)^2=(X-\mu_X)^2+(Y-\mu_Y)^2+2(X-\mu_X)(Y-\mu_Y)$ y se toma esperanza. Para (v), el [Teorema “Esperanza de un producto de variables independientes”](09-vectores-aleatorios-y-distribuciones-conjuntas.qmd#thm-esperanza-producto) da $\E[XY]=\E[X]\E[Y]$ y se aplica (i).
+
+:::
+
+La implicación (v) no se invierte. Sea $Z\sim\N(0,1)$ e $Y=Z^2$. Como $\E[Z]=0$ y $\E[Z^3]=0$ por la simetría, $\Cov(Z,Y)=\E[Z^3]-\E[Z]\E[Z^2]=0$, pero $Y$ es una función de $Z$ y por tanto completamente dependiente de ella. La covarianza solo detecta relaciones lineales, y que sea cero no descarta una dependencia de otro tipo. La correlación está acotada, y sus valores extremos caracterizan las relaciones lineales exactas.
+
+::: {#prp-correlacion-acotada}
+## La correlación está en $[-1,1]$
+
+Si $\Var(X),\Var(Y)>0$, entonces $-1\leq\Corr(X,Y)\leq1$. Además $\Corr(X,Y)=1$ si y solo si $Y=a+bX$ casi seguramente con $b>0$, y $\Corr(X,Y)=-1$ si y solo si $Y=a+bX$ casi seguramente con $b<0$.
+
+:::
+
+::: {.proof}
+Se aplica la desigualdad de Cauchy–Schwarz a las variables centradas $X-\mu_X$ y $Y-\mu_Y$: $\Cov(X,Y)^2\leq\Var(X)\Var(Y)$, que equivale a $|\Corr(X,Y)|\leq1$. En el caso de igualdad, el teorema da constantes no ambas nulas con $\alpha(X-\mu_X)+\beta(Y-\mu_Y)=0$ casi seguramente; como las varianzas son positivas, $\alpha$ y $\beta$ son ambas distintas de cero, y $Y=\mu_Y-(\alpha/\beta)(X-\mu_X)$. El signo de la covarianza, $\Cov(X,Y)=-(\alpha/\beta)\Var(X)$, determina el signo de la correlación. Recíprocamente, si $Y=a+bX$ con $b\neq0$, entonces $\Cov(X,Y)=b\Var(X)$ y $\Var(Y)=b^2\Var(X)$, de modo que $\Corr(X,Y)=b/|b|=\pm1$.
+
+:::
+
+La varianza de una suma de más de dos variables es la suma de todas las covarianzas, y cuando las variables son no correlacionadas queda la suma de las varianzas.
+
+::: {#prp-varianza-suma}
+## Varianza de una suma
+
+Si $X_1,\ldots,X_n$ tienen segundo momento finito, entonces $\Var\bigl(\sum_iX_i\bigr)=\sum_i\Var(X_i)+\sum_{i\neq j}\Cov(X_i,X_j)$. Si son no correlacionadas con varianza común $\sigma^2$, la media muestral $\bar X=\tfrac1n\sum_iX_i$ tiene $\E[\bar X]=\mu$ y $\Var(\bar X)=\sigma^2/n$.
+
+:::
+
+::: {.proof}
+Se expande el cuadrado de la suma de las variables centradas, $\bigl(\sum_i(X_i-\mu_i)\bigr)^2=\sum_i\sum_j(X_i-\mu_i)(X_j-\mu_j)$, y se toma esperanza término a término. Si las covarianzas son nulas, sobreviven los términos diagonales, $n\sigma^2$, y por la propiedad (iii) con $a=1/n$, $\Var(\bar X)=n\sigma^2/n^2=\sigma^2/n$.
+
+:::
+
+La varianza de la media muestral disminuye como $1/n$, hecho que sustenta la confianza en los promedios de muestras grandes. Con $n=100$ y $\sigma^2=4$, $\Var(\bar X)=0.04$ y la desviación estándar es $0.2$.
+
+La última aplicación responde a una pregunta de predicción: si se quiere aproximar $Y$ con una función lineal de $X$, ¿cuál es la mejor, en error cuadrático medio?
+
+::: {#thm-mejor-predictor-lineal}
+## Mejor predictor lineal
+
+Sean $X,Y$ con segundo momento finito y $\Var(X)>0$. La función $(a,b)\mapsto\E[(Y-a-bX)^2]$ se minimiza en $b^*=\Cov(X,Y)/\Var(X)$ y $a^*=\mu_Y-b^*\mu_X$, con valor mínimo $\Var(Y)\bigl(1-\Corr(X,Y)^2\bigr)$. El residuo $Y-a^*-b^*X$ tiene media cero y es no correlacionado con $X$.
+
+:::
+
+::: {.proof}
+Para cualesquiera $a,b$, por el inciso (iv) de la [Proposición “Propiedades de la varianza”](05-momentos-y-desigualdades-fundamentales.qmd#prp-varianza) aplicado a $Y-bX$ con $c=a$, $\E[(Y-bX-a)^2]=\Var(Y-bX)+(\mu_Y-b\mu_X-a)^2$. El segundo término es cero con $a=\mu_Y-b\mu_X$, y entonces queda minimizar $\Var(Y-bX)=\Var(Y)-2b\Cov(X,Y)+b^2\Var(X)$, un polinomio cuadrático en $b$ con coeficiente director positivo. Completando el cuadrado, $\Var(Y-bX)=\Var(X)\bigl(b-\Cov/\Var(X)\bigr)^2+\Var(Y)-\Cov^2/\Var(X)$, que se minimiza en $b^*=\Cov(X,Y)/\Var(X)$ con valor $\Var(Y)\bigl(1-\Corr^2\bigr)$. Para el residuo $e=Y-a^*-b^*X$, la media es $\mu_Y-a^*-b^*\mu_X=0$ y $\Cov(X,e)=\Cov(X,Y)-b^*\Var(X)=0$.
+
+:::
+
+Con números, para el par con densidad $f(x,y)=x+y$ en $[0,1]^2$ de la nota de distribuciones conjuntas, $\E[X]=\E[Y]=7/12$, $\E[XY]=1/3$ y $\E[X^2]=\int_0^1x^2(x+1/2)\,dx=5/12$. Entonces $\Var(X)=5/12-49/144=11/144$, $\Cov(X,Y)=1/3-49/144=-1/144$ y $\Corr(X,Y)=-1/11\approx-0.091$. El mejor predictor lineal es $b^*=-1/11$ y $a^*=7/11$, de modo que $\hat Y=7/11-X/11$, con error cuadrático medio $\tfrac{11}{144}(1-1/121)=0.0758$. La correlación es débil, y el predictor lineal mejora solo en un $0.8\,\%$ la varianza de $Y$.

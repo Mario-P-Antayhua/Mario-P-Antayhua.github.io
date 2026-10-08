@@ -1,0 +1,62 @@
+---
+title: "Ergodicidad"
+description: "La ergodicidad en la media como convergencia de la media muestral al valor esperado de un proceso estacionario, su demostración cuando las autocovarianzas son sumables o tienden a cero, la varianza de largo plazo y un proceso estacionario que no es ergódico."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Procesos estocásticos]
+---
+
+Con una muestra iid, la media muestral converge a la esperanza por la ley de los grandes números. Una serie de tiempo es una sola trayectoria de un proceso dependiente, y la pregunta es si el promedio de una trayectoria larga se acerca a la media del proceso. Esa propiedad se llama ergodicidad en la media. No es consecuencia de la estacionariedad: hace falta que la dependencia entre observaciones lejanas se desvanezca. Esta nota demuestra que basta que las autocovarianzas tiendan a cero, y calcula la varianza de la media cuando son sumables.
+
+::: {#def-ergodicidad-media}
+## Ergodicidad en la media
+
+Un proceso débilmente estacionario $\{X_t\}$ con media $\mu$ es ***ergódico en la media*** si la media muestral $\bar X_T=\tfrac1T\sum_{t=1}^TX_t$ converge en media cuadrática a $\mu$, es decir, $\E[(\bar X_T-\mu)^2]\to0$ (y por tanto en probabilidad).
+
+:::
+
+Para decidir si la media muestral se acerca a la media del proceso hay que calcular su varianza, que se expresa por completo con las autocovarianzas.
+
+::: {#prp-varianza-media-muestral}
+## Varianza de la media muestral
+
+Si $\{X_t\}$ es débilmente estacionario con autocovarianza $\gamma$, entonces $\Var(\bar X_T)=\frac1T\sum_{h=-(T-1)}^{T-1}\bigl(1-\tfrac{|h|}T\bigr)\gamma(h)$.
+
+:::
+
+::: {.proof}
+$\Var(\bar X_T)=\tfrac1{T^2}\sum_{s,t=1}^T\gamma(t-s)$. El valor $\gamma(h)$ aparece una vez por cada par $(s,t)$ con $t-s=h$, es decir, $T-|h|$ veces para $|h|\leq T-1$. Entonces $\Var(\bar X_T)=\tfrac1{T^2}\sum_{|h|<T}(T-|h|)\gamma(h)$, que es la expresión enunciada.
+
+:::
+
+De esta fórmula se deducen dos resultados, uno bajo la condición mínima y otro bajo sumabilidad.
+
+::: {#thm-ergodicidad}
+## Ergodicidad en la media
+
+Sea $\{X_t\}$ débilmente estacionario con media $\mu$. (i) Si $\gamma(h)\to0$ cuando $h\to\infty$, entonces $\Var(\bar X_T)\to0$, y el proceso es ergódico en la media. (ii) Si además $\sum_h|\gamma(h)|<\infty$, entonces $T\,\Var(\bar X_T)\to\sum_{h=-\infty}^{\infty}\gamma(h)=:\omega^2$, la ***varianza de largo plazo***.
+
+:::
+
+::: {.proof}
+Para (i), de la proposición, $\Var(\bar X_T)\leq\tfrac1T\sum_{|h|<T}|\gamma(h)|$. Dado $\varepsilon>0$, sea $H$ tal que $|\gamma(h)|<\varepsilon$ para $|h|>H$. Entonces $\tfrac1T\sum_{|h|<T}|\gamma(h)|\leq\tfrac{(2H+1)\gamma(0)}T+\tfrac1T\sum_{H<|h|<T}\varepsilon\leq\tfrac{(2H+1)\gamma(0)}T+2\varepsilon$, y el primer término tiende a cero con $T$, de modo que el límite superior es a lo sumo $2\varepsilon$. Para (ii), $T\,\Var(\bar X_T)=\sum_{h}\mathbf{1}_{\{|h|<T\}}(1-|h|/T)\gamma(h)$, y cada sumando converge a $\gamma(h)$ y está acotado en valor absoluto por $|\gamma(h)|$, que es sumable, de modo que la convergencia dominada para series (que es la convergencia dominada con la medida de conteo, de las propiedades de la esperanza) da el límite $\sum_h\gamma(h)$.
+
+:::
+
+La varianza de largo plazo reemplaza a $\gamma(0)$ cuando las observaciones están correlacionadas: la media de $T$ observaciones tiene una varianza aproximada $\omega^2/T$ en lugar de $\gamma(0)/T$. Para un proceso lineal se calcula con el filtro.
+
+::: {#prp-varianza-largo-plazo}
+## Varianza de largo plazo de un proceso lineal
+
+Sea $X_t=\mu+\sum_{j\geq0}\psi_j\varepsilon_{t-j}$ con $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$ y $\sum_j|\psi_j|<\infty$. Entonces $\sum_h|\gamma(h)|\leq\sigma^2\bigl(\sum_j|\psi_j|\bigr)^2<\infty$, el proceso es ergódico en la media, y $\omega^2=\sigma^2\bigl(\sum_j\psi_j\bigr)^2=\sigma^2\psi(1)^2$.
+
+:::
+
+::: {.proof}
+Como $\gamma(h)=\sigma^2\sum_j\psi_j\psi_{j+|h|}$, agrupando el término $h=0$ y los pares $(j,k)$ con $j<k$, que corresponden a $h=k-j$ y $h=j-k$, $\sum_h|\gamma(h)|\leq\sigma^2\bigl(\sum_j|\psi_j|^2+2\sum_{j<k}|\psi_j\psi_k|\bigr)=\sigma^2\bigl(\sum_j|\psi_j|\bigr)^2$. La misma agrupación, sin valores absolutos y legítima por la convergencia absoluta de la suma doble, da $\sum_h\gamma(h)=\sigma^2\bigl(\sum_j\psi_j^2+2\sum_{j<k}\psi_j\psi_k\bigr)=\sigma^2\bigl(\sum_j\psi_j\bigr)^2$. La ergodicidad es el inciso (i) del teorema.
+
+:::
+
+Con números, para el AR(1) con $\phi=0.8$ y $\sigma^2=1$, $\psi_j=0.8^j$, $\psi(1)=1/(1-0.8)=5$ y $\omega^2=25$, mucho mayor que $\gamma(0)=2.78$. La desviación estándar de la media de $T=100$ observaciones es aproximadamente $\sqrt{25/100}=0.5$, y la que se obtendría erróneamente ignorando la dependencia es $\sqrt{2.78/100}=0.167$, tres veces menor. Para el MA(1) con $\theta=0.5$, $\omega^2=(1+0.5)^2=2.25$, mayor que $\gamma(0)=1.25$ porque la correlación es positiva; con $\theta=-0.5$ sería $0.25$, menor, porque la correlación negativa compensa los desvíos. Para un ruido blanco, $\omega^2=\gamma(0)$.
+
+La estacionariedad sola no basta. Sea $X_t=Z$ para todo $t$, con $Z$ una variable con media cero y varianza uno. El proceso es estacionario, con $\gamma(h)=1$ para todo $h$, que no tiende a cero, y la media muestral es $\bar X_T=Z$ para todo $T$, que no converge a la media $0$ del proceso. Una sola trayectoria revela solo el valor de $Z$ y no la distribución, y por eso en este proceso el promedio temporal no sustituye al promedio sobre las trayectorias.

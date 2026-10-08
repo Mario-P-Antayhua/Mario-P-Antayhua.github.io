@@ -1,0 +1,71 @@
+---
+title: "Leyes de los grandes números"
+description: "La ley débil de los grandes números por la desigualdad de Chebyshev, la ley débil con media finita por truncamiento, la ley fuerte con cuarto momento finito y la consistencia de la varianza muestral."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Convergencia]
+---
+
+El promedio de muchas observaciones se parece cada vez más a la media poblacional. Ese hecho es la razón por la que la estadística funciona: los estimadores basados en promedios convergen al parámetro que estiman. Las leyes de los grandes números lo establecen con precisión, en los dos sentidos de convergencia de la [Nota “Modos de convergencia”](15-modos-de-convergencia.qmd): la ley débil, en probabilidad, y la ley fuerte, casi segura. Esta nota demuestra las versiones que se usan en la práctica con las herramientas de las notas anteriores.
+
+Sea $X_1,X_2,\ldots$ una sucesión de variables aleatorias y $\bar X_n=\tfrac1n\sum_{i=1}^nX_i$ la media muestral. La versión más simple de la ley débil exige varianza finita y usa la varianza de la media de la [Proposición “Varianza de una suma”](11-covarianza-y-correlacion.qmd#prp-varianza-suma).
+
+::: {#thm-lgn-debil-l2}
+## Ley débil de los grandes números con varianza finita
+
+Si $X_1,X_2,\ldots$ son no correlacionadas con media común $\mu$ y varianza común $\sigma^2<\infty$, entonces $\E[(\bar X_n-\mu)^2]=\sigma^2/n$, de modo que $\bar X_n\overset{L^2}{\to}\mu$ y $\bar X_n\overset{p}{\to}\mu$. Además, $\Prob{|\bar X_n-\mu|\geq\varepsilon}\leq\sigma^2/(n\varepsilon^2)$.
+
+:::
+
+::: {.proof}
+La media de $\bar X_n$ es $\mu$ y su varianza es $\sigma^2/n$ por la proposición citada, de modo que $\E[(\bar X_n-\mu)^2]=\sigma^2/n\to0$. La desigualdad de Chebyshev da la cota, y de ella se obtiene la convergencia en probabilidad para todo $\varepsilon>0$.
+
+:::
+
+Con números, para $n=10\,000$ lanzamientos de una moneda equilibrada, $\sigma^2=1/4$ y la cota es $\Prob{|\bar X_n-0.5|\geq0.01}\leq0.25/(10\,000\cdot0.0001)=0.25$, mientras que la probabilidad exacta, calculada con la distribución binomial, es $0.0466$. La cota de Chebyshev es conservadora, pero basta para probar la convergencia.
+
+La ley débil con varianza finita no cubre variables con media finita pero varianza infinita. El teorema de Khinchin elimina esa exigencia para variables independientes e idénticamente distribuidas.
+
+::: {#thm-khinchin}
+## Ley débil de Khinchin
+
+Si $X_1,X_2,\ldots$ son iid con $\E|X_1|<\infty$ y media $\mu$, entonces $\bar X_n\overset{p}{\to}\mu$.
+
+:::
+
+::: {.proof}
+Para $M>0$ se descompone $X_i=Y_i+Z_i$ con $Y_i=X_i\mathbf{1}_{\{|X_i|\leq M\}}$ y $Z_i=X_i\mathbf{1}_{\{|X_i|>M\}}$. Sean $\mu_M=\E[Y_1]$ y $\mathcal{E}_M=\E|Z_1|=\E[|X_1|\mathbf{1}_{\{|X_1|>M\}}]$. Cuando $M\to\infty$, $|X_1|\mathbf{1}_{\{|X_1|>M\}}\to0$ puntualmente y está dominada por $|X_1|$, de modo que $\mathcal{E}_M\to0$ por la convergencia dominada (E5). Los $Y_i$ son iid y acotados por $M$, con varianza a lo sumo $M^2$, y por la ley débil con varianza finita, $\Prob{|\bar Y_n-\mu_M|>\varepsilon}\leq M^2/(n\varepsilon^2)\to0$. Para los $Z_i$, $\E|\bar Z_n-\E[Z_1]|\leq\E|\bar Z_n|+|\E[Z_1]|\leq2\mathcal{E}_M$, y la desigualdad de Markov da $\Prob{|\bar Z_n-\E[Z_1]|>\varepsilon}\leq2\mathcal{E}_M/\varepsilon$. Como $\mu=\mu_M+\E[Z_1]$, $\{|\bar X_n-\mu|>2\varepsilon\}\subseteq\{|\bar Y_n-\mu_M|>\varepsilon\}\cup\{|\bar Z_n-\E[Z_1]|>\varepsilon\}$, y entonces $\limsup_n\Prob{|\bar X_n-\mu|>2\varepsilon}\leq2\mathcal{E}_M/\varepsilon$. Como $M$ es arbitrario y $\mathcal{E}_M\to0$, el límite superior es cero.
+
+:::
+
+La ley fuerte afirma más, que la convergencia ocurre para casi toda sucesión de observaciones. La demostración más sencilla exige un cuarto momento finito y se apoya en el lema de Borel–Cantelli.
+
+::: {#thm-lgn-fuerte}
+## Ley fuerte de los grandes números
+
+Si $X_1,X_2,\ldots$ son iid con $\E[X_1^4]<\infty$ y media $\mu$, entonces $\bar X_n\to\mu$ casi seguramente.
+
+:::
+
+::: {.proof}
+Sustituyendo $X_i$ por $X_i-\mu$ se supone $\mu=0$, con $\E[X_1^4]<\infty$ aún válido. Sea $S_n=\sum_{i=1}^nX_i$. Al expandir $S_n^4=\sum_{i,j,k,l}X_iX_jX_kX_l$ y tomar esperanza, por la independencia y por $\E[X_i]=0$ solo sobreviven los términos en que cada índice aparece al menos dos veces: los $n$ términos con los cuatro índices iguales, con esperanza $\E[X^4]$, y los $3n(n-1)$ términos con dos pares distintos, con esperanza $(\E[X^2])^2$. Entonces $\E[S_n^4]=n\E[X^4]+3n(n-1)(\E[X^2])^2\leq3n^2\E[X^4]$, porque $(\E[X^2])^2\leq\E[X^4]$ por la desigualdad de Lyapunov. La desigualdad de Markov aplicada a $S_n^4$ da $\Prob{|\bar X_n|>\varepsilon}\leq\E[S_n^4]/(n^4\varepsilon^4)\leq3\E[X^4]/(n^2\varepsilon^4)$, que es sumable en $n$. Por el lema de Borel–Cantelli (i), casi seguramente $|\bar X_n|\leq\varepsilon$ para $n$ suficientemente grande, para cada $\varepsilon=1/j$, y por tanto $\bar X_n\to0$ casi seguramente.
+
+:::
+
+La expansión del cuarto momento se verifica con $X_i=\pm1$ equiprobables y $n=4$: la fórmula da $4+3\cdot4\cdot3=40$, y la suma sobre los $16$ resultados de $S_4^4$ dividida por $16$ también es $40$. La ley fuerte vale con solo $\E|X_1|<\infty$, un resultado de Kolmogorov cuya demostración es más larga y no se desarrolla aquí; en este curso se usa la ley débil de Khinchin, que basta para los resultados de consistencia.
+
+Para vectores, la convergencia es coordenada a coordenada, porque $\|\vect{x}\|\leq\sum_j|x_j|$: si cada coordenada de $\bar{\vect{X}}_n$ converge en probabilidad, también lo hace el vector. Además, el teorema se aplica a transformaciones: si $X_i$ son iid y $g(X_1)$ es integrable, las variables $g(X_i)$ son iid y $\tfrac1n\sum_ig(X_i)\overset{p}{\to}\E[g(X_1)]$. Con esta observación y el teorema de funciones continuas se demuestra la consistencia de la varianza muestral.
+
+::: {#prp-varianza-muestral}
+## Consistencia de la varianza muestral
+
+Si $X_1,X_2,\ldots$ son iid con $\E[X_1^2]<\infty$ y varianza $\sigma^2$, entonces $\hat\sigma_n^2=\tfrac1n\sum_{i=1}^n(X_i-\bar X_n)^2\overset{p}{\to}\sigma^2$.
+
+:::
+
+::: {.proof}
+Se expande $\hat\sigma_n^2=\tfrac1n\sum_iX_i^2-\bar X_n^2$. Por la ley débil de Khinchin aplicada a $X_i$ y a $X_i^2$, que son integrables, $\bar X_n\overset{p}{\to}\mu$ y $\tfrac1n\sum_iX_i^2\overset{p}{\to}\E[X_1^2]$. La función $(a,b)\mapsto b-a^2$ es continua, y el teorema de funciones continuas y convergencia en probabilidad da $\hat\sigma_n^2\overset{p}{\to}\E[X_1^2]-\mu^2=\sigma^2$.
+
+:::
+
+Con números, si $X_i\sim\N(10,4)$, entonces $\E[X_1^2]=104$ y $\mu^2=100$, de modo que $\hat\sigma_n^2\overset{p}{\to}104-100=4$.

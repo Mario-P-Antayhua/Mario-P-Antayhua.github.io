@@ -1,0 +1,61 @@
+---
+title: "El filtro de Kalman II: la etapa de actualización"
+description: "La actualización del estado con la innovación y la ganancia de Kalman, su derivación como el elemento que minimiza la matriz de covarianza del error entre todas las ganancias posibles, la forma de Joseph, la reducción de la incertidumbre y los casos límite."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Filtro de Kalman]
+---
+
+Cuando llega la observación $\vect{y}_t$, la predicción del estado se corrige con la parte de la observación que no se esperaba, la innovación. La pregunta es cuánto corregir. Si se corrige poco, se desperdicia información, y si se corrige mucho, se amplifica el error de medición. La respuesta óptima es la ganancia de Kalman, y esta nota la deduce de dos maneras: como la consecuencia de la actualización de una predicción con información nueva, y como la ganancia que minimiza el error entre todas las posibles. La segunda deducción no requiere normalidad y muestra por qué el filtro es óptimo entre los estimadores lineales.
+
+::: {#thm-actualizacion-kalman}
+## Etapa de actualización
+
+Supóngase que $\mat{F}_t$ es invertible. Entonces $\vect{\alpha}_t\mid\mathcal{Y}_t\sim\N(\vect{a}_{t\mid t},\mat{P}_{t\mid t})$ con
+$$
+\vect{a}_{t\mid t}=\vect{a}_{t\mid t-1}+\mat{K}_t\vect{v}_t,\qquad\mat{K}_t=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}\mat{F}_t^{-1},\qquad\mat{P}_{t\mid t}=\mat{P}_{t\mid t-1}-\mat{K}_t\mat{F}_t\mat{K}_t^{\top}=(\Imat-\mat{K}_t\mat{Z}_t)\mat{P}_{t\mid t-1}.
+$$ {#eq-actualizacion-kalman}
+
+:::
+
+::: {.proof}
+Se aplica el teorema de actualización de una predicción de la [Nota “Predicción óptima y actualización de una predicción”](10-prediccion-optima-y-actualizacion.qmd) a la distribución condicional en $\mathcal{Y}_{t-1}$, con $\vect{Y}=\vect{\alpha}_t$, $\vect{X}_1=\mathcal{Y}_{t-1}$ y $\vect{X}_2=\vect{y}_t$. La predicción previa es $\vect{a}_{t\mid t-1}$ con varianza $\mat{P}_{t\mid t-1}$, la innovación de $\vect{y}_t$ es $\vect{v}_t$ con varianza $\mat{F}_t$, y $\Cov(\vect{\alpha}_t,\vect{v}_t\mid\mathcal{Y}_{t-1})=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}$ por la etapa de predicción. Sustituyendo en la [Ecuación de la nota “Predicción óptima y actualización de una predicción”](10-prediccion-optima-y-actualizacion.qmd#eq-actualizacion) se obtienen la media $\vect{a}_{t\mid t-1}+\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}\mat{F}_t^{-1}\vect{v}_t$ y la varianza $\mat{P}_{t\mid t-1}-\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}\mat{F}_t^{-1}\mat{Z}_t\mat{P}_{t\mid t-1}$. Como $\mat{K}_t\mat{F}_t\mat{K}_t^{\top}=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}\mat{F}_t^{-1}\mat{F}_t\mat{F}_t^{-1}\mat{Z}_t\mat{P}_{t\mid t-1}=\mat{K}_t\mat{Z}_t\mat{P}_{t\mid t-1}$, las dos expresiones de la varianza coinciden.
+
+:::
+
+La ganancia $\mat{K}_t$ pesa la innovación según cuánta incertidumbre previa hay sobre el estado, $\mat{P}_{t\mid t-1}$, en relación con la incertidumbre de la observación, $\mat{F}_t$. Con los mismos datos del ejemplo del nivel local, en $t=2$, $P_{2\mid1}=1.5$, $F_2=2.5$, la ganancia es $K_2=1.5/2.5=0.6$, y con la innovación $v_2=0.8-1.2=-0.4$, $a_{2\mid2}=1.2+0.6(-0.4)=0.96$ y $P_{2\mid2}=1.5-0.6^2\cdot2.5=0.6=(1-0.6)\cdot1.5$.
+
+La segunda deducción prescinde de la normalidad. Considérese cualquier estimador de la forma $\vect{a}_{t\mid t-1}+\mat{K}\vect{v}_t$ con una matriz de ganancia $\mat{K}$ arbitraria. Su error es $\vect{\alpha}_t-\vect{a}_{t\mid t-1}-\mat{K}\vect{v}_t=(\Imat-\mat{K}\mat{Z}_t)(\vect{\alpha}_t-\vect{a}_{t\mid t-1})-\mat{K}\vect{\varepsilon}_t$, porque $\vect{v}_t=\mat{Z}_t(\vect{\alpha}_t-\vect{a}_{t\mid t-1})+\vect{\varepsilon}_t$. Como el error de predicción del estado y $\vect{\varepsilon}_t$ no están correlacionados, la matriz de covarianza del error es la ***forma de Joseph***
+$$
+\mat{P}(\mat{K})=(\Imat-\mat{K}\mat{Z}_t)\mat{P}_{t\mid t-1}(\Imat-\mat{K}\mat{Z}_t)^{\top}+\mat{K}\mat{H}_t\mat{K}^{\top}.
+$$ {#eq-joseph}
+
+::: {#thm-ganancia-optima}
+## La ganancia de Kalman minimiza la covarianza del error
+
+Si $\mat{F}_t$ es definida positiva, entonces para toda matriz $\mat{K}$ de $m\times N$, $\mat{P}(\mat{K})=\mat{P}(\mat{K}_t)+(\mat{K}-\mat{K}_t)\mat{F}_t(\mat{K}-\mat{K}_t)^{\top}$. En consecuencia, $\mat{P}(\mat{K})\succeq\mat{P}(\mat{K}_t)$ y $\mathrm{tr}\,\mat{P}(\mat{K})\geq\mathrm{tr}\,\mat{P}(\mat{K}_t)$, con igualdad solo si $\mat{K}=\mat{K}_t$.
+
+:::
+
+::: {.proof}
+Se expande @eq-joseph con $\mat{P}=\mat{P}_{t\mid t-1}$, $\mat{Z}=\mat{Z}_t$ y $\mat{F}=\mat{Z}\mat{P}\mat{Z}^{\top}+\mat{H}_t$: $\mat{P}(\mat{K})=\mat{P}-\mat{K}\mat{Z}\mat{P}-\mat{P}\mat{Z}^{\top}\mat{K}^{\top}+\mat{K}\mat{F}\mat{K}^{\top}$. Con $\mat{K}_t=\mat{P}\mat{Z}^{\top}\mat{F}^{-1}$, se tiene $\mat{K}_t\mat{F}=\mat{P}\mat{Z}^{\top}$, y al desarrollar $(\mat{K}-\mat{K}_t)\mat{F}(\mat{K}-\mat{K}_t)^{\top}=\mat{K}\mat{F}\mat{K}^{\top}-\mat{K}\mat{Z}\mat{P}-\mat{P}\mat{Z}^{\top}\mat{K}^{\top}+\mat{K}_t\mat{F}\mat{K}_t^{\top}$ resulta $\mat{P}(\mat{K})=\mat{P}-\mat{K}_t\mat{F}\mat{K}_t^{\top}+(\mat{K}-\mat{K}_t)\mat{F}(\mat{K}-\mat{K}_t)^{\top}$, donde el primer par de términos es $\mat{P}(\mat{K}_t)$. El último término es semidefinido positivo por ser de la forma $\mat{B}\mat{F}\mat{B}^{\top}$ con $\mat{F}$ definida positiva, y su traza es $\sum_{ij}$ de una forma cuadrática positiva, nula solo si $\mat{K}-\mat{K}_t=\mat{0}$.
+
+:::
+
+La demostración equivale a una condición de primer orden y una de segundo orden. Derivar $\mathrm{tr}\,\mat{P}(\mat{K})$ respecto de $\mat{K}$ da $-2\mat{P}\mat{Z}^{\top}+2\mat{K}\mat{F}$, que se anula en $\mat{K}_t$, y la hessiana respecto de $\mathrm{vec}(\mat{K})$ es $2\mat{F}\otimes\Imat$, definida positiva. Con números, en el ejemplo anterior ($P=1.5$, $F=2.5$, $H=1$), la ganancia $K=0.5$ en lugar de $0.6$ da la forma de Joseph $(1-0.5)^2\cdot1.5+0.5^2\cdot1=0.625$, que coincide con $0.6+(0.5-0.6)^2\cdot2.5=0.625$ y supera al mínimo $0.6$.
+
+El teorema tiene tres consecuencias. Primero, el filtro de Kalman es óptimo entre los estimadores lineales que corrigen la predicción con la innovación, aun cuando las perturbaciones no sean normales: basta que tengan las medias y covarianzas del modelo, y entonces $\vect{a}_{t\mid t}$ es la proyección lineal óptima y $\mat{P}_{t\mid t}$ su error cuadrático medio. Con normalidad, es además el estimador de mínimo error entre todos, lineales o no, por la esperanza condicional. Segundo, la incertidumbre no aumenta con la observación: $\mat{P}_{t\mid t}=\mat{P}_{t\mid t-1}-\mat{K}_t\mat{F}_t\mat{K}_t^{\top}\preceq\mat{P}_{t\mid t-1}$, porque se resta una matriz semidefinida positiva. Tercero, la ganancia tiene comportamientos extremos intuitivos.
+
+::: {#prp-casos-limite}
+## Casos límite de la ganancia
+
+(i) Si $\mat{Z}_t$ es cuadrada e invertible y $\mat{H}_t\to\mat{0}$, entonces $\mat{K}_t\to\mat{Z}_t^{-1}$, $\vect{a}_{t\mid t}\to\mat{Z}_t^{-1}(\vect{y}_t-\vect{d}_t)$ y $\mat{P}_{t\mid t}\to\mat{0}$. (ii) Si $\mat{H}_t=h\mat{H}^0$ con $h\to\infty$, entonces $\mat{K}_t\to\mat{0}$ y $\vect{a}_{t\mid t}\to\vect{a}_{t\mid t-1}$, $\mat{P}_{t\mid t}\to\mat{P}_{t\mid t-1}$.
+
+:::
+
+::: {.proof}
+Para (i), con $\mat{H}_t=\mat{0}$, $\mat{F}_t=\mat{Z}_t\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}$ y $\mat{K}_t=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}(\mat{Z}_t^{\top})^{-1}\mat{P}_{t\mid t-1}^{-1}\mat{Z}_t^{-1}=\mat{Z}_t^{-1}$ si $\mat{P}_{t\mid t-1}$ es invertible, por la continuidad de la inversa; entonces $\Imat-\mat{K}_t\mat{Z}_t=\mat{0}$ y $\mat{P}_{t\mid t}=\mat{0}$, y $\vect{a}_{t\mid t}=\vect{a}_{t\mid t-1}+\mat{Z}_t^{-1}(\vect{y}_t-\mat{Z}_t\vect{a}_{t\mid t-1}-\vect{d}_t)=\mat{Z}_t^{-1}(\vect{y}_t-\vect{d}_t)$. Para (ii), $\mat{F}_t^{-1}\to\mat{0}$ cuando $h\to\infty$ porque $\mat{F}_t\succeq h\mat{H}^0$, y entonces $\mat{K}_t\to\mat{0}$.
+
+:::
+
+En el caso escalar del nivel local, $K=P/(P+\sigma_\varepsilon^2)$ pasa de $1$ cuando $\sigma_\varepsilon^2\to0$ (el dato es exacto y se toma tal cual) a $0$ cuando $\sigma_\varepsilon^2\to\infty$ (el dato no informa y se ignora). Con $P=1.5$ y $\sigma_\varepsilon^2=1$, $K=0.6$; con $\sigma_\varepsilon^2=0.1$, $K=0.94$; con $\sigma_\varepsilon^2=10$, $K=0.13$.

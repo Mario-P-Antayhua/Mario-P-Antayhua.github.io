@@ -1,0 +1,72 @@
+---
+title: "Transformaciones de variables aleatorias"
+description: "La densidad de una función de una variable aleatoria, el cambio de variables para vectores, las transformaciones afines, la densidad de una suma de variables independientes y el máximo de una muestra."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Vectores aleatorios]
+---
+
+Los modelos econométricos transforman variables: se toman logaritmos, se estandarizan, se suman. Si se conoce la distribución de $X$, ¿cuál es la de $g(X)$? La respuesta para variables con densidad depende de la fórmula de cambio de variable (E8) de la [Nota “El cálculo de esperanzas”](04-el-calculo-de-esperanzas.qmd), que lleva en el integrando el factor del determinante jacobiano de la [Nota “Diferenciación en varias variables”](../matematica-3/04-diferenciacion-en-varias-variables.qmd). Esta nota deduce las fórmulas de densidad para funciones de una o varias variables y las aplica a sumas de variables independientes.
+
+::: {#thm-cambio-variable-densidad}
+## Densidad de una transformación biyectiva
+
+Sea $\vect{X}$ un vector aleatorio en $\mathbb{R}^k$ con densidad $f_{\vect{X}}$ concentrada en un abierto $U$ (es decir, $\Prob{\vect{X}\in U}=1$), y $\vect{g}:U\to V$ una biyección de clase $C^1$ entre abiertos con inversa $\vect{h}=\vect{g}^{-1}$ de clase $C^1$. Entonces $\vect{Y}=\vect{g}(\vect{X})$ tiene densidad
+$$
+f_{\vect{Y}}(\vect{y})=f_{\vect{X}}\bigl(\vect{h}(\vect{y})\bigr)\,\bigl|\det\mat{J}_{\vect{h}}(\vect{y})\bigr|,\qquad\vect{y}\in V ,
+$$ {#eq-densidad-transformada}
+y cero fuera de $V$. Para $k=1$, el factor es $|h'(y)|$.
+
+:::
+
+::: {.proof}
+Para un conjunto de Borel $B\subseteq V$, $\{\vect{Y}\in B\}=\{\vect{X}\in\vect{h}(B)\}$, de modo que $\Prob{\vect{Y}\in B}=\int_{\vect{h}(B)}f_{\vect{X}}(\vect{x})\,d\vect{x}$. La fórmula de cambio de variables (E8), aplicada a la biyección $\vect{h}:B\to\vect{h}(B)$ con $\vect{x}=\vect{h}(\vect{y})$, convierte la integral en $\int_Bf_{\vect{X}}(\vect{h}(\vect{y}))\,|\det\mat{J}_{\vect{h}}(\vect{y})|\,d\vect{y}$. Como esto vale para todo $B$, el integrando es una densidad de $\vect{Y}$.
+
+:::
+
+El caso más importante es el afín. Si $\mat{A}$ es una matriz invertible y $\vect{Y}=\mat{A}\vect{X}+\vect{b}$, entonces $\vect{h}(\vect{y})=\mat{A}^{-1}(\vect{y}-\vect{b})$, $\mat{J}_{\vect{h}}=\mat{A}^{-1}$ y $\det\mat{A}^{-1}=1/\det\mat{A}$, de modo que
+$$
+f_{\vect{Y}}(\vect{y})=\frac{1}{|\det\mat{A}|}f_{\vect{X}}\bigl(\mat{A}^{-1}(\vect{y}-\vect{b})\bigr).
+$$ {#eq-densidad-afin}
+En una variable, con $Y=\sigma X+\mu$, la fórmula da $f_Y(y)=\tfrac1\sigma f_X((y-\mu)/\sigma)$, que es la densidad de localización y escala de la [Nota “La distribución normal univariante”](08-la-distribucion-normal-univariante.qmd). Con números, si $X$ es exponencial con tasa $2$ y $Y=3X$, entonces $f_Y(y)=\tfrac13\cdot2e^{-2y/3}$, exponencial con tasa $2/3$ y media $1.5=3\cdot0.5$.
+
+La fórmula exige una biyección; cuando la función no es inyectiva, se calcula la función de distribución y se deriva. Dos ejemplos sirven de referencia.
+
+::: {#exm-lognormal-chi-cuadrado}
+## La lognormal y el cuadrado de una normal
+
+(i) Si $X\sim\N(\mu,\sigma^2)$ y $Y=e^X$, entonces $Y$ tiene densidad $f_Y(y)=\dfrac1{y\sigma\sqrt{2\pi}}\exp\Bigl(-\dfrac{(\ln y-\mu)^2}{2\sigma^2}\Bigr)$ para $y>0$ y $\E[Y]=e^{\mu+\sigma^2/2}$. (ii) Si $Z\sim\N(0,1)$, entonces $Z^2$ tiene densidad $f(y)=(2\pi y)^{-1/2}e^{-y/2}$ para $y>0$.
+
+:::
+
+Para (i), $g(x)=e^x$ es una biyección de $\mathbb{R}$ en $(0,\infty)$ con inversa $h(y)=\ln y$ y $|h'(y)|=1/y$, y la fórmula da la densidad enunciada. Para la esperanza, $\E[e^{\mu+\sigma Z}]=e^\mu\int e^{\sigma z}\varphi(z)\,dz$, y completando el cuadrado, $\sigma z-z^2/2=\sigma^2/2-(z-\sigma)^2/2$, de modo que la integral es $e^{\sigma^2/2}\int\varphi(z-\sigma)\,dz=e^{\sigma^2/2}$. Con $\mu=0$ y $\sigma=1$, $\E[e^X]=e^{1/2}=1.6487$, que supera a $e^{\E[X]}=1$, como exige la desigualdad de Jensen de la [Nota “Momentos y desigualdades fundamentales”](05-momentos-y-desigualdades-fundamentales.qmd). Para (ii), la función $z\mapsto z^2$ no es inyectiva, y la función de distribución es $\Prob{Z^2\leq y}=\Prob{-\sqrt y\leq Z\leq\sqrt y}=2\Phi(\sqrt y)-1$ para $y>0$. Derivando con la regla de la cadena, $f(y)=2\varphi(\sqrt y)\cdot\tfrac1{2\sqrt y}=(2\pi y)^{-1/2}e^{-y/2}$. Con números, $\Prob{Z^2\leq3.84}=2\Phi(1.96)-1=0.95$.
+
+Para vectores, la transformación más frecuente es la suma. Si $X$ e $Y$ son independientes, la densidad de $S=X+Y$ es la convolución de las densidades.
+
+::: {#prp-convolucion}
+## Suma de variables independientes
+
+Sean $X,Y$ independientes. (i) Si tienen densidades $f_X,f_Y$, la suma $S=X+Y$ tiene densidad $f_S(s)=\int_{-\infty}^{\infty}f_X(x)f_Y(s-x)\,dx$. (ii) Si son discretas con valores enteros, $\Prob{S=s}=\sum_{x}\Prob{X=x}\Prob{Y=s-x}$.
+
+:::
+
+::: {.proof}
+Para (i), la densidad conjunta de $(X,Y)$ es $f_X(x)f_Y(y)$ por la proposición de independencia y densidades. La transformación $(x,y)\mapsto(x,s)=(x,x+y)$ es una biyección afín de $\mathbb{R}^2$ en sí mismo con matriz $\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ de determinante $1$, de modo que la fórmula afín da la densidad conjunta de $(X,S)$ igual a $f_X(x)f_Y(s-x)$. La marginal de $S$ se obtiene integrando en $x$, por la proposición de marginales. Para (ii), el evento $\{S=s\}$ es la unión disjunta de los eventos $\{X=x,Y=s-x\}$ sobre $x$, y la independencia factoriza cada probabilidad.
+
+:::
+
+Con números, si $X,Y$ son independientes y uniformes en $(0,1)$, la convolución da $f_S(s)=s$ para $s\in[0,1]$ y $f_S(s)=2-s$ para $s\in[1,2]$, una densidad triangular, y $\Prob{S\leq1.5}=\int_0^1s\,ds+\int_1^{1.5}(2-s)\,ds=0.5+0.375=0.875$. En el caso discreto, la suma de variables de Poisson independientes es de Poisson.
+
+::: {#prp-suma-poisson}
+## Suma de Poisson independientes
+
+Si $X\sim\mathrm{Poisson}(\lambda_1)$ e $Y\sim\mathrm{Poisson}(\lambda_2)$ son independientes, entonces $X+Y\sim\mathrm{Poisson}(\lambda_1+\lambda_2)$.
+
+:::
+
+::: {.proof}
+Por la fórmula de convolución discreta y el teorema del binomio, $\Prob{S=k}=\sum_{j=0}^{k}e^{-\lambda_1}\frac{\lambda_1^j}{j!}e^{-\lambda_2}\frac{\lambda_2^{k-j}}{(k-j)!}=\frac{e^{-(\lambda_1+\lambda_2)}}{k!}\sum_{j=0}^{k}\binom kj\lambda_1^j\lambda_2^{k-j}=\frac{e^{-(\lambda_1+\lambda_2)}(\lambda_1+\lambda_2)^k}{k!}$.
+
+:::
+
+Con $\lambda_1=1$ y $\lambda_2=2$, $\Prob{S=3}=e^{-3}3^3/3!=0.2240$. Un último ejemplo trata el máximo de una muestra, que se calcula directamente con la función de distribución. Si $X_1,\ldots,X_n$ son iid con FDA $F$, el máximo $M=\max_iX_i$ cumple $\{M\leq x\}=\bigcap_i\{X_i\leq x\}$, de modo que, por la independencia, $\Prob{M\leq x}=F(x)^n$. Con tres variables uniformes en $(0,1)$, $\Prob{M\leq0.8}=0.8^3=0.512$.

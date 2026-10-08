@@ -1,0 +1,125 @@
+---
+title: "Conjuntos abiertos, cerrados y la clausura"
+description: "Conjuntos abiertos y cerrados en un espacio métrico, su relación por complementos, las operaciones que los preservan y la clausura como el menor cerrado que contiene a un conjunto."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Topología de la recta y del espacio]
+---
+
+La clasificación de puntos de la nota anterior se traslada ahora a conjuntos completos: un conjunto es abierto cuando todos sus puntos son interiores a él, y es cerrado cuando no deja fuera a ninguno de sus puntos límite.
+
+::: {#def-abierto-cerrado}
+## Conjunto abierto y cerrado
+
+$E\subseteq X$ es ***abierto*** si todo punto de $E$ es interior a $E$. Es ***cerrado*** si todo punto límite de $E$ pertenece a $E$.
+
+:::
+
+«Abierto» y «cerrado» no son opuestos en el sentido cotidiano: un conjunto puede no ser ninguna de las dos cosas, y también puede ser ambas a la vez, como ocurre con $X$ y con $\varnothing$ en cualquier espacio métrico. Los intervalos de la recta muestran los casos, y la @fig-abierto-cerrado los resume.
+
+::: {#exm-abierto-cerrado-intervalos}
+## Un intervalo que no es abierto ni cerrado, y uno cerrado
+
+En $E=[0,2)\subseteq\mathbb{R}$, el punto $0\in E$ no es interior: para todo radio $r>0$, la vecindad $N_r(0)=(-r,r)$ contiene números negativos, que no están en $E$. Por eso $E$ no es abierto. Por otra parte, $2\notin E$ es punto límite de $E$: para todo $\varepsilon>0$, el punto $2-\min\{\varepsilon/2,\,1\}$ pertenece a $E$ y dista de $2$ menos de $\varepsilon$; como un punto límite queda fuera de $E$, $E$ no es cerrado. En cambio $F=[3,5]$ es cerrado: ningún punto fuera de $F$ es punto límite de $F$, porque un punto $x<3$ tiene la vecindad $N_{3-x}(x)$ disjunta de $F$, y lo mismo vale para $x>5$. No es abierto, porque $3$ no es interior.
+
+:::
+
+![El intervalo $[0,2)$ no es abierto ni cerrado: el punto $0$ pertenece al conjunto y no es interior, y el punto hueco $2$ es un punto límite que no pertenece al conjunto. El intervalo $[3,5]$ es cerrado.](../../assets/img/fig/matematica-1-25-conjuntos-abiertos-cerrados-y-la-clausura-1.svg){#fig-abierto-cerrado fig-alt="Recta numérica con el intervalo [0,2) rotulado ni abierto ni cerrado, con extremo izquierdo relleno y extremo derecho hueco, y el intervalo [3,5] rotulado cerrado."}
+
+Abierto y cerrado se verifican punto por punto, pero la relación entre ambas nociones es una sola idea vista desde dos ángulos: un conjunto es abierto exactamente cuando su complemento contiene a todos sus propios puntos límite, que es la definición de cerrado aplicada al complemento.
+
+::: {#thm-abierto-complemento-cerrado}
+## Un conjunto es abierto si y solo si su complemento es cerrado
+
+$E\subseteq X$ es abierto si y solo si $E^c=X\setminus E$ es cerrado.
+
+:::
+
+::: {.proof}
+Se prueba primero que $E^c$ cerrado implica $E$ abierto. Sea $p\in E$; entonces $p\notin E^c$, y como $E^c$ es cerrado, $p$ no puede ser punto límite de $E^c$. Existe entonces una vecindad $N$ de $p$ sin puntos de $E^c$ distintos de $p$, y como $p\in E$, $N\cap E^c=\varnothing$, es decir, $N\subseteq E$. Por lo tanto $p$ es interior a $E$, y $E$ es abierto.
+
+Para la recíproca, sea $E$ abierto y $p$ un punto límite de $E^c$. Toda vecindad de $p$ contiene un punto de $E^c$, de modo que ninguna vecindad de $p$ está contenida en $E$. Como todo punto de $E$ tiene una vecindad dentro de $E$, esto obliga a $p\notin E$, es decir, $p\in E^c$. Todo punto límite de $E^c$ pertenece a $E^c$, y $E^c$ es cerrado.
+
+:::
+
+El teorema permite decidir que un conjunto es abierto verificando que su complemento contiene a sus puntos límite, y viceversa. La propiedad siguiente describe qué operaciones de conjuntos preservan el carácter abierto o cerrado, y por qué una de ellas exige una restricción que parece innecesaria.
+
+::: {#prp-uniones-intersecciones}
+## Uniones e intersecciones de abiertos y cerrados
+
+(i) La unión de cualquier colección de abiertos es abierta.
+
+(ii) La intersección de cualquier colección de cerrados es cerrada.
+
+(iii) La intersección de una colección *finita* de abiertos es abierta.
+
+(iv) La unión de una colección *finita* de cerrados es cerrada.
+
+:::
+
+::: {.proof}
+Para (i), sea $\{G_\alpha\}$ una colección de abiertos y $G:=\bigcup_\alpha G_\alpha$. Si $p\in G$, entonces $p\in G_\alpha$ para algún $\alpha$, y como $G_\alpha$ es abierto existe una vecindad de $p$ contenida en $G_\alpha$, que también está contenida en el conjunto más grande $G$; por lo tanto $p$ es interior a $G$.
+
+Para (iii), sea $\{G_1,\ldots,G_n\}$ una colección finita y $H:=\bigcap_{i=1}^{n}G_i$. Si $p\in H$, para cada $i$ existe $r_i>0$ con $N_{r_i}(p)\subseteq G_i$, y como la lista de radios es finita, tiene un mínimo positivo
+$$
+r:=\min\{r_1,\ldots,r_n\}>0,
+$$
+que cumple $N_r(p)\subseteq G_i$ para todo $i$ a la vez, y por lo tanto $N_r(p)\subseteq H$. Aquí la finitud es indispensable: con infinitos radios, el ínfimo podría ser cero y ningún radio positivo serviría para todos.
+
+Las partes (ii) y (iv) se obtienen de (i) y (iii) tomando complementos: por las [Proposición “Leyes de De Morgan para familias”](07-conjuntos-pertenencia-y-operaciones-basicas.qmd#prp-demorgan-familias), $\bigl(\bigcap_\alpha F_\alpha\bigr)^c=\bigcup_\alpha F_\alpha^c$ es una unión de abiertos por el @thm-abierto-complemento-cerrado, luego abierta por (i), de modo que $\bigcap_\alpha F_\alpha$ es cerrado por el mismo teorema; el argumento para (iv) es idéntico con (iii).
+
+:::
+
+La finitud en (iii) no es un tecnicismo, y el ejemplo siguiente lo demuestra con un cálculo explícito.
+
+::: {#exm-interseccion-infinita-no-abierta}
+## Por qué la intersección de infinitos abiertos puede no ser abierta
+
+Sea $G_n:=\left(-\frac1n,\frac1n\right)$ para $n\in\mathbb{N}$, cada uno abierto. Su intersección es
+$$
+\bigcap_{n=1}^{\infty}G_n=\{0\},
+$$
+porque cualquier $x\neq0$ queda excluido tan pronto $n$ sea, por la propiedad arquimediana, tal que $1/n<|x|$; con $x=0.001$, ya $x\notin G_{1001}$. Pero $\{0\}$ no es abierto: ninguna vecindad de $0$ está contenida en $\{0\}$, porque toda vecindad de radio positivo contiene números distintos de $0$.
+
+:::
+
+Hasta aquí «abierto» y «cerrado» describen propiedades de un conjunto respecto de sí mismo. La construcción siguiente asigna a cualquier conjunto el cerrado más pequeño que lo contiene.
+
+::: {#def-clausura}
+## Clausura
+
+La ***clausura*** de $E\subseteq X$ es $\overline{E}:=E\cup E'$, donde $E'$ es el conjunto de los puntos límite de $E$.
+
+:::
+
+La clausura añade a $E$ los puntos límite que le faltaban; por construcción debería ser cerrada y, de hecho, la menor con esa propiedad que contiene a $E$.
+
+::: {#thm-clausura}
+## Propiedades de la clausura
+
+Para todo $E\subseteq X$: (i) $\overline{E}$ es cerrado; (ii) $E=\overline{E}$ si y solo si $E$ es cerrado; (iii) si $F$ es cerrado y $E\subseteq F$, entonces $\overline{E}\subseteq F$. En particular, $\overline{E}$ es el menor conjunto cerrado que contiene a $E$.
+
+:::
+
+::: {.proof}
+Para (i), sea $p\notin\overline{E}$; como $p\notin E\cup E'$, existe una vecindad $N$ de $p$ sin puntos de $E$ distintos de $p$, y como $p\notin E$, $N\cap E=\varnothing$. La misma $N$ no interseca a $E'$: si existiera $q\in N\cap E'$, por la [Proposición “Los puntos de una vecindad son interiores a ella”](25-vecindades-y-clasificacion-de-puntos.qmd#prp-vecindad-abierta) existiría una vecindad de $q$ contenida en $N$, disjunta de $E$, lo que contradice que $q$ sea punto límite de $E$. Entonces $N$ no interseca a $\overline{E}$, de modo que todo punto fuera de $\overline{E}$ tiene una vecindad fuera de $\overline{E}$; es decir, $\overline{E}^c$ es abierto y $\overline{E}$ es cerrado.
+
+Para (ii), si $E=\overline{E}$, (i) da que $E$ es cerrado; si $E$ es cerrado, $E'\subseteq E$ y $\overline{E}=E\cup E'=E$.
+
+Para (iii), sea $F$ cerrado con $E\subseteq F$. Todo punto límite de $E$ es punto límite de $F$, porque toda vecindad con puntos de $E$ distintos de un punto dado contiene puntos de $F$; como $F$ es cerrado, ese punto pertenece a $F$. Entonces $E'\subseteq F$, y junto con $E\subseteq F$ resulta $\overline{E}\subseteq F$.
+
+:::
+
+La parte (iii) reduce una pregunta de la forma «¿está este punto en la clausura de aquel conjunto?» a exhibir, o descartar, puntos del conjunto arbitrariamente cercanos a él. Un caso particular, que conecta esta nota con el axioma de completitud, es el del supremo.
+
+::: {#prp-sup-en-clausura}
+## El supremo de un conjunto acotado pertenece a su clausura
+
+Sea $E\subseteq\mathbb{R}$ no vacío y acotado superiormente, $y=\sup E$. Entonces $y\in\overline{E}$.
+
+:::
+
+::: {.proof}
+Si $y\in E$, la afirmación es inmediata. Si $y\notin E$, para todo $h>0$ la [Proposición “Caracterización del supremo mediante $\varepsilon$”](16-los-reales-el-axioma-de-completitud.qmd#prp-sup-epsilon) da $x\in E$ con $y-h<x\leq y$, y como $y\notin E$, $x<y$. Entonces $x\in N_h(y)$ y $x\neq y$; toda vecindad de $y$ contiene un punto de $E$ distinto de $y$, y $y$ es punto límite de $E$, de modo que $y\in E'\subseteq\overline{E}$.
+
+:::

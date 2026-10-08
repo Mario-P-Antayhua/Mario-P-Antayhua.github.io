@@ -1,0 +1,80 @@
+---
+title: "La distribución normal multivariante"
+description: "La normal multivariante definida por su densidad, su media y covarianza, la descomposición por el complemento de Schur que da las marginales y las condicionales, la clausura bajo transformaciones lineales y la distribución chi cuadrado."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Vectores aleatorios]
+---
+
+La normal multivariante es el modelo estándar para vectores aleatorios continuos, y es la distribución límite de las sumas normalizadas de vectores. Su valor práctico está en que todo se calcula en forma cerrada: las combinaciones lineales son normales, las marginales son normales y las condicionales también, con media lineal en lo que se condiciona. Esta nota la define con una densidad, verifica que tiene la media y la covarianza anunciadas, y demuestra las propiedades de clausura con la factorización de Schur de la [Nota “Matrices particionadas y el complemento de Schur”](../matematica-2/09-matrices-particionadas-y-complemento-de-schur.qmd).
+
+::: {#def-normal-multivariante}
+## Distribución normal multivariante
+
+Sea $\vect{\mu}\in\mathbb{R}^k$ y $\mat{\Sigma}\in\mathbb{R}^{k\times k}$ simétrica y definida positiva. Un vector aleatorio $\vect{X}$ tiene distribución ***normal multivariante***, $\vect{X}\sim\N_k(\vect{\mu},\mat{\Sigma})$, si tiene densidad
+$$
+f(\vect{x})=\frac{1}{(2\pi)^{k/2}\sqrt{\det\mat{\Sigma}}}\exp\Bigl(-\tfrac12(\vect{x}-\vect{\mu})^{\top}\mat{\Sigma}^{-1}(\vect{x}-\vect{\mu})\Bigr),\qquad\vect{x}\in\mathbb{R}^k.
+$$ {#eq-densidad-normal-multivariante}
+
+:::
+
+Que $f$ sea una densidad exige que su integral sea uno, y que $\vect{\mu}$ y $\mat{\Sigma}$ sean la media y la covarianza exige verificación. Ambas cosas se obtienen representando el vector como una transformación afín de normales estándar independientes.
+
+::: {#thm-representacion-normal}
+## Representación de la normal multivariante
+
+Sea $\vect{Z}=(Z_1,\ldots,Z_k)^{\top}$ con $Z_i$ independientes $\N(0,1)$. Entonces $\vect{X}=\vect{\mu}+\mat{\Sigma}^{1/2}\vect{Z}$ tiene la densidad de @eq-densidad-normal-multivariante. En consecuencia, esa función integra uno, y $\E[\vect{X}]=\vect{\mu}$ y $\Var(\vect{X})=\mat{\Sigma}$.
+
+:::
+
+::: {.proof}
+La densidad conjunta de $\vect{Z}$ es el producto de las densidades marginales, $\prod_i\varphi(z_i)=(2\pi)^{-k/2}\exp(-\tfrac12\vect{z}^{\top}\vect{z})$. La transformación $\vect{x}=\vect{\mu}+\mat{A}\vect{z}$ con $\mat{A}=\mat{\Sigma}^{1/2}$, invertible por la [Proposición “Raíz cuadrada de una matriz semidefinida positiva”](../matematica-2/12-formas-cuadraticas-y-matrices-definidas-positivas.qmd#prp-raiz-cuadrada-matricial), tiene densidad dada por la fórmula de densidad afín de la [Ecuación de la nota “Transformaciones de variables aleatorias”](10-transformaciones-de-variables-aleatorias.qmd#eq-densidad-afin), $f(\vect{x})=|\det\mat{A}|^{-1}(2\pi)^{-k/2}\exp(-\tfrac12\vect{z}^{\top}\vect{z})$ con $\vect{z}=\mat{A}^{-1}(\vect{x}-\vect{\mu})$. Como $\mat{A}$ es simétrica, $\vect{z}^{\top}\vect{z}=(\vect{x}-\vect{\mu})^{\top}\mat{A}^{-1}\mat{A}^{-1}(\vect{x}-\vect{\mu})=(\vect{x}-\vect{\mu})^{\top}\mat{\Sigma}^{-1}(\vect{x}-\vect{\mu})$, y $(\det\mat{A})^2=\det\mat{\Sigma}$ con $\det\mat{A}>0$ por ser el producto de las raíces de los valores propios positivos. Esto es @eq-densidad-normal-multivariante. Por ser la densidad de un vector aleatorio, integra uno. La media y la covarianza se obtienen de la [Proposición “Propiedades de la matriz de covarianzas”](12-vector-de-medias-y-matriz-de-covarianzas.qmd#prp-covarianza-vector) con $\E[\vect{Z}]=\vect{0}$ y $\Var(\vect{Z})=\Imat$.
+
+:::
+
+La normal conjunta de dos normales independientes es el caso diagonal, $\mat{\Sigma}=\mathrm{diag}(\sigma_1^2,\ldots)$, y la densidad es el producto de las densidades marginales. La estructura general se descubre al particionar el vector en dos bloques y descomponer la forma cuadrática del exponente con el complemento de Schur.
+
+::: {#thm-normal-marginal-condicional}
+## Marginales y condicionales de la normal
+
+Sea $\vect{X}=(\vect{X}_1,\vect{X}_2)\sim\N_k(\vect{\mu},\mat{\Sigma})$ con $\vect{X}_1\in\mathbb{R}^{k_1}$ y $\vect{X}_2\in\mathbb{R}^{k_2}$, particionados como $\vect{\mu}=(\vect{\mu}_1,\vect{\mu}_2)$ y $\mat{\Sigma}=\left(\begin{smallmatrix}\mat{\Sigma}_{11}&\mat{\Sigma}_{12}\\\mat{\Sigma}_{21}&\mat{\Sigma}_{22}\end{smallmatrix}\right)$. Entonces: (i) $\vect{X}_1\sim\N_{k_1}(\vect{\mu}_1,\mat{\Sigma}_{11})$; (ii) dado $\vect{X}_1=\vect{x}_1$, $\vect{X}_2$ tiene distribución $\N_{k_2}\bigl(\vect{\mu}_2+\mat{\Sigma}_{21}\mat{\Sigma}_{11}^{-1}(\vect{x}_1-\vect{\mu}_1),\ \mat{S}\bigr)$ con $\mat{S}=\mat{\Sigma}_{22}-\mat{\Sigma}_{21}\mat{\Sigma}_{11}^{-1}\mat{\Sigma}_{12}$; (iii) $\vect{X}_1$ y $\vect{X}_2$ son independientes si y solo si $\mat{\Sigma}_{12}=\mat{0}$.
+
+:::
+
+::: {.proof}
+El bloque $\mat{\Sigma}_{11}$ es definido positivo, porque $\vect{a}^{\top}\mat{\Sigma}_{11}\vect{a}=(\vect{a},\vect{0})\mat{\Sigma}(\vect{a},\vect{0})^{\top}>0$ para $\vect{a}\neq\vect{0}$, y por tanto invertible. El [Teorema “Factorización por el complemento de Schur”](../matematica-2/09-matrices-particionadas-y-complemento-de-schur.qmd#thm-factorizacion-schur) da $\mat{\Sigma}=\mat{L}\,\mathrm{diag}(\mat{\Sigma}_{11},\mat{S})\,\mat{L}^{\top}$ con $\mat{L}=\left(\begin{smallmatrix}\Imat&\mat{0}\\\mat{\Sigma}_{21}\mat{\Sigma}_{11}^{-1}&\Imat\end{smallmatrix}\right)$, porque $\mat{\Sigma}_{12}=\mat{\Sigma}_{21}^{\top}$ y $\mat{\Sigma}_{11}$ es simétrica, y $\det\mat{\Sigma}=\det\mat{\Sigma}_{11}\det\mat{S}$. Además, $\mat{S}^{-1}$ es el bloque inferior derecho de $\mat{\Sigma}^{-1}$ por la fórmula de la inversa por bloques del mismo teorema, y como un bloque diagonal de una matriz definida positiva es definido positivo, $\mat{S}$ es definida positiva. Entonces $\mat{\Sigma}^{-1}=\mat{L}^{-\top}\mathrm{diag}(\mat{\Sigma}_{11}^{-1},\mat{S}^{-1})\mat{L}^{-1}$, y con $\vect{u}=\vect{x}-\vect{\mu}$ y $\mat{L}^{-1}\vect{u}=(\vect{u}_1,\ \vect{u}_2-\mat{\Sigma}_{21}\mat{\Sigma}_{11}^{-1}\vect{u}_1)$,
+$$
+(\vect{x}-\vect{\mu})^{\top}\mat{\Sigma}^{-1}(\vect{x}-\vect{\mu})=\vect{u}_1^{\top}\mat{\Sigma}_{11}^{-1}\vect{u}_1+\bigl(\vect{u}_2-\mat{\Sigma}_{21}\mat{\Sigma}_{11}^{-1}\vect{u}_1\bigr)^{\top}\mat{S}^{-1}\bigl(\vect{u}_2-\mat{\Sigma}_{21}\mat{\Sigma}_{11}^{-1}\vect{u}_1\bigr).
+$$
+Sustituyendo esta descomposición y el determinante en la densidad, y con $k=k_1+k_2$, $f(\vect{x})=f_1(\vect{x}_1)\,g(\vect{x}_2\mid\vect{x}_1)$, donde $f_1$ es la densidad de $\N_{k_1}(\vect{\mu}_1,\mat{\Sigma}_{11})$ y $g(\cdot\mid\vect{x}_1)$ es la densidad de $\N_{k_2}(\vect{m}(\vect{x}_1),\mat{S})$ con $\vect{m}(\vect{x}_1)=\vect{\mu}_2+\mat{\Sigma}_{21}\mat{\Sigma}_{11}^{-1}(\vect{x}_1-\vect{\mu}_1)$. Como $g$ es una densidad que integra uno en $\vect{x}_2$, la marginal de $\vect{X}_1$ es $f_1$, que prueba (i), y la densidad condicional $f/f_1=g$ prueba (ii). Para (iii), si $\vect{X}_1$ y $\vect{X}_2$ son independientes, sus covarianzas cruzadas son nulas por la factorización de la esperanza. Recíprocamente, si $\mat{\Sigma}_{12}=\mat{0}$, entonces $\vect{m}=\vect{\mu}_2$ y $\mat{S}=\mat{\Sigma}_{22}$, de modo que $f=f_1\cdot f_2$ con $f_2$ la densidad de $\N(\vect{\mu}_2,\mat{\Sigma}_{22})$, y la proposición de independencia y factorización de densidades da la independencia.
+
+:::
+
+El resultado dice que, para la normal, la media condicional $\vect{m}(\vect{x}_1)$ es una función lineal de $\vect{x}_1$ y la covarianza condicional $\mat{S}$ no depende de $\vect{x}_1$. Con números, para $\vect{\mu}=(1,2)^{\top}$ y $\mat{\Sigma}=\left(\begin{smallmatrix}4&2\\2&3\end{smallmatrix}\right)$, $X_1\sim\N(1,4)$, y dado $X_1=3$, la media condicional de $X_2$ es $2+\tfrac24(3-1)=3$ y la varianza condicional es $3-\tfrac{2\cdot2}{4}=2$, menor que la marginal $3$ porque conocer $X_1$ reduce la incertidumbre. La densidad en el centro vale $(2\pi)^{-1}(\det\mat{\Sigma})^{-1/2}=1/(2\pi\sqrt8)=0.0563$, con $\det\mat{\Sigma}=12-4=8$.
+
+La clausura bajo transformaciones lineales se deduce del teorema anterior.
+
+::: {#cor-normal-lineal}
+## Transformaciones lineales de una normal
+
+Si $\vect{X}\sim\N_k(\vect{\mu},\mat{\Sigma})$, $\mat{A}\in\mathbb{R}^{p\times k}$ tiene rango $p$ y $\vect{b}\in\mathbb{R}^p$, entonces $\mat{A}\vect{X}+\vect{b}\sim\N_p(\mat{A}\vect{\mu}+\vect{b},\ \mat{A}\mat{\Sigma}\mat{A}^{\top})$. En particular, $\vect{a}^{\top}\vect{X}\sim\N(\vect{a}^{\top}\vect{\mu},\vect{a}^{\top}\mat{\Sigma}\vect{a})$ para $\vect{a}\neq\vect{0}$, y la suma de normales independientes $\N(\mu_i,\sigma_i^2)$ es normal con media $\sum\mu_i$ y varianza $\sum\sigma_i^2$.
+
+:::
+
+::: {.proof}
+Como $\mat{A}$ tiene $p$ filas independientes, se completan con $k-p$ filas $\mat{B}$ hasta una matriz invertible $\mat{M}=\left(\begin{smallmatrix}\mat{A}\\\mat{B}\end{smallmatrix}\right)$ por la [Proposición “Completar a una base y dimensión de los subespacios”](../matematica-2/02-independencia-lineal-base-y-dimension.qmd#prp-completar-base). La transformación afín $\vect{W}=\mat{M}\vect{X}$ tiene, por la fórmula de densidad afín de la [Ecuación de la nota “Transformaciones de variables aleatorias”](10-transformaciones-de-variables-aleatorias.qmd#eq-densidad-afin), densidad $f_{\vect{X}}(\mat{M}^{-1}\vect{w})/|\det\mat{M}|$. Con $\mat{\Omega}=\mat{M}\mat{\Sigma}\mat{M}^{\top}$, que es definida positiva, se tiene $(\mat{M}^{-1}\vect{w}-\vect{\mu})^{\top}\mat{\Sigma}^{-1}(\mat{M}^{-1}\vect{w}-\vect{\mu})=(\vect{w}-\mat{M}\vect{\mu})^{\top}\mat{\Omega}^{-1}(\vect{w}-\mat{M}\vect{\mu})$ y $\det\mat{\Omega}=(\det\mat{M})^2\det\mat{\Sigma}$, de modo que la densidad de $\vect{W}$ es la de $\N_k(\mat{M}\vect{\mu},\mat{\Omega})$. Las primeras $p$ coordenadas de $\vect{W}$ son $\mat{A}\vect{X}$, y por la parte (i) del teorema son $\N_p(\mat{A}\vect{\mu},\mat{A}\mat{\Sigma}\mat{A}^{\top})$, porque el bloque superior izquierdo de $\mat{\Omega}$ es $\mat{A}\mat{\Sigma}\mat{A}^{\top}$. Sumar $\vect{b}$ desplaza la densidad sin cambiar su forma. Si $X_i$ son normales independientes, el vector tiene densidad producto, que es la de una normal multivariante con covarianza diagonal, y la suma es $\vect{a}^{\top}\vect{X}$ con $\vect{a}=(1,\ldots,1)^{\top}$.
+
+:::
+
+Con el vector del ejemplo, $X_1+X_2\sim\N(3,\,4+3+2\cdot2)=\N(3,11)$, y $\Prob{X_1+X_2>6}=\Prob{Z>3/\sqrt{11}}=\Prob{Z>0.9045}=0.1829$.
+
+Finalmente, la suma de cuadrados de normales estándar independientes define una distribución que aparece en el contraste de hipótesis.
+
+::: {#def-chi-cuadrado}
+## Distribución chi cuadrado
+
+La distribución ***chi cuadrado*** con $k$ grados de libertad, $\chi^2_k$, es la ley de $Z_1^2+\cdots+Z_k^2$ con $Z_i$ independientes $\N(0,1)$.
+
+:::
+
+Como $\E[Z_i^2]=1$ y $\Var(Z_i^2)=\E[Z_i^4]-1=2$ por la [Proposición “Momentos de la normal estándar”](08-la-distribucion-normal-univariante.qmd#prp-momentos-normal), y los $Z_i^2$ son independientes, una variable $\chi^2_k$ tiene media $k$ y varianza $2k$. Para $\vect{X}\sim\N_k(\vect{\mu},\mat{\Sigma})$, la representación del teorema da $\vect{Z}=\mat{\Sigma}^{-1/2}(\vect{X}-\vect{\mu})$ con coordenadas $\N(0,1)$ independientes, de modo que $(\vect{X}-\vect{\mu})^{\top}\mat{\Sigma}^{-1}(\vect{X}-\vect{\mu})=\vect{Z}^{\top}\vect{Z}\sim\chi^2_k$. Con números, con $k=2$ la media es $2$, la varianza $4$, y $\Prob{\chi^2_1\leq3.84}=0.95$ como se vio en la nota de transformaciones.

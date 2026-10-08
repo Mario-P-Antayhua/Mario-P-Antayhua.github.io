@@ -1,0 +1,39 @@
+---
+title: "Aplicaciones del banco central I: tasa natural, brecha de producto e inflación subyacente"
+description: "Un modelo semiestructural de espacio-estado para estimar el producto potencial, la brecha del producto y la tasa de interés natural a partir de producto, inflación y tasa de política, con matrices explícitas y una simulación, y esquemas para el desempleo natural y el ciclo del crédito."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Aplicaciones]
+---
+
+Los bancos centrales publican estimaciones de variables que ningún dato mide: el producto potencial, la brecha del producto, la tasa de interés natural, la inflación subyacente. Las estimaciones se hacen con modelos que combinan relaciones económicas, que conectan las variables no observables con las observables, y un modelo estadístico para el movimiento de las primeras. El espacio-estado es el marco que reúne ambas cosas. Esta nota presenta la estructura de uno de esos modelos, con sus matrices, verifica con una simulación qué se puede y qué no se puede estimar, y señala cómo cambia para el desempleo natural y el ciclo del crédito.
+
+El modelo semiestructural más usado para la tasa natural tiene tres bloques. El producto observado $y_t$ (en logaritmos) es la suma del potencial $y^*_t$ y la brecha $\hat y_t$. El potencial crece a una tasa $g_t$ que cambia lentamente. La brecha depende de su pasado y de la diferencia entre la tasa real y la natural, porque una tasa real por encima de la natural enfría la economía. La inflación depende de su pasado y de la brecha. La tasa natural es la suma del crecimiento potencial anualizado y de un componente persistente $z_t$.
+
+::: {#def-modelo-tasa-natural}
+## Modelo semiestructural de la tasa natural
+
+Con $r_t$ la tasa real de política y $\pi_t$ la inflación, observadas, el modelo es
+$$
+\begin{aligned}
+y_t&=y^*_t+\hat y_t+\varepsilon_{1t}, & y^*_t&=y^*_{t-1}+g_{t-1}+\eta_{1t}, & g_t&=g_{t-1}+\eta_{2t},\\
+\hat y_t&=a_1\hat y_{t-1}-a_r\bigl(r_{t-1}-r^*_{t-1}\bigr)+\eta_{3t}, & r^*_t&=4g_t+z_t, & z_t&=\rho z_{t-1}+\eta_{4t},\\
+\pi_t&=b\pi_{t-1}+(1-b)\bar\pi+c\,\hat y_t+\varepsilon_{2t}.
+\end{aligned}
+$$ {#eq-modelo-tasa-natural}
+
+:::
+
+El estado es $\vect{\alpha}_t=(y^*_t,g_t,\hat y_t,z_t)^{\top}$ y las mediciones son $(y_t,\pi_t)$. Como $r^*_{t-1}=4g_{t-1}+z_{t-1}$ es una función de componentes de $\vect{\alpha}_{t-1}$, no hace falta un estado adicional. Las matrices son
+$$
+\mat{T}=\begin{pmatrix}1&1&0&0\\0&1&0&0\\0&4a_r&a_1&a_r\\0&0&0&\rho\end{pmatrix},\quad\vect{c}_t=\begin{pmatrix}0\\0\\-a_rr_{t-1}\\0\end{pmatrix},\quad\mat{Z}=\begin{pmatrix}1&0&1&0\\0&0&c&0\end{pmatrix},\quad\vect{d}_t=\begin{pmatrix}0\\b\pi_{t-1}+(1-b)\bar\pi\end{pmatrix},
+$$
+con $\mat{R}=\Imat_4$, $\mat{Q}=\mathrm{diag}(\sigma_{\eta1}^2,\ldots,\sigma_{\eta4}^2)$ y $\mat{H}=\mathrm{diag}(\sigma_{\varepsilon1}^2,\sigma_{\varepsilon2}^2)$, de modo que $N=2$, $m=4$, $r=4$. El vector $\vect{c}_t$ y el vector $\vect{d}_t$ contienen variables observadas en $t-1$, la tasa de política rezagada y la inflación rezagada. Esto es compatible con el filtro: lo único que se necesita es que dependan de la información anterior a $t$, pues entonces la distribución del estado condicional en $\mathcal{Y}_{t-1}$ sigue siendo normal con la media desplazada por esa cantidad conocida.
+
+La ecuación de la brecha, que usa el estado rezagado, se escribe como parte de $\mat{T}$: la fila 3 dice $\hat y_t=a_1\hat y_{t-1}-a_r\bigl(r_{t-1}-4g_{t-1}-z_{t-1}\bigr)+\eta_{3t}$, con el término observado $-a_rr_{t-1}$ en $\vect{c}_t$ y los términos $4a_rg_{t-1}+a_rz_{t-1}$ en la segunda y cuarta columnas de $\mat{T}$. Con ello el modelo es lineal y gaussiano y todo el desarrollo de las notas anteriores se aplica.
+
+Para ver qué se puede estimar, se simuló el modelo con $160$ trimestres, $a_1=0.8$, $a_r=0.1$, $\rho=0.9$, $b=0.7$, $c=0.2$, $\bar\pi=2$ y desvíos $(0.25,0.03,0.5,0.15)$ para las perturbaciones de transición y $(0.1,0.25)$ para las de medición, con la tasa de política dependiendo de la inflación rezagada más un componente exógeno. Con los parámetros verdaderos conocidos, el suavizador estima la brecha con correlación $0.94$ respecto de la verdadera y raíz del error cuadrático medio $0.33$, frente a una desviación estándar de la brecha de $0.93$. La tasa natural se estima con correlación $0.77$ y raíz del error cuadrático medio $0.51$, frente a una desviación estándar de $0.73$: mejora a una constante, pero en una proporción modesta. La banda del $95\,\%$ cubre el valor verdadero en el $90\,\%$ de las fechas, con ancho medio de $\pm0.82$.
+
+Es el resultado típico de estos modelos. La brecha se identifica bien, porque aparece en dos observaciones, el producto y la inflación, y tiene una persistencia que la distingue del ruido. La tasa natural, en cambio, solo afecta a la brecha a través de la diferencia con la tasa observada y con un coeficiente pequeño, de modo que los datos informan poco sobre ella. Una consecuencia práctica es que su estimación es sensible a las varianzas elegidas para sus perturbaciones, y por eso los resultados deben acompañarse siempre de la banda de incertidumbre.
+
+La misma estructura sirve para otras variables. En el desempleo natural, el estado contiene el desempleo de equilibrio $u^*_t$, que sigue un paseo aleatorio, y la brecha de desempleo $\tilde u_t=u_t-u^*_t$, un AR(2); la medición es $u_t=u^*_t+\tilde u_t$, y una curva de Phillips conecta la aceleración de la inflación con la brecha, $\Delta\pi_t=-\beta\tilde u_t+\varepsilon_t$, como segunda ecuación de medición. En el ciclo del crédito, la serie observada es la razón crédito-producto, que se descompone en una tendencia suave y un ciclo persistente exactamente como en la nota de tendencia y ciclo, y las desviaciones del ciclo respecto de cero señalan épocas de auge o contracción del crédito.

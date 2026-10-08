@@ -1,0 +1,51 @@
+---
+title: "El teorema de Slutsky y la aplicación continua"
+description: "La conservación de la convergencia en distribución bajo funciones continuas, el lema de equivalencia asintótica y el teorema de Slutsky para sumas, productos y cocientes con sucesiones que convergen en probabilidad a constantes."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Convergencia]
+---
+
+Los estimadores se construyen combinando otros estimadores, y su distribución límite se obtiene combinando los límites. Dos resultados lo permiten: el teorema de la aplicación continua, que dice que una función continua conserva la convergencia en distribución, y el teorema de Slutsky, que permite reemplazar un componente desconocido por un estimador consistente sin alterar el límite. Ambos se demuestran a partir de la definición de la [Nota “Convergencia en distribución”](17-convergencia-en-distribucion.qmd).
+
+::: {#thm-aplicacion-continua-distribucion}
+## Teorema de la aplicación continua
+
+Si $\vect{X}_n\overset{d}{\to}\vect{X}$ en $\mathbb{R}^k$ y $g:\mathbb{R}^k\to\mathbb{R}^m$ es continua, entonces $g(\vect{X}_n)\overset{d}{\to}g(\vect{X})$.
+
+:::
+
+::: {.proof}
+Sea $h:\mathbb{R}^m\to\mathbb{R}$ continua y acotada. La composición $h\circ g$ es continua y acotada, y por la definición de convergencia en distribución, $\E[h(g(\vect{X}_n))]\to\E[h(g(\vect{X}))]$. Como esto vale para toda $h$, $g(\vect{X}_n)\overset{d}{\to}g(\vect{X})$.
+
+:::
+
+Por ejemplo, si $X_n\overset{d}{\to}\N(0,1)$, entonces $X_n^2\overset{d}{\to}\chi^2_1$ por la [Definición “Distribución chi cuadrado”](13-la-distribucion-normal-multivariante.qmd#def-chi-cuadrado), y $\Prob{X_n^2\leq3.84}\to\Prob{\chi^2_1\leq3.84}=0.95$, porque $3.84$ es un punto de continuidad de la distribución límite. Para sustituir un componente aleatorio por una constante hace falta un lema que dice que variables asintóticamente indistinguibles tienen el mismo límite.
+
+::: {#lem-equivalencia-asintotica}
+## Equivalencia asintótica
+
+Si $\vect{X}_n\overset{d}{\to}\vect{X}$ y $\|\vect{Y}_n-\vect{X}_n\|\overset{p}{\to}0$, entonces $\vect{Y}_n\overset{d}{\to}\vect{X}$.
+
+:::
+
+::: {.proof}
+Sea $g\in C^3_b$ con $|g|\leq B$ y gradiente acotado por $L$. Por el teorema del valor medio, $|g(\vect{y})-g(\vect{x})|\leq L\|\vect{y}-\vect{x}\|$ y también $\leq2B$, de modo que para $\varepsilon>0$, $|\E[g(\vect{Y}_n)]-\E[g(\vect{X}_n)]|\leq L\varepsilon+2B\Prob{\|\vect{Y}_n-\vect{X}_n\|>\varepsilon}$. El límite superior es $L\varepsilon$ y, como $\varepsilon$ es arbitrario, la diferencia tiende a cero. Como $\E[g(\vect{X}_n)]\to\E[g(\vect{X})]$, también $\E[g(\vect{Y}_n)]\to\E[g(\vect{X})]$ para toda $g\in C^3_b$, y el [Teorema “Las funciones de prueba suaves bastan”](17-convergencia-en-distribucion.qmd#thm-funciones-prueba-suaves) da $\vect{Y}_n\overset{d}{\to}\vect{X}$.
+
+:::
+
+El teorema de Slutsky trata el caso en que una de las sucesiones converge en probabilidad a una constante. Esa constante puede ser el valor verdadero de un parámetro que se estima, y la conclusión permite usar la estimación en su lugar.
+
+::: {#thm-slutsky}
+## Teorema de Slutsky
+
+Si $\vect{X}_n\overset{d}{\to}\vect{X}$ en $\mathbb{R}^k$ y $\vect{Y}_n\overset{p}{\to}\vect{c}$ con $\vect{c}\in\mathbb{R}^m$ constante, entonces $(\vect{X}_n,\vect{Y}_n)\overset{d}{\to}(\vect{X},\vect{c})$. En consecuencia, para todo $g$ continua, $g(\vect{X}_n,\vect{Y}_n)\overset{d}{\to}g(\vect{X},\vect{c})$; en particular, con variables escalares: (i) $X_n+Y_n\overset{d}{\to}X+c$; (ii) $X_nY_n\overset{d}{\to}cX$; (iii) si $c\neq0$, $X_n/Y_n\overset{d}{\to}X/c$.
+
+:::
+
+::: {.proof}
+Si $h$ es continua y acotada en $\mathbb{R}^{k+m}$, la función $\vect{x}\mapsto h(\vect{x},\vect{c})$ es continua y acotada en $\mathbb{R}^k$, de modo que $(\vect{X}_n,\vect{c})\overset{d}{\to}(\vect{X},\vect{c})$. La diferencia $(\vect{X}_n,\vect{Y}_n)-(\vect{X}_n,\vect{c})=(\vect{0},\vect{Y}_n-\vect{c})$ tiende a cero en probabilidad, y el lema de equivalencia asintótica da la primera afirmación. Las partes (i) y (ii) se obtienen con las funciones continuas $g(x,y)=x+y$ y $g(x,y)=xy$ y el teorema de la aplicación continua. Para (iii), la función $x/y$ no es continua en $y=0$, pero se reemplaza por $g(x,y)=x/y$ si $|y|\geq|c|/2$ y $g(x,y)=x\,\mathrm{sgn}(c)\,2/|c|$ en otro caso, que es continua en todo $\mathbb{R}^2$. Como $\Prob{|Y_n|<|c|/2}\to0$, la diferencia $g(X_n,Y_n)-X_n/Y_n$ es cero con probabilidad que tiende a uno, de modo que tiende a cero en probabilidad, y $g(X_n,Y_n)\overset{d}{\to}g(X,c)=X/c$. El lema de equivalencia asintótica da $X_n/Y_n\overset{d}{\to}X/c$.
+
+:::
+
+Con números, si $X_n\sim\N(0,1)$ para todo $n$ e $Y_n\overset{p}{\to}2$, entonces $X_nY_n\overset{d}{\to}2Z$ con $Z\sim\N(0,1)$, es decir, $\N(0,4)$, y $\Prob{X_nY_n\leq2}\to\Prob{Z\leq1}=0.8413$. La hipótesis de que el segundo componente converge a una constante es esencial: si $X_n\sim\N(0,1)$ y $Y_n=-X_n$, entonces cada sucesión converge en distribución a $\N(0,1)$, pero $X_n+Y_n=0$ no converge a la suma de dos normales independientes, porque el comportamiento conjunto de $(X_n,Y_n)$ no se deduce de las leyes marginales.

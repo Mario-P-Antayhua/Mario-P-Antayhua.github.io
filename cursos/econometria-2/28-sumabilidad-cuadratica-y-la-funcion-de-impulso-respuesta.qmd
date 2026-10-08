@@ -1,0 +1,34 @@
+---
+title: "Sumabilidad cuadrática y la función de impulso-respuesta"
+description: "La sumabilidad cuadrática de los coeficientes de una media móvil infinita como condición para la existencia del proceso estacionario, su diferencia con la sumabilidad absoluta, la función de impulso-respuesta y el multiplicador de largo plazo."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Predicción]
+---
+
+La descomposición de Wold produce una media móvil infinita cuyos coeficientes cumplen $\sum_j\psi_j^2<\infty$, una condición más débil que la sumabilidad absoluta que se usó para los ARMA. Esta nota muestra que es exactamente la condición para que la serie defina un proceso estacionario de varianza finita, distingue las propiedades que requieren la condición fuerte, y presenta la interpretación económica de los coeficientes como respuesta a un choque.
+
+::: {#prp-sumabilidad-cuadratica}
+## Procesos de media móvil con coeficientes de cuadrado sumable
+
+Sean $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$ y $\{\psi_j\}$ con $\sum_{j\geq0}\psi_j^2<\infty$. Las sumas parciales $\sum_{j=0}^n\psi_j\varepsilon_{t-j}$ convergen en media cuadrática a una variable $Y_t$, y $\mu+Y_t$ es débilmente estacionario con media $\mu$ y $\gamma(h)=\sigma^2\sum_{j\geq0}\psi_j\psi_{j+|h|}$, finita y con $|\gamma(h)|\leq\gamma(0)=\sigma^2\sum_j\psi_j^2$.
+
+:::
+
+::: {.proof}
+Para $n>m$, las variables $\varepsilon_{t-j}$ son ortogonales, y Pitágoras da $\|\sum_{m<j\leq n}\psi_j\varepsilon_{t-j}\|^2=\sigma^2\sum_{m<j\leq n}\psi_j^2\to0$ por ser colas de una serie convergente. Entonces las sumas parciales son de Cauchy y convergen en $L^2$ por la completitud. La media de $Y_t$ es cero, y como en el caso de coeficientes sumables, la covarianza del límite es el límite de las covarianzas de las sumas parciales, $\sigma^2\sum_{j}\psi_j\psi_{j+|h|}$, que converge absolutamente por la desigualdad de Cauchy–Schwarz para series, $\sum_j|\psi_j\psi_{j+h}|\leq(\sum\psi_j^2)^{1/2}(\sum\psi_{j+h}^2)^{1/2}\leq\sum_j\psi_j^2$. Ni la media ni la covarianza dependen de $t$.
+
+:::
+
+La sumabilidad absoluta es más fuerte y se usó, en la nota de ergodicidad, para obtener la sumabilidad de las autocovarianzas. Con solo cuadrado sumable, la autocovarianza existe pero puede decaer lentamente. Sea $\psi_j=1/(j+1)$, que cumple $\sum\psi_j^2=\pi^2/6<\infty$ pero $\sum\psi_j=\infty$. Por fracciones parciales, $\sum_{j\geq0}\frac{1}{(j+1)(j+1+h)}=\frac1h\sum_{j\geq0}\Bigl(\frac1{j+1}-\frac1{j+1+h}\Bigr)=\frac{H_h}h$, donde $H_h=1+\tfrac12+\cdots+\tfrac1h$ es el número armónico y la suma telescópica deja los primeros $h$ términos. Entonces $\gamma(0)=1.645\,\sigma^2$, $\gamma(1)=\sigma^2$, $\gamma(2)=0.75\,\sigma^2$ y $\gamma(3)=0.611\,\sigma^2$: la autocovarianza decae como $\ln h/h$, mucho más lentamente que cualquier decaimiento geométrico. Este es el tipo de proceso con memoria larga, que no es un ARMA, y la descomposición de Wold lo incluye.
+
+Los coeficientes $\psi_j$ tienen una lectura causal. En el proceso $X_t=\mu+\sum_j\psi_j\varepsilon_{t-j}$, un choque unitario en $\varepsilon_t$, con los demás fijos, cambia $X_{t+h}$ en $\psi_h$ unidades.
+
+::: {#def-irf}
+## Función de impulso-respuesta y multiplicador de largo plazo
+
+La ***función de impulso-respuesta*** del proceso es $h\mapsto\psi_h$, $h\geq0$, el efecto en $X_{t+h}$ de un aumento unitario del choque $\varepsilon_t$. La ***respuesta acumulada*** a horizonte $h$ es $\sum_{j=0}^h\psi_j$, y si $\sum_j|\psi_j|<\infty$ el ***multiplicador de largo plazo*** es $\psi(1)=\sum_{j=0}^{\infty}\psi_j$.
+
+:::
+
+La respuesta al impulso describe la persistencia de un choque. Con números, en el AR(1) con $\phi=0.8$, $\psi_h=0.8^h$, que decae geométricamente: el efecto de un choque se reduce a la mitad en $\ln0.5/\ln0.8=3.1$ períodos, y el multiplicador de largo plazo es $\psi(1)=1/(1-0.8)=5$. En el AR(2) con $\vect{\phi}=(1.2,-0.35)$ la respuesta es $1,\,1.2,\,1.09,\,0.888,\,0.684,\ldots$: crece en el primer período y luego decae, con multiplicador $1/\phi(1)=6.67$. En el ARMA(1,1) con $\phi=0.8$ y $\theta=0.4$ es $\psi_h=1.2\cdot0.8^{h-1}$, con multiplicador $1+1.2/0.2=7$, igual a $\theta(1)/\phi(1)=1.4/0.2$. En un MA(q) la respuesta se anula después de $q$ períodos y el multiplicador es $\theta(1)=1+\theta_1+\cdots+\theta_q$. En el paseo aleatorio, $X_t=X_0+\sum_{j\leq t}\varepsilon_j$, el efecto de un choque es $\psi_h=1$ para todo $h$, permanente: no decae, y es la razón por la que ese proceso no es estacionario.

@@ -1,0 +1,448 @@
+---
+title: "Conjuntos, pertenencia y operaciones básicas"
+description: "Conjuntos, igualdad y subconjunto, especificación, operaciones, uniones e intersecciones de familias, leyes de De Morgan y conjunto potencia."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Teoría de conjuntos]
+---
+
+La lógica de la nota anterior gobierna cómo se combinan proposiciones;
+corresponde ahora ocuparse de los objetos sobre los que esas proposiciones se
+pronuncian con más frecuencia en matemáticas, que son los conjuntos.
+
+El tratamiento que sigue es deliberadamente ingenuo, en el sentido técnico
+del término: se asume una comprensión intuitiva de qué es un conjunto y se
+enuncian, sin una lista exhaustiva de axiomas, los principios que permiten
+fabricar conjuntos nuevos a partir de otros y compararlos entre sí. Ese nivel
+de rigor, intermedio entre la vaguedad del lenguaje cotidiano y la
+formalidad completa de una teoría axiomática, es exactamente el que hace
+falta para sostener todo lo que viene después.
+
+Todo el edificio descansa sobre una única noción que no se define, del mismo
+modo que en la lógica proposicional no se definió qué es un valor de verdad.
+
+::: {#def-conjunto}
+## Conjunto, elemento, pertenencia
+
+Un ***conjunto*** es una colección de objetos, llamados sus
+***elementos***. Si un objeto $x$ es elemento de un conjunto $A$,
+se escribe $x\in A$ y se lee “$x$ pertenece a $A$”; en caso contrario se
+escribe $x\notin A$.
+
+:::
+
+La pertenencia es la noción primitiva sobre la que se construye todo lo
+demás, y no se define en términos de nociones más simples. Esto no es una
+carencia del desarrollo, sino una necesidad lógica: toda cadena de
+definiciones debe empezar en algún punto que se acepte sin definir, del mismo
+modo que en geometría elemental los puntos y las rectas no se definen, sino
+que se describe qué se puede hacer con ellos.
+
+El primer principio que rige a los conjuntos establece cuándo dos de ellos
+deben considerarse el mismo, y la respuesta es la más económica posible: un
+conjunto queda determinado enteramente por cuáles son sus elementos, sin
+importar el orden en que se listen ni cuántas veces se repitan en una
+eventual enumeración.
+
+::: {#def-igualdad-conjuntos}
+## Igualdad de conjuntos y subconjunto
+
+Dos conjuntos $A$ y $B$ son ***iguales***, lo que se escribe
+$A=B$, si tienen exactamente los mismos elementos, es decir, si
+$\forall x,\ (x\in A \leftrightarrow x\in B)$. Se dice que $A$ es
+***subconjunto*** de $B$, lo que se escribe $A\subseteq B$, si
+todo elemento de $A$ es también elemento de $B$, esto es, si
+$\forall x,\ (x\in A \rightarrow x\in B)$.
+
+:::
+
+Obsérvese que ambas nociones se han escrito con el vocabulario de la nota
+anterior: la igualdad mediante un bicondicional cuantificado y la inclusión
+mediante un condicional cuantificado. Esa traducción no es un capricho
+notacional, porque permite aplicar de inmediato las equivalencias lógicas ya
+demostradas, y de ahí sale el criterio práctico que más se usará para probar
+igualdades entre conjuntos.
+
+::: {#prp-doble-inclusion}
+## Criterio de igualdad por doble inclusión
+
+Dados dos conjuntos $A$ y $B$, se cumple $A=B$ si y solo si $A\subseteq B$ y
+$B\subseteq A$.
+
+:::
+
+::: {.proof}
+Por la @def-igualdad-conjuntos, la afirmación $A=B$ equivale a la
+proposición cuantificada
+
+$$
+\forall x,\ \bigl(x\in A \leftrightarrow x\in B\bigr).
+$$
+
+Ahora bien, la [Proposición “Equivalencias lógicas fundamentales”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#prp-equivalencias) estableció que todo bicondicional es
+equivalente a la conjunción de dos condicionales. Aplicando esa equivalencia
+dentro del cuantificador,
+
+$$
+\forall x,\ \Bigl[\bigl(x\in A\rightarrow x\in B\bigr)\wedge
+  \bigl(x\in B\rightarrow x\in A\bigr)\Bigr].
+$$
+
+Como una afirmación universal sobre una conjunción equivale a la conjunción
+de dos afirmaciones universales, esta expresión se descompone en las dos
+afirmaciones separadas $\forall x,\ (x\in A\rightarrow x\in B)$ y
+$\forall x,\ (x\in B\rightarrow x\in A)$, que son precisamente, por la
+@def-igualdad-conjuntos, las inclusiones $A\subseteq B$ y
+$B\subseteq A$.
+
+:::
+
+Esta proposición, de apariencia modesta, es en realidad el método de
+demostración que se usará sin excepción cada vez que haga falta probar que
+dos conjuntos construidos de maneras distintas son en realidad el mismo.
+
+::: {#idea-doble-inclusion-metodo .callout-tip appearance="simple" title="Idea central"}
+Para probar $A=B$ se demuestran las dos inclusiones por separado, cada una
+como una demostración directa o por casos de un condicional, exactamente con
+las herramientas de la [Nota “Métodos de demostración”](04-metodos-de-demostracion.qmd).
+
+:::
+
+El segundo principio permite fabricar subconjuntos nuevos a partir de una
+propiedad que distinga a algunos elementos de otros dentro de un conjunto ya
+dado.
+
+::: {#def-especificacion}
+## Especificación
+
+Dado un conjunto $A$ y una función proposicional $P(x)$, el
+***subconjunto de $A$ especificado por $P$*** es
+
+$$
+\{x\in A : P(x)\} := \{x : x\in A \wedge P(x)\},
+$$ {#eq-especificacion}
+
+es decir, el conjunto de todos los elementos de $A$ para los cuales $P(x)$ es
+verdadera.
+
+:::
+
+Un detalle de esta definición merece subrayarse, porque no es una precaución
+gratuita. La construcción exige partir de un conjunto $A$ ya existente y no
+permite formar, sin más, “el conjunto de todos los objetos que satisfacen
+$P$” sin anclarlo a un universo previo. Esa restricción es precisamente lo
+que evita las paradojas de autorreferencia análogas a la de la
+[Nota “la proposición autorreferencial no es un descuido”](01-proposiciones-y-conectores-logicos.qmd#nota-paradoja): si se permitiera especificar sin cota, podría formarse
+el conjunto de todos los conjuntos que no se pertenecen a sí mismos, y
+preguntarse si ese conjunto se pertenece o no conduciría a la misma
+contradicción sin salida que producía “esta afirmación es falsa”.
+
+Antes de definir las operaciones habituales conviene registrar el conjunto
+más pequeño posible, que aparecerá constantemente.
+
+::: {#def-vacio}
+## Conjunto vacío
+
+El ***conjunto vacío***, denotado $\varnothing$, es el conjunto
+que no tiene ningún elemento.
+
+:::
+
+La definición habla de “el” conjunto vacío, en singular, y esa elección del
+artículo definido requiere justificación: nada garantiza a priori que no
+haya varios conjuntos distintos, todos sin elementos.
+
+::: {#prp-unicidad-vacio}
+## Unicidad del conjunto vacío
+
+Existe un único conjunto sin elementos.
+
+:::
+
+::: {.proof}
+Supóngase que $E_1$ y $E_2$ son dos conjuntos sin elementos, y pruébese que
+son iguales usando el criterio de doble inclusión de la
+@prp-doble-inclusion.
+
+Para la inclusión $E_1\subseteq E_2$, hay que establecer la afirmación
+
+$$
+\forall x,\ \bigl(x\in E_1\rightarrow x\in E_2\bigr),
+$$
+
+que resulta verdadera por verdad vacua, según la [Nota “verdad vacua”](03-cuantificadores-y-su-negacion.qmd#nota-vacua): no existe
+ningún $x$ que pertenezca a $E_1$, de modo que la hipótesis del condicional
+nunca se cumple y el condicional nunca puede ser refutado.
+
+El mismo argumento, intercambiando los papeles de $E_1$ y $E_2$, prueba la
+inclusión recíproca $E_2\subseteq E_1$. Por la
+@prp-doble-inclusion, se concluye $E_1=E_2$.
+
+:::
+
+Con la especificación disponible pueden definirse ya las operaciones usuales
+entre conjuntos. Todas ellas producen subconjuntos de un mismo conjunto
+universal $U$ que se fija de antemano según el contexto, y todas se escriben
+mediante los conectores lógicos de la nota anterior, lo cual no es
+casualidad y tendrá consecuencias inmediatas.
+
+::: {#def-operaciones-conjuntos}
+## Unión, intersección, diferencia y complemento
+
+Sean $A,B\subseteq U$. Se definen
+
+$$
+\begin{aligned}
+A\cup B &:= \{x\in U : x\in A \vee x\in B\}, \\[4pt]
+  A\cap B &:= \{x\in U : x\in A \wedge x\in B\}, \\[4pt]
+  A\setminus B &:= \{x\in U : x\in A \wedge x\notin B\}, \\[4pt]
+  A^{c} &:= U\setminus A = \{x\in U : x\notin A\}.
+\end{aligned}
+$$ {#eq-union}
+
+Se dice que $A$ y $B$ son ***disjuntos*** si
+$A\cap B=\varnothing$.
+
+:::
+
+La correspondencia salta a la vista: la unión se define con la disyunción, la
+intersección con la conjunción y el complemento con la negación. De ahí que
+las leyes lógicas ya demostradas tengan una contraparte exacta en el lenguaje
+de conjuntos, sin necesidad de ningún argumento nuevo.
+
+::: {#prp-demorgan-conjuntos}
+## Leyes de De Morgan para conjuntos
+
+Para cualesquiera $A,B\subseteq U$,
+
+$$
+(A\cup B)^{c} = A^{c}\cap B^{c},
+  \qquad
+  (A\cap B)^{c} = A^{c}\cup B^{c}.
+$$ {#eq-demorgan-conjuntos}
+
+:::
+
+::: {.proof}
+Se prueba la primera igualdad, y la segunda se obtiene de manera idéntica
+partiendo de la otra ley de De Morgan lógica.
+
+En lugar de verificar las dos inclusiones por separado, conviene aquí
+construir una cadena de equivalencias, porque cada paso de la traducción
+entre conjuntos y lógica es reversible. Para todo $x\in U$, y abreviando
+$P:\equiv x\in(A\cup B)^{c}$ para no reescribir esa expresión completa en
+cada línea,
+
+$$
+\begin{aligned}
+P &\;\equiv\; \neg\bigl(x\in A\vee x\in B\bigr) \\[4pt]
+  P &\;\equiv\; \neg(x\in A)\wedge\neg(x\in B) \\[4pt]
+  P &\;\equiv\; x\in A^{c}\wedge x\in B^{c} \\[4pt]
+  P &\;\equiv\; x\in A^{c}\cap B^{c},
+\end{aligned}
+$$
+
+donde el primer paso aplica la definición de complemento y de unión, el
+segundo es exactamente la ley de De Morgan lógica de la
+[Proposición “Equivalencias lógicas fundamentales”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#prp-equivalencias) aplicada a las proposiciones $x\in A$ y $x\in B$,
+el tercero vuelve a traducir a lenguaje de conjuntos y el cuarto aplica la
+definición de intersección.
+
+Como la cadena muestra que $x\in(A\cup B)^c$ si y solo si
+$x\in A^c\cap B^c$, ambos conjuntos tienen exactamente los mismos elementos
+y, por la @def-igualdad-conjuntos, son iguales.
+
+:::
+
+Esta demostración ilustra un principio general que ahorrará trabajo repetidas
+veces en lo que sigue.
+
+::: {#idea-demorgan-traduccion .callout-tip appearance="simple" title="Idea central"}
+Toda identidad entre conjuntos definidos mediante $\cup$, $\cap$ y
+complemento se traduce, elemento a elemento, en una equivalencia lógica entre
+proposiciones del tipo $x\in A$; y esa equivalencia lógica ya fue demostrada,
+o puede demostrarse, con las herramientas de la [Proposición “Equivalencias lógicas fundamentales”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#prp-equivalencias). La
+teoría de conjuntos elemental no introduce, en este sentido, ninguna
+dificultad genuinamente nueva respecto de la lógica proposicional: solo
+cambia el vocabulario en el que se enuncian los mismos hechos.
+
+:::
+
+Las operaciones binarias no agotan lo que hace falta. Las construcciones que
+siguen en el curso trabajan con colecciones arbitrarias de conjuntos, finitas
+o infinitas, y con las leyes que relacionan unas operaciones con otras.
+
+::: {#def-union-familia}
+## Uniones e intersecciones de una familia
+
+Sea $\{A_i\}_{i\in I}$ una familia de subconjuntos de $U$ indexada por un
+conjunto $I$. Su ***unión*** y su ***intersección*** son
+$$
+\bigcup_{i\in I}A_i := \{x\in U : \exists i\in I,\ x\in A_i\},
+\qquad
+\bigcap_{i\in I}A_i := \{x\in U : \forall i\in I,\ x\in A_i\}.
+$$
+
+:::
+
+Para $I=\{1,2\}$ se recuperan la unión y la intersección binarias. La
+diferencia importante es que $I$ puede ser infinito: por ejemplo, con
+$A_n=\left[0,\tfrac1n\right]$ para $n\in\mathbb{N}$, la unión de la familia es
+$[0,1]$ y la intersección es $\{0\}$, porque el único punto que pertenece a
+todos los intervalos es el origen.
+
+Las leyes de De Morgan se extienden a estas operaciones, y la demostración usa
+exactamente la negación de cuantificadores.
+
+::: {#prp-demorgan-familias}
+## Leyes de De Morgan para familias
+
+Para toda familia $\{A_i\}_{i\in I}$ de subconjuntos de $U$,
+$$
+\Bigl(\bigcup_{i\in I}A_i\Bigr)^{c}=\bigcap_{i\in I}A_i^{c},
+\qquad
+\Bigl(\bigcap_{i\in I}A_i\Bigr)^{c}=\bigcup_{i\in I}A_i^{c}.
+$$
+
+:::
+
+::: {.proof}
+Se procede elemento a elemento, como en la @prp-demorgan-conjuntos. Para
+$x\in U$, la pertenencia a la izquierda de la primera igualdad se traduce en
+$$
+x\in\Bigl(\bigcup_{i\in I}A_i\Bigr)^{c}\;\equiv\;\neg\bigl(\exists i\in I,\ x\in A_i\bigr).
+$$
+
+Por el [Teorema “Negación de proposiciones cuantificadas”](03-cuantificadores-y-su-negacion.qmd#thm-negacion-cuantificadores), la negación de un cuantificador
+existencial es un universal con la propiedad negada, de modo que esa
+proposición equivale a $\forall i\in I,\ x\notin A_i$, es decir, a
+$\forall i\in I,\ x\in A_i^{c}$, que es la pertenencia de $x$ a
+$\bigcap_{i}A_i^{c}$. Los dos conjuntos tienen los mismos elementos y son
+iguales.
+
+La segunda igualdad se obtiene del mismo modo, intercambiando los papeles del
+cuantificador universal y del existencial: $x$ pertenece al complemento de la
+intersección si y solo si no ocurre que $x\in A_i$ para todo $i$, esto es, si
+y solo si existe un $i$ con $x\in A_i^{c}$.
+
+:::
+
+Las dos operaciones binarias se relacionan además mediante leyes de
+distributividad, análogas a la que vincula la suma y el producto de números.
+
+::: {#prp-distributividad}
+## Leyes distributivas
+
+Para $A,B,C\subseteq U$,
+$$
+A\cap(B\cup C)=(A\cap B)\cup(A\cap C),
+\qquad
+A\cup(B\cap C)=(A\cup B)\cap(A\cup C).
+$$
+
+:::
+
+::: {.proof}
+Para la primera igualdad se usa la doble inclusión de la
+@prp-doble-inclusion. Si $x\in A\cap(B\cup C)$, entonces $x\in A$ y, además,
+$x\in B$ o $x\in C$; en el primer caso $x\in A\cap B$ y en el segundo
+$x\in A\cap C$, de modo que $x$ pertenece a la unión de ambos. Recíprocamente,
+si $x\in(A\cap B)\cup(A\cap C)$, entonces $x$ está en $A$ y en $B$, o en $A$ y
+en $C$; en ambos casos $x\in A$ y $x\in B\cup C$, es decir, $x\in A\cap(B\cup C)$.
+
+Para la segunda, se aplica la primera a los complementos y se toman
+complementos de nuevo. Por la @prp-demorgan-conjuntos y la primera igualdad,
+$$
+\begin{aligned}
+\bigl(A\cup(B\cap C)\bigr)^{c} &= A^{c}\cap\bigl(B^{c}\cup C^{c}\bigr) \\[4pt]
+\bigl(A\cup(B\cap C)\bigr)^{c} &= \bigl(A^{c}\cap B^{c}\bigr)\cup\bigl(A^{c}\cap C^{c}\bigr) \\[4pt]
+\bigl(A\cup(B\cap C)\bigr)^{c} &= \bigl((A\cup B)\cap(A\cup C)\bigr)^{c},
+\end{aligned}
+$$
+donde el último paso aplica De Morgan a cada término. Dos conjuntos con el
+mismo complemento son iguales, y la segunda igualdad queda establecida.
+
+:::
+
+Queda por introducir una construcción que produce, a partir de un conjunto,
+otro considerablemente más grande.
+
+::: {#def-potencia}
+## Conjunto potencia
+
+Dado un conjunto $A$, el ***conjunto potencia*** de $A$, denotado
+$\mathcal{P}(A)$, es el conjunto de todos los subconjuntos de $A$, esto es,
+$\mathcal{P}(A) := \{S : S\subseteq A\}$.
+
+:::
+
+Conviene ver la definición en funcionamiento sobre un conjunto pequeño, donde
+puedan listarse todos sus elementos sin omitir ninguno. Tomando $A=\{1,2\}$,
+los subconjuntos posibles se obtienen decidiendo, para cada uno de los dos
+elementos, si se incluye o no; las cuatro decisiones posibles producen
+
+$$
+\mathcal{P}(A)=\bigl\{\varnothing,\ \{1\},\ \{2\},\ \{1,2\}\bigr\},
+$$
+
+un conjunto de cuatro elementos, cada uno de los cuales es a su vez un
+conjunto. Con tres elementos el mismo razonamiento daría ocho subconjuntos, y
+ese patrón de duplicación es exactamente el que la
+@prp-cardinalidad-potencia establecerá en general.
+
+Los dos casos extremos de esta lista merecen comentario, porque suelen
+olvidarse. El conjunto vacío pertenece a $\mathcal{P}(A)$ para cualquier $A$,
+puesto que $\varnothing\subseteq A$ es verdadero por vacuidad según la
+@prp-unicidad-vacio; y el propio $A$ pertenece siempre a
+$\mathcal{P}(A)$, porque todo conjunto es subconjunto de sí mismo, al
+cumplirse trivialmente $\forall x,\ (x\in A\rightarrow x\in A)$.
+
+El patrón de cuatro elementos para un conjunto de dos no es casual, y admite
+una fórmula general que se demuestra con la primera aplicación seria del
+principio de inducción.
+
+::: {#prp-cardinalidad-potencia}
+## Cardinalidad del conjunto potencia
+
+Si $A$ es un conjunto finito con $n$ elementos, entonces $\mathcal{P}(A)$
+tiene $2^{n}$ elementos.
+
+:::
+
+::: {.proof}
+Se procede por inducción sobre $n$, usando el [Teorema “Principio de inducción matemática”](05-el-principio-de-induccion-matematica.qmd#thm-induccion), con la
+salvedad de que aquí conviene empezar en $n=0$ en lugar de $n=1$, variante
+del principio que se justifica exactamente igual desplazando la base.
+
+Para la base de inducción, tómese $n=0$, de modo que $A=\varnothing$. El
+único subconjunto del conjunto vacío es el propio $\varnothing$, así que
+$\mathcal{P}(A)=\{\varnothing\}$, que tiene exactamente un elemento; y en
+efecto $2^{0}=1$, con lo cual la fórmula se cumple.
+
+Para el paso inductivo, supóngase como hipótesis que todo conjunto con $k$
+elementos tiene $2^{k}$ subconjuntos, y sea $A$ un conjunto con $k+1$
+elementos. Fíjese un elemento particular $a\in A$ y escríbase
+$A':=A\setminus\{a\}$, que tiene $k$ elementos y al cual sí se aplica la
+hipótesis de inducción.
+
+El argumento consiste ahora en clasificar los subconjuntos de $A$ en dos
+grupos excluyentes, según contengan o no al elemento distinguido $a$. Si
+$a\notin S$, entonces $S\subseteq A'$, y por hipótesis de inducción hay
+exactamente $2^{k}$ subconjuntos de esta clase. Si $a\in S$, entonces
+$S\setminus\{a\}\subseteq A'$, y la correspondencia que a cada subconjunto de
+$A'$ le asocia ese mismo subconjunto con $a$ añadido es biyectiva, de modo
+que también hay exactamente $2^{k}$ subconjuntos de la segunda clase.
+
+Sumando ambos grupos, que son disjuntos y agotan todos los subconjuntos de
+$A$,
+
+$$
+\bigl|\mathcal{P}(A)\bigr| = 2^{k}+2^{k} = 2\cdot 2^{k} = 2^{k+1},
+$$
+
+que es lo que la fórmula predice para un conjunto de $k+1$ elementos.
+
+Por el principio de inducción, $|\mathcal{P}(A)|=2^{n}$ para todo natural
+$n$.
+
+:::

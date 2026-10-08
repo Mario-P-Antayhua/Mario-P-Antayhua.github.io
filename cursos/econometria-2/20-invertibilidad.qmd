@@ -1,0 +1,46 @@
+---
+title: "Invertibilidad"
+description: "La invertibilidad de un proceso de medias móviles, la representación autorregresiva de orden infinito que permite recuperar los choques a partir de los datos, y la reflexión de raíces que muestra que siempre existe una representación invertible con la misma autocovarianza."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+Un modelo de medias móviles expresa la serie en función de choques que no se observan. Para usar el modelo en estimación y en predicción hace falta poder recuperar esos choques a partir de los datos observados. Eso es posible solo para ciertas representaciones, las invertibles, y la nota anterior mostró que cada autocovarianza admite al menos dos representaciones. Esta nota caracteriza la invertibilidad con las raíces del polinomio, demuestra que siempre hay una representación invertible y la usa como convención.
+
+::: {#def-invertibilidad}
+## Proceso MA(q) invertible
+
+Un MA(q), $X_t=\mu+\theta(L)\varepsilon_t$, es ***invertible*** si todas las raíces de $\theta(z)$ están fuera del círculo unitario.
+
+:::
+
+La invertibilidad permite escribir cada choque como una combinación del pasado de la serie.
+
+::: {#thm-ar-infinito}
+## Representación autorregresiva de orden infinito
+
+Si el MA(q) es invertible, existen coeficientes $\pi_0=1,\pi_1,\pi_2,\ldots$ con $\sum_j|\pi_j|<\infty$, los coeficientes de la serie de $1/\theta(z)$, tales que $\varepsilon_t=\sum_{j\geq0}\pi_j(X_{t-j}-\mu)$ en media cuadrática. En consecuencia, $\varepsilon_t$ pertenece al subespacio cerrado generado por $\{X_s:s\leq t\}$, y $X_t-\mu=-\sum_{j\geq1}\pi_jX_{t-j}+\varepsilon_t$.
+
+:::
+
+::: {.proof}
+Sea $Y_t=X_t-\mu=\theta(L)\varepsilon_t$, un proceso estacionario de varianza acotada. Por el teorema de inversión de un polinomio con raíces fuera del círculo, la ecuación $\theta(L)W_t=Y_t$ tiene una única solución con varianza acotada, $W_t=\sum_j\pi_jY_{t-j}$, con $\pi(z)\theta(z)=1$ y $\sum|\pi_j|<\infty$. El proceso $\varepsilon_t$ es una solución con varianza acotada, de modo que $\varepsilon_t=W_t$. Las sumas parciales $\sum_{j\leq n}\pi_jY_{t-j}$ pertenecen al subespacio generado por los valores pasados y presentes de $X$, y su límite en media cuadrática pertenece a su clausura.
+
+:::
+
+Con números, para el MA(1) con $\theta=0.5$, $\pi(z)=1/(1+0.5z)=\sum_j(-0.5)^jz^j$, de modo que $\varepsilon_t=\sum_j(-0.5)^j(X_{t-j}-\mu)$ y los coeficientes decaen geométricamente: $1,\,-0.5,\,0.25,\,-0.125,\ldots$ Con $\theta=2$ el polinomio $1+2z$ tiene raíz $z=-0.5$ dentro del círculo, y la serie $\sum_j(-2)^j$ diverge, de modo que no se pueden recuperar los choques de esa forma. La no unicidad de la representación se resuelve reflejando las raíces que están dentro del círculo.
+
+::: {#prp-reflexion-raices}
+## Reflexión de raíces
+
+Sea $X_t=\mu+\theta(L)\varepsilon_t$ un MA(q) con $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$ y $\theta(z)=\prod_{j=1}^q(1-a_jz)$. Si se reemplazan los factores con $|a_k|>1$ (raíces $1/a_k$ dentro del círculo) por $(1-z/a_k)$, y $\sigma^2$ por $\sigma^2\prod_k|a_k|^2$, tomados sobre los reflejados, se obtiene un MA(q) con la misma función de autocovarianza y todas sus raíces sobre o fuera del círculo.
+
+:::
+
+::: {.proof}
+La función generadora de autocovarianzas, $g(z)=\sum_{h=-q}^{q}\gamma(h)z^h$, satisface $g(z)=\sigma^2\theta(z)\theta(z^{-1})$ para $z\neq0$, porque $\sigma^2\sum_h\sum_j\theta_j\theta_{j+h}z^h=\sigma^2\sum_{j}\theta_jz^{-j}\sum_{k}\theta_kz^k$ con $k=j+h$. Una función de este tipo, un polinomio de Laurent, determina sus coeficientes $\gamma(h)$. Cada factor satisface la identidad algebraica $(1-az)(1-a/z)=1-a(z+1/z)+a^2=a^2\bigl(1-z/a\bigr)\bigl(1-1/(az)\bigr)$, que vale para $a\in\mathbb{C}$. Entonces, reemplazar $(1-az)$ por $(1-z/a)$ y multiplicar $\sigma^2$ por $|a|^2$ deja $g$ sin cambio cuando $a$ es real; para un par conjugado $a,\bar a$ se reflejan ambos factores a la vez y se multiplica por $|a|^4$, y el polinomio resultante sigue teniendo coeficientes reales.
+
+:::
+
+Con números, el MA(1) con $\theta=2$ y $\sigma^2=1$ tiene $a=-2$, y su reflejo tiene $\tilde\theta=1/2$ con $\tilde\sigma^2=1\cdot4=4$. Las autocovarianzas coinciden: $\gamma(0)=1\cdot(1+4)=5=4\cdot(1+0.25)$ y $\gamma(1)=1\cdot2=2=4\cdot0.5$. La representación invertible usa un choque $\tilde\varepsilon_t$ de varianza mayor, cuatro veces la original. Al convenir que los modelos de medias móviles se escriben en forma invertible, se evita la ambigüedad y se asegura que $\varepsilon_t$ sea una función del pasado de la serie.

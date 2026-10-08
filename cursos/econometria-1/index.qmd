@@ -12,7 +12,7 @@ listing:
 
 <p class="estado">En proceso</p>
 
-Por ahora reúno los fundamentos de probabilidad, la convergencia de variables aleatorias, la esperanza condicional y los vectores aleatorios con la distribución normal multivariante, que sostienen la econometría de corte transversal.
+Aquí desarrollo la probabilidad desde los axiomas, las distribuciones notables, los vectores aleatorios con la distribución normal multivariante, la esperanza condicional y la convergencia de variables aleatorias, con las leyes de los grandes números, el teorema central del límite y el método delta. Cada nota se apoya solo en las anteriores y en los tres cursos de Matemática.
 
 ## Notas {.unnumbered}
 

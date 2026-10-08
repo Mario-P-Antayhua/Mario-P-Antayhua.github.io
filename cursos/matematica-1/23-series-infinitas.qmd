@@ -1,0 +1,148 @@
+---
+title: "Series infinitas"
+description: "Series y sumas parciales, el criterio de Cauchy para series, la serie geométrica, la convergencia absoluta y el criterio de comparación."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sucesiones y series]
+---
+
+Una suma de infinitos términos solo tiene sentido si se define como el límite de las sumas de los primeros términos. Con eso, una serie no es más que una sucesión particular, la de sus sumas parciales, y todos los resultados de las notas anteriores se aplican a ella. Esta nota fija la definición y estudia la convergencia de las series con los criterios de Cauchy y de comparación, empezando por la serie geométrica.
+
+::: {#def-serie}
+## Serie y suma parcial
+
+Dada una sucesión $(a_n)_{n=1}^{\infty}$, la ***sucesión de
+sumas parciales*** es $s_N:=\sum_{n=1}^{N}a_n$. La ***serie***
+$\sum_{n=1}^{\infty}a_n$ ***converge*** a $S$ si $s_N\to S$
+según la [Definición “Límite de una sucesión”](18-sucesiones-y-su-limite.qmd#def-limite-sucesion), y en ese caso se escribe
+$\sum_{n=1}^{\infty}a_n=S$.
+
+:::
+
+Una serie no es, entonces, más que una sucesión particular, la de sus sumas
+parciales, y todos los resultados de las notas anteriores se aplican
+a ella sin modificación; en particular, tiene sentido preguntar de
+inmediato si la serie satisface una versión propia del criterio de Cauchy,
+formulada directamente en términos de las sumas de sus términos en lugar de
+en términos de la sucesión $(s_N)$, porque esa forma alternativa será más
+cómoda de aplicar en la práctica.
+
+::: {#prp-cauchy-series}
+## Criterio de Cauchy para series
+
+La serie $\sum a_n$ converge si y solo si para todo $\varepsilon>0$ existe
+$N$ tal que, para todos $m>n\geq N$, se cumple
+$\bigl|\sum_{k=n+1}^{m}a_k\bigr|<\varepsilon$.
+
+:::
+
+::: {.proof}
+Aplíquese el [Teorema “Criterio de Cauchy”](22-el-criterio-de-cauchy.qmd#thm-criterio-cauchy) a la sucesión de sumas parciales
+$(s_N)$, observando que $s_m-s_n=\sum_{k=n+1}^{m}a_k$.
+
+:::
+
+Esta reformulación tiene una consecuencia inmediata y útil como prueba de
+divergencia: si la serie converge, en particular con $m=n+1$ la condición
+exige $|a_{n+1}|<\varepsilon$ para $n$ suficientemente grande, es decir,
+$a_n\to 0$ es una condición necesaria, aunque no suficiente, para la
+convergencia de la serie. La serie más importante del documento, con
+diferencia, es la que sigue, y antes de enunciar su teorema conviene aislar
+como resultado auxiliar independiente el hecho puramente aritmético que
+sostiene la demostración, porque ese mismo hecho volverá a usarse, fuera de
+este contexto, cada vez que se necesite controlar la velocidad con la que
+una potencia se acerca a cero.
+
+::: {#lem-potencia-a-cero}
+## $r^{N}\to 0$ cuando $|r|<1$
+
+Si $r\in\mathbb{R}$ con $|r|<1$, entonces $r^{N}\to 0$ cuando
+$N\to\infty$.
+
+:::
+
+::: {.proof}
+Si $r=0$ el resultado es inmediato, así que supóngase $0<|r|<1$. Escríbase
+$|r|=1/(1+h)$ con $h>0$, lo cual es posible porque $0<|r|<1$ implica
+$1/|r|>1$. Por la [Proposición “Desigualdad de Bernoulli”](06-sumatorias-potencias-y-binomio.qmd#prp-bernoulli), $(1+h)^{N}\geq 1+Nh$, de donde
+
+$$
+|r|^{N} = \frac{1}{(1+h)^{N}} \leq \frac{1}{1+Nh}.
+$$ {#eq-cota-bernoulli}
+
+Dado $\varepsilon>0$, por el [Teorema “Propiedad arquimediana”](16-los-reales-el-axioma-de-completitud.qmd#thm-arquimediana)(ii) existe $N_0$ tal que $1/N_0<\varepsilon h$. Entonces, para todo $N\geq N_0$, la desigualdad @eq-cota-bernoulli da
+
+$$
+|r|^{N} \leq \frac{1}{1+Nh} < \frac{1}{Nh} \leq \frac{1}{N_0h} < \varepsilon,
+$$
+
+así que $|r^{N}-0|<\varepsilon$ para todo $N\geq N_0$, lo que establece $r^{N}\to 0$.
+
+:::
+
+Con este lema disponible, la demostración de la convergencia de la serie geométrica puede concentrarse en el argumento algebraico propio.
+
+::: {#thm-serie-geometrica}
+## Convergencia de la serie geométrica
+
+Para $r\in\mathbb{R}$ con $|r|<1$,
+
+$$
+\sum_{n=0}^{\infty} r^{n} = \frac{1}{1-r}.
+$$ {#eq-serie-geometrica}
+
+Si $|r|\geq 1$, la serie diverge.
+
+:::
+
+::: {.proof}
+La suma parcial $s_N=\sum_{n=0}^{N-1}r^n$ se calcula con la [Proposición “Suma geométrica finita”](06-sumatorias-potencias-y-binomio.qmd#prp-suma-geometrica): como $r\neq1$ cuando $|r|<1$, $s_N=(1-r^{N})/(1-r)$. Por el @lem-potencia-a-cero, $r^{N}\to 0$, y el [Teorema “Teorema algebraico del límite”](19-los-teoremas-algebraicos-y-de-orden-del-limite.qmd#thm-algebraico-limite) da $s_N\to (1-0)/(1-r)=1/(1-r)$, que es @eq-serie-geometrica.
+
+Si $|r|\geq 1$, entonces $|r^n|=|r|^n\geq1$ para todo $n$, de modo que $r^n$ no tiende a cero y falla la condición necesaria $a_n\to 0$ señalada tras la @prp-cauchy-series; la serie diverge.
+
+:::
+
+La serie geométrica converge también al sustituir sus términos por sus valores absolutos, ya que $|r^n|=|r|^n$ es una serie geométrica de razón $|r|<1$. No toda serie convergente comparte esta propiedad, y la distinción es relevante porque la convergencia de la serie de valores absolutos es una condición suficiente para la convergencia de la serie original.
+
+::: {#def-convergencia-absoluta}
+## Convergencia absoluta
+
+Una serie $\sum a_n$ ***converge absolutamente*** si la serie de valores absolutos $\sum|a_n|$ converge. Si $\sum a_n$ converge pero $\sum|a_n|$ no, se dice que converge ***condicionalmente***.
+
+:::
+
+La terminología sugiere ya la relación entre ambas nociones, pero conviene demostrarla en lugar de darla por supuesta: que una serie converja absolutamente es, en principio, una condición más fuerte que la simple convergencia, y el teorema siguiente confirma que en efecto la implica.
+
+::: {#thm-absoluta-implica-convergencia}
+## La convergencia absoluta implica convergencia
+
+Si $\sum a_n$ converge absolutamente, entonces converge.
+
+:::
+
+::: {.proof}
+Como $\sum|a_n|$ converge, la @prp-cauchy-series aplicada a $\sum|a_n|$ da, para $\varepsilon>0$, un $N$ tal que $\sum_{k=n+1}^{m}|a_k|<\varepsilon$ para todos $m>n\geq N$. Por la desigualdad triangular repetida $m-n-1$ veces,
+
+$$
+\left|\sum_{k=n+1}^{m}a_k\right| \leq \sum_{k=n+1}^{m}|a_k| < \varepsilon,
+$$
+
+así que $\sum a_n$ satisface la condición de Cauchy y, por la @prp-cauchy-series, converge.
+
+:::
+
+Para probar que una serie converge basta, a menudo, con probar que converge la serie más sencilla de sus valores absolutos, sin lidiar con las cancelaciones de signo. Eso desplaza el problema hacia la comparación entre series de términos no negativos, y el resultado siguiente es la herramienta estándar.
+
+::: {#prp-comparacion}
+## Criterio de comparación
+
+Sean $(a_n)$ y $(b_n)$ con $0\leq a_n\leq b_n$ para todo $n$. Si $\sum b_n$ converge, entonces $\sum a_n$ converge.
+
+:::
+
+::: {.proof}
+Las sumas parciales de $\sum a_n$ son crecientes, porque $a_n\geq 0$, y están acotadas superiormente por las sumas parciales de $\sum b_n$, que a su vez están acotadas porque $\sum b_n$ converge y sus sumas parciales convergen (toda sucesión convergente está acotada). Por el [Teorema “Teorema de convergencia monótona”](20-sucesiones-monotonas.qmd#thm-convergencia-monotona), la sucesión de sumas parciales de $\sum a_n$ converge.
+
+:::
+
+El criterio traslada el problema de decidir la convergencia de una serie de términos no negativos al, casi siempre más simple, de encontrar una serie conocida que la domine término a término. Por ejemplo, $\sum_{n\geq1}1/n^2$ converge: para $n\geq2$, $1/n^2\leq1/(n(n-1))=1/(n-1)-1/n$, y la suma telescópica de la [Proposición “Propiedades de la sumatoria”](06-sumatorias-potencias-y-binomio.qmd#prp-propiedades-sumatoria) da $\sum_{n=2}^{N}1/(n(n-1))=1-1/N<1$, de modo que las sumas parciales de $\sum1/n^2$ están acotadas por $2$ y son crecientes. Numéricamente, la suma de los primeros $1000$ términos es $1.6439$, por debajo de esa cota.

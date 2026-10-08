@@ -1,0 +1,76 @@
+---
+title: "El teorema de Taylor en una variable"
+description: "Derivadas de orden superior, la aproximación polinómica de una función con el resto de Lagrange, y el caso de segundo orden con resto que tiende a cero más rápido que el cuadrado."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Funciones continuas]
+---
+
+La derivada da la mejor aproximación lineal de una función cerca de un punto. Cuando se necesita más precisión, por ejemplo para distinguir un máximo de un mínimo o para acotar el error de una aproximación, se usan polinomios de grado mayor, y el teorema de Taylor mide cuánto se equivoca cada uno. La demostración reutiliza el teorema de Rolle de la [Nota “La derivada de una función de una variable”](31-la-derivada-de-una-variable.qmd).
+
+::: {#def-derivadas-superiores}
+## Derivadas de orden superior
+
+La ***segunda derivada*** de $f$ en $p$ es la derivada de $f'$ en $p$, cuando existe, y se denota $f''(p)$; en general $f^{(n)}$ es la derivada de $f^{(n-1)}$, con $f^{(0)}=f$. La función $f$ es de ***clase $C^n$*** en un intervalo si $f^{(n)}$ existe y es continua en él.
+
+:::
+
+Para $f(x)=1/x$ en $x>0$, la regla del cociente da $f'(x)=-1/x^2$ y, aplicándola de nuevo, $f''(x)=2/x^3$; por inducción $f^{(k)}(x)=(-1)^kk!\,x^{-(k+1)}$. El polinomio de Taylor reúne las derivadas en un punto en un polinomio que las reproduce.
+
+::: {#def-polinomio-taylor}
+## Polinomio de Taylor
+
+El ***polinomio de Taylor*** de orden $n$ de $f$ alrededor de $a$ es
+$$
+P_n(x):=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^k .
+$$
+
+:::
+
+Por construcción, $P_n^{(k)}(a)=f^{(k)}(a)$ para $k=0,\ldots,n$, porque la derivada $k$-ésima de $(x-a)^j/j!$ en $a$ vale $1$ si $j=k$ y $0$ en otro caso. El teorema siguiente mide la diferencia entre $f$ y $P_n$.
+
+::: {#thm-taylor-lagrange}
+## Teorema de Taylor con resto de Lagrange
+
+Sea $f:[a,b]\to\mathbb{R}$ con $f^{(n)}$ continua en $[a,b]$ y $f^{(n+1)}$ existente en $(a,b)$. Entonces existe $c\in(a,b)$ con
+$$
+f(b)=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(b-a)^k+\frac{f^{(n+1)}(c)}{(n+1)!}(b-a)^{n+1}.
+$$
+
+:::
+
+::: {.proof}
+La estrategia consiste en construir una función que se anule en $a$ junto con sus primeras $n$ derivadas y en $b$, y aplicar Rolle repetidamente. Sea $K$ el número definido por
+$$
+f(b)=P_n(b)+K(b-a)^{n+1},
+$$
+y sea $g(x):=f(x)-P_n(x)-K(x-a)^{n+1}$. Por la construcción de $P_n$ y porque las derivadas de $(x-a)^{n+1}$ de orden $\leq n$ se anulan en $a$, $g(a)=g'(a)=\cdots=g^{(n)}(a)=0$, y por la definición de $K$, $g(b)=0$.
+
+Como $g(a)=g(b)=0$, el teorema de Rolle da $c_1\in(a,b)$ con $g'(c_1)=0$. Como además $g'(a)=0$, Rolle aplicado a $g'$ en $[a,c_1]$ da $c_2\in(a,c_1)$ con $g''(c_2)=0$. Repitiendo, se obtiene $c_{n+1}\in(a,c_n)$ con $g^{(n+1)}(c_{n+1})=0$. Como $P_n$ tiene grado $n$, $P_n^{(n+1)}\equiv0$, de modo que
+$$
+0=g^{(n+1)}(c_{n+1})=f^{(n+1)}(c_{n+1})-K\,(n+1)!,
+$$
+y $K=f^{(n+1)}(c)/(n+1)!$ con $c=c_{n+1}$.
+
+:::
+
+El resto de Lagrange permite acotar el error sin conocer $c$. Con $f(x)=1/x$, $a=1$ y $n=3$, $P_3(x)=1-(x-1)+(x-1)^2-(x-1)^3$, y en $x=1.2$ se obtiene $P_3(1.2)=1-0.2+0.04-0.008=0.832$, mientras que $1/1.2=0.83333\ldots$ El resto es $f^{(4)}(c)\,(0.2)^4/4!=c^{-5}(0.0016)$ con $c\in(1,1.2)$, de modo que está entre $0.0016/1.2^5=0.00064$ y $0.0016$; el error real $0.001333$ cae en ese rango, como debe.
+
+El caso de segundo orden es el que se usa en la optimización: afirma que el resto tiende a cero más rápido que $h^2$.
+
+::: {#cor-taylor-segundo-orden}
+## Taylor de segundo orden con resto pequeño
+
+Si $f$ es de clase $C^2$ en un intervalo que contiene a $a$, entonces para $h$ pequeño
+$$
+f(a+h)=f(a)+f'(a)h+\tfrac12f''(a)h^2+R(h),\qquad\frac{R(h)}{h^2}\xrightarrow[h\to0]{}0 .
+$$
+
+:::
+
+::: {.proof}
+Por el @thm-taylor-lagrange con $n=1$ en el intervalo de extremos $a$ y $a+h$, existe $c_h$ entre $a$ y $a+h$ con $f(a+h)=f(a)+f'(a)h+\tfrac12f''(c_h)h^2$. Entonces $R(h)=\tfrac12\bigl(f''(c_h)-f''(a)\bigr)h^2$. Como $|c_h-a|\leq|h|\to0$ y $f''$ es continua en $a$, $f''(c_h)\to f''(a)$ y $R(h)/h^2\to0$.
+
+:::
+
+Con $f(x)=x^3-3x$ en $a=1$, $f'(1)=0$, $f''(x)=6x$ y $f''(1)=6>0$, de modo que $f(1+h)=-2+3h^2+h^3$: el resto es exactamente $h^3$, que es $o(h^2)$, y el signo positivo del término cuadrático confirma que $x=1$ es un mínimo local.

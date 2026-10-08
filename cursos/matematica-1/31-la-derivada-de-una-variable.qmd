@@ -1,0 +1,111 @@
+---
+title: "La derivada de una función de una variable"
+description: "Derivada de una función real de una variable, sus reglas de cálculo, la condición de primer orden de Fermat, los teoremas de Rolle y del valor medio, y la relación entre el signo de la derivada y la monotonía."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Funciones continuas]
+---
+
+La continuidad dice que una función cambia poco cuando su argumento cambia poco; la derivada mide cuánto y en qué sentido cambia. Geométricamente es la pendiente de la recta que mejor aproxima a la función cerca de un punto, y esa lectura, la de la derivada como aproximación lineal, es la que se generaliza a varias variables.
+
+::: {#def-derivada}
+## Derivada
+
+Sea $D\subseteq\mathbb{R}$ un intervalo abierto y $f:D\to\mathbb{R}$. La función $f$ es ***derivable*** en $p\in D$ si el límite
+$$
+f'(p):=\lim_{h\to0}\frac{f(p+h)-f(p)}{h}
+$$
+existe, en cuyo caso $f'(p)$ se llama la ***derivada*** de $f$ en $p$.
+
+:::
+
+El cociente mide la pendiente promedio de $f$ entre $p$ y $p+h$, de modo que su límite es la pendiente instantánea. Una primera consecuencia es que derivable implica continua: si $f$ es derivable en $p$, entonces $f(p+h)-f(p)=h\cdot\frac{f(p+h)-f(p)}{h}$ tiende a $0\cdot f'(p)=0$ cuando $h\to0$, por el [Teorema “Teorema algebraico del límite”](19-los-teoremas-algebraicos-y-de-orden-del-limite.qmd#thm-algebraico-limite) aplicado a funciones mediante el [Teorema “Caracterización de la continuidad por sucesiones”](30-limites-y-continuidad-de-funciones.qmd#thm-continuidad-sucesiones). Para calcular derivadas sin recurrir al límite cada vez hacen falta reglas.
+
+::: {#prp-reglas-derivacion}
+## Reglas de derivación
+
+Sean $f,g$ derivables en $p$. Entonces: (i) $(f+g)'(p)=f'(p)+g'(p)$ y $(cf)'(p)=cf'(p)$; (ii) $(fg)'(p)=f'(p)g(p)+f(p)g'(p)$; (iii) si $g(p)\neq0$, $(f/g)'(p)=\dfrac{f'(p)g(p)-f(p)g'(p)}{g(p)^2}$; (iv) *(regla de la cadena)* si $h$ es derivable en $f(p)$, entonces $h\circ f$ es derivable en $p$ con $(h\circ f)'(p)=h'(f(p))\,f'(p)$; (v) $(x^n)'=nx^{n-1}$ para $n\in\mathbb{N}$.
+
+:::
+
+::: {.proof}
+La regla (i) se sigue de la linealidad de los límites aplicada al cociente incremental. Para (ii), se suma y resta un término intermedio en el numerador,
+$$
+\begin{aligned}
+\frac{(fg)(p+h)-(fg)(p)}{h}
+ &= \frac{f(p+h)g(p+h)-f(p)g(p+h)+f(p)g(p+h)-f(p)g(p)}{h} \\
+\frac{(fg)(p+h)-(fg)(p)}{h}
+ &= \frac{f(p+h)-f(p)}{h}\,g(p+h)+f(p)\,\frac{g(p+h)-g(p)}{h},
+\end{aligned}
+$$
+y al tomar $h\to0$ el primer sumando tiende a $f'(p)g(p)$, porque $g$ es continua en $p$ por ser derivable, y el segundo a $f(p)g'(p)$.
+
+Para (iii), primero se calcula $(1/g)'$: como $g(p)\neq0$ y $g$ es continua en $p$, $g(p+h)\neq0$ para $h$ pequeño y
+$$
+\frac{1/g(p+h)-1/g(p)}{h}=-\frac{g(p+h)-g(p)}{h}\cdot\frac1{g(p+h)g(p)}\longrightarrow-\frac{g'(p)}{g(p)^2},
+$$
+y la regla del producto aplicada a $f\cdot(1/g)$ da (iii).
+
+Para la regla de la cadena (iv), el cociente que define $h'(f(p))$ no sirve directamente, porque $f(p+t)$ puede coincidir con $f(p)$ para $t$ arbitrariamente pequeños. Se introduce la función auxiliar
+$$
+\varphi(y):=\begin{cases}\dfrac{h(y)-h(f(p))}{y-f(p)}, & y\neq f(p),\\[6pt] h'(f(p)), & y=f(p),\end{cases}
+$$
+continua en $f(p)$ porque $h$ es derivable allí, y que cumple $h(y)-h(f(p))=\varphi(y)\,(y-f(p))$ para todo $y$, incluso para $y=f(p)$, donde ambos lados valen cero. Evaluando en $y=f(p+t)$ y dividiendo por $t\neq0$,
+$$
+\frac{h(f(p+t))-h(f(p))}{t}=\varphi\bigl(f(p+t)\bigr)\,\frac{f(p+t)-f(p)}{t}.
+$$
+Cuando $t\to0$, $f(p+t)\to f(p)$ por continuidad, y $\varphi(f(p+t))\to\varphi(f(p))=h'(f(p))$ por la continuidad de $\varphi$, mientras que el último cociente tiende a $f'(p)$; el producto de límites es $h'(f(p))f'(p)$.
+
+Para (v), con $n=1$, $(x)'=1$; si vale para $n$, la regla del producto da $(x^{n+1})'=(x^n\cdot x)'=nx^{n-1}\cdot x+x^n\cdot1=(n+1)x^n$.
+
+:::
+
+Con las reglas, $f(x)=x^3-3x$ tiene $f'(x)=3x^2-3$, que se anula en $x=\pm1$; esos son los candidatos a extremos locales por el resultado siguiente, que es la condición necesaria de primer orden.
+
+::: {#thm-fermat-una-variable}
+## Teorema de Fermat
+
+Sea $f:D\to\mathbb{R}$ derivable en $p$, y sea $p$ un máximo o un mínimo local de $f$, es decir, hay $r>0$ con $f(x)\leq f(p)$ (o $f(x)\geq f(p)$) para todo $x\in N_r(p)\cap D$. Entonces $f'(p)=0$.
+
+:::
+
+::: {.proof}
+Se prueba el caso del máximo local; el del mínimo es el mismo cambiando la desigualdad. Para $0<h<r$, $f(p+h)-f(p)\leq0$, de modo que el cociente $[f(p+h)-f(p)]/h\leq0$ y su límite por la derecha, $f'(p)$, es $\leq0$ por el [Teorema “Teorema del orden del límite”](19-los-teoremas-algebraicos-y-de-orden-del-limite.qmd#thm-orden-limite). Para $-r<h<0$, el numerador es $\leq0$ y el denominador negativo, de modo que el cociente es $\geq0$ y su límite por la izquierda, también $f'(p)$, es $\geq0$. Ambas conclusiones dan $f'(p)=0$.
+
+:::
+
+El teorema de Fermat permite probar que la pendiente promedio entre dos puntos se alcanza como pendiente instantánea en algún punto intermedio.
+
+::: {#thm-valor-medio}
+## Teorema de Rolle y del valor medio
+
+Sea $f:[a,b]\to\mathbb{R}$ continua en $[a,b]$ y derivable en $(a,b)$. (i) *(Rolle)* Si $f(a)=f(b)$, existe $c\in(a,b)$ con $f'(c)=0$. (ii) *(valor medio)* Existe $c\in(a,b)$ con $f'(c)=\dfrac{f(b)-f(a)}{b-a}$.
+
+:::
+
+::: {.proof}
+Para (i), como $f$ es continua en el compacto $[a,b]$, el [Teorema “Teorema de los valores extremos”](30-limites-y-continuidad-de-funciones.qmd#thm-weierstrass-valores-extremos) garantiza que alcanza un máximo y un mínimo. Si ambos están en los extremos, como $f(a)=f(b)$ el máximo y el mínimo coinciden, $f$ es constante y $f'(c)=0$ para cualquier $c\in(a,b)$. Si alguno se alcanza en un punto $c\in(a,b)$, ese punto es un extremo local interior, y el [Teorema “Teorema de Fermat”](#thm-fermat-una-variable) da $f'(c)=0$.
+
+Para (ii), se construye una función que absorba la diferencia entre $f(a)$ y $f(b)$,
+$$
+g(x):=f(x)-f(a)-\frac{f(b)-f(a)}{b-a}(x-a),
+$$
+continua en $[a,b]$ y derivable en $(a,b)$, con $g(a)=0$ y $g(b)=f(b)-f(a)-(f(b)-f(a))=0$. Por (i) existe $c\in(a,b)$ con $g'(c)=0$, es decir, $f'(c)-\dfrac{f(b)-f(a)}{b-a}=0$.
+
+:::
+
+El teorema relaciona una propiedad global, la pendiente promedio, con una local, la pendiente instantánea. Sus consecuencias inmediatas describen cómo la derivada controla el comportamiento de la función.
+
+::: {#cor-derivada-monotonia}
+## Derivada y monotonía
+
+Sea $f$ continua en $[a,b]$ y derivable en $(a,b)$. (i) Si $f'(x)=0$ para todo $x\in(a,b)$, $f$ es constante. (ii) Si $f'(x)\geq0$ en $(a,b)$, $f$ es creciente (no decreciente); si $f'(x)>0$, es estrictamente creciente. (iii) Si $f'(x)\leq0$ (o $<0$), $f$ es decreciente (o estrictamente decreciente).
+
+:::
+
+::: {.proof}
+Para $x<y$ en $[a,b]$, el [Teorema “Teorema de Rolle y del valor medio”](#thm-valor-medio) aplicado a $[x,y]$ da $c\in(x,y)$ con $f(y)-f(x)=f'(c)(y-x)$. Si $f'\equiv0$, $f(y)=f(x)$. Si $f'(c)\geq0$, como $y-x>0$ resulta $f(y)\geq f(x)$, y si $f'(c)>0$, $f(y)>f(x)$. El caso (iii) es simétrico.
+
+:::
+
+Con $f(x)=x^3-3x$, $f'(x)=3(x-1)(x+1)>0$ para $|x|>1$ y $<0$ para $|x|<1$: $f$ crece hasta $x=-1$, decrece hasta $x=1$ y vuelve a crecer; en $x=-1$ hay un máximo local con $f(-1)=2$ y en $x=1$ un mínimo local con $f(1)=-2$.

@@ -1,0 +1,39 @@
+---
+title: "El teorema de descomposición de Wold"
+description: "Todo proceso débilmente estacionario se descompone en una media móvil infinita de sus innovaciones lineales, un ruido blanco de errores de predicción, más una parte determinista; demostración completa con proyecciones en L2."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Predicción]
+---
+
+Los modelos ARMA parecen una familia particular de procesos. El teorema de Wold dice que son una aproximación general: todo proceso estacionario, sin importar su origen, se puede escribir como una media móvil infinita de un ruido blanco más un componente completamente predecible. El ruido blanco no es un supuesto, sino un objeto construido del proceso, el error de predecir cada valor con todo el pasado. Esa universalidad justifica el uso de los modelos ARMA como aproximaciones a la estructura lineal de cualquier serie estacionaria. La demostración usa las proyecciones en $L^2$ de la [Nota “El espacio L2 y la proyección lineal”](25-el-espacio-l2-y-la-proyeccion.qmd).
+
+Sea $\{X_t\}$ débilmente estacionario con media cero (en otro caso se resta la media). Para cada $t$ sea $H_t$ el subespacio cerrado de $L^2$ generado por $\{X_s:s\leq t\}$, el pasado lineal hasta $t$, y sea $H_{-\infty}=\bigcap_tH_t$ el pasado remoto. Los subespacios crecen con $t$. El ***error de predicción lineal a un paso*** es $\varepsilon_t=X_t-P_{H_{t-1}}X_t$, la ***innovación***, y $\sigma^2=\E[\varepsilon_t^2]$. Se supone $\sigma^2>0$, es decir, que el proceso no es perfectamente predecible a partir de su pasado.
+
+::: {#thm-wold}
+## Teorema de descomposición de Wold
+
+Bajo las condiciones anteriores: (i) $\{\varepsilon_t\}$ es un ruido blanco de varianza $\sigma^2$, con $\varepsilon_t\in H_t$ y $\varepsilon_t\perp H_{t-1}$; (ii) existen coeficientes $\psi_0=1,\psi_1,\ldots$ con $\sum_j\psi_j^2<\infty$, dados por $\psi_j=\E[X_t\varepsilon_{t-j}]/\sigma^2$, tales que $X_t=\sum_{j\geq0}\psi_j\varepsilon_{t-j}+V_t$ con convergencia en media cuadrática; (iii) $V_t=P_{H_{-\infty}}X_t\in H_{-\infty}$, de modo que $V_t$ se predice sin error a partir del pasado, $P_{H_{t-1}}V_t=V_t$, y $\E[\varepsilon_sV_t]=0$ para todo $s,t$.
+
+:::
+
+::: {.proof}
+*Paso 0: el operador de desplazamiento.* Sea $D$ el conjunto de combinaciones lineales finitas de los $X_s$, y sea $T(\sum_ia_iX_{s_i})=\sum_ia_iX_{s_i+1}$. Como $\E[X_{s+1}X_{r+1}]=\gamma(s-r)=\E[X_sX_r]$ por estacionariedad, $T$ conserva el producto interno en $D$, y en particular está bien definido y es lineal. Se extiende por continuidad a la clausura de $D$ como una isometría. Aplica $H_t$ sobre $H_{t+1}$: la imagen de las combinaciones de los $X_s$ con $s\leq t$ es el conjunto de todas las combinaciones de los $X_u$ con $u\leq t+1$, que es denso en $H_{t+1}$, y una isometría tiene rango cerrado. Al conservar productos internos y llevar $H_{t-1}$ sobre $H_t$ y $X_t$ sobre $X_{t+1}$, $T$ lleva la mejor aproximación de $X_t$ en $H_{t-1}$ a la mejor de $X_{t+1}$ en $H_t$, es decir, $T\varepsilon_t=\varepsilon_{t+1}$.
+
+*Paso 1: ruido blanco.* Por el teorema de la proyección, $\varepsilon_t\perp H_{t-1}$, y $\varepsilon_t\in H_t$ porque $X_t$ y $P_{H_{t-1}}X_t$ pertenecen a $H_t$. Para $s<t$, $\varepsilon_s\in H_s\subseteq H_{t-1}$, de modo que $\E[\varepsilon_t\varepsilon_s]=0$. Como $T$ es una isometría, $\E[\varepsilon_t^2]=\E[\varepsilon_{t-1}^2]=\sigma^2$ para todo $t$. Los elementos de $H_t$ tienen media cero, porque la media es continua en $L^2$ y las combinaciones de los $X_s$ tienen media cero. Esto prueba (i).
+
+*Paso 2: la descomposición por etapas.* Para $r\in\mathbb{Z}$, el complemento ortogonal $W_r=H_r\ominus H_{r-1}$ (los elementos de $H_r$ ortogonales a $H_{r-1}$) está generado por $\varepsilon_r$. En efecto, $\varepsilon_r\in W_r$. Si $w\in W_r$, es límite de combinaciones $u_k=a_kX_r+\rho_k$ con $\rho_k\in H_{r-1}$, y la proyección sobre $W_r$ da $w=\lim P_{W_r}u_k=\lim a_k\varepsilon_r$, porque $P_{W_r}X_r=X_r-P_{H_{r-1}}X_r=\varepsilon_r$ y $P_{W_r}\rho_k=0$. Entonces $H_r=H_{r-1}\oplus\mathrm{span}\{\varepsilon_r\}$ y, para todo $Y\in L^2$, $P_{H_r}Y=P_{H_{r-1}}Y+\tfrac{\E[Y\varepsilon_r]}{\sigma^2}\varepsilon_r$. Con $Y=X_t$ y $r=t,t-1,\ldots$, y $\psi_j=\E[X_t\varepsilon_{t-j}]/\sigma^2$, que no depende de $t$ porque $T$ conserva productos internos, resulta por inducción
+$$
+X_t=\sum_{j=0}^{n-1}\psi_j\varepsilon_{t-j}+P_{H_{t-n}}X_t\qquad\text{para todo }n\geq1.
+$$ {#eq-wold-etapas}
+Además $\psi_0=\E[X_t\varepsilon_t]/\sigma^2=\E[\varepsilon_t^2]/\sigma^2=1$, porque $X_t-\varepsilon_t\in H_{t-1}\perp\varepsilon_t$.
+
+*Paso 3: sumabilidad.* Los términos $\psi_j\varepsilon_{t-j}$ son ortogonales entre sí y ortogonales a $P_{H_{t-n}}X_t$, de modo que por Pitágoras $\gamma(0)=\sigma^2\sum_{j<n}\psi_j^2+\|P_{H_{t-n}}X_t\|^2\geq\sigma^2\sum_{j<n}\psi_j^2$ para todo $n$. Entonces $\sum_j\psi_j^2\leq\gamma(0)/\sigma^2<\infty$, y las sumas parciales $\sum_{j<n}\psi_j\varepsilon_{t-j}$ son de Cauchy en $L^2$ porque $\|\sum_{m\leq j<n}\psi_j\varepsilon_{t-j}\|^2=\sigma^2\sum_{m\leq j<n}\psi_j^2\to0$, y convergen a un $U_t\in L^2$.
+
+*Paso 4: la parte determinista.* Sea $V_t=X_t-U_t$. De @eq-wold-etapas, $V_t=\lim_nP_{H_{t-n}}X_t$. Los subespacios $H_{t-n}$ decrecen con $n$ hacia $H_{-\infty}$, y el límite de proyecciones sobre subespacios decrecientes da $V_t=P_{H_{-\infty}}X_t\in H_{-\infty}$. Como $H_{-\infty}\subseteq H_{t-1}$, $P_{H_{t-1}}V_t=V_t$. Para todo $s$, $\varepsilon_s\perp H_{s-1}\supseteq H_{-\infty}\ni V_t$, de modo que $\E[\varepsilon_sV_t]=0$. Esto prueba (ii) y (iii).
+
+:::
+
+La descomposición tiene dos partes de naturaleza distinta. La primera, $\sum_j\psi_j\varepsilon_{t-j}$, es la parte estocástica y es lo que los modelos ARMA aproximan. La segunda, $V_t$, es la parte determinista en el sentido de predicción lineal: se conoce exactamente a partir del pasado remoto. Cuando $H_{-\infty}=\{0\}$, el proceso es ***puramente no determinista*** y $V_t=0$, que es el caso de todos los ARMA causales de las notas anteriores.
+
+Un ejemplo con parte determinista es $X_t=Z+\varepsilon_t$, con $Z$ de media cero y varianza $s^2$, no correlacionada con el ruido blanco $\varepsilon_t$ de varianza $\sigma^2$. El proceso es estacionario, con $\gamma(0)=s^2+\sigma^2$ y $\gamma(h)=s^2$ para $h\neq0$. El promedio de los $n$ valores anteriores es $Z+\bar\varepsilon_n$ con $\E[(\bar\varepsilon_n)^2]=\sigma^2/n\to0$, de modo que $Z$ es límite en $L^2$ de elementos de $H_{t-1}$ y pertenece a $H_{t-1}$ para todo $t$, es decir, a $H_{-\infty}$. Como $\varepsilon_t$ es no correlacionado con $Z$ y con los $\varepsilon_s$ anteriores, $P_{H_{t-1}}X_t=Z$, la innovación es $\varepsilon_t$ con varianza $\sigma^2$, los coeficientes son $\psi=(1,0,0,\ldots)$ y la parte determinista es $V_t=Z$, constante en el tiempo y conocida exactamente a partir del pasado. Con $s^2=2$ y $\sigma^2=1$, la varianza total es $3$, de la cual dos tercios son determinista en este sentido.

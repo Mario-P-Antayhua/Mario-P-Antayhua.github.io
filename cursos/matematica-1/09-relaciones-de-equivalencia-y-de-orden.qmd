@@ -1,0 +1,181 @@
+---
+title: "Relaciones de equivalencia y de orden"
+description: "Propiedades de una relación, relaciones de equivalencia y particiones, el conjunto cociente y las relaciones de orden."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Teoría de conjuntos]
+---
+
+De todas las relaciones posibles, dos tipos reaparecerán constantemente en lo
+que sigue: las que capturan una noción de “ser esencialmente lo mismo” sin
+ser literalmente idénticos, y las que capturan una noción de “venir antes
+que” o “ser menor o igual que”. Ambos tipos se caracterizan por qué
+propiedades cumplen, de modo que conviene fijar primero el catálogo de
+propiedades posibles.
+
+::: {#def-propiedades-relacion}
+## Propiedades de una relación
+
+Sea $R$ una relación en un conjunto $A$. Se dice que $R$ es:
+
+(i) ***reflexiva*** si $\forall a\in A,\ aRa$;
+
+(i) ***simétrica*** si $\forall a,b\in A,\
+        (aRb\rightarrow bRa)$;
+
+(i) ***antisimétrica*** si $\forall a,b\in A,\
+        \bigl[(aRb\wedge bRa)\rightarrow a=b\bigr]$;
+
+(i) ***transitiva*** si $\forall a,b,c\in A,\
+        \bigl[(aRb\wedge bRc)\rightarrow aRc\bigr]$.
+
+:::
+
+La simetría y la antisimetría no son opuestas, aunque sus nombres lo
+sugieran: la primera exige que la relación funcione en ambas direcciones, y
+la segunda que funcionar en ambas direcciones solo sea posible cuando los dos
+objetos coinciden. Son, precisamente, las propiedades que separan los dos
+tipos de relación que interesan.
+
+::: {#def-relacion-equivalencia}
+## Relación de equivalencia y clase de equivalencia
+
+Una relación $R$ en $A$ es una ***relación de equivalencia*** si
+es reflexiva, simétrica y transitiva. En ese caso, para cada $a\in A$, la
+***clase de equivalencia*** de $a$ es el conjunto
+$[a] := \{x\in A : xRa\}$.
+
+:::
+
+Las tres propiedades exigidas son justamente las que tiene la igualdad, y por
+eso una relación de equivalencia puede pensarse como una igualdad relajada:
+declara indistinguibles a objetos que en rigor son distintos, pero de manera
+consistente, sin que esa declaración produzca conflictos.
+
+Esa consistencia tiene una formulación precisa, que conecta las relaciones de
+equivalencia con una noción puramente conjuntista.
+
+::: {#def-particion}
+## Partición
+
+Una ***partición*** de un conjunto $A$ es una colección
+$\{A_i\}_{i\in I}$ de subconjuntos no vacíos de $A$, mutuamente disjuntos dos
+a dos, cuya unión es $A$.
+
+:::
+
+El resultado que sigue establece que ambas nociones son, en el fondo, dos
+maneras de describir lo mismo.
+
+::: {#thm-equivalencia-particion}
+## Equivalencia entre relaciones de equivalencia y particiones
+
+Si $R$ es una relación de equivalencia en $A$, entonces las clases de
+equivalencia distintas de $R$ forman una partición de $A$. Recíprocamente,
+toda partición de $A$ determina una relación de equivalencia en $A$, cuyas
+clases de equivalencia son precisamente los conjuntos de la partición.
+
+:::
+
+::: {.proof}
+Se prueban las dos direcciones por separado, empezando por la que va de la
+relación a la partición.
+
+Supóngase que $R$ es una relación de equivalencia. Cada clase $[a]$ es no
+vacía, puesto que $a\in[a]$ por reflexividad; y todo elemento de $A$
+pertenece a alguna clase, en particular a la suya propia, de modo que la
+unión de todas las clases es $A$. Se cumplen así dos de las tres condiciones
+de la @def-particion, y solo falta la disyunción mutua.
+
+Para probar que dos clases distintas son disjuntas conviene demostrar la
+formulación contrarrecíproca, en el sentido de la
+[Idea central de la nota “Tablas de verdad y equivalencias lógicas”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#idea-contrarreciproco): si dos clases se intersecan, entonces son
+iguales. Supóngase entonces que $[a]\cap[b]\neq\varnothing$, y tómese un
+elemento $c$ en esa intersección, de modo que $cRa$ y $cRb$. Por simetría,
+$aRc$; y por transitividad, de $aRc$ y $cRb$ se obtiene $aRb$, relación que
+será la clave del resto del argumento.
+
+Se prueba ahora $[a]=[b]$ por doble inclusión. Sea $x\in[a]$, es decir,
+$xRa$; combinando con $aRb$ y aplicando transitividad se obtiene $xRb$, esto
+es, $x\in[b]$, lo cual establece $[a]\subseteq[b]$. La inclusión recíproca se
+obtiene de forma simétrica, usando que $bRa$ se sigue de $aRb$ por simetría.
+Por la [Proposición “Criterio de igualdad por doble inclusión”](07-conjuntos-pertenencia-y-operaciones-basicas.qmd#prp-doble-inclusion), $[a]=[b]$, y por lo tanto dos clases
+distintas no pueden intersecarse.
+
+Corresponde ahora la dirección recíproca. Sea $\{A_i\}_{i\in I}$ una
+partición de $A$, y defínase la relación $R$ mediante la regla de que $aRb$
+si y solo si $a$ y $b$ pertenecen al mismo conjunto $A_i$ de la partición.
+
+Esta relación cumple las tres propiedades exigidas. Es reflexiva, porque todo
+elemento pertenece a algún $A_i$ y por tanto al mismo conjunto que él mismo;
+y es simétrica, porque la condición “pertenecer al mismo conjunto” no
+distingue el orden entre $a$ y $b$.
+
+La transitividad requiere un paso más. Si $a$ y $b$ están en el mismo $A_i$,
+y $b$ y $c$ están en el mismo $A_j$, entonces $b$ pertenece a $A_i\cap A_j$;
+pero los conjuntos de una partición son disjuntos dos a dos, de modo que una
+intersección no vacía obliga a $A_i=A_j$, y en consecuencia $a$ y $c$ están
+en ese mismo conjunto.
+
+Finalmente, la clase de equivalencia de un elemento $a\in A_i$ bajo esta
+relación es exactamente $A_i$, porque $x$ está relacionado con $a$ si y solo
+si $x$ pertenece al mismo conjunto de la partición que $a$, que es $A_i$.
+
+:::
+
+El teorema permite pasar de una relación a una partición, y ese paso tiene un
+nombre propio porque es una forma estándar de construir objetos nuevos.
+
+::: {#def-cociente}
+## Conjunto cociente
+
+Si $R$ es una relación de equivalencia en $A$, el ***conjunto cociente*** de
+$A$ por $R$ es el conjunto de sus clases de equivalencia,
+$$
+A/R := \{[a] : a\in A\}.
+$$
+
+:::
+
+Por el @thm-equivalencia-particion, $A/R$ es una partición de $A$: cada
+elemento de $A$ queda en exactamente una clase. Los elementos del cociente son,
+por tanto, clases, y declarar iguales dos elementos de $A$ equivale a
+identificarlos dentro de una misma clase. Un ejemplo mínimo lo ofrece la
+relación en $\mathbb{Z}$ definida por $aRb$ si $a-b$ es par: es reflexiva
+porque $a-a=0$ es par, simétrica porque $b-a=-(a-b)$ es par, y transitiva porque
+la suma de dos enteros pares es par; su cociente tiene exactamente dos
+elementos, la clase de los pares y la de los impares.
+
+El segundo tipo de relación que interesa cambia la simetría por la
+antisimetría, y captura la idea de ordenamiento.
+
+::: {#def-orden}
+## Relación de orden
+
+Una relación $R$ en $A$ es un ***orden parcial*** si es
+reflexiva, antisimétrica y transitiva. Un orden parcial es un
+***orden total*** si además satisface la propiedad de
+***tricotomía***: para todo $a,b\in A$, se cumple $aRb$ o $bRa$.
+
+:::
+
+La palabra “parcial” señala exactamente lo que puede faltar: que haya pares
+de elementos que la relación no compare en absoluto, ni en un sentido ni en
+el otro. El ejemplo siguiente muestra los dos casos.
+
+::: {#exm-ordenes}
+## Un orden total y un orden que no lo es
+
+La relación $\leq$ en $\mathbb{R}$ es un orden total: es reflexiva, ya que
+$x\leq x$; antisimétrica, ya que $x\leq y$ y $y\leq x$ fuerzan $x=y$;
+transitiva de forma evidente; y satisface tricotomía, porque dos números
+reales cualesquiera son siempre comparables.
+
+En cambio, la relación de inclusión $\subseteq$ en $\mathcal{P}(A)$, para un
+conjunto $A$ con al menos dos elementos, es un orden parcial que no es total:
+es reflexiva porque todo conjunto se contiene a sí mismo, antisimétrica
+precisamente por la [Proposición “Criterio de igualdad por doble inclusión”](07-conjuntos-pertenencia-y-operaciones-basicas.qmd#prp-doble-inclusion) y transitiva sin dificultad,
+pero si $A=\{1,2\}$, los subconjuntos $\{1\}$ y $\{2\}$ no son comparables,
+ya que ni $\{1\}\subseteq\{2\}$ ni $\{2\}\subseteq\{1\}$.
+
+:::

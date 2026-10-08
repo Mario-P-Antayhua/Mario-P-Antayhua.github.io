@@ -1,0 +1,41 @@
+---
+title: "El modelo paramétrico y la función de verosimilitud"
+description: "El modelo estadístico paramétrico para una muestra iid, la función de verosimilitud y su logaritmo, el estimador de máxima verosimilitud y su cálculo exacto para las distribuciones de Bernoulli, exponencial y normal."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Verosimilitud]
+---
+
+Estimar es elegir, dentro de una familia de distribuciones plausibles, la que mejor explica los datos observados. El criterio de máxima verosimilitud formaliza «mejor» como la distribución bajo la cual los datos observados eran más probables. Es el método de estimación más usado en econometría, y las notas de esta parte estudian cuándo funciona y con qué precisión. Esta nota fija el marco de trabajo y calcula los estimadores en tres modelos cuya solución es exacta, con las herramientas de optimización de la [Nota “Condiciones de optimalidad sin restricciones”](../matematica-3/09-condiciones-de-optimalidad-sin-restricciones.qmd) y la teoría de la probabilidad de [Econometría I](../econometria-1/index.qmd).
+
+::: {#def-modelo-parametrico}
+## Modelo paramétrico y función de verosimilitud
+
+Un ***modelo paramétrico*** para una variable $X$ es una familia de densidades (o funciones de masa) $\{f(x;\vect{\theta}):\vect{\theta}\in\Theta\}$ con ***espacio de parámetros*** $\Theta\subseteq\mathbb{R}^k$. Se supone que los datos $X_1,\ldots,X_n$ son iid con densidad $f(x;\vect{\theta}_0)$ para un ***valor verdadero*** $\vect{\theta}_0\in\Theta$ desconocido. La ***función de verosimilitud*** de la muestra observada $x_1,\ldots,x_n$ es $L_n(\vect{\theta})=\prod_{i=1}^nf(x_i;\vect{\theta})$ y la ***log-verosimilitud promedio*** es $\ell_n(\vect{\theta})=\frac1n\sum_{i=1}^n\ln f(x_i;\vect{\theta})$.
+
+:::
+
+La verosimilitud es la densidad conjunta de la muestra, vista como función del parámetro con los datos fijos. Maximizar $L_n$ y maximizar $\ell_n$ es lo mismo, porque el logaritmo es creciente y $\ell_n=\tfrac1n\ln L_n$, pero la forma promediada es la que permite aplicar la ley de los grandes números.
+
+::: {#def-emv}
+## Estimador de máxima verosimilitud
+
+Un ***estimador de máxima verosimilitud*** (EMV) es un valor $\hat{\vect{\theta}}_n\in\Theta$ que maximiza $\ell_n(\vect{\theta})$ sobre $\Theta$, cuando existe. Se escribe $\hat{\vect{\theta}}_n=\argmax_{\vect{\theta}\in\Theta}\ell_n(\vect{\theta})$.
+
+:::
+
+Si $g$ es una función biyectiva del parámetro, la reparametrización $\vect{\eta}=g(\vect{\theta})$ no cambia los valores de la verosimilitud, solo la manera de etiquetarlos, de modo que $g(\hat{\vect{\theta}}_n)$ es el EMV de $\vect{\eta}$. Esta propiedad de invariancia se usa constantemente. Cuando la log-verosimilitud es diferenciable y el máximo es interior, el EMV es una solución de la condición de primer orden $\nabla\ell_n(\hat{\vect{\theta}}_n)=\vect{0}$, por el [Teorema “Condición necesaria de primer orden”](../matematica-3/09-condiciones-de-optimalidad-sin-restricciones.qmd#thm-fermat). Tres modelos permiten resolverla exactamente.
+
+::: {#prp-emv-ejemplos}
+## EMV de Bernoulli, exponencial y normal
+
+(i) *Bernoulli.* Si $X_i\in\{0,1\}$ con $\Prob{X_i=1}=p\in(0,1)$ y la muestra no es constante, el EMV es $\hat p=\bar X_n$. (ii) *Exponencial.* Si $X_i$ tiene densidad $\lambda e^{-\lambda x}$ para $x>0$ y $\lambda>0$, el EMV es $\hat\lambda=1/\bar X_n$. (iii) *Normal.* Si $X_i\sim\N(\mu,\sigma^2)$ con $\sigma^2>0$, el EMV es $\hat\mu=\bar X_n$ y $\hat\sigma^2=\tfrac1n\sum_i(X_i-\bar X_n)^2$.
+
+:::
+
+::: {.proof}
+Para (i), con $s=\sum_ix_i$ el número de éxitos, $\ell_n(p)=\tfrac sn\ln p+(1-\tfrac sn)\ln(1-p)$ en $(0,1)$ con $0<s<n$. Su derivada $\tfrac{s/n}{p}-\tfrac{1-s/n}{1-p}$ se anula solo en $p=s/n$, es positiva a la izquierda y negativa a la derecha, de modo que $p=\bar X_n$ es el máximo global. Para (ii), $\ell_n(\lambda)=\ln\lambda-\lambda\bar x$ con derivada $1/\lambda-\bar x$, que se anula en $\lambda=1/\bar x$ y cambia de positiva a negativa, y es el máximo global. Para (iii), la log-verosimilitud es $\ell_n(\mu,\sigma^2)=-\tfrac12\ln(2\pi\sigma^2)-\tfrac1{2\sigma^2}\cdot\tfrac1n\sum_i(x_i-\mu)^2$. Para cada $\sigma^2$ fijo, el último término es máximo cuando $\tfrac1n\sum_i(x_i-\mu)^2$ es mínimo, y por la [Proposición “Propiedades de la varianza”](../econometria-1/05-momentos-y-desigualdades-fundamentales.qmd#prp-varianza) aplicada a la distribución empírica, $\tfrac1n\sum_i(x_i-\mu)^2=\tfrac1n\sum_i(x_i-\bar x)^2+(\bar x-\mu)^2$, que se minimiza en $\mu=\bar x$ con valor $s^2$. Queda maximizar $-\tfrac12\ln\sigma^2-\tfrac{s^2}{2\sigma^2}$ en $\sigma^2>0$, cuya derivada es $-\tfrac1{2\sigma^2}+\tfrac{s^2}{2\sigma^4}$, positiva si $\sigma^2<s^2$ y negativa si $\sigma^2>s^2$, de modo que el máximo está en $\sigma^2=s^2$.
+
+:::
+
+Con números, una muestra exponencial $x=(1.2,0.7,2.1,0.4,1.6)$ tiene media $1.2$ y el EMV es $\hat\lambda=1/1.2=0.8333$. El valor de $n\,\ell_n=n\ln\lambda-\lambda\sum x_i$ en $\hat\lambda$ es $-5.912$, mayor que en $\lambda=1$ ($-6.000$) y que en $\lambda=0.5$ ($-6.466$). Para una muestra normal $y=(4.1,5.3,3.8,6.0,4.8)$, $\hat\mu=4.8$ y $\hat\sigma^2=0.636$, que es el promedio de los cuadrados de las desviaciones y no el estimador insesgado, que divide por $n-1$ y vale $0.795$. Otros modelos, como los de los procesos ARMA, no tienen solución exacta y requieren los métodos numéricos de la [Nota “Métodos numéricos de optimización”](../matematica-3/12-metodos-numericos-de-optimizacion.qmd).

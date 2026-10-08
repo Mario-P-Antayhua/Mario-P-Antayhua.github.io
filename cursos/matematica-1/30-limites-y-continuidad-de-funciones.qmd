@@ -1,0 +1,129 @@
+---
+title: "Límites y continuidad de funciones"
+description: "Límite y continuidad de funciones de ℝⁿ en ℝᵐ, su caracterización por sucesiones y por preimágenes, la continuidad uniforme, el teorema de los valores extremos y el teorema del valor intermedio."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Funciones continuas]
+---
+
+Las nociones de cercanía de las notas anteriores se aplican ahora a funciones. Una función es continua cuando cambia poco si su argumento cambia poco, y la topología de $\mathbb{R}^n$ permite enunciarlo con una precisión que sirve tanto para funciones de una variable como de varias, y con valores escalares o vectoriales. En toda la nota $D\subseteq\mathbb{R}^n$, $f:D\to\mathbb{R}^m$ y las distancias se miden con la norma euclidiana de la [Nota “Espacios métricos”](24-espacios-metricos.qmd).
+
+::: {#def-limite-funcion}
+## Límite de una función
+
+Sea $\vect{p}$ un punto límite de $D$ en el sentido de la [Definición “Punto interior, punto límite y punto aislado”](25-vecindades-y-clasificacion-de-puntos.qmd#def-puntos-especiales). La función $f$ tiene ***límite*** $\vect{L}\in\mathbb{R}^m$ cuando $\vect{x}$ tiende a $\vect{p}$, lo que se escribe $\lim_{\vect{x}\to\vect{p}}f(\vect{x})=\vect{L}$, si para todo $\varepsilon>0$ existe $\delta>0$ tal que, para todo $\vect{x}\in D$ con $0<\|\vect{x}-\vect{p}\|<\delta$, se cumple $\|f(\vect{x})-\vect{L}\|<\varepsilon$.
+
+:::
+
+La definición reutiliza la estructura $\varepsilon$-$\delta$ que la [Definición “Límite de una sucesión”](18-sucesiones-y-su-limite.qmd#def-limite-sucesion) introdujo para sucesiones, sustituyendo el valor absoluto por la norma. La continuidad es el caso en que el límite coincide con el valor de la función.
+
+::: {#def-continuidad}
+## Continuidad
+
+La función $f:D\to\mathbb{R}^m$ es ***continua*** en $\vect{p}\in D$ si, para todo $\varepsilon>0$, existe $\delta>0$ tal que para todo $\vect{x}\in D$ con $\|\vect{x}-\vect{p}\|<\delta$ se cumple $\|f(\vect{x})-f(\vect{p})\|<\varepsilon$. Es ***continua en $D$*** si lo es en cada punto de $D$. Si $\vect{p}$ es punto límite de $D$, la continuidad en $\vect{p}$ equivale a $\lim_{\vect{x}\to\vect{p}}f(\vect{x})=f(\vect{p})$.
+
+:::
+
+La caracterización por sucesiones es la que permite trasladar a funciones todo lo demostrado para sucesiones, y evita en la práctica el argumento $\varepsilon$-$\delta$.
+
+::: {#thm-continuidad-sucesiones}
+## Caracterización de la continuidad por sucesiones
+
+Sea $\vect{p}\in D$. La función $f$ es continua en $\vect{p}$ si y solo si, para toda sucesión $(\vect{x}_k)$ en $D$ con $\vect{x}_k\to\vect{p}$, se cumple $f(\vect{x}_k)\to f(\vect{p})$.
+
+:::
+
+::: {.proof}
+Se supone primero que $f$ es continua en $\vect{p}$ y se toma una sucesión $\vect{x}_k\to\vect{p}$ en $D$. Dado $\varepsilon>0$, la continuidad da $\delta>0$ tal que $\|\vect{x}-\vect{p}\|<\delta$ implica $\|f(\vect{x})-f(\vect{p})\|<\varepsilon$; como $\vect{x}_k\to\vect{p}$, existe $K$ tal que $\|\vect{x}_k-\vect{p}\|<\delta$ para $k\geq K$, de modo que $\|f(\vect{x}_k)-f(\vect{p})\|<\varepsilon$ para $k\geq K$.
+
+Para la recíproca se razona por contrarrecíproca, según el método de la [Nota “Métodos de demostración”](04-metodos-de-demostracion.qmd). Si $f$ no es continua en $\vect{p}$, existe $\varepsilon_0>0$ tal que para todo $\delta>0$ hay $\vect{x}\in D$ con $\|\vect{x}-\vect{p}\|<\delta$ y $\|f(\vect{x})-f(\vect{p})\|\geq\varepsilon_0$. Tomando $\delta=1/k$ se obtiene una sucesión $\vect{x}_k\in D$ con $\|\vect{x}_k-\vect{p}\|<1/k$, de modo que $\vect{x}_k\to\vect{p}$, pero $\|f(\vect{x}_k)-f(\vect{p})\|\geq\varepsilon_0$ para todo $k$, y $f(\vect{x}_k)$ no converge a $f(\vect{p})$. Esa sucesión contradice la hipótesis.
+
+:::
+
+La caracterización permite construir funciones continuas complicadas a partir de piezas simples.
+
+::: {#prp-continuidad-operaciones}
+## Operaciones que preservan la continuidad
+
+Sean $f,g:D\to\mathbb{R}$ continuas en $\vect{p}$ y $h:E\to\mathbb{R}^l$ continua en $f(\vect{p})$ con $f(D)\subseteq E$. Entonces $f+g$ y $fg$ son continuas en $\vect{p}$; $f/g$ es continua en $\vect{p}$ si $g(\vect{p})\neq0$; y $h\circ f$ es continua en $\vect{p}$. Las funciones constantes y las coordenadas $\vect{x}\mapsto x_i$ son continuas, de modo que todo polinomio en las coordenadas es continuo en $\mathbb{R}^n$.
+
+:::
+
+::: {.proof}
+Sea $\vect{x}_k\to\vect{p}$ en $D$. Por el @thm-continuidad-sucesiones, $f(\vect{x}_k)\to f(\vect{p})$ y $g(\vect{x}_k)\to g(\vect{p})$, y el [Teorema “Teorema algebraico del límite”](19-los-teoremas-algebraicos-y-de-orden-del-limite.qmd#thm-algebraico-limite) da $f(\vect{x}_k)+g(\vect{x}_k)\to f(\vect{p})+g(\vect{p})$, $f(\vect{x}_k)g(\vect{x}_k)\to f(\vect{p})g(\vect{p})$ y, si $g(\vect{p})\neq0$, el cociente converge a $f(\vect{p})/g(\vect{p})$ (los $g(\vect{x}_k)$ son no nulos desde cierto índice, porque $g(\vect{x}_k)\to g(\vect{p})\neq0$). Para la composición, $f(\vect{x}_k)\to f(\vect{p})$ y la continuidad de $h$ en $f(\vect{p})$ aplicada a esta sucesión da $h(f(\vect{x}_k))\to h(f(\vect{p}))$. Las constantes son continuas con $\delta$ arbitrario, y las coordenadas lo son porque $|x_i-p_i|\leq\|\vect{x}-\vect{p}\|$.
+
+:::
+
+La continuidad tiene una formulación sin $\varepsilon$ ni sucesiones, en términos de la preimagen de la [Definición “Imagen y preimagen de un conjunto”](10-funciones.qmd#def-imagen-preimagen), que es la que usan los resultados de existencia de óptimos.
+
+::: {#thm-continuidad-abiertos}
+## Continuidad y conjuntos abiertos
+
+Una función $f:\mathbb{R}^n\to\mathbb{R}^m$ es continua en todo $\mathbb{R}^n$ si y solo si la preimagen $f^{-1}(G)$ de todo abierto $G\subseteq\mathbb{R}^m$ es abierta. En consecuencia, la preimagen de un cerrado es cerrada.
+
+:::
+
+::: {.proof}
+Si $f$ es continua y $G$ es abierto, sea $\vect{p}\in f^{-1}(G)$. Como $f(\vect{p})\in G$ y $G$ es abierto, existe $\varepsilon>0$ con $N_\varepsilon(f(\vect{p}))\subseteq G$, y la continuidad da $\delta>0$ con $f(N_\delta(\vect{p}))\subseteq N_\varepsilon(f(\vect{p}))\subseteq G$; es decir, $N_\delta(\vect{p})\subseteq f^{-1}(G)$ y $\vect{p}$ es interior.
+
+Recíprocamente, sea $\vect{p}$ y $\varepsilon>0$. La vecindad $G=N_\varepsilon(f(\vect{p}))$ es abierta, de modo que $f^{-1}(G)$ es abierta y contiene a $\vect{p}$; existe $\delta>0$ con $N_\delta(\vect{p})\subseteq f^{-1}(G)$, que es la condición de continuidad.
+
+Para los cerrados, si $F$ es cerrado, $f^{-1}(F)=\bigl(f^{-1}(F^c)\bigr)^c$ por la [Proposición “La preimagen respeta las operaciones de conjuntos”](10-funciones.qmd#prp-preimagen), y es el complemento de un abierto.
+
+:::
+
+El resultado siguiente muestra por qué la continuidad y la compacidad se complementan: la continuidad transporta la compacidad.
+
+::: {#thm-imagen-compacta}
+## La imagen continua de un compacto es compacta
+
+Sea $K\subseteq\mathbb{R}^n$ compacto y $f:K\to\mathbb{R}^m$ continua. Entonces $f(K)$ es compacto.
+
+:::
+
+::: {.proof}
+Se usa la compacidad secuencial del [Corolario “Compacidad secuencial en $\mathbb{R}^k$”](28-conjuntos-compactos-y-el-teorema-de-heine-borel.qmd#cor-compacidad-secuencial). Sea $(\vect{y}_k)$ una sucesión en $f(K)$, con $\vect{y}_k=f(\vect{x}_k)$ y $\vect{x}_k\in K$. Por la compacidad de $K$, alguna subsucesión $\vect{x}_{k_j}\to\vect{x}\in K$, y por el @thm-continuidad-sucesiones, $\vect{y}_{k_j}=f(\vect{x}_{k_j})\to f(\vect{x})\in f(K)$. Toda sucesión en $f(K)$ tiene una subsucesión convergente en $f(K)$, de modo que $f(K)$ es compacto.
+
+:::
+
+::: {#thm-weierstrass-valores-extremos}
+## Teorema de los valores extremos
+
+Sea $K\subseteq\mathbb{R}^n$ compacto y no vacío, y $f:K\to\mathbb{R}$ continua. Entonces $f$ alcanza su máximo y su mínimo en $K$: existen $\vect{x}^*,\vect{x}_*\in K$ con $f(\vect{x}_*)\leq f(\vect{x})\leq f(\vect{x}^*)$ para todo $\vect{x}\in K$.
+
+:::
+
+::: {.proof}
+Por el @thm-imagen-compacta, $f(K)\subseteq\mathbb{R}$ es compacto, de modo que es cerrado y acotado por el [Teorema “Teorema de Heine–Borel”](28-conjuntos-compactos-y-el-teorema-de-heine-borel.qmd#thm-heine-borel). Como es no vacío y acotado, el axioma de completitud da $M=\sup f(K)$, y por la [Proposición “El supremo de un conjunto acotado pertenece a su clausura”](26-conjuntos-abiertos-cerrados-y-la-clausura.qmd#prp-sup-en-clausura), $M\in\overline{f(K)}=f(K)$ porque $f(K)$ es cerrado. Entonces existe $\vect{x}^*\in K$ con $f(\vect{x}^*)=M$, que es un máximo. El mismo argumento con el ínfimo, que pertenece a $\overline{f(K)}$ por la simetría $\inf A=-\sup(-A)$, da el mínimo.
+
+:::
+
+Además de alcanzar sus extremos, una función continua en un compacto cumple una forma más fuerte de continuidad, en la que el $\delta$ no depende del punto.
+
+::: {#thm-continuidad-uniforme}
+## Continuidad uniforme en un compacto
+
+Sea $K\subseteq\mathbb{R}^n$ compacto y $f:K\to\mathbb{R}^m$ continua. Entonces $f$ es ***uniformemente continua***: para todo $\varepsilon>0$ existe $\delta>0$ tal que $\|f(\vect{x})-f(\vect{y})\|<\varepsilon$ para todos $\vect{x},\vect{y}\in K$ con $\|\vect{x}-\vect{y}\|<\delta$.
+
+:::
+
+::: {.proof}
+Se razona por contradicción. Si $f$ no fuera uniformemente continua, existiría $\varepsilon_0>0$ tal que, para cada $k$, hay $\vect{x}_k,\vect{y}_k\in K$ con $\|\vect{x}_k-\vect{y}_k\|<1/k$ y $\|f(\vect{x}_k)-f(\vect{y}_k)\|\geq\varepsilon_0$. Por la compacidad de $K$, una subsucesión $\vect{x}_{k_j}\to\vect{x}\in K$, y como $\|\vect{y}_{k_j}-\vect{x}\|\leq\|\vect{y}_{k_j}-\vect{x}_{k_j}\|+\|\vect{x}_{k_j}-\vect{x}\|\to0$, también $\vect{y}_{k_j}\to\vect{x}$. Por el @thm-continuidad-sucesiones, $f(\vect{x}_{k_j})\to f(\vect{x})$ y $f(\vect{y}_{k_j})\to f(\vect{x})$, de modo que $\|f(\vect{x}_{k_j})-f(\vect{y}_{k_j})\|\to0$, lo que contradice que valga al menos $\varepsilon_0$.
+
+:::
+
+La conexidad también se transporta, y de ello se obtiene que una función continua en un intervalo no puede saltar sobre ningún valor.
+
+::: {#thm-valor-intermedio}
+## Teorema del valor intermedio
+
+Sea $f:[a,b]\to\mathbb{R}$ continua y $c$ un número entre $f(a)$ y $f(b)$. Entonces existe $x\in[a,b]$ con $f(x)=c$.
+
+:::
+
+::: {.proof}
+Se prueba primero que la imagen de un conexo es conexa. Sea $E=[a,b]$, conexo por el [Teorema “Caracterización de los conexos de $\mathbb{R}$”](29-conjuntos-conexos.qmd#thm-conexos-r), y supóngase que $f(E)=A\cup B$ con $A,B$ no vacíos y separados. Sean $E_A=\{x\in E:f(x)\in A\}$ y $E_B=\{x\in E:f(x)\in B\}$, no vacíos y con $E=E_A\cup E_B$. Si existiera $p\in\overline{E_A}\cap E_B$, por la [Proposición “Clausura y conjuntos cerrados mediante sucesiones”](27-sucesiones-en-espacios-metricos-y-completitud.qmd#prp-clausura-sucesiones) habría una sucesión $x_k\in E_A$ con $x_k\to p$; como $p\in E$ y $f$ es continua en $p$, $f(x_k)\to f(p)\in B$, y como $f(x_k)\in A$, resultaría $f(p)\in\overline{A}\cap B=\varnothing$, una contradicción. Del mismo modo $E_A\cap\overline{E_B}=\varnothing$, de modo que $E_A,E_B$ separan a $E$, lo que contradice que $E$ sea conexo. Entonces $f(E)$ es conexo, y por el mismo teorema es un conjunto sin huecos. Como $f(a),f(b)\in f(E)$ y $c$ está entre ambos, $c\in f(E)$.
+
+:::
+
+Con números, $f(x)=x^2-2$ es continua en $[1,2]$ con $f(1)=-1<0<f(2)=2$, de modo que se anula en algún punto. La bisección lo localiza: $f(1.5)=0.25>0$ deja el intervalo $[1,1.5]$; $f(1.25)=-0.4375<0$ deja $[1.25,1.5]$; $f(1.375)=-0.109<0$ deja $[1.375,1.5]$; y $f(1.4375)=0.0664>0$ deja $[1.375,1.4375]$, que contiene a $\sqrt2=1.41421\ldots$ El teorema garantiza que el cero existe; el método de bisección, además, lo encierra en un intervalo cada vez más pequeño.

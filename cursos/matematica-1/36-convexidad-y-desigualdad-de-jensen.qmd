@@ -1,0 +1,92 @@
+---
+title: "Convexidad en una variable y la desigualdad de Jensen"
+description: "Funciones convexas de una variable, su caracterización por la derivada y por la recta tangente, la desigualdad de Jensen finita con su caso de igualdad, y las desigualdades del logaritmo y de las medias."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Funciones continuas]
+---
+
+Una función es convexa cuando el segmento que une dos puntos de su gráfica queda por encima de la gráfica. Esa propiedad geométrica tiene dos consecuencias analíticas que se usan sin cesar: la pendiente nunca decrece, y la gráfica queda siempre por encima de sus rectas tangentes. De ellas se deduce la desigualdad de Jensen, que acota el valor de una función convexa en un promedio por el promedio de sus valores, y que es el resultado detrás de varias desigualdades de la estadística, entre ellas la no negatividad de la divergencia de información que sostiene la consistencia de la máxima verosimilitud.
+
+::: {#def-convexa-una-variable}
+## Función convexa y cóncava
+
+Sea $I\subseteq\mathbb{R}$ un intervalo. Una función $f:I\to\mathbb{R}$ es ***convexa*** si, para todos $x,y\in I$ y todo $\lambda\in[0,1]$, $f\bigl(\lambda x+(1-\lambda)y\bigr)\leq\lambda f(x)+(1-\lambda)f(y)$. Es ***estrictamente convexa*** si la desigualdad es estricta para $x\neq y$ y $\lambda\in(0,1)$. La función $f$ es ***cóncava*** si $-f$ es convexa.
+
+:::
+
+La primera caracterización compara pendientes de cuerdas: en una función convexa, la pendiente de la cuerda crece cuando se mueve cualquiera de sus extremos hacia la derecha.
+
+::: {#lem-tres-cuerdas}
+## Lema de las tres cuerdas
+
+Si $f$ es convexa y $x<y<z$ en $I$, entonces
+$$
+\frac{f(y)-f(x)}{y-x}\leq\frac{f(z)-f(x)}{z-x}\leq\frac{f(z)-f(y)}{z-y}.
+$$
+
+:::
+
+::: {.proof}
+Sea $\lambda=(z-y)/(z-x)\in(0,1)$, de modo que $y=\lambda x+(1-\lambda)z$. La convexidad da $f(y)\leq\lambda f(x)+(1-\lambda)f(z)$. Restando $f(x)$ a ambos lados, $f(y)-f(x)\leq(1-\lambda)\bigl(f(z)-f(x)\bigr)$, y como $1-\lambda=(y-x)/(z-x)$, dividiendo por $y-x>0$ resulta la primera desigualdad. Restando $f(z)$ en cambio, $f(y)-f(z)\leq\lambda\bigl(f(x)-f(z)\bigr)$, es decir, $f(z)-f(y)\geq\lambda\bigl(f(z)-f(x)\bigr)$, y dividiendo por $z-y>0$ con $\lambda=(z-y)/(z-x)$ resulta la segunda.
+
+:::
+
+Para funciones derivables, la convexidad se lee en la derivada y en las rectas tangentes.
+
+::: {#thm-convexidad-derivada}
+## Convexidad, derivada y recta tangente
+
+Sea $f$ derivable en un intervalo abierto $I$. Las tres afirmaciones siguientes son equivalentes: (a) $f$ es convexa; (b) $f'$ es creciente (no decreciente); (c) $f(y)\geq f(x)+f'(x)(y-x)$ para todos $x,y\in I$. Si además $f$ es dos veces derivable, son equivalentes a (d) $f''(x)\geq0$ para todo $x$; y $f''>0$ implica que $f$ es estrictamente convexa.
+
+:::
+
+::: {.proof}
+(a)$\Rightarrow$(b). Sean $x<y$. Por el lema de las tres cuerdas, para $x<u<y$, el cociente $\frac{f(u)-f(x)}{u-x}\leq\frac{f(y)-f(x)}{y-x}\leq\frac{f(y)-f(u)}{y-u}$. Al hacer $u\to x^+$ en el primer cociente, $f'(x)\leq\frac{f(y)-f(x)}{y-x}$; al hacer $u\to y^-$ en el último, $\frac{f(y)-f(x)}{y-x}\leq f'(y)$. Entonces $f'(x)\leq f'(y)$.
+
+(b)$\Rightarrow$(c). Para $y>x$, el teorema del valor medio da $c\in(x,y)$ con $f(y)-f(x)=f'(c)(y-x)\geq f'(x)(y-x)$, porque $f'(c)\geq f'(x)$. Para $y<x$, da $c\in(y,x)$ con $f(y)-f(x)=f'(c)(y-x)$, y como $f'(c)\leq f'(x)$ e $y-x<0$, resulta $f(y)-f(x)\geq f'(x)(y-x)$.
+
+(c)$\Rightarrow$(a). Sean $x,y\in I$, $\lambda\in[0,1]$ y $m=\lambda x+(1-\lambda)y$. Por (c) en $m$, $f(x)\geq f(m)+f'(m)(x-m)$ y $f(y)\geq f(m)+f'(m)(y-m)$; multiplicando por $\lambda$ y $1-\lambda$ y sumando, el término con $f'(m)$ vale $f'(m)\bigl(\lambda x+(1-\lambda)y-m\bigr)=0$, de modo que $\lambda f(x)+(1-\lambda)f(y)\geq f(m)$.
+
+Si $f''$ existe, (b) equivale a $f''\geq0$ por el [Corolario “Derivada y monotonía”](31-la-derivada-de-una-variable.qmd#cor-derivada-monotonia) aplicado a $f'$. Si $f''>0$, $f'$ es estrictamente creciente, y las desigualdades de (b)$\Rightarrow$(c) son estrictas para $y\neq x$, de modo que (c) es estricta; con ello la prueba de (c)$\Rightarrow$(a) da una desigualdad estricta cuando $x\neq y$ y $\lambda\in(0,1)$.
+
+:::
+
+La desigualdad de Jensen extiende la definición de dos puntos a cualquier número finito de puntos con pesos arbitrarios.
+
+::: {#thm-jensen-finita}
+## Desigualdad de Jensen
+
+Sea $f$ convexa en el intervalo $I$, $x_1,\ldots,x_m\in I$ y $\lambda_1,\ldots,\lambda_m\geq0$ con $\sum_i\lambda_i=1$. Entonces
+$$
+f\Bigl(\sum_{i=1}^{m}\lambda_ix_i\Bigr)\leq\sum_{i=1}^{m}\lambda_if(x_i).
+$$
+Si $f$ es derivable y estrictamente convexa y todos los $\lambda_i>0$, la igualdad ocurre si y solo si $x_1=\cdots=x_m$.
+
+:::
+
+::: {.proof}
+Se induce sobre $m$. Para $m=1$ es una igualdad, y para $m=2$ es la definición. Si vale para $m-1$, y $\lambda_m<1$ (si $\lambda_m=1$ el resultado es trivial), se escribe $\sum_{i=1}^{m}\lambda_ix_i=(1-\lambda_m)\,y+\lambda_mx_m$ con $y=\sum_{i<m}\frac{\lambda_i}{1-\lambda_m}x_i\in I$, y la definición con dos puntos y la hipótesis de inducción dan
+$$
+f\Bigl(\sum_i\lambda_ix_i\Bigr)\leq(1-\lambda_m)f(y)+\lambda_mf(x_m)\leq(1-\lambda_m)\sum_{i<m}\frac{\lambda_i}{1-\lambda_m}f(x_i)+\lambda_mf(x_m)=\sum_i\lambda_if(x_i).
+$$
+
+Para el caso de igualdad, sea $\mu=\sum_i\lambda_ix_i$. Por el teorema anterior, la desigualdad estricta $f(x_i)>f(\mu)+f'(\mu)(x_i-\mu)$ vale para todo $x_i\neq\mu$. Multiplicando por $\lambda_i>0$ y sumando, $\sum_i\lambda_if(x_i)>f(\mu)+f'(\mu)\sum_i\lambda_i(x_i-\mu)=f(\mu)$ si algún $x_i\neq\mu$, porque la suma del segundo término es cero. Entonces hay igualdad solo si todos los $x_i$ coinciden con $\mu$.
+
+:::
+
+Dos aplicaciones inmediatas usan la concavidad del logaritmo, cuya segunda derivada $-1/x^2$ es negativa en todo el dominio, de modo que $-\ln$ es estrictamente convexa.
+
+::: {#cor-desigualdades-log}
+## Desigualdades del logaritmo y de las medias
+
+(i) Para todo $x>0$, $\ln x\leq x-1$, con igualdad solo en $x=1$. (ii) *(media aritmética y geométrica)* Para $x_i>0$ y pesos $\lambda_i>0$ con suma $1$, $\prod_ix_i^{\lambda_i}\leq\sum_i\lambda_ix_i$, con igualdad si y solo si los $x_i$ son iguales.
+
+:::
+
+::: {.proof}
+Para (i), la recta tangente a $\ln$ en $1$ es $y=x-1$, y por el teorema anterior aplicado a la función estrictamente convexa $-\ln$, $-\ln x\geq-(x-1)$ con desigualdad estricta si $x\neq1$. Para (ii), la desigualdad de Jensen aplicada a $-\ln$ da $-\ln\bigl(\sum_i\lambda_ix_i\bigr)\leq-\sum_i\lambda_i\ln x_i$, es decir, $\ln\bigl(\sum\lambda_ix_i\bigr)\geq\ln\prod x_i^{\lambda_i}$, y como $\ln$ es estrictamente creciente, $\sum\lambda_ix_i\geq\prod x_i^{\lambda_i}$; el caso de igualdad es el de Jensen.
+
+:::
+
+Con números, para $x=(1,4)$ y $\lambda=(\tfrac12,\tfrac12)$, la media geométrica es $\sqrt{1\cdot4}=2$ y la aritmética $2.5$, de modo que $2\leq2.5$; y $\ln2=0.693\leq2-1=1$ ilustra (i).

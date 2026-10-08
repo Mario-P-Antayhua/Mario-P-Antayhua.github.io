@@ -1,0 +1,91 @@
+---
+title: "Matrices particionadas y el complemento de Schur"
+description: "Producto de matrices por bloques, determinante e inversa de una matriz particionada mediante el complemento de Schur, y su verificación con un ejemplo numérico."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
+---
+
+En muchos problemas, el vector o la matriz con los que se trabaja se separan de forma natural en dos grupos: las variables que se observan y las que no, los regresores de interés y los de control, el estado y la medición. La notación por bloques escribe esa separación, y el complemento de Schur es la pieza que permite invertir la matriz completa en términos de los bloques y calcular su determinante.
+
+Una matriz $\mat{M}\in\mathbb{R}^{(p+q)\times(p+q)}$ se ***particiona*** en bloques escribiendo
+$$
+\mat{M}=\begin{pmatrix}\mat{A}&\mat{B}\\\mat{C}&\mat{D}\end{pmatrix},
+$$
+con $\mat{A}\in\mathbb{R}^{p\times p}$, $\mat{B}\in\mathbb{R}^{p\times q}$, $\mat{C}\in\mathbb{R}^{q\times p}$ y $\mat{D}\in\mathbb{R}^{q\times q}$. Los bloques se multiplican como si fueran números, con la condición de que los tamaños sean compatibles.
+
+::: {#prp-producto-bloques}
+## Producto por bloques
+
+Si $\mat{M}=\begin{pmatrix}\mat{A}&\mat{B}\\\mat{C}&\mat{D}\end{pmatrix}$ y $\mat{N}=\begin{pmatrix}\mat{E}&\mat{F}\\\mat{G}&\mat{H}\end{pmatrix}$ están particionadas de modo que los productos de bloques están definidos, entonces
+$$
+\mat{M}\mat{N}=\begin{pmatrix}\mat{A}\mat{E}+\mat{B}\mat{G}&\mat{A}\mat{F}+\mat{B}\mat{H}\\\mat{C}\mat{E}+\mat{D}\mat{G}&\mat{C}\mat{F}+\mat{D}\mat{H}\end{pmatrix}.
+$$
+
+:::
+
+::: {.proof}
+La entrada $(i,j)$ de $\mat{M}\mat{N}$ es $\sum_\ell m_{i\ell}n_{\ell j}$. Se separa la suma en los índices $\ell\leq p$, que recorren las columnas del primer grupo de $\mat{M}$ y las filas del primer grupo de $\mat{N}$, y los $\ell>p$, que recorren las del segundo. Para $i\leq p$ y $j\leq p$, la primera parte es $(\mat{A}\mat{E})_{ij}$ y la segunda $(\mat{B}\mat{G})_{ij}$. Los otros tres bloques se obtienen igual.
+
+:::
+
+Dos casos especiales de matrices por bloques se tratan con una regla única: el determinante de una matriz con un bloque de ceros es el producto de los determinantes de los bloques diagonales.
+
+::: {#lem-determinante-bloques}
+## Determinante de una matriz triangular por bloques
+
+Si $\mat{M}=\begin{pmatrix}\mat{A}&\mat{B}\\\mat{0}&\mat{D}\end{pmatrix}$ con $\mat{A},\mat{D}$ cuadradas, o $\mat{M}=\begin{pmatrix}\mat{A}&\mat{0}\\\mat{C}&\mat{D}\end{pmatrix}$, entonces $\det\mat{M}=\det\mat{A}\det\mat{D}$.
+
+:::
+
+::: {.proof}
+Se trata el primer caso; el segundo se sigue del primero por la [Proposición “Transpuesta, matrices triangulares y linealidad por filas”](08-el-determinante-y-la-invertibilidad.qmd#prp-determinante-basico)(i), porque la transpuesta de una matriz triangular inferior por bloques es triangular superior por bloques. En la fórmula $\det\mat{M}=\sum_\sigma\operatorname{sgn}(\sigma)\prod_im_{i\sigma(i)}$, como $m_{ij}=0$ para $i>p$ y $j\leq p$, un producto es no nulo solo si $\sigma(i)>p$ para todo $i>p$. Entonces $\sigma$ envía $\{p+1,\ldots,p+q\}$ en sí mismo, y por ser biyectiva también $\{1,\ldots,p\}$ en sí mismo.Cada tal $\sigma$ es un par $(\sigma_1,\sigma_2)$ de permutaciones de $p$ y de $q$ elementos, no hay inversiones entre los dos grupos, de modo que $\operatorname{sgn}\sigma=\operatorname{sgn}\sigma_1\operatorname{sgn}\sigma_2$, y la suma se factoriza en $\bigl(\sum_{\sigma_1}\operatorname{sgn}\sigma_1\prod a_{i\sigma_1(i)}\bigr)\bigl(\sum_{\sigma_2}\operatorname{sgn}\sigma_2\prod d_{i\sigma_2(i)}\bigr)=\det\mat{A}\det\mat{D}$.
+
+:::
+
+La pieza central es una factorización de $\mat{M}$ que elimina el bloque $\mat{C}$ y el bloque $\mat{B}$ por turnos, y deja una matriz cuadrada más pequeña, el complemento de Schur.
+
+::: {#def-complemento-schur}
+## Complemento de Schur
+
+Si $\mat{A}$ es invertible, el ***complemento de Schur*** de $\mat{A}$ en $\mat{M}$ es $\mat{S}:=\mat{D}-\mat{C}\mat{A}^{-1}\mat{B}\in\mathbb{R}^{q\times q}$.
+
+:::
+
+El complemento de Schur mide lo que queda de $\mat{D}$ una vez que se ha descontado la información que aporta $\mat{A}$ a través de $\mat{B}$ y $\mat{C}$, y el teorema siguiente muestra que toda la estructura de $\mat{M}$ se descompone en $\mat{A}$ y $\mat{S}$.
+
+::: {#thm-factorizacion-schur}
+## Factorización por el complemento de Schur
+
+Si $\mat{A}$ es invertible, entonces
+$$
+\begin{pmatrix}\mat{A}&\mat{B}\\\mat{C}&\mat{D}\end{pmatrix}
+=\begin{pmatrix}\Imat&\mat{0}\\\mat{C}\mat{A}^{-1}&\Imat\end{pmatrix}
+\begin{pmatrix}\mat{A}&\mat{0}\\\mat{0}&\mat{S}\end{pmatrix}
+\begin{pmatrix}\Imat&\mat{A}^{-1}\mat{B}\\\mat{0}&\Imat\end{pmatrix}.
+$$ {#eq-factorizacion-schur}
+En consecuencia, $\det\mat{M}=\det\mat{A}\,\det\mat{S}$; y $\mat{M}$ es invertible si y solo si $\mat{S}$ lo es, en cuyo caso
+$$
+\mat{M}^{-1}=\begin{pmatrix}\mat{A}^{-1}+\mat{A}^{-1}\mat{B}\mat{S}^{-1}\mat{C}\mat{A}^{-1}&-\mat{A}^{-1}\mat{B}\mat{S}^{-1}\\-\mat{S}^{-1}\mat{C}\mat{A}^{-1}&\mat{S}^{-1}\end{pmatrix}.
+$$ {#eq-inversa-bloques}
+
+:::
+
+::: {.proof}
+Se verifica @eq-factorizacion-schur multiplicando por bloques con la [Proposición “Producto por bloques”](#prp-producto-bloques). El producto de los dos últimos factores es
+$$
+\begin{pmatrix}\mat{A}&\mat{0}\\\mat{0}&\mat{S}\end{pmatrix}\begin{pmatrix}\Imat&\mat{A}^{-1}\mat{B}\\\mat{0}&\Imat\end{pmatrix}=\begin{pmatrix}\mat{A}&\mat{B}\\\mat{0}&\mat{S}\end{pmatrix},
+$$
+y multiplicando a la izquierda por el primero, la primera fila de bloques sigue siendo $(\mat{A},\mat{B})$ y la segunda es $\bigl(\mat{C}\mat{A}^{-1}\mat{A},\ \mat{C}\mat{A}^{-1}\mat{B}+\mat{S}\bigr)=(\mat{C},\mat{D})$, que es $\mat{M}$.
+
+Para el determinante, los factores primero y tercero son triangulares por bloques con diagonales de identidad, de modo que por el @lem-determinante-bloques su determinante es $1$; el factor central tiene determinante $\det\mat{A}\det\mat{S}$, y por el [Teorema “Multiplicatividad del determinante”](08-el-determinante-y-la-invertibilidad.qmd#thm-determinante-producto), $\det\mat{M}=\det\mat{A}\det\mat{S}$. Como $\det\mat{A}\neq0$, $\mat{M}$ es invertible si y solo si $\det\mat{S}\neq0$, es decir, si y solo si $\mat{S}$ lo es, por el [Teorema “Caracterización de la invertibilidad”](08-el-determinante-y-la-invertibilidad.qmd#thm-caracterizacion-invertibilidad).
+
+Para la inversa, los tres factores son invertibles, con inversas $\begin{pmatrix}\Imat&\mat{0}\\-\mat{C}\mat{A}^{-1}&\Imat\end{pmatrix}$, $\begin{pmatrix}\mat{A}^{-1}&\mat{0}\\\mat{0}&\mat{S}^{-1}\end{pmatrix}$ y $\begin{pmatrix}\Imat&-\mat{A}^{-1}\mat{B}\\\mat{0}&\Imat\end{pmatrix}$, que se verifican multiplicando por bloques. Para un producto invertible, $(\mat{X}\mat{Y}\mat{Z})^{-1}=\mat{Z}^{-1}\mat{Y}^{-1}\mat{X}^{-1}$, y multiplicar los tres factores inversos en ese orden por bloques da @eq-inversa-bloques.
+
+:::
+
+El teorema se verifica con números. Sea $\mat{M}=\left(\begin{smallmatrix}2&1&0\\1&3&1\\0&1&2\end{smallmatrix}\right)$, particionada con $\mat{A}=(2)$, $\mat{B}=(1\ \ 0)$, $\mat{C}=\left(\begin{smallmatrix}1\\0\end{smallmatrix}\right)$ y $\mat{D}=\left(\begin{smallmatrix}3&1\\1&2\end{smallmatrix}\right)$. El complemento de Schur es
+$$
+\mat{S}=\mat{D}-\mat{C}\mat{A}^{-1}\mat{B}=\begin{pmatrix}3&1\\1&2\end{pmatrix}-\frac12\begin{pmatrix}1&0\\0&0\end{pmatrix}=\begin{pmatrix}5/2&1\\1&2\end{pmatrix},
+$$
+con $\det\mat{S}=5-1=4$, de modo que $\det\mat{M}=2\cdot4=8$, que coincide con el cálculo directo por la definición de determinante. Además $\mat{S}^{-1}=\tfrac14\left(\begin{smallmatrix}2&-1\\-1&5/2\end{smallmatrix}\right)=\left(\begin{smallmatrix}1/2&-1/4\\-1/4&5/8\end{smallmatrix}\right)$, que es el bloque inferior derecho de $\mat{M}^{-1}=\tfrac18\left(\begin{smallmatrix}5&-2&1\\-2&4&-2\\1&-2&5\end{smallmatrix}\right)$, y el bloque superior izquierdo de la fórmula vale $\mat{A}^{-1}+\mat{A}^{-1}\mat{B}\mat{S}^{-1}\mat{C}\mat{A}^{-1}=\tfrac12+\tfrac12\cdot\tfrac12\cdot\tfrac12=\tfrac58$, porque $\mat{B}\mat{S}^{-1}\mat{C}$ es la entrada $(1,1)$ de $\mat{S}^{-1}$, igual a $\tfrac12$; es el mismo valor que la entrada $(1,1)$ de $\mat{M}^{-1}$.

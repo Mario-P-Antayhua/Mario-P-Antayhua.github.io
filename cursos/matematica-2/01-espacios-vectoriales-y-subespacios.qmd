@@ -1,213 +1,90 @@
 ---
 title: "Espacios vectoriales y subespacios"
-description: "Espacios vectoriales y subespacios. Incluye Espacio vectorial, Subespacio vectorial y Criterio de subespacio."
+description: "La definición abstracta de espacio vectorial, las consecuencias elementales de sus axiomas, los subespacios con su criterio de verificación y la envoltura lineal."
 author: "Mario Peñaloza"
-date: 2026-10-07
-categories: [Matemática para Economistas II, Espacios vectoriales, normados y con producto interno]
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
 ---
 
-Las secciones anteriores construyeron la recta real a partir de sus
-axiomas y extrajeron de ella, primero, la noción de límite y, después, la
-de distancia abstracta en un espacio métrico cualquiera. Esa distancia
-bastaba para hablar de cercanía, de convergencia y de compacidad, pero no
-alcanza para describir el tipo de objetos con los que trabaja la
-econometría: vectores de observaciones que se suman entre sí, se escalan
-por un coeficiente y se combinan linealmente para formar predicciones.
-Falta, en otras palabras, estructura algebraica además de estructura
-métrica. Esta sección la provee en tres capas sucesivas. Primero, el
-espacio vectorial fija qué significa sumar y escalar; sobre él, la base y
-la dimensión miden cuántas direcciones independientes contiene el
-espacio. Segundo, la norma mide el tamaño de un vector y, al hacerlo,
-recupera la métrica de la [Sección “Espacios métricos”](../matematica-1/23-espacios-metricos.qmd) como caso particular.
-Tercero, el producto interno añade la noción de ángulo y, en particular,
-de ortogonalidad, que es la pieza que faltaba. La sección cierra con el
-teorema de la mejor aproximación, que resuelve el problema geométrico de
-encontrar, dentro de un subespacio, el punto más cercano a un vector
-dado; ese resultado, demostrado aquí en abstracto, es exactamente el que
-la [sección sobre la predicción óptima](../econometria-3/index.qmd) invocará para justificar que la esperanza
-condicional es el predictor óptimo, sin volver a demostrarlo.
+La distancia de un espacio métrico basta para hablar de cercanía y de convergencia, pero no alcanza para describir el tipo de objetos con los que trabaja la econometría: vectores de observaciones que se suman entre sí, se escalan por un coeficiente y se combinan linealmente para formar predicciones. Falta, en otras palabras, estructura algebraica además de estructura métrica. Esta nota define esa estructura en abstracto, y las tres siguientes la enriquecen con la dimensión, la norma y el producto interno.
 
-Conviene anticipar por qué vale la pena pagar el costo de esta
-abstracción antes de necesitarla. Ninguno de los resultados que siguen
-depende de que $V$ sea $\mathbb{R}^n$, de que sus elementos sean columnas
-de números o de que la dimensión sea finita; dependen únicamente de los
-axiomas que se van declarando en cada definición. Esa independencia del
-caso particular es la que permite que, mucho más adelante, el mismo
-argumento que aquí se prueba para vectores geométricos se traslade sin
-alteración alguna al espacio de las variables aleatorias con varianza
-finita, donde el producto interno deja de ser un producto punto y pasa a
-ser una esperanza de productos. Quien recorra esta sección pensando solo
-en $\mathbb{R}^n$ no pierde nada de su contenido, pero quien la recorra
-teniendo presente esa segunda aplicación entiende de inmediato por qué el
-argumento se construye con el nivel de generalidad que sigue.
-
-Distintos objetos matemáticos que a primera vista no tienen nada en
-común, como las $n$-tuplas de $\mathbb{R}^n$, las matrices de un tamaño
-fijo, los polinomios de grado acotado o, más adelante, las variables
-aleatorias con varianza finita, comparten un mismo comportamiento
-algebraico: se pueden sumar entre sí y se pueden multiplicar por un
-escalar, y esas dos operaciones satisfacen siempre las mismas reglas. La
-definición siguiente extrae esas reglas de sus casos particulares y las
-declara suficientes para que cualquier conjunto que las cumpla merezca
-llamarse espacio vectorial, del mismo modo en que la
-[Definición “Espacio métrico”](../matematica-1/23-espacios-metricos.qmd#def-espacio-metrico) extrajo de la distancia usual las tres
-propiedades que bastan para hablar de métrica.
+Objetos que a primera vista no tienen nada en común, como las $n$-tuplas de $\mathbb{R}^n$, las matrices de un tamaño fijo o los polinomios de grado acotado, comparten un mismo comportamiento algebraico: se pueden sumar entre sí y se pueden multiplicar por un escalar, y esas dos operaciones satisfacen siempre las mismas reglas. La definición siguiente extrae esas reglas y las declara suficientes para que cualquier conjunto que las cumpla merezca llamarse espacio vectorial.
 
 ::: {#def-espacio-vectorial}
 ## Espacio vectorial
 
-Un ***espacio vectorial*** sobre $\mathbb{R}$ es un conjunto
-$V$ junto con una operación de suma $+:V\times V\to V$ y una operación de
-multiplicación por escalar $\cdot:\mathbb{R}\times V\to V$, tales que para
-todos $\vect{u},\vect{v},\vect{w}\in V$ y todos $\alpha,\beta\in\mathbb{R}$
-se cumple:
+Un ***espacio vectorial*** sobre $\mathbb{R}$ es un conjunto $V$ junto con una suma $+:V\times V\to V$ y una multiplicación por escalar $\cdot:\mathbb{R}\times V\to V$, tales que para todos $\vect{u},\vect{v},\vect{w}\in V$ y todos $\alpha,\beta\in\mathbb{R}$ se cumple:
 
-(i) $(V,+)$ es un grupo abeliano: la suma es asociativa y
-            conmutativa, existe un elemento neutro $\vect{0}\in V$ tal que
-            $\vect{v}+\vect{0}=\vect{v}$, y todo $\vect{v}$ tiene un inverso
-            aditivo $-\vect{v}$ con $\vect{v}+(-\vect{v})=\vect{0}$;
+(i) $(V,+)$ es un grupo abeliano: la suma es asociativa y conmutativa, existe un neutro $\vect{0}\in V$ con $\vect{v}+\vect{0}=\vect{v}$, y todo $\vect{v}$ tiene un opuesto $-\vect{v}$ con $\vect{v}+(-\vect{v})=\vect{0}$;
 
-(i) $1\cdot\vect{v}=\vect{v}$;
+(ii) $1\cdot\vect{v}=\vect{v}$;
 
-(i) $\alpha(\beta\vect{v})=(\alpha\beta)\vect{v}$;
+(iii) $\alpha(\beta\vect{v})=(\alpha\beta)\vect{v}$;
 
-(i) $(\alpha+\beta)\vect{v}=\alpha\vect{v}+\beta\vect{v}$ y
-            $\alpha(\vect{u}+\vect{v})=\alpha\vect{u}+\alpha\vect{v}$.
+(iv) $(\alpha+\beta)\vect{v}=\alpha\vect{v}+\beta\vect{v}$ y $\alpha(\vect{u}+\vect{v})=\alpha\vect{u}+\alpha\vect{v}$.
 
-A los elementos de $V$ se les llama ***vectores***, sin que
-eso presuponga que tengan la forma de una columna de números.
+A los elementos de $V$ se les llama ***vectores***, sin que eso presuponga que sean columnas de números.
 
 :::
 
-La generalidad de la definición es intencional: $\mathbb{R}^n$ con la
-suma y el escalamiento coordenada a coordenada es un espacio vectorial,
-pero también lo son el conjunto de matrices $m\times n$ con entradas
-reales, el conjunto de polinomios de grado a lo sumo $p$, y, en un
-resultado que se usará sin volver a demostrarlo a partir de la
-[Sección “Espacios de probabilidad”](../econometria-1/01-espacios-de-probabilidad.qmd), el conjunto de las variables aleatorias con
-varianza finita definidas sobre un mismo espacio de probabilidad.
-Trabajar con la estructura abstracta evita repetir cuatro veces el mismo
-argumento cuando en realidad depende solo de los axiomas (i) a (iv).
+La generalidad es intencional. $\mathbb{R}^n$ con la suma y el escalamiento coordenada a coordenada es un espacio vectorial, pero también lo son el conjunto $\mathbb{R}^{m\times n}$ de las matrices con entradas reales, el conjunto de los polinomios de grado a lo sumo $p$ y el conjunto de las funciones $f:[a,b]\to\mathbb{R}$ con la suma y el producto por escalar puntuales. Trabajar con la estructura abstracta evita repetir cuatro veces el mismo argumento cuando en realidad depende solo de los axiomas. Las primeras consecuencias de los axiomas son las reglas de cálculo que se usan sin mencionarlas.
 
-Con frecuencia el interés no recae en todo $V$ sino en un subconjunto que
-hereda su misma estructura algebraica: el conjunto de todas las
-combinaciones lineales de un número fijo de regresores dentro del espacio
-de todos los vectores de $\mathbb{R}^n$, por ejemplo. La definición
-siguiente aísla esa idea.
+::: {#lem-reglas-espacio-vectorial}
+## Reglas elementales de un espacio vectorial
+
+Para todo $\vect{v}\in V$ y $\alpha\in\mathbb{R}$: (i) $0\cdot\vect{v}=\vect{0}$; (ii) $\alpha\cdot\vect{0}=\vect{0}$; (iii) $(-1)\cdot\vect{v}=-\vect{v}$; (iv) si $\alpha\vect{v}=\vect{0}$, entonces $\alpha=0$ o $\vect{v}=\vect{0}$.
+
+:::
+
+::: {.proof}
+Para (i), por el axioma (iv), $0\cdot\vect{v}=(0+0)\vect{v}=0\cdot\vect{v}+0\cdot\vect{v}$, y sumando el opuesto de $0\cdot\vect{v}$ a ambos lados se obtiene $\vect{0}=0\cdot\vect{v}$. Para (ii), $\alpha\vect{0}=\alpha(\vect{0}+\vect{0})=\alpha\vect{0}+\alpha\vect{0}$, y el mismo argumento da $\alpha\vect{0}=\vect{0}$. Para (iii), $\vect{v}+(-1)\vect{v}=(1+(-1))\vect{v}=0\cdot\vect{v}=\vect{0}$ por (i), de modo que $(-1)\vect{v}$ es un opuesto de $\vect{v}$, y el opuesto es único porque si $\vect{w}$ y $\vect{w}'$ lo son, $\vect{w}=\vect{w}+(\vect{v}+\vect{w}')=(\vect{w}+\vect{v})+\vect{w}'=\vect{w}'$. Para (iv), si $\alpha\neq0$, multiplicando por $\alpha^{-1}$ se obtiene $\vect{v}=\alpha^{-1}(\alpha\vect{v})=\alpha^{-1}\vect{0}=\vect{0}$ por (ii).
+
+:::
+
+Con frecuencia el interés no recae en todo $V$ sino en un subconjunto que hereda su estructura: el conjunto de todas las combinaciones lineales de unos regresores, dentro del espacio de todos los vectores de $\mathbb{R}^n$, por ejemplo.
 
 ::: {#def-subespacio}
 ## Subespacio vectorial
 
-Sea $V$ un espacio vectorial. Un subconjunto no vacío $W\subseteq V$ es un
-***subespacio vectorial*** de $V$ si $W$ es, por derecho
-propio, un espacio vectorial con las mismas operaciones de $V$
-restringidas a $W$.
+Sea $V$ un espacio vectorial. Un subconjunto no vacío $W\subseteq V$ es un ***subespacio vectorial*** de $V$ si $W$ es, por derecho propio, un espacio vectorial con las operaciones de $V$ restringidas a $W$.
 
 :::
 
-Verificar los cuatro axiomas de la @def-espacio-vectorial cada vez
-que se quiere confirmar que un subconjunto es un subespacio resultaría
-tedioso, porque la mayoría de esos axiomas se heredan automáticamente de
-$V$: la asociatividad, la conmutatividad y las leyes distributivas valen
-en $W$ simplemente porque valen en todo $V$ y $W\subseteq V$. Lo único
-que hace falta comprobar en la práctica es que $W$ no se salga de sí
-mismo al sumar o al escalar, lo cual conduce a un criterio mucho más
-manejable.
+Verificar los cuatro axiomas cada vez sería tedioso, porque la mayoría se heredan de $V$: la asociatividad, la conmutatividad y las leyes distributivas valen en $W$ simplemente porque valen en $V$. Lo único que hace falta comprobar es que $W$ no se salga de sí mismo al sumar o escalar.
 
 ::: {#prp-criterio-subespacio}
 ## Criterio de subespacio
 
-Sea $V$ un espacio vectorial y $W\subseteq V$ no vacío. Entonces $W$ es un
-subespacio de $V$ si y solo si para todos $\vect{u},\vect{v}\in W$ y todos
-$\alpha,\beta\in\mathbb{R}$ se cumple $\alpha\vect{u}+\beta\vect{v}\in W$.
+Sea $V$ un espacio vectorial y $W\subseteq V$ no vacío. Entonces $W$ es un subespacio de $V$ si y solo si para todos $\vect{u},\vect{v}\in W$ y todos $\alpha,\beta\in\mathbb{R}$ se cumple $\alpha\vect{u}+\beta\vect{v}\in W$.
 
 :::
 
 ::: {.proof}
-Si $W$ es subespacio, la cerradura bajo combinaciones lineales es
-inmediata: $\alpha\vect{u}\in W$ y $\beta\vect{v}\in W$ por cerradura bajo
-escalamiento, y su suma queda en $W$ por cerradura bajo la suma, de modo
-que esta dirección no requiere ningún argumento adicional.
+Si $W$ es subespacio, $\alpha\vect{u}\in W$ y $\beta\vect{v}\in W$ por la cerradura bajo escalamiento, y su suma queda en $W$ por la cerradura bajo la suma.
 
-Para la dirección recíproca hace falta verificar que $W$ satisface los
-cuatro axiomas de la @def-espacio-vectorial, y conviene empezar por
-el elemento neutro. Como $W\neq\varnothing$, existe algún $\vect{w}\in W$;
-tomando $\alpha=\beta=0$ en la hipótesis se obtiene
-
-$$
-0\cdot\vect{w}+0\cdot\vect{w} = \vect{0} \in W,
-$$
-
-de modo que el vector cero pertenece a $W$ sin necesidad de suponerlo por
-adelantado. Para el inverso aditivo, dado $\vect{w}\in W$, la hipótesis
-con $\alpha=-1$, $\beta=0$ y $\vect{u}=\vect{v}=\vect{w}$ da
-$-\vect{w}=(-1)\vect{w}\in W$. La cerradura bajo la suma se sigue
-tomando $\alpha=\beta=1$, y la cerradura bajo el escalamiento se sigue
-tomando $\beta=0$ y variando $\alpha$. Con estos cuatro hechos
-establecidos, $(W,+)$ es un grupo abeliano y las leyes de escalamiento se
-heredan de $V$, con lo cual $W$ satisface íntegramente la
-@def-espacio-vectorial y es, por lo tanto, un subespacio.
+Para la recíproca hay que verificar que $W$ satisface los axiomas, y se empieza por el neutro. Como $W\neq\varnothing$, existe $\vect{w}\in W$, y tomando $\alpha=\beta=0$ en la hipótesis, $0\cdot\vect{w}+0\cdot\vect{w}=\vect{0}\in W$ por el @lem-reglas-espacio-vectorial(i). Para el opuesto, la hipótesis con $\alpha=-1$ y $\beta=0$ da $-\vect{w}=(-1)\vect{w}\in W$ por el mismo lema (iii). La cerradura bajo la suma se sigue de $\alpha=\beta=1$, y bajo el escalamiento de $\beta=0$. Con estos hechos $(W,+)$ es un grupo abeliano, y las leyes de escalamiento se heredan de $V$.
 
 :::
 
-El criterio anterior reduce la verificación de un subespacio a una sola
-desigualdad algebraica, y es precisamente el que se aplicará más adelante
-para confirmar que ciertos conjuntos construidos a partir de un producto
-interno, como el complemento ortogonal de la [Subsección “Ortogonalidad, proyección y el teorema de la mejor aproximación”](05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd), son
-subespacios sin repetir el argumento completo. Vale la pena notar también
-qué queda descartado por este criterio: un subconjunto de $V$ puede ser
-cerrado bajo la suma sin ser cerrado bajo el escalamiento, o viceversa, y
-en cualquiera de los dos casos no califica como subespacio aunque
-contenga al vector cero. El primer cuadrante de $\mathbb{R}^2$, por
-ejemplo, es cerrado bajo la suma de dos vectores y bajo el escalamiento
-por cualquier $\alpha\geq 0$, pero no lo es bajo escalamiento por
-$\alpha<0$, de modo que no es un subespacio pese a contener al origen y
-parecer, a primera vista, un candidato razonable.
-
-Antes de llegar al complemento ortogonal, conviene formalizar la
-operación que genera subespacios a partir de un conjunto arbitrario de
-vectores, porque será el lenguaje en el que se describan tanto el espacio
-columna de una matriz de regresores como el conjunto de predicciones
-lineales admisibles a partir de un conjunto de información.
+El criterio reduce la verificación de un subespacio a una sola condición. También descarta candidatos que parecen razonables: el primer cuadrante de $\mathbb{R}^2$ es cerrado bajo la suma y bajo el escalamiento por $\alpha\geq0$, pero no bajo $\alpha<0$, de modo que no es un subespacio pese a contener al origen. La operación que genera subespacios a partir de un conjunto arbitrario de vectores es la envoltura lineal.
 
 ::: {#def-span}
 ## Combinación lineal y envoltura lineal
 
-Sea $V$ un espacio vectorial y $S\subseteq V$. Una
-***combinación lineal*** de elementos de $S$ es cualquier
-vector de la forma $\alpha_1\vect{v}_1+\cdots+\alpha_k\vect{v}_k$, con
-$k$ finito, $\vect{v}_1,\ldots,\vect{v}_k\in S$ y
-$\alpha_1,\ldots,\alpha_k\in\mathbb{R}$. La ***envoltura
-lineal*** de $S$, denotada $\operatorname{gen}(S)$, es el conjunto de
-todas las combinaciones lineales de elementos de $S$; por convención,
-$\operatorname{gen}(\varnothing)=\{\vect{0}\}$.
+Sea $V$ un espacio vectorial y $S\subseteq V$. Una ***combinación lineal*** de elementos de $S$ es un vector $\alpha_1\vect{v}_1+\cdots+\alpha_k\vect{v}_k$ con $k$ finito, $\vect{v}_i\in S$ y $\alpha_i\in\mathbb{R}$. La ***envoltura lineal*** de $S$, denotada $\operatorname{gen}(S)$, es el conjunto de todas las combinaciones lineales de elementos de $S$; por convención $\operatorname{gen}(\varnothing)=\{\vect{0}\}$.
 
 :::
 
-La envoltura lineal aparece en la práctica cada vez que se describe el
-conjunto de todas las predicciones lineales que se pueden formar a partir
-de un número finito de regresores, y el resultado siguiente confirma que
-ese conjunto siempre tiene la estructura algebraica más económica posible
-dado que debe contener a $S$.
+La envoltura lineal describe, por ejemplo, el conjunto de todas las predicciones lineales que se pueden formar con un número finito de regresores, y el resultado siguiente confirma que es el menor subespacio que los contiene.
 
 ::: {#cor-span-subespacio}
 ## $\operatorname{gen}(S)$ es el menor subespacio que contiene a $S$
 
-Para todo $S\subseteq V$, el conjunto $\operatorname{gen}(S)$ es un
-subespacio de $V$, contiene a $S$, y está contenido en cualquier otro
-subespacio de $V$ que contenga a $S$.
+Para todo $S\subseteq V$, $\operatorname{gen}(S)$ es un subespacio de $V$, contiene a $S$, y está contenido en cualquier otro subespacio de $V$ que contenga a $S$.
 
 :::
 
 ::: {.proof}
-Que $\operatorname{gen}(S)$ es subespacio se sigue directamente del
-@prp-criterio-subespacio, puesto que una combinación lineal de dos
-combinaciones lineales de elementos de $S$ es, tras reagrupar términos,
-otra combinación lineal de elementos de $S$. Que $S\subseteq
-\operatorname{gen}(S)$ es inmediato, escribiendo cada $\vect{v}\in S$
-como la combinación trivial $1\cdot\vect{v}$. Finalmente, si $W$ es
-cualquier subespacio con $S\subseteq W$, entonces $W$ contiene, por
-cerradura, toda combinación lineal de elementos de $S$, de modo que
-$\operatorname{gen}(S)\subseteq W$.
+Que $\operatorname{gen}(S)$ es subespacio se sigue del @prp-criterio-subespacio: una combinación lineal de dos combinaciones lineales de elementos de $S$ es, tras reagrupar términos, otra combinación lineal de elementos de $S$. Que $S\subseteq\operatorname{gen}(S)$ es inmediato, escribiendo cada $\vect{v}\in S$ como $1\cdot\vect{v}$. Finalmente, si $W$ es un subespacio con $S\subseteq W$, contiene por cerradura toda combinación lineal de elementos de $S$, de modo que $\operatorname{gen}(S)\subseteq W$.
 
 :::

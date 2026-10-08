@@ -1,0 +1,50 @@
+---
+title: "El proceso AR(p) y la forma compañera"
+description: "El proceso autorregresivo de orden p, la solución estacionaria causal cuando las raíces del polinomio están fuera del círculo unitario, y la representación de primer orden con la matriz compañera cuyos valores propios son los inversos de las raíces."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+El AR(1) captura la dependencia con un solo rezago, pero muchas series necesitan más. El proceso AR(p) incluye $p$ rezagos, y su análisis puede reducirse al del AR(1) por dos caminos que dan el mismo resultado: factorizar el polinomio de rezagos y aplicar la inversión factor por factor, o escribir el proceso como un sistema de primer orden en un vector de estado, donde la condición de estabilidad se lee en los valores propios de una matriz. El segundo camino es el que se generaliza a sistemas con varias variables.
+
+::: {#def-arp}
+## Proceso AR(p)
+
+Un proceso $\{X_t\}$ es un ***AR(p)*** si $X_t=c+\phi_1X_{t-1}+\cdots+\phi_pX_{t-p}+\varepsilon_t$ con $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$ y $\phi_p\neq0$; es decir, $\phi(L)X_t=c+\varepsilon_t$ con $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p$.
+
+:::
+
+La condición de estacionariedad es la misma que en el AR(1), expresada en las raíces.
+
+::: {#thm-arp-estacionario}
+## Solución estacionaria del AR(p)
+
+Si todas las raíces de $\phi(z)$ están fuera del círculo unitario, existe una única solución con varianza acotada, $X_t=\mu+\sum_{j\geq0}\psi_j\varepsilon_{t-j}$ con $\mu=c/\phi(1)$ y $\psi_j$ dados por la recursión de la nota de inversión, con $\sum_j|\psi_j|<\infty$. Es débilmente estacionaria, con $\gamma(h)=\sigma^2\sum_{j\geq0}\psi_j\psi_{j+|h|}$, y $\varepsilon_t$ es no correlacionada con $X_{t-k}$ para $k\geq1$. Cuando alguna raíz está dentro del círculo y ninguna sobre él, existe una única solución con varianza acotada, no causal.
+
+:::
+
+::: {.proof}
+Con $Y_t=X_t-\mu$, $\phi(L)Y_t=\varepsilon_t$ porque $\phi(1)\mu=c$. Por el teorema de inversión de un polinomio con raíces fuera del círculo, la única solución con varianza acotada es $Y_t=\sum_j\psi_j\varepsilon_{t-j}$, con convergencia en media cuadrática y coeficientes absolutamente sumables. Los momentos se calculan como en el AR(1): la media es cero, y por la continuidad de la covarianza en $L^2$, $\Cov(Y_t,Y_{t+h})=\sigma^2\sum_{j}\psi_j\psi_{j+h}$, que converge porque $\sum_j|\psi_j\psi_{j+h}|\leq(\sum|\psi_j|)^2$ y no depende de $t$. La no correlación de $\varepsilon_t$ con el pasado se sigue de que $X_{t-k}$ es límite de combinaciones de $\varepsilon_s$ con $s<t$. Para el último caso, se aplican los inversos causales a los factores con $|\lambda_j|<1$ y los inversos de adelanto a los factores con $|\lambda_j|>1$ del teorema de inversión, que preservan la varianza acotada, y la solución resultante es única por la unicidad en cada factor.
+
+:::
+
+Con números, para $\phi(L)=1-1.2L+0.35L^2$ con raíces $2$ y $1.4286$, la solución es $X_t=\sum_j\psi_j\varepsilon_{t-j}$ con $\psi=(1,\,1.2,\,1.09,\,0.888,\,\ldots)$, y la varianza es $\sigma^2\sum_j\psi_j^2=5.43\,\sigma^2$. Para reducir el AR(p) a primer orden se define el vector de estado $\vect{\xi}_t=(X_t,X_{t-1},\ldots,X_{t-p+1})^{\top}$, que cumple
+$$
+\vect{\xi}_t=\vect{c}+\mat{F}\vect{\xi}_{t-1}+\vect{e}_1\varepsilon_t,\qquad\mat{F}=\begin{pmatrix}\phi_1&\phi_2&\cdots&\phi_{p-1}&\phi_p\\1&0&\cdots&0&0\\0&1&\cdots&0&0\\\vdots&&\ddots&&\vdots\\0&0&\cdots&1&0\end{pmatrix},
+$$ {#eq-forma-companera}
+con $\vect{c}=(c,0,\ldots,0)^{\top}$ y $\vect{e}_1=(1,0,\ldots,0)^{\top}$. La primera fila reproduce la ecuación del AR(p) y las demás expresan la identidad $X_{t-i}=X_{t-i}$. La matriz $\mat{F}$ es la ***matriz compañera***, y sus valores propios son los inversos de las raíces del polinomio.
+
+::: {#prp-companera}
+## Los valores propios de la matriz compañera
+
+El polinomio característico de $\mat{F}$ es $\det(\lambda\Imat-\mat{F})=\lambda^p-\phi_1\lambda^{p-1}-\cdots-\phi_p$. En consecuencia, los valores propios de $\mat{F}$ son los $\lambda_j=1/z_j$, y todas las raíces de $\phi(z)$ están fuera del círculo unitario si y solo si todos los valores propios de $\mat{F}$ tienen módulo menor que uno.
+
+:::
+
+::: {.proof}
+Se prueba por inducción en $p$ que $\det(\lambda\Imat-\mat{F}_p)=\lambda^p-\phi_1\lambda^{p-1}-\cdots-\phi_p$. Para $p=1$, $\det(\lambda-\phi_1)=\lambda-\phi_1$. Para $p>1$, se expande el determinante de $\lambda\Imat-\mat{F}_p$ por la última columna, que tiene entradas $-\phi_p$ en la primera fila y $\lambda$ en la última fila, y ceros en las demás. El cofactor de la entrada $\lambda$ de la última fila es el determinante de $\lambda\Imat-\mat{F}_{p-1}$ asociado a $(\phi_1,\ldots,\phi_{p-1})$, y el cofactor de $-\phi_p$ es el determinante de una matriz triangular con diagonal de $-1$, igual a $(-1)^{p-1}$. La expansión da $\lambda\bigl(\lambda^{p-1}-\phi_1\lambda^{p-2}-\cdots-\phi_{p-1}\bigr)+(-\phi_p)(-1)^{1+p}(-1)^{p-1}=\lambda^p-\phi_1\lambda^{p-1}-\cdots-\phi_{p-1}\lambda-\phi_p$. La relación con las raíces es la de la proposición de factorización de polinomios de rezagos.
+
+:::
+
+La forma compañera permite resolver el proceso de estado con las potencias de $\mat{F}$: iterando, $\vect{\xi}_t=\sum_{k=0}^{m-1}\mat{F}^k(\vect{c}+\vect{e}_1\varepsilon_{t-k})+\mat{F}^m\vect{\xi}_{t-m}$, y si todos los valores propios tienen módulo menor que uno, el teorema de potencias de una matriz del [Teorema “Potencias de una matriz y valores propios”](../matematica-2/11-valores-propios-y-teorema-espectral.qmd#thm-potencias-matriz) asegura que las entradas de $\mat{F}^k$ decaen como $C\rho^k$ con $\rho<1$. El término $\mat{F}^m\vect{\xi}_{t-m}$ desaparece, y la primera coordenada de la suma es la representación causal del teorema, con $\psi_k=(\mat{F}^k)_{11}$. Con números, para $\phi=(1.2,-0.35)$, $\mat{F}=\left(\begin{smallmatrix}1.2&-0.35\\1&0\end{smallmatrix}\right)$ tiene traza $1.2$ y determinante $0.35$, de modo que sus valores propios son las raíces de $\lambda^2-1.2\lambda+0.35$, es decir, $0.7$ y $0.5$. Además $(\mat{F}^2)_{11}=1.2^2-0.35=1.09=\psi_2$.

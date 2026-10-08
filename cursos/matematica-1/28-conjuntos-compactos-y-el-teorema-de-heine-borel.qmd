@@ -1,0 +1,159 @@
+---
+title: "Conjuntos compactos y el teorema de Heine–Borel"
+description: "Compacidad por cubrimientos abiertos, los resultados de que todo compacto es cerrado y acotado, la compacidad de las celdas, el teorema de Heine–Borel en ℝᵏ y la compacidad secuencial."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Topología de la recta y del espacio]
+---
+
+La compacidad no describe una propiedad aislada de un conjunto, como «abierto» o «acotado», sino una propiedad de todos los cubrimientos posibles del conjunto por abiertos. Es la hipótesis que garantiza, en los resultados de análisis que siguen, que ciertos máximos y mínimos existen y que ciertas sucesiones tienen límites parciales.
+
+::: {#def-compacto}
+## Cubrimiento abierto y compacidad
+
+Un ***cubrimiento abierto*** de $E\subseteq X$ es una colección $\{G_\alpha\}$ de abiertos con $E\subseteq\bigcup_\alpha G_\alpha$. El conjunto $K\subseteq X$ es ***compacto*** si todo cubrimiento abierto de $K$ admite un ***subcubrimiento finito***, es decir, una subcolección finita que ya cubre a $K$.
+
+:::
+
+Que la definición cuantifique sobre todos los cubrimientos posibles la hace difícil de verificar directamente. Dos ejemplos con un cubrimiento concreto muestran el éxito y el fracaso de esa cuantificación.
+
+::: {#exm-cubrimiento-si-finito}
+## Un cubrimiento que sí admite subcubrimiento finito, frente a uno que no
+
+Sea $K=[0,1]$ y el cubrimiento $G_x:=(x-0.3,\,x+0.3)$ para cada $x\in K$: cada $x$ está en su propio $G_x$, de modo que $K\subseteq\bigcup_{x\in K}G_x$. Aunque la colección tiene tantos miembros como puntos hay en $[0,1]$, bastan tres de ellos: $G_0=(-0.3,0.3)$, $G_{0.4}=(0.1,0.7)$ y $G_{0.8}=(0.5,1.1)$ se traslapan consecutivamente y su unión $(-0.3,1.1)$ contiene a $[0,1]$, como muestra la @fig-cubrimiento-finito.
+
+Compárese con el intervalo abierto $(0,1)$, que no es compacto. El cubrimiento $G_n:=(1/n,1)$, para $n=2,3,\ldots$, tiene unión $(0,1)$, pero ninguna subcolección finita lo cubre: si $N=\max\{n_1,\ldots,n_k\}$, la unión finita es $(1/N,1)$ y deja sin cubrir $(0,1/N]$; con $N=100$, el punto $x=0.005$ queda fuera. En $[0,1]$ los extremos están incluidos y los atrapa algún abierto; en $(0,1)$, el extremo $0$ nunca se alcanza y el cubrimiento escapa hacia él.
+
+:::
+
+![Tres abiertos de la colección $\{G_x\}$ del ejemplo, traslapados consecutivamente, bastan para cubrir todo $[0,1]$.](../../assets/img/fig/matematica-1-26-conjuntos-compactos-y-el-teorema-de-heine-borel-1.svg){#fig-cubrimiento-finito fig-alt="Tres intervalos abiertos traslapados sobre la recta que cubren el intervalo [0,1]."}
+
+Los resultados siguientes conectan la compacidad con las nociones de acotado y cerrado, mucho más fáciles de verificar. Se empieza por la mitad más sencilla.
+
+::: {#lem-compacto-acotado}
+## Todo compacto es acotado
+
+Si $K\subseteq X$ es compacto, entonces $K$ es acotado.
+
+:::
+
+::: {.proof}
+Se fija $p_0\in X$ y se considera la colección de vecindades $\{N_n(p_0)\}_{n\in\mathbb{N}}$, que son abiertas por la [Proposición “Los puntos de una vecindad son interiores a ella”](25-vecindades-y-clasificacion-de-puntos.qmd#prp-vecindad-abierta). Esta colección cubre $X$: un punto $q$ dista de $p_0$ una cantidad finita $d(p_0,q)$, y por la propiedad arquimediana $q\in N_n(p_0)$ para algún $n$. Por compacidad, existe un subcubrimiento finito $N_{n_1}(p_0),\ldots,N_{n_r}(p_0)$; como las vecindades están anidadas, su unión es $N_M(p_0)$ con $M=\max\{n_1,\ldots,n_r\}$. Entonces todo punto de $K$ dista de $p_0$ menos de $M$, y $K$ es acotado.
+
+:::
+
+La otra mitad exige un argumento distinto, que separa cada punto fuera de $K$ del propio $K$ mediante vecindades disjuntas.
+
+::: {#thm-compacto-cerrado}
+## Todo conjunto compacto es cerrado
+
+Si $K\subseteq X$ es compacto, $K$ es cerrado.
+
+:::
+
+::: {.proof}
+Sea $p\notin K$; se busca una vecindad de $p$ disjunta de $K$, lo que probará que $p$ es interior a $K^c$. Para cada $q\in K$, la distancia $d(p,q)$ es positiva porque $p\neq q$, de modo que $r_q:=d(p,q)/2>0$ define las vecindades $V_q:=N_{r_q}(q)$ y $W_q:=N_{r_q}(p)$, que son disjuntas: si existiera $s\in V_q\cap W_q$, la desigualdad triangular daría $d(p,q)\leq d(p,s)+d(s,q)<2r_q=d(p,q)$.
+
+La colección $\{V_q\}_{q\in K}$ es un cubrimiento abierto de $K$, y por compacidad existen $q_1,\ldots,q_n\in K$ con $K\subseteq V_{q_1}\cup\cdots\cup V_{q_n}$. La intersección finita $W:=W_{q_1}\cap\cdots\cap W_{q_n}$ contiene a $p$ y es abierta por la [Proposición “Uniones e intersecciones de abiertos y cerrados”](26-conjuntos-abiertos-cerrados-y-la-clausura.qmd#prp-uniones-intersecciones)(iii), de modo que contiene una vecindad de $p$. Esa vecindad no interseca a $K$: un punto de $K$ está en algún $V_{q_i}$, que es disjunto de $W_{q_i}\supseteq W$. Por lo tanto $p$ es interior a $K^c$, y como $p\notin K$ era arbitrario, $K^c$ es abierto y $K$ es cerrado.
+
+:::
+
+Compacto implica entonces cerrado y acotado. Para el recíproco en $\mathbb{R}^k$ se necesitan dos piezas: que un cerrado dentro de un compacto sea compacto, y que existan compactos que sirvan de contenedor.
+
+::: {#thm-cerrado-en-compacto}
+## Un cerrado dentro de un compacto es compacto
+
+Si $F\subseteq K$, con $F$ cerrado y $K$ compacto, entonces $F$ es compacto.
+
+:::
+
+::: {.proof}
+Sea $\{V_\alpha\}$ un cubrimiento abierto de $F$. Al añadir el abierto $F^c$ se obtiene un cubrimiento abierto de $K$, porque $K=F\cup(K\setminus F)\subseteq\bigcup_\alpha V_\alpha\cup F^c$. Por compacidad de $K$ existe un subcubrimiento finito, y descartar $F^c$ si aparece entre los elegidos deja un cubrimiento finito de $F$ por miembros de $\{V_\alpha\}$, porque $F^c$ no contiene puntos de $F$.
+
+:::
+
+Los contenedores compactos son las celdas, cuya compacidad se prueba por bisección repetida.
+
+::: {#def-k-celda}
+## $k$-celda
+
+Dados $a_j\leq b_j$ para $j=1,\ldots,k$, la ***$k$-celda*** es $\{\vect{x}\in\mathbb{R}^k:a_j\leq x_j\leq b_j\ \text{para todo }j\}$, y su ***diámetro*** es $\delta=\sqrt{\sum_j(b_j-a_j)^2}$.
+
+:::
+
+La celda es el rectángulo generalizado de $\mathbb{R}^k$ con los lados incluidos, y su compacidad se prueba de manera directa, por bisección repetida, sin apoyarse en ningún resultado previo sobre compacidad.
+
+::: {#thm-kcelda-compacta}
+## Toda $k$-celda es compacta
+
+Toda $k$-celda $I\subseteq\mathbb{R}^k$ es compacta.
+
+:::
+
+::: {.proof}
+Se razona por contradicción: sea $\{G_\alpha\}$ un cubrimiento abierto de $I$ sin ningún subcubrimiento finito. Bisecando cada uno de los $k$ lados por su punto medio, $I$ se descompone en $2^k$ subceldas de lados mitad. Si cada una admitiera un subcubrimiento finito, la unión de esos finitos subcubrimientos sería un subcubrimiento finito de $I$; como esto contradice la hipótesis, al menos una subcelda, llamada $I_1$, no admite subcubrimiento finito. Repitiendo el argumento se construye una cadena $I\supseteq I_1\supseteq I_2\supseteq\cdots$ de celdas sin subcubrimiento finito, donde los lados de $I_n$ son $(b_j-a_j)/2^n$.
+
+Para cada coordenada $j$, los intervalos $[a_j^{(n)},b_j^{(n)}]$ de las celdas $I_n$ están encajados, y por el [Teorema “Propiedad de los intervalos encajados”](16-los-reales-el-axioma-de-completitud.qmd#thm-intervalos-encajados) existe $x_j$ común a todos. El punto $\vect{x}^*=(x_1,\ldots,x_k)$ pertenece a todas las $I_n$, y para cualquier $\vect{y}\in I_n$ se tiene $|y_j-x_j|\leq(b_j-a_j)/2^n$, de modo que $\|\vect{y}-\vect{x}^*\|\leq\delta/2^n$.
+
+Como $\{G_\alpha\}$ cubre a $I$, existe $\alpha_0$ con $\vect{x}^*\in G_{\alpha_0}$, y como $G_{\alpha_0}$ es abierto hay $r>0$ con $N_r(\vect{x}^*)\subseteq G_{\alpha_0}$. Se elige $n$ con $n>\delta/r$; como $2^n>n$, $\delta/2^n<r$, y entonces $I_n\subseteq N_r(\vect{x}^*)\subseteq G_{\alpha_0}$. Un solo abierto cubre a $I_n$, lo que contradice que $I_n$ no admita subcubrimiento finito.
+
+:::
+
+El resultado siguiente, que usa solo la compacidad de las celdas, garantiza la existencia de puntos límite.
+
+::: {#thm-bolzano-weierstrass-conjuntos}
+## Bolzano–Weierstrass para conjuntos
+
+Todo subconjunto infinito y acotado de $\mathbb{R}^k$ tiene un punto límite en $\mathbb{R}^k$.
+
+:::
+
+::: {.proof}
+Sea $E$ infinito y acotado, contenido en una $k$-celda $I$. Si ningún punto de $I$ fuera punto límite de $E$, cada $q\in I$ tendría una vecindad $V_q$ con a lo sumo un punto de $E$. La colección $\{V_q\}_{q\in I}$ cubre a $I$ y, por el @thm-kcelda-compacta, existen $V_{q_1},\ldots,V_{q_n}$ que ya la cubren; entonces $E\subseteq I$ tendría a lo sumo $n$ puntos, lo que contradice que $E$ sea infinito.
+
+:::
+
+::: {#thm-heine-borel}
+## Teorema de Heine–Borel
+
+Para $E\subseteq\mathbb{R}^k$, las siguientes condiciones son equivalentes: (a) $E$ es cerrado y acotado; (b) $E$ es compacto; (c) todo subconjunto infinito de $E$ tiene un punto límite en $E$.
+
+:::
+
+::: {.proof}
+Para (a)$\Rightarrow$(b): como $E$ es acotado, está contenido en una $k$-celda $I$, compacta por el @thm-kcelda-compacta; y como $E$ es cerrado, el @thm-cerrado-en-compacto da que $E$ es compacto.
+
+Para (b)$\Rightarrow$(c): sea $S\subseteq E$ infinito, y supóngase que ningún punto de $E$ es punto límite de $S$. Cada $q\in E$ tiene entonces una vecindad $V_q$ con a lo sumo un punto de $S$. La colección $\{V_q\}_{q\in E}$ cubre a $E$ y, por compacidad, un número finito $V_{q_1},\ldots,V_{q_n}$ ya la cubre; entonces $S\subseteq E$ tendría a lo sumo $n$ puntos, una contradicción.
+
+Para (c)$\Rightarrow$(a), se prueban las dos partes por contradicción. Si $E$ no fuera acotado, habría $\vect{x}_n\in E$ con $\|\vect{x}_n\|>n$ para cada $n$, y $S=\{\vect{x}_n\}$ sería infinito, porque las normas no están acotadas. Pero ningún punto $\vect{p}$ es punto límite de $S$: la vecindad $N_1(\vect{p})$ contiene a $\vect{x}_n$ solo si $n<\|\vect{x}_n\|\leq\|\vect{p}\|+1$, lo que ocurre para finitos $n$. Esto contradice (c). Si $E$ no fuera cerrado, habría un punto límite $\vect{x}_0\notin E$, y para cada $n$ un $\vect{x}_n\in E\cap N_{1/n}(\vect{x}_0)$. El conjunto $S=\{\vect{x}_n\}$ es infinito: si un valor se repitiera infinitas veces, su distancia a $\vect{x}_0$ sería menor que $1/n$ para infinitos $n$, es decir, cero, y estaría en $E$ siendo igual a $\vect{x}_0\notin E$. Y ningún $\vect{p}\neq\vect{x}_0$ es punto límite de $S$, porque $N_r(\vect{p})$ con $r=\|\vect{p}-\vect{x}_0\|/2$ solo contiene a $\vect{x}_n$ si $1/n>r$, es decir, para finitos $n$. El único punto límite posible de $S$ es $\vect{x}_0\notin E$, lo que contradice (c).
+
+:::
+
+Este teorema es la razón por la cual, en $\mathbb{R}^k$, casi nunca hace falta verificar la compacidad con cubrimientos: basta que el conjunto sea cerrado y acotado.
+
+::: {#exm-heine-borel-numerico}
+## Heine–Borel sobre dos discos
+
+El disco cerrado $F=\{(x,y):x^2+y^2\leq9\}$ es cerrado y acotado (todo punto cumple $\|(x,y)\|\leq3$), de modo que es compacto. El disco abierto $D=\{(x,y):x^2+y^2<9\}$ es acotado pero no cerrado: el punto $(3,0)$ es límite de $D$, porque los puntos $(3-1/n,0)\in D$ se acercan tanto como se quiera, pero $(3,0)\notin D$, ya que $9\not<9$. Por Heine–Borel, $D$ no es compacto, y lo confirma el cubrimiento $G_n=\{(x,y):x^2+y^2<9-1/n\}$, cuya unión es $D$ y ningún subconjunto finito de ellos cubre la franja cercana a la circunferencia $x^2+y^2=9$.
+
+:::
+
+En $\mathbb{R}^k$ la compacidad se lee también en términos de sucesiones.
+
+Una consecuencia de Heine–Borel, que en la práctica sustituye a la verificación de la compacidad con cubrimientos, es que en $\mathbb{R}^k$ la compacidad puede leerse enteramente en términos de sucesiones, sin mencionar cubrimientos.
+
+::: {#cor-compacidad-secuencial}
+## Compacidad secuencial en $\mathbb{R}^k$
+
+$E\subseteq\mathbb{R}^k$ es compacto si y solo si toda sucesión de puntos de $E$ tiene una subsucesión que converge a un punto de $E$.
+
+:::
+
+::: {.proof}
+Si $E$ es compacto, por Heine–Borel es cerrado y acotado. Dada $(\vect{x}_n)$ en $E$, si toma solo finitos valores distintos, algún valor se repite infinitas veces y da una subsucesión constante, convergente en $E$. En caso contrario el conjunto de sus valores es infinito y acotado, y por el @thm-bolzano-weierstrass-conjuntos tiene un punto límite $\vect{x}^*$, que pertenece a $E$ por ser cerrado. Toda vecindad de $\vect{x}^*$ contiene infinitos valores de la sucesión: si contuviera solo finitos, la menor distancia de ellos a $\vect{x}^*$ sería positiva, y una vecindad más pequeña no contendría ninguno, contra que $\vect{x}^*$ sea punto límite. Se eligen entonces índices $n_1<n_2<\cdots$ con $\vect{x}_{n_k}\in N_{1/k}(\vect{x}^*)$, y $\vect{x}_{n_k}\to\vect{x}^*$.
+
+Recíprocamente, si toda sucesión en $E$ tiene una subsucesión convergente en $E$, $E$ es acotado: si no, existirían $\vect{x}_n\in E$ con $\|\vect{x}_n\|>n$, y toda subsucesión sería no acotada, mientras que una sucesión convergente está acotada. Y $E$ es cerrado: si $\vect{x}_0$ fuera punto límite fuera de $E$, existirían $\vect{x}_n\in E$ con $\vect{x}_n\to\vect{x}_0$, y toda subsucesión convergería a $\vect{x}_0\notin E$. Por Heine–Borel, $E$ es compacto.
+
+:::
+
+La equivalencia entre cerrado y acotado, por un lado, y compacto, por otro, es un fenómeno específico de $\mathbb{R}^k$ con la distancia euclidiana: en espacios métricos más generales, «cerrado y acotado» ya no basta para la compacidad, y es la definición por cubrimientos, junto con el @lem-compacto-acotado, el @thm-compacto-cerrado y el @thm-cerrado-en-compacto, la que sigue siendo válida sin modificación.

@@ -1,0 +1,65 @@
+---
+title: "Construcción de matrices II: estacionalidad, regresión e intervención"
+description: "La estacionalidad en forma de variables ficticias y en forma trigonométrica, las variables explicativas y de intervención como columnas de la matriz de medición, y el ensamblaje de un modelo combinado por bloques."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Espacio-estado]
+---
+
+Las series económicas mensuales o trimestrales suelen tener un patrón que se repite cada año, y muchas veces se quiere controlar el efecto de otras variables o de un evento puntual, como un cambio de política. Cada uno de esos elementos se incorpora al modelo de espacio-estado ampliando el vector de estado o la matriz de medición, según tenga o no dinámica propia. Esta nota presenta las construcciones de la estacionalidad y de la regresión, y la forma de combinarlas con un componente de tendencia mediante matrices por bloques.
+
+Un componente estacional $S_t$ de período $s$ (por ejemplo $s=12$ para datos mensuales) es un patrón que se repite cada $s$ períodos y cuyos valores en un año completo suman cero, para que no se confunda con el nivel. En el modelo determinista, la condición es $S_t+S_{t-1}+\cdots+S_{t-s+1}=0$. Si se permite que el patrón cambie lentamente, se añade una perturbación.
+
+::: {#def-estacionalidad-ficticia}
+## Estacionalidad en forma de variables ficticias
+
+El componente estacional en forma de variables ficticias satisface $S_t=-\sum_{j=1}^{s-1}S_{t-j}+\omega_t$ con $\omega_t\sim\N(0,\sigma_\omega^2)$. Con el estado $\vect{\alpha}_t=(S_t,S_{t-1},\ldots,S_{t-s+2})^{\top}\in\mathbb{R}^{s-1}$, la matriz de transición tiene primera fila $(-1,-1,\ldots,-1)$, la subdiagonal de unos y ceros en las demás entradas, $\mat{R}=(1,0,\ldots,0)^{\top}$, $\mat{Q}=\sigma_\omega^2$ y $\mat{Z}=(1,0,\ldots,0)$ en la medición.
+
+:::
+
+El estado tiene dimensión $s-1$ porque el último valor del año queda determinado por la restricción de suma cero. Se verifican dos propiedades.
+
+::: {#prp-estacionalidad-ficticia}
+## Propiedades de la estacionalidad por variables ficticias
+
+(i) Para toda $t$, $S_t+S_{t-1}+\cdots+S_{t-s+1}=\omega_t$. (ii) Si $\sigma_\omega^2=0$, el componente es periódico, $S_t=S_{t-s}$ para todo $t$, con suma cero en cada período.
+
+:::
+
+::: {.proof}
+Pasando $S_t$ al lado derecho en la definición se obtiene (i). Para (ii), con $\omega_t=0$, las sumas de ventanas consecutivas $\sum_{j=0}^{s-1}S_{t-j}$ y $\sum_{j=0}^{s-1}S_{t-1-j}$ son ambas cero, y su diferencia es $S_t-S_{t-s}=0$.
+
+:::
+
+Con números, para $s=4$ la matriz de transición del estado $(S_t,S_{t-1},S_{t-2})^{\top}$ es $\left(\begin{smallmatrix}-1&-1&-1\\1&0&0\\0&1&0\end{smallmatrix}\right)$. Con los valores iniciales $(S_3,S_2,S_1)=(-1,-0.5,1.5)$, la recursión determinista da $S_4=0$, $S_5=1.5$, $S_6=-0.5$, $S_7=-1$: el patrón $(1.5,-0.5,-1,0)$ se repite con período $4$ y suma $1.5-0.5-1+0=0$. La segunda forma de modelar la estacionalidad usa funciones periódicas y necesita menos estados cuando el patrón es suave.
+
+::: {#def-estacionalidad-trigonometrica}
+## Estacionalidad en forma trigonométrica
+
+Sea $\lambda_j=2\pi j/s$ para $j=1,\ldots,\lfloor s/2\rfloor$. El componente es $S_t=\sum_jS_{jt}$ con
+$$
+\begin{pmatrix}S_{jt}\\S^*_{jt}\end{pmatrix}=\begin{pmatrix}\cos\lambda_j&\sin\lambda_j\\-\sin\lambda_j&\cos\lambda_j\end{pmatrix}\begin{pmatrix}S_{j,t-1}\\S^*_{j,t-1}\end{pmatrix}+\begin{pmatrix}\omega_{jt}\\\omega^*_{jt}\end{pmatrix},
+$$ {#eq-estacional-trigonometrica}
+y, si $s$ es par, el último armónico $\lambda_{s/2}=\pi$ tiene un solo estado $S_{s/2,t}=-S_{s/2,t-1}+\omega_{s/2,t}$. La matriz de transición es diagonal por bloques, con los bloques de rotación, y $\mat{Z}$ tiene un uno en la posición de cada $S_{jt}$ y ceros en las de $S^*_{jt}$.
+
+:::
+
+Cada bloque rota el par $(S_{jt},S^*_{jt})$ un ángulo $\lambda_j$ por período. Como $s\lambda_j=2\pi j$, el bloque elevado a la potencia $s$ es la identidad, de modo que sin perturbaciones el patrón se repite cada $s$ períodos. La dimensión total del estado es $2\lfloor(s-1)/2\rfloor+\mathbf{1}\{s\text{ par}\}=s-1$, la misma que la de variables ficticias. Para $s=4$ hay un armónico $\lambda_1=\pi/2$, con bloque $\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)$, y uno $\lambda_2=\pi$, con $-1$, y el estado es $(S_{1t},S^*_{1t},S_{2t})$ de dimensión $3$. La ventaja de esta forma es que, con $s=12$ y un patrón suave, se pueden omitir los armónicos de alta frecuencia y reducir la dimensión del estado.
+
+Las variables explicativas y las de intervención no tienen dinámica propia, y entran por la ecuación de medición. Sea $y_t=\mu_t+\vect{x}_t^{\top}\vect{\beta}+\varepsilon_t$, donde $\vect{x}_t\in\mathbb{R}^k$ es observable. Si el vector $\vect{\beta}$ es constante, se añade al estado con transición $\vect{\beta}_t=\vect{\beta}_{t-1}$ (sin perturbación), y la matriz de medición $\mat{Z}_t=(1,0,\vect{x}_t^{\top})$ en un modelo con tendencia lineal pasa a depender de $t$; si los coeficientes cambian, se les asigna una perturbación. Una ***intervención*** es una variable $x_t$ que codifica un evento: un escalón $\mathbf{1}\{t\geq\tau\}$ (cambio permanente de nivel desde $\tau$), un pulso $\mathbf{1}\{t=\tau\}$ (efecto de un solo período) o una rampa $\max\{t-\tau+1,0\}$ (cambio de pendiente). Con una intervención de escalón en $\tau=5$ y $\beta=2$, la serie sube $2$ unidades a partir de $t=5$.
+
+El modelo combinado se construye con las matrices diagonales por bloques de los componentes independientes.
+
+::: {#prp-modelo-combinado}
+## Modelo combinado por bloques
+
+Si $y_t=\sum_{i=1}^Ky^{(i)}_t+\varepsilon_t$ donde cada $y^{(i)}_t=\mat{Z}_i\vect{\alpha}^{(i)}_t$ tiene una transición $\vect{\alpha}^{(i)}_t=\mat{T}_i\vect{\alpha}^{(i)}_{t-1}+\mat{R}_i\vect{\eta}^{(i)}_t$ con perturbaciones independientes entre componentes, entonces $y_t=\mat{Z}\vect{\alpha}_t+\varepsilon_t$ con $\vect{\alpha}_t=(\vect{\alpha}^{(1)}_t,\ldots,\vect{\alpha}^{(K)}_t)$, $\mat{Z}=(\mat{Z}_1,\ldots,\mat{Z}_K)$, $\mat{T}=\mathrm{diag}(\mat{T}_i)$, $\mat{R}=\mathrm{diag}(\mat{R}_i)$ y $\mat{Q}=\mathrm{diag}(\mat{Q}_i)$.
+
+:::
+
+::: {.proof}
+La ecuación de medición es la suma $\sum_i\mat{Z}_i\vect{\alpha}^{(i)}_t=\mat{Z}\vect{\alpha}_t$ por el producto por bloques. La transición apila las transiciones de cada componente, que son $\mat{T}\vect{\alpha}_{t-1}+\mat{R}\vect{\eta}_t$ con las matrices diagonales por bloques, y la independencia de las perturbaciones entre componentes hace que $\mat{Q}$ sea diagonal por bloques.
+
+:::
+
+Con números, un modelo mensual con tendencia lineal local ($m=2$), estacionalidad por variables ficticias con $s=12$ ($m=11$) y un regresor con coeficiente constante ($m=1$) tiene un estado de dimensión $14$, con $\mat{T}$ de $14\times14$ diagonal por bloques de tamaños $2$, $11$ y $1$, $\mat{Z}_t=(1,0,1,0,\ldots,0,x_t)$ de dimensión $1\times14$, y tres perturbaciones de transición ($r=3$), una para el nivel, una para la pendiente y una para la estacionalidad, con $\mat{Q}=\mathrm{diag}(\sigma_\eta^2,\sigma_\zeta^2,\sigma_\omega^2)$ y $\mat{R}$ de $14\times3$.

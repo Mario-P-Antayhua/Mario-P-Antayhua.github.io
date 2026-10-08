@@ -1,0 +1,31 @@
+---
+title: "Modelo de nivel local"
+description: "El filtro del nivel local como media móvil exponencial, su equivalencia con un proceso ARIMA(0,1,1) cuyo parámetro de media móvil se obtiene del estado estacionario del filtro, y un ejemplo con serie simulada que compara el filtro, el suavizador y sus bandas."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Modelos estructurales]
+---
+
+El nivel local es el modelo de componentes no observables más simple, y por eso es el que mejor permite ver qué hace el filtro de Kalman. Su filtro, una vez estabilizado, se reduce a una regla de actualización con un único peso, la media móvil exponencial, que los practicantes usan sin saber que es el estimador óptimo de un modelo de espacio-estado. Y su forma reducida es un modelo ARIMA(0,1,1), de modo que los dos lenguajes, el de espacio-estado y el de los modelos de series de tiempo de Econometría II, describen el mismo proceso. Esta nota demuestra esas dos equivalencias.
+
+El modelo es el de la definición de nivel local, $y_t=\mu_t+\varepsilon_t$, $\mu_t=\mu_{t-1}+\eta_t$. Cuando el filtro alcanza el estado estacionario, la ganancia es constante, $K=P^*/(P^*+\sigma_\varepsilon^2)$ con $P^*$ la varianza predicha límite, y la actualización $a_{t+1\mid t}=a_{t\mid t}=a_{t\mid t-1}+Kv_t$ se reescribe como $a_{t+1\mid t}=(1-K)a_{t\mid t-1}+Ky_t$. Repetida hacia atrás, da $a_{t+1\mid t}=K\sum_{j\geq0}(1-K)^jy_{t-j}$ más un término que decae geométricamente: es una media móvil exponencial con constante de suavizamiento $K\in(0,1)$. Los pesos suman uno, porque $K\sum_j(1-K)^j=1$, y el peso del dato de hace $j$ períodos decae como $(1-K)^j$. Si $K$ es grande, la estimación sigue de cerca al último dato, y si es pequeño, promedia una ventana larga. La ganancia depende solo de la razón señal-ruido $q=\sigma_\eta^2/\sigma_\varepsilon^2$.
+
+::: {#thm-nivel-local-arima}
+## El nivel local es un ARIMA(0,1,1)
+
+En el estado estacionario del filtro, la serie diferenciada satisface $\Delta y_t=v_t-(1-K)v_{t-1}$, donde $v_t$ son las innovaciones, ruido blanco de varianza $F=P^*+\sigma_\varepsilon^2$. Es decir, $y_t$ es un ARIMA(0,1,1) con parámetro de media móvil $\theta=-(1-K)=K-1\in(-1,0)$, que cumple $\gamma_{\Delta y}(0)=\sigma_\eta^2+2\sigma_\varepsilon^2$ y $\gamma_{\Delta y}(1)=-\sigma_\varepsilon^2$. La constante de suavizamiento es $K=1+\theta$.
+
+:::
+
+::: {.proof}
+De $y_t=a_{t\mid t-1}+v_t$ y $a_{t+1\mid t}=a_{t\mid t-1}+Kv_t$, se tiene $y_{t+1}-y_t=(a_{t+1\mid t}-a_{t\mid t-1})+v_{t+1}-v_t=Kv_t+v_{t+1}-v_t=v_{t+1}-(1-K)v_t$. Las innovaciones son independientes con varianza $F$, así que el lado derecho es un MA(1) con $\theta=-(1-K)$. Se verifica la coincidencia con las autocovarianzas de la forma reducida del nivel local. Como $1-K=\sigma_\varepsilon^2/F$, $\gamma(1)=\theta F=-(1-K)F=-\sigma_\varepsilon^2$. Para la varianza, $\gamma(0)=F+(1-K)^2F=F+\sigma_\varepsilon^4/F$, y la igualdad $F^2+\sigma_\varepsilon^4=(\sigma_\eta^2+2\sigma_\varepsilon^2)F$ equivale a $P^{*2}=\sigma_\eta^2P^*+\sigma_\eta^2\sigma_\varepsilon^2$, la ecuación del estado estacionario: con $F=P^*+\sigma_\varepsilon^2$, el lado izquierdo es $P^{*2}+2P^*\sigma_\varepsilon^2+2\sigma_\varepsilon^4$ y el derecho $\sigma_\eta^2P^*+\sigma_\eta^2\sigma_\varepsilon^2+2\sigma_\varepsilon^2P^*+2\sigma_\varepsilon^4$. Por último, $K\in(0,1)$ implica $\theta\in(-1,0)$, de modo que el MA(1) es invertible.
+
+:::
+
+Con números, para $\sigma_\varepsilon^2=1$ y $\sigma_\eta^2=0.5$, el estado estacionario tiene $P^*=1$, $K=0.5$ y $F=2$. El ARIMA(0,1,1) correspondiente tiene $\theta=-0.5$ e innovaciones de varianza $2$, de modo que $\gamma(0)=2(1+0.25)=2.5=\sigma_\eta^2+2\sigma_\varepsilon^2$ y $\gamma(1)=2(-0.5)=-1=-\sigma_\varepsilon^2$. Aparece aquí la reflexión de raíces de la [Nota “Invertibilidad”](../econometria-2/20-invertibilidad.qmd): la autocorrelación $\rho(1)=-1/2.5=-0.4$ del MA(1) tiene dos soluciones, $\theta=-0.5$ y $\theta=-2$, y la invertible es la que coincide con el filtro. Para la serie simulada de la primera nota, con $q=0.09$, $P^*=0.348$, $K=0.258$ y $\theta=-0.742$: el nivel cambia poco respecto del ruido, y el filtro promedia una ventana larga.
+
+La @fig-nivel-local muestra, para esa serie, el filtro, el suavizador y la banda de confianza del suavizador con los parámetros verdaderos. El suavizador sigue más de cerca el nivel verdadero y su banda es más angosta que la del filtro, porque usa datos de ambos lados.
+
+![Serie simulada de nivel local, nivel verdadero, estimación filtrada, estimación suavizada y banda del 95 % del suavizador. Fuente: simulación propia.](figuras/nivel-local-filtro-suavizado.svg){#fig-nivel-local fig-alt="Puntos de la serie observada, línea del nivel verdadero, línea del filtro, línea del suavizador y una banda sombreada alrededor del suavizador."}
+
+En esa muestra, el nivel verdadero cae dentro de la banda del $95\,\%$ del suavizador en el $92\,\%$ de las fechas a partir de la décima, y dentro de la banda análoga del filtro en el $88\,\%$; en una sola muestra de $90$ fechas estos porcentajes fluctúan alrededor del nominal por la dependencia entre las fechas. La desviación estándar del suavizador en el medio de la muestra es $0.385$ y la del filtro al final es $0.508$, de modo que la banda del suavizador es un $24\,\%$ más angosta.

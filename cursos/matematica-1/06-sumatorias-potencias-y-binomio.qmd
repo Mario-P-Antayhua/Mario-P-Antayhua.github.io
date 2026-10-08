@@ -1,0 +1,130 @@
+---
+title: "Sumatorias, potencias y el teorema del binomio"
+description: "Notación de sumas y productos, potencias enteras, coeficientes binomiales, teorema del binomio y desigualdad de Bernoulli, todo demostrado por inducción."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Lógica y demostración]
+---
+
+Las fórmulas que dependen de un índice entero, como la suma de los primeros $n$ términos de una serie o la potencia $n$-ésima de un binomio, aparecen en cada nota que sigue, y el principio de inducción de la [Nota “El principio de inducción matemática”](05-el-principio-de-induccion-matematica.qmd) es la herramienta con la que se justifican. Esta nota fija la notación y demuestra los resultados algebraicos que se usarán sin volver a justificarlos. Los números tienen su aritmética habitual, como se convino en la primera nota.
+
+::: {#def-sumatoria}
+## Sumatoria, productoria y potencia
+
+Para números $a_1,a_2,\ldots$ se definen por recursión la ***sumatoria*** $\sum_{k=1}^{1}a_k:=a_1$ y $\sum_{k=1}^{n+1}a_k:=\sum_{k=1}^{n}a_k+a_{n+1}$, y la ***productoria*** $\prod_{k=1}^{1}a_k:=a_1$ y $\prod_{k=1}^{n+1}a_k:=\bigl(\prod_{k=1}^{n}a_k\bigr)a_{n+1}$. La ***potencia*** de $a$ es $a^n:=\prod_{k=1}^{n}a$ para $n\in\mathbb{N}$, con $a^0:=1$ por convención, y el ***factorial*** es $n!:=\prod_{k=1}^{n}k$, con $0!:=1$. Cuando el índice inicial es otro entero $m\ge0$ (por ejemplo $m=0$), las definiciones son las mismas con $m$ en lugar de $1$.
+
+:::
+
+Las propiedades que se usan constantemente son la linealidad de la sumatoria y los cambios de índice.
+
+::: {#prp-propiedades-sumatoria}
+## Propiedades de la sumatoria
+
+Para números $a_k,b_k$ y una constante $c$: (i) $\sum_{k=1}^{n}(a_k+b_k)=\sum_{k=1}^{n}a_k+\sum_{k=1}^{n}b_k$; (ii) $\sum_{k=1}^{n}c\,a_k=c\sum_{k=1}^{n}a_k$; (iii) *(suma telescópica)* $\sum_{k=1}^{n}(a_{k+1}-a_k)=a_{n+1}-a_1$; (iv) $\sum_{k=1}^{n}a_k=\sum_{j=0}^{n-1}a_{j+1}$.
+
+:::
+
+::: {.proof}
+Las cuatro se prueban por inducción sobre $n$. Para (i), con $n=1$ ambos lados son $a_1+b_1$; si vale para $n$, entonces $\sum_{k=1}^{n+1}(a_k+b_k)=\sum_{k=1}^{n}(a_k+b_k)+a_{n+1}+b_{n+1}$, y la hipótesis de inducción y la conmutatividad de la suma dan el lado derecho para $n+1$. La propiedad (ii) se prueba igual, usando la distributividad. Para (iii), con $n=1$ ambos lados son $a_2-a_1$; si vale para $n$, entonces $\sum_{k=1}^{n+1}(a_{k+1}-a_k)=(a_{n+1}-a_1)+(a_{n+2}-a_{n+1})=a_{n+2}-a_1$. La propiedad (iv) es un cambio de nombre del índice.
+
+:::
+
+Los resultados anteriores permiten calcular sumas que aparecerán después. Por ejemplo, la suma telescópica con $a_k=k^2$ da $\sum_{k=1}^{n}\bigl((k+1)^2-k^2\bigr)=(n+1)^2-1$, y desarrollando el lado izquierdo con (i) y (ii) se obtiene $2\sum k+n=n^2+2n$, es decir $\sum_{k=1}^{n}k=n(n+1)/2$, la fórmula de la [Proposición “Suma de los primeros $n$ naturales”](05-el-principio-de-induccion-matematica.qmd#prp-suma-naturales) obtenida ahora sin adivinarla. Con $n=4$, $1+2+3+4=10=4\cdot5/2$.
+
+Las potencias obedecen la ley de los exponentes, que también se prueba por inducción.
+
+::: {#prp-leyes-exponentes}
+## Leyes de los exponentes
+
+Para un número $a$ y $m,n\in\mathbb{N}$ (y con la convención $a^0=1$): $a^{m+n}=a^m a^n$ y $(a^m)^n=a^{mn}$.
+
+:::
+
+::: {.proof}
+Para la primera, con $n=1$: $a^{m+1}=a^m a$ por la definición recursiva. Si vale para $n$, entonces $a^{m+n+1}=a^{m+n}a=a^m a^n a=a^m a^{n+1}$. Para la segunda, con $n=1$ ambos lados son $a^m$; si vale para $n$, entonces $(a^m)^{n+1}=(a^m)^n a^m=a^{mn}a^m=a^{mn+m}=a^{m(n+1)}$ por la primera ley.
+
+:::
+
+La suma geométrica se obtiene con la misma técnica y es el ejemplo más importante de una suma con forma cerrada.
+
+::: {#prp-suma-geometrica}
+## Suma geométrica finita
+
+Para $r\neq1$ y $n\in\mathbb{N}$, $\sum_{k=0}^{n-1}r^k=\dfrac{1-r^n}{1-r}$.
+
+:::
+
+::: {.proof}
+Se multiplica la suma por $1-r$ y se aplica la suma telescópica de la [Proposición “Propiedades de la sumatoria”](#prp-propiedades-sumatoria)(iii) a los términos $a_k=r^k$:
+$$
+(1-r)\sum_{k=0}^{n-1}r^k=\sum_{k=0}^{n-1}(r^k-r^{k+1})=r^0-r^n=1-r^n ,
+$$
+y como $1-r\neq0$ puede dividirse por él.
+
+:::
+
+Para $r=1/2$ y $n=4$: $1+\tfrac12+\tfrac14+\tfrac18=\tfrac{15}8$ y $(1-\tfrac1{16})/(1-\tfrac12)=\tfrac{15}{16}\cdot2=\tfrac{15}8$. El teorema del binomio generaliza el desarrollo de $(a+b)^2$, y sus coeficientes se definen por recursión, sin divisiones.
+
+::: {#def-binomial}
+## Coeficiente binomial
+
+Para $n\in\mathbb{N}\cup\{0\}$ y $0\leq k\leq n$, el ***coeficiente binomial*** $\binom nk$ se define por $\binom n0=\binom nn=1$ y, para $n\geq1$ y $1\leq k\leq n-1$, la regla de Pascal $\binom nk=\binom{n-1}{k-1}+\binom{n-1}{k}$.
+
+:::
+
+La regla de Pascal arma el triángulo de coeficientes: las filas para $n=0,1,2,3,4$ son $1$; $1\ 1$; $1\ 2\ 1$; $1\ 3\ 3\ 1$; $1\ 4\ 6\ 4\ 1$. La fórmula con factoriales, que identifica estos números con los de las combinaciones, se prueba por inducción.
+
+::: {#prp-binomial-factorial}
+## Fórmula factorial del coeficiente binomial
+
+Para $0\leq k\leq n$, $k!\,(n-k)!\binom nk=n!$.
+
+:::
+
+::: {.proof}
+Se induce sobre $n$. Para $n=0$ (y $k=0$), ambos lados son $1$. Si vale para $n-1$, se distinguen los casos. Para $k=0$ o $k=n$, el coeficiente es $1$ y $k!(n-k)!=n!$. Para $1\leq k\leq n-1$, la regla de Pascal y la hipótesis de inducción dan
+$$
+k!(n-k)!\binom nk=k!(n-k)!\binom{n-1}{k-1}+k!(n-k)!\binom{n-1}{k},
+$$
+y usando $(k-1)!(n-k)!\binom{n-1}{k-1}=(n-1)!$ y $k!(n-1-k)!\binom{n-1}{k}=(n-1)!$,
+$$
+k!(n-k)!\binom nk=k\,(n-1)!+(n-k)\,(n-1)!=n\,(n-1)!=n! .
+$$
+
+:::
+
+::: {#thm-binomio}
+## Teorema del binomio
+
+Para números $a,b$ y $n\in\mathbb{N}$, $(a+b)^n=\sum_{k=0}^{n}\binom nk a^{k}b^{n-k}$.
+
+:::
+
+::: {.proof}
+Se induce sobre $n$. Con $n=1$, $(a+b)^1=b+a=\binom10 a^0b^1+\binom11a^1b^0$. Si vale para $n$, entonces
+$$
+(a+b)^{n+1}=(a+b)\sum_{k=0}^{n}\binom nk a^kb^{n-k}=\sum_{k=0}^{n}\binom nk a^{k+1}b^{n-k}+\sum_{k=0}^{n}\binom nk a^kb^{n+1-k}.
+$$
+En la primera suma se cambia el índice a $j=k+1$ y se obtiene $\sum_{j=1}^{n+1}\binom n{j-1}a^jb^{n+1-j}$. Separando el término $j=n+1$ de la primera y el término $k=0$ de la segunda, y agrupando los términos con $a^jb^{n+1-j}$ para $1\leq j\leq n$, su coeficiente es $\binom n{j-1}+\binom nj=\binom{n+1}{j}$ por la regla de Pascal. Los términos extremos son $a^{n+1}=\binom{n+1}{n+1}a^{n+1}b^0$ y $b^{n+1}=\binom{n+1}0a^0b^{n+1}$, de modo que la suma completa es $\sum_{j=0}^{n+1}\binom{n+1}{j}a^jb^{n+1-j}$.
+
+:::
+
+Con $a=b=1$ el teorema da $2^n=\sum_{k}\binom nk$, y para $n=4$, $1+4+6+4+1=16=2^4$; es el conteo de subconjuntos de un conjunto de $n$ elementos, agrupados por tamaño, porque $\binom nk$ cuenta los de tamaño $k$. La desigualdad de Bernoulli, que usa el término $k=1$ del desarrollo, acota las potencias de $1+h$ cerca de $h=0$.
+
+::: {#prp-bernoulli}
+## Desigualdad de Bernoulli
+
+Para $h\geq-1$ y $n\in\mathbb{N}$, $(1+h)^n\geq1+nh$.
+
+:::
+
+::: {.proof}
+Con $n=1$ ambos lados son $1+h$. Si vale para $n$, como $1+h\geq0$ se puede multiplicar la desigualdad por $1+h$ sin invertirla:
+$$
+(1+h)^{n+1}\geq(1+nh)(1+h)=1+(n+1)h+nh^2\geq1+(n+1)h ,
+$$
+porque $nh^2\geq0$.
+
+:::
+
+Con $h=0.1$ y $n=10$, $1.1^{10}=2.5937\ldots\geq1+10(0.1)=2$; la cota subestima, pero crece linealmente con $n$ y esto es lo que se necesita para mostrar que $r^n\to0$ cuando $0<r<1$.

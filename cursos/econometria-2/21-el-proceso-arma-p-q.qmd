@@ -1,0 +1,50 @@
+---
+title: "El proceso ARMA(p,q)"
+description: "Los procesos ARMA que combinan partes autorregresiva y de medias móviles, la solución estacionaria causal, los coeficientes de su representación MA infinita, la recursión de autocovarianzas, la redundancia por raíces comunes y el ARMA(1,1)."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+Un AR de orden alto o un MA de orden alto pueden necesitar muchos parámetros para describir una serie que una combinación de ambos describe con pocos. El modelo ARMA incorpora los dos mecanismos, memoria en el nivel y memoria en los choques, y su análisis reúne los resultados anteriores: la parte autorregresiva se invierte con la técnica del AR, y la parte de medias móviles actúa como un filtro finito sobre el ruido.
+
+::: {#def-arma}
+## Proceso ARMA(p,q)
+
+Un proceso $\{X_t\}$ es un ***ARMA(p,q)*** si $\phi(L)(X_t-\mu)=\theta(L)\varepsilon_t$, con $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$, $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p$ y $\theta(z)=1+\theta_1z+\cdots+\theta_qz^q$, con $\phi_p\neq0$ y $\theta_q\neq0$. Se exige que $\phi$ y $\theta$ no tengan raíces comunes.
+
+:::
+
+La condición sobre raíces comunes evita una redundancia. Si $\phi$ y $\theta$ comparten un factor $(1-aL)$, este se cancela en ambos lados y el mismo proceso se describe con un modelo de orden menor, de modo que los parámetros no estarían identificados. Por ejemplo, $(1-0.5L)X_t=(1-0.5L)\varepsilon_t$ es un ARMA(1,1) cuyo factor común se simplifica a $X_t=\varepsilon_t$.
+
+::: {#thm-arma-causal}
+## Solución causal de un ARMA
+
+Si todas las raíces de $\phi(z)$ están fuera del círculo unitario, existe una única solución con varianza acotada, $X_t=\mu+\sum_{j\geq0}\psi_j\varepsilon_{t-j}$, con $\psi(z)=\theta(z)/\phi(z)$, es decir, $\psi_0=1$ y $\psi_j=\theta_j+\sum_{i=1}^{\min\{j,p\}}\phi_i\psi_{j-i}$ ($\theta_j=0$ para $j>q$), y $\sum_j|\psi_j|<\infty$. El proceso es débilmente estacionario con $\gamma(h)=\sigma^2\sum_{j\geq0}\psi_j\psi_{j+|h|}$. Si además las raíces de $\theta$ están fuera del círculo, $\varepsilon_t=\sum_{j\geq0}\pi_j(X_{t-j}-\mu)$ con $\pi(z)=\phi(z)/\theta(z)$ y $\sum_j|\pi_j|<\infty$.
+
+:::
+
+::: {.proof}
+Sea $Y_t=X_t-\mu$ y $\eta_t=\theta(L)\varepsilon_t$, un proceso de varianza acotada. La ecuación $\phi(L)Y_t=\eta_t$ tiene por el teorema de inversión una única solución con varianza acotada, $Y_t=\sum_k\xi_k\eta_{t-k}$ con $\xi(z)=1/\phi(z)$ y $\sum|\xi_k|<\infty$. Sustituyendo $\eta_t=\sum_{j=0}^q\theta_j\varepsilon_{t-j}$, $Y_t=\sum_m\psi_m\varepsilon_{t-m}$ con $\psi_m=\sum_{j+k=m}\theta_j\xi_k$, y $\sum_m|\psi_m|\leq\sum_j|\theta_j|\sum_k|\xi_k|<\infty$. Como $\psi(z)\phi(z)=\theta(z)$, comparando coeficientes se obtiene la recursión. La autocovarianza se calcula como la del AR(p), por la continuidad de la covarianza en $L^2$. Para la última afirmación, el inverso de $\theta$ existe por el teorema de invertibilidad y $\pi(z)=\phi(z)\cdot\bigl(1/\theta(z)\bigr)$ es un producto de un polinomio por una serie absolutamente sumable, que es absolutamente sumable.
+
+:::
+
+Para $h>q$, la autocovarianza satisface la misma recursión que la del AR(p).
+
+::: {#prp-recursion-arma}
+## Recursión de las autocovarianzas de un ARMA
+
+En un ARMA causal, para $h>q$, $\gamma(h)=\sum_{i=1}^p\phi_i\gamma(h-i)$.
+
+:::
+
+::: {.proof}
+Con $Y_t=X_t-\mu$, se multiplica $Y_t=\sum_i\phi_iY_{t-i}+\sum_{j=0}^q\theta_j\varepsilon_{t-j}$ por $Y_{t-h}$ y se toma esperanza. Los términos $\E[\varepsilon_{t-j}Y_{t-h}]$ con $0\leq j\leq q<h$ son cero porque $Y_{t-h}$ solo depende de choques $\varepsilon_s$ con $s\leq t-h<t-j$.
+
+:::
+
+El ARMA(1,1) $(1-\phi L)(X_t-\mu)=(1+\theta L)\varepsilon_t$ con $|\phi|<1$ admite fórmulas cerradas. Sus coeficientes son $\psi_0=1$ y $\psi_j=(\phi+\theta)\phi^{j-1}$ para $j\geq1$, porque la recursión da $\psi_1=\theta+\phi$ y $\psi_j=\phi\psi_{j-1}$ para $j\geq2$. Entonces $\gamma(0)=\sigma^2\bigl(1+(\phi+\theta)^2/(1-\phi^2)\bigr)=\sigma^2(1+2\phi\theta+\theta^2)/(1-\phi^2)$, y para $h\geq1$, $\gamma(h)=\sigma^2\bigl[(\phi+\theta)\phi^{h-1}+(\phi+\theta)^2\phi^h/(1-\phi^2)\bigr]=\sigma^2(\phi+\theta)(1+\phi\theta)\phi^{h-1}/(1-\phi^2)$. Se concluye que
+$$
+\rho(1)=\frac{(1+\phi\theta)(\phi+\theta)}{1+2\phi\theta+\theta^2},\qquad\rho(h)=\phi^{h-1}\rho(1)\quad(h\geq1).
+$$ {#eq-arma11-acf}
+Con números, para $\phi=0.8$, $\theta=0.4$ y $\sigma^2=1$, $\gamma(0)=(1+0.64+0.16)/0.36=5$, $\rho(1)=(1.32)(1.2)/1.8=0.88$ y $\rho(2)=0.704$. La autocorrelación decae geométricamente desde el primer rezago, como en un AR(1), pero con un valor inicial $\rho(1)$ que no es $\phi$, lo que distingue al ARMA(1,1) de un AR(1) y le da más flexibilidad a un costo de un parámetro adicional.

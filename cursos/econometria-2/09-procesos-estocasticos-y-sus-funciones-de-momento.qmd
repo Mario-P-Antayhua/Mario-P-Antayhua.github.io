@@ -1,85 +1,47 @@
 ---
-title: "Procesos estocásticos y sus funciones de momentos"
-description: "Procesos estocásticos y sus funciones de momentos. Incluye Proceso estocástico y Media, varianza y función de autocovarianza."
+title: "Procesos estocásticos y sus funciones de momento"
+description: "Los procesos estocásticos como sucesiones de variables aleatorias, la media y la función de autocovarianza, su simetría y semidefinición positiva, y ejemplos con un proceso periódico aleatorio y el paseo aleatorio."
 author: "Mario Peñaloza"
-date: 2026-10-07
-categories: [Econometría II, Procesos estocásticos, estacionariedad y ergodicidad]
+date: 2026-10-08
+categories: [Econometría II, Procesos estocásticos]
 ---
 
-Hasta aquí, cada variable aleatoria del curso ha vivido aislada, o
-a lo sumo acompañada de un número finito de otras variables dentro de un
-vector aleatorio. Los datos económicos que se observan a lo largo del
-tiempo, un producto interno bruto trimestral, una tasa de interés
-diaria, exigen algo distinto: una colección de variables aleatorias
-indexada no por un conjunto finito sino por el tiempo mismo, en la que
-cada observación puede depender de las anteriores. Esta sección
-introduce esa colección, el proceso estocástico, y las dos propiedades
-que hacen posible estimar sus características a partir de una única
-trayectoria observada: la estacionariedad, que exige que el proceso se
-comporte de la misma manera en cualquier punto del tiempo, y la
-ergodicidad, que exige que una sola trayectoria suficientemente larga
-contenga, en un sentido preciso, toda la información que contendría
-observar muchas realizaciones independientes del mismo proceso. Sin
-estas dos propiedades, ningún promedio muestral calculado sobre una
-serie de tiempo tendría derecho a llamarse un estimador consistente de
-nada, porque la ley de los grandes números de la
-[Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd) se demostró para muestras independientes e
-idénticamente distribuidas, hipótesis que un proceso estocástico
-genérico no satisface.
+Las series de tiempo económicas, como el PIB trimestral o el tipo de cambio diario, son observaciones ordenadas en el tiempo de una misma cantidad. A diferencia de una muestra iid, sus valores consecutivos están relacionados, y el modelo probabilístico debe describir esa relación. Un proceso estocástico es ese modelo: una sucesión de variables aleatorias indexada por el tiempo. Esta nota define el proceso y sus funciones de media y de covarianza, que son los resúmenes de segundo orden que usa todo el análisis de series de tiempo. Se apoya en la covarianza de la [Nota “Covarianza y correlación”](../econometria-1/11-covarianza-y-correlacion.qmd) y en las matrices de covarianza de la [Nota “Vector de medias y matriz de covarianzas”](../econometria-1/12-vector-de-medias-y-matriz-de-covarianzas.qmd).
 
 ::: {#def-proceso-estocastico}
 ## Proceso estocástico
 
-Un ***proceso estocástico*** es una colección de variables
-aleatorias $\{Y_t\}_{t\in T}$, definidas sobre un mismo espacio de
-probabilidad, indexadas por un conjunto $T$ que en el curso será
-siempre $T=\mathbb{Z}$ o $T=\mathbb{N}$. Para cada resultado
-$\omega\in\Omega$ fijo, la función $t\mapsto Y_t(\omega)$ es una
-***trayectoria*** o ***realización*** del
-proceso; para cada instante $t$ fijo, $Y_t$ es una variable aleatoria
-ordinaria en el sentido de la [Definición “Variable aleatoria”](../econometria-1/03-variables-aleatorias-y-funciones-de-distribucion.qmd#def-variable-aleatoria).
+Un ***proceso estocástico*** es una sucesión $\{X_t\}_{t\in\mathbb{Z}}$ de variables aleatorias definidas en un mismo espacio de probabilidad. Para cada resultado $\omega$, la sucesión de números $t\mapsto X_t(\omega)$ es una ***trayectoria***. Una serie de tiempo observada $x_1,\ldots,x_T$ es un segmento de una trayectoria.
 
 :::
 
-Esta doble lectura, un proceso estocástico como una familia de
-variables aleatorias indexadas por $t$, o como una distribución de
-probabilidad sobre trayectorias completas, es la fuente de una
-dificultad práctica ineludible: en la econometría de series de tiempo
-casi nunca se dispone de varias realizaciones independientes del mismo
-proceso, un lujo habitual en los datos de corte transversal, sino de una
-sola trayectoria observada, $y_1,\ldots,y_n$. Toda la teoría que sigue
-está diseñada para que, bajo condiciones razonables, esa única
-trayectoria baste para inferir las propiedades del proceso completo, de
-la misma manera en que un solo país observado durante varias décadas
-permite estimar la relación entre su inflación y su tasa de interés,
-sin necesidad de observar simultáneamente otros países que hayan vivido
-exactamente la misma historia económica.
+Un proceso queda descrito por las distribuciones conjuntas de todos sus segmentos finitos, pero estas rara vez se conocen o se pueden estimar con una sola trayectoria. Por eso el análisis se concentra en los momentos de primer y segundo orden, que existen cuando los segundos momentos son finitos.
 
-::: {#def-momentos-proceso}
-## Media, varianza y función de autocovarianza
+::: {#def-media-autocovarianza}
+## Función de media y de autocovarianza
 
-Para un proceso estocástico $\{Y_t\}$ con segundo momento finito en
-cada $t$, la ***función de media*** es
-$\mu_t:=\Esp{Y_t}$, y la ***función de autocovarianza*** es
-
-$$
-\gamma(t,s) := \Cov(Y_t,Y_s) = \Esp{(Y_t-\mu_t)(Y_s-\mu_s)},
-$$
-
-definida para cada par $(t,s)\in T\times T$; en particular,
-$\gamma(t,t)=\Var(Y_t)$.
+Sea $\{X_t\}$ un proceso con $\E[X_t^2]<\infty$ para todo $t$. Su ***función de media*** es $\mu_t=\E[X_t]$ y su ***función de autocovarianza*** es $\gamma(t,s)=\Cov(X_t,X_s)=\E[(X_t-\mu_t)(X_s-\mu_s)]$. En particular $\gamma(t,t)=\Var(X_t)$.
 
 :::
 
-Estas dos funciones, $\mu_t$ y $\gamma(t,s)$, generalizan
-directamente a la media y la varianza de una sola variable aleatoria,
-con la salvedad de que ahora hace falta un valor por cada instante $t$,
-y una covarianza por cada par de instantes $(t,s)$, en lugar de un
-único número. En general, $\mu_t$ y $\gamma(t,s)$ dependen de $t$ y de
-$s$ de manera
-arbitraria, lo que haría inútil cualquier intento de estimarlas a partir
-de una sola trayectoria: no hay forma de estimar $\Var(Y_{2024})$ con
-una sola observación de $Y_{2024}$, del mismo modo en que no hay forma
-de estimar la varianza de una variable aleatoria con una sola
-realización suya. La estacionariedad es la restricción que rescata esta
-situación, exigiendo que esas funciones no cambien con $t$.
+La autocovarianza mide cuánto se mueven juntas las observaciones de dos momentos. Es simétrica, $\gamma(t,s)=\gamma(s,t)$, y está sometida a una restricción de coherencia, porque toda combinación lineal de valores del proceso tiene varianza no negativa.
+
+::: {#prp-autocovarianza-psd}
+## La autocovarianza es semidefinida positiva
+
+Para todo $n$, instantes $t_1,\ldots,t_n$ y coeficientes $a_1,\ldots,a_n\in\mathbb{R}$, $\sum_{i,j}a_ia_j\gamma(t_i,t_j)=\Var\bigl(\sum_ia_iX_{t_i}\bigr)\geq0$. En consecuencia, la matriz $\bigl(\gamma(t_i,t_j)\bigr)_{i,j}$ es simétrica y semidefinida positiva.
+
+:::
+
+::: {.proof}
+La igualdad es la fórmula de la varianza de una combinación lineal, que se obtiene de la [Proposición “Propiedades de la matriz de covarianzas”](../econometria-1/12-vector-de-medias-y-matriz-de-covarianzas.qmd#prp-covarianza-vector) aplicada al vector $(X_{t_1},\ldots,X_{t_n})$ con $\vect{a}^{\top}\mat{\Sigma}\vect{a}=\Var(\vect{a}^{\top}\vect{X})$. La no negatividad es la de toda varianza.
+
+:::
+
+Dos ejemplos fijan ideas. El primero es un proceso periódico con amplitud aleatoria: sean $U,V$ no correlacionadas con media cero y varianza uno, $\omega\in\mathbb{R}$ y $X_t=U\cos(\omega t)+V\sin(\omega t)$. Entonces $\mu_t=0$ y
+$$
+\gamma(t,s)=\cos(\omega t)\cos(\omega s)+\sin(\omega t)\sin(\omega s)=\cos\bigl(\omega(t-s)\bigr),
+$$
+que depende solo de la diferencia $t-s$. Con $\omega=\pi/3$, $\gamma(t,t)=1$ y $\gamma(t,t+1)=\cos(\pi/3)=0.5$ para todo $t$, y la matriz $3\times3$ de autocovarianzas con $\gamma(h)=\cos(\pi h/3)$ tiene valores propios no negativos, con $\det=0$ porque el proceso solo tiene dos fuentes de aleatoriedad.
+
+El segundo es el paseo aleatorio $S_t=\sum_{j=1}^t\varepsilon_j$ para $t\geq1$, con $\varepsilon_j$ no correlacionados de media cero y varianza $\sigma^2$. Para $s\leq t$, $\gamma(t,s)=\Cov\bigl(\sum_{j\leq t}\varepsilon_j,\sum_{j\leq s}\varepsilon_j\bigr)=\sigma^2\min\{t,s\}$, que no depende solo de la diferencia: $\Var(S_t)=\sigma^2t$ crece con el tiempo. Con $\sigma^2=1$, $\Var(S_{10})=10$ y $\Cov(S_4,S_{10})=4$, de modo que $\Corr(S_4,S_{10})=4/\sqrt{4\cdot10}=0.632$. La diferencia entre estos dos procesos, que el primero tiene una autocovarianza que solo depende del desfase y el segundo no, es la propiedad que se estudia en la nota siguiente.

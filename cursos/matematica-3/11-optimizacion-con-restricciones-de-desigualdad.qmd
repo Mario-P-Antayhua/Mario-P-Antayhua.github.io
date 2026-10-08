@@ -1,0 +1,50 @@
+---
+title: "Optimización con restricciones de desigualdad"
+description: "Las condiciones de Karush–Kuhn–Tucker para restricciones de desigualdad, su necesidad bajo independencia lineal de las restricciones activas, el signo de los multiplicadores, su suficiencia bajo convexidad y dos ejemplos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Optimización]
+---
+
+Una restricción de igualdad obliga al óptimo a estar sobre el conjunto $\{g=0\}$. Muchas restricciones económicas son desigualdades, como la no negatividad del consumo o una cota de capacidad, y pueden apretar o no según los datos. Si no aprietan, el óptimo es el de un problema sin restricciones; si aprietan, se comporta como el de uno con igualdades, y las condiciones de Karush–Kuhn–Tucker reúnen ambas posibilidades en un solo sistema.
+
+::: {#def-problema-desigualdad}
+## Problema con restricciones de desigualdad y condiciones KKT
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$, $h:D\to\mathbb{R}^p$ de clase $C^1$. El problema consiste en minimizar $f(\vect{x})$ sujeto a $h(\vect{x})\leq\vect{0}$, y un punto $\vect{x}^*$ es ***factible*** si $h(\vect{x}^*)\leq\vect{0}$. Una restricción $j$ está ***activa*** en $\vect{x}^*$ si $h_j(\vect{x}^*)=0$. El punto $\vect{x}^*$ factible satisface las ***condiciones de Karush–Kuhn–Tucker*** (KKT) si existe $\vect{\mu}^*\in\mathbb{R}^p$ tal que (i) $\nabla f(\vect{x}^*)+\mat{J}_h(\vect{x}^*)^{\top}\vect{\mu}^*=\vect{0}$ (estacionariedad), (ii) $\vect{\mu}^*\geq\vect{0}$ (factibilidad dual) y (iii) $\mu_j^*h_j(\vect{x}^*)=0$ para cada $j$ (***holgura complementaria***).
+
+:::
+
+La holgura complementaria separa dos casos para cada restricción: o bien está inactiva, $h_j(\vect{x}^*)<0$, y entonces su multiplicador es cero porque no influye en el óptimo; o bien está activa y su multiplicador puede ser positivo. La condición de signo $\vect{\mu}^*\geq\vect{0}$ expresa que, al minimizar, relajar una restricción nunca empeora el óptimo.
+
+::: {#thm-kkt}
+## Condiciones necesarias de Karush–Kuhn–Tucker
+
+Sea $\vect{x}^*$ un mínimo local del problema, y sea $A$ el conjunto de restricciones activas en $\vect{x}^*$. Si los gradientes $\nabla h_j(\vect{x}^*)$ para $j\in A$ son linealmente independientes, entonces $\vect{x}^*$ satisface las condiciones KKT.
+
+:::
+
+::: {.proof}
+Se escribe $\mat{J}_A$ para la submatriz de $\mat{J}_h(\vect{x}^*)$ con las filas de $A$ y $q=|A|\leq n$. Las restricciones inactivas cumplen $h_j(\vect{x}^*)<0$ y, por continuidad de $h$, siguen siendo negativas en una vecindad de $\vect{x}^*$. En ambos pasos se usan curvas $\vect{x}(t)$ de clase $C^1$ con $\vect{x}(0)=\vect{x}^*$, $\vect{x}'(0)=\vect{u}$ y $h_A(\vect{x}(t))=t\,\mat{J}_A\vect{u}$ para un $\vect{u}\in\mathbb{R}^n$ dado, que se obtienen según el valor de $q$. Si $0<q<n$, el [Corolario “Curvas que respetan una restricción”](05-funcion-inversa-e-implicita.qmd#cor-curvas-restriccion) aplicado a $g=h_A$ las produce. Si $q=n$, $\mat{J}_A$ es invertible y el [Teorema “Teorema de la función inversa”](05-funcion-inversa-e-implicita.qmd#thm-funcion-inversa) da una inversa local $C^1$ de $h_A$, de modo que $\vect{x}(t):=(h_A)^{-1}(t\mat{J}_A\vect{u})$ cumple lo mismo. Si $q=0$, basta $\vect{x}(t)=\vect{x}^*+t\vect{u}$.
+
+*Estacionariedad y holgura.* Para $\vect{u}\in\ker\mat{J}_A$, la curva cumple $h_A(\vect{x}(t))=\vect{0}$, y las restricciones inactivas siguen siendo negativas para $|t|$ pequeño, de modo que la curva es factible. Como en la demostración del [Teorema “Condición de primer orden de Lagrange”](10-optimizacion-con-restricciones-de-igualdad.qmd#thm-lagrange), $\phi(t)=f(\vect{x}(t))$ tiene un mínimo local en $0$ y $\langle\nabla f(\vect{x}^*),\vect{u}\rangle=0$ para todo $\vect{u}\in\ker\mat{J}_A$. Por el corolario del núcleo ortogonal a las filas, $\nabla f(\vect{x}^*)=\mat{J}_A^{\top}\vect{\lambda}$ para algún $\vect{\lambda}\in\mathbb{R}^q$. Se definen $\mu_j^*:=-\lambda_j$ para $j\in A$ y $\mu_j^*:=0$ para $j\notin A$, lo que da la estacionariedad (i) y la holgura complementaria (iii), porque $h_j=0$ en $A$ y $\mu_j^*=0$ fuera de $A$.
+
+*Signo del multiplicador.* Sea $j_0\in A$. Como las filas de $\mat{J}_A$ son independientes, $\mat{J}_A:\mathbb{R}^n\to\mathbb{R}^q$ es sobreyectiva, y existe $\vect{u}$ con $\mat{J}_A\vect{u}=-\vect{e}_{j_0}$, con $\vect{e}_{j_0}$ el vector canónico de $\mathbb{R}^q$ correspondiente a $j_0$. La curva asociada cumple $h_{j_0}(\vect{x}(t))=-t<0$ y $h_j(\vect{x}(t))=0$ para los demás $j\in A$ cuando $t>0$, y las inactivas son negativas por continuidad, de modo que $\vect{x}(t)$ es factible para $t\in[0,\tau)$. Entonces $\phi(t)\geq\phi(0)$ para $t\geq0$ pequeño, y $\phi'(0)=\lim_{t\to0^+}[\phi(t)-\phi(0)]/t\geq0$. Por otro lado, la estacionariedad da $\phi'(0)=\langle\nabla f(\vect{x}^*),\vect{u}\rangle=-\sum_{j\in A}\mu_j^*\langle\nabla h_j(\vect{x}^*),\vect{u}\rangle=-\sum_{j\in A}\mu_j^*(\mat{J}_A\vect{u})_j=\mu_{j_0}^*$. Entonces $\mu_{j_0}^*\geq0$ para cada $j_0\in A$, y la factibilidad dual (ii) se cumple.
+
+:::
+
+Las condiciones KKT son necesarias bajo la calificación de independencia, y suficientes cuando el problema es convexo.
+
+::: {#prp-suficiencia-kkt}
+## Suficiencia de KKT bajo convexidad
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y convexo, y sean $f$ y cada $h_j$ de clase $C^2$ y convexas. Si $\vect{x}^*$ es factible y satisface KKT con un multiplicador $\vect{\mu}^*$, entonces $\vect{x}^*$ es un mínimo global del problema.
+
+:::
+
+::: {.proof}
+La función $L(\vect{x}):=f(\vect{x})+\langle\vect{\mu}^*,h(\vect{x})\rangle$ es una combinación de funciones convexas con coeficientes no negativos, y por tanto convexa, porque la definición de convexidad se preserva al multiplicar por escalares no negativos y sumar. Su gradiente en $\vect{x}^*$ es nulo por la estacionariedad, de modo que el [Corolario “Bajo convexidad, el primer orden es necesario y suficiente”](09-condiciones-de-optimalidad-sin-restricciones.qmd#cor-primer-orden-suficiente-convexa) da $L(\vect{y})\geq L(\vect{x}^*)$ para todo $\vect{y}\in D$. Por la holgura complementaria, $\langle\vect{\mu}^*,h(\vect{x}^*)\rangle=0$, de modo que $L(\vect{x}^*)=f(\vect{x}^*)$. Si $\vect{y}$ es factible, $h(\vect{y})\leq\vect{0}$ y $\vect{\mu}^*\geq\vect{0}$ implican $\langle\vect{\mu}^*,h(\vect{y})\rangle\leq0$, y entonces $f(\vect{y})\geq L(\vect{y})\geq L(\vect{x}^*)=f(\vect{x}^*)$.
+
+:::
+
+Con números, se minimiza $f(x,y)=(x-c)^2+(y-c)^2$ sujeto a $h(x,y)=x+y-1\leq0$, con $f$ convexa y $h$ afín. La estacionariedad es $2(x-c)+\mu=0$ y $2(y-c)+\mu=0$, de modo que $x=y=c-\mu/2$. Si $c=1$, el caso $\mu=0$ da $x=y=1$, que viola la restricción porque $h=1>0$; el caso activo $h=0$ da $x=y=1/2$ y $\mu=1\geq0$, de modo que el óptimo es $(1/2,1/2)$ con $f=1/2$ y la restricción aprieta. Si $c=1/4$, el caso $\mu=0$ da $x=y=1/4$, que es factible con $h=-1/2<0$, y la holgura complementaria exige $\mu=0$, de modo que el óptimo es $(1/4,1/4)$ con $f=0$ y la restricción no aprieta. En ambos casos la proposición de suficiencia garantiza que el punto hallado es el mínimo global. El sistema de KKT decide, en cada problema, si la restricción actúa o no.

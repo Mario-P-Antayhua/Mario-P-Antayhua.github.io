@@ -1,0 +1,51 @@
+---
+title: "Normalidad asintótica de estimadores de maximización"
+description: "La distribución asintótica de un estimador que maximiza un promedio muestral, con varianza de tipo sándwich, demostrada con el desarrollo de Taylor por filas, y su caso particular para el estimador de máxima verosimilitud bajo especificación correcta."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Verosimilitud]
+---
+
+Un estimador consistente converge al parámetro, pero para hacer inferencia hace falta saber cómo se distribuye el error de estimación. El resultado es una normal centrada en cero cuando el error se multiplica por $\sqrt n$, cuya varianza depende de la curvatura de la función objetivo y de la variabilidad de su gradiente. La demostración sigue el esquema del método delta: se linealiza la condición de primer orden alrededor del límite y se aplican el teorema central del límite al gradiente y la ley de los grandes números a la hessiana. Para que el resultado cubra también el caso en que el modelo es solo una aproximación, se prueba para estimadores que maximizan un promedio general $Q_n(\vect{\theta})=\tfrac1n\sum_iq(X_i,\vect{\theta})$, y el estimador de máxima verosimilitud es el caso $q=\ln f$.
+
+::: {#thm-normalidad-asintotica}
+## Normalidad asintótica de un estimador de maximización
+
+Sean $X_i$ iid y $\hat{\vect{\theta}}_n$ un maximizador de $Q_n$ en $\Theta$. Supóngase: (N1) $\hat{\vect{\theta}}_n\overset{p}{\to}\vect{\theta}^*$, un punto interior de $\Theta$; (N2) $q(x,\vect{\theta})$ es dos veces continuamente diferenciable en $\vect{\theta}$ en una bola cerrada $N\subseteq\Theta$ centrada en $\vect{\theta}^*$; (N3) $\E\|\nabla q(X,\vect{\theta}^*)\|^2<\infty$ y $\E[\nabla q(X,\vect{\theta}^*)]=\vect{0}$; (N4) $\E\bigl[\sup_{\vect{\theta}\in N}\|\mat{H}(X,\vect{\theta})\|\bigr]<\infty$, con $\mat{H}=\nabla^2_{\vect{\theta}}q$; (N5) $\mat{A}=-\E[\mat{H}(X,\vect{\theta}^*)]$ es definida positiva. Con $\mat{B}=\Var\bigl(\nabla q(X,\vect{\theta}^*)\bigr)$,
+$$
+\sqrt n\,(\hat{\vect{\theta}}_n-\vect{\theta}^*)\overset{d}{\to}\N_k\bigl(\vect{0},\ \mat{A}^{-1}\mat{B}\mat{A}^{-1}\bigr).
+$$ {#eq-normalidad-asintotica}
+
+:::
+
+::: {.proof}
+Sea $E_n=\{\hat{\vect{\theta}}_n\in\mathrm{int}\,N\}$, con $\Prob{E_n}\to1$ por (N1). En $E_n$, $\hat{\vect{\theta}}_n$ es un máximo interior de la función diferenciable $Q_n$, y por la condición necesaria de primer orden, $\nabla Q_n(\hat{\vect{\theta}}_n)=\vect{0}$.
+
+*Desarrollo por filas.* Para cada coordenada $j$, la función $g_j=\partial Q_n/\partial\theta_j$ es de clase $C^1$ en la bola $N$, y el teorema del valor medio de una variable aplicado a $t\mapsto g_j(\vect{\theta}^*+t(\hat{\vect{\theta}}_n-\vect{\theta}^*))$ da un punto $\tilde{\vect{\theta}}_j$ en el segmento entre $\vect{\theta}^*$ y $\hat{\vect{\theta}}_n$ con $g_j(\hat{\vect{\theta}}_n)=g_j(\vect{\theta}^*)+\nabla g_j(\tilde{\vect{\theta}}_j)^{\top}(\hat{\vect{\theta}}_n-\vect{\theta}^*)$. El punto puede ser distinto para cada fila, y por eso no se usa un único punto intermedio. Apilando las $k$ ecuaciones en $E_n$, $\vect{0}=\nabla Q_n(\vect{\theta}^*)+\tilde{\mat{H}}_n(\hat{\vect{\theta}}_n-\vect{\theta}^*)$, donde la fila $j$ de $\tilde{\mat{H}}_n$ es la fila $j$ de $\nabla^2Q_n(\tilde{\vect{\theta}}_j)$.
+
+*La hessiana converge.* Por (N2) y (N4), la ley uniforme de los grandes números aplicada a cada entrada $H_{jl}$ en el compacto $N$ da $\sup_{\vect{\theta}\in N}|\tfrac1n\sum_iH_{jl}(X_i,\vect{\theta})-h_{jl}(\vect{\theta})|\overset{p}{\to}0$, con $h_{jl}(\vect{\theta})=\E[H_{jl}(X,\vect{\theta})]$ continua. Como $\|\tilde{\vect{\theta}}_j-\vect{\theta}^*\|\leq\|\hat{\vect{\theta}}_n-\vect{\theta}^*\|\overset{p}{\to}0$, la entrada $(j,l)$ de $\tilde{\mat{H}}_n$ satisface $|\tilde H_{n,jl}-h_{jl}(\tilde{\vect{\theta}}_j)|\leq\sup_N|\cdots|\overset{p}{\to}0$ y $h_{jl}(\tilde{\vect{\theta}}_j)\overset{p}{\to}h_{jl}(\vect{\theta}^*)$ por el teorema de funciones continuas. Entonces $\tilde{\mat{H}}_n\overset{p}{\to}-\mat{A}$. Como $\mat{A}$ es invertible, la inversa es continua en $-\mat{A}$ y $\tilde{\mat{H}}_n$ es invertible con probabilidad que tiende a uno; se define $\mat{M}_n=-\tilde{\mat{H}}_n^{-1}$ cuando existe y $\mat{M}_n=\mat{0}$ en otro caso, de modo que $\mat{M}_n\overset{p}{\to}\mat{A}^{-1}$.
+
+*Conclusión.* En el evento de probabilidad que tiende a uno donde valen la condición de primer orden y la invertibilidad, $\sqrt n(\hat{\vect{\theta}}_n-\vect{\theta}^*)=\mat{M}_n\,\vect{Z}_n$ con $\vect{Z}_n=\sqrt n\,\nabla Q_n(\vect{\theta}^*)=n^{-1/2}\sum_i\nabla q(X_i,\vect{\theta}^*)$. Por (N3) y el teorema central del límite, $\vect{Z}_n\overset{d}{\to}\N_k(\vect{0},\mat{B})$. El teorema de Slutsky da $\mat{M}_n\vect{Z}_n\overset{d}{\to}\mat{A}^{-1}\N_k(\vect{0},\mat{B})=\N_k(\vect{0},\mat{A}^{-1}\mat{B}\mat{A}^{-1})$, y el lema de equivalencia asintótica transfiere el límite a $\sqrt n(\hat{\vect{\theta}}_n-\vect{\theta}^*)$, que coincide con $\mat{M}_n\vect{Z}_n$ con probabilidad que tiende a uno.
+
+:::
+
+La matriz $\mat{A}^{-1}\mat{B}\mat{A}^{-1}$ se llama varianza de tipo ***sándwich***, por la forma en que $\mat{B}$ queda entre dos copias de $\mat{A}^{-1}$. Cuando el modelo está bien especificado, el sándwich se simplifica.
+
+::: {#cor-normalidad-emv}
+## Normalidad asintótica del EMV bajo especificación correcta
+
+Sean $X_i$ iid con densidad $f(x;\vect{\theta}_0)$ en un modelo regular en $\vect{\theta}_0$ y $q(x,\vect{\theta})=\ln f(x;\vect{\theta})$. Si se cumplen (N1)–(N5) con $\vect{\theta}^*=\vect{\theta}_0$, entonces
+$$
+\sqrt n\,(\hat{\vect{\theta}}_n-\vect{\theta}_0)\overset{d}{\to}\N_k\bigl(\vect{0},\ \mat{I}(\vect{\theta}_0)^{-1}\bigr).
+$$ {#eq-normalidad-emv}
+
+:::
+
+::: {.proof}
+Por el teorema de la igualdad de la información, $\E[\nabla q(X,\vect{\theta}_0)]=\E[\vect{s}(X;\vect{\theta}_0)]=\vect{0}$, lo que da la parte restante de (N3), y $\mat{B}=\Var(\vect{s})=\mat{I}(\vect{\theta}_0)$ y $\mat{A}=-\E[\mat{H}]=\mat{I}(\vect{\theta}_0)$. Entonces $\mat{A}^{-1}\mat{B}\mat{A}^{-1}=\mat{I}^{-1}\mat{I}\mat{I}^{-1}=\mat{I}(\vect{\theta}_0)^{-1}$.
+
+:::
+
+Con números, para la exponencial con tasa verdadera $\lambda_0=2$, $A=-\E[-1/\lambda_0^2]=1/4$ y $B=\Var(1/\lambda_0-X)=\Var(X)=1/4$, de modo que la varianza asintótica es $1/I(\lambda_0)=\lambda_0^2=4$. Para $n=100$, la desviación estándar aproximada de $\hat\lambda_n$ es $\sqrt{4/100}=0.2$, coherente con el valor $0.203$ de la simulación de la [Nota “El método delta”](../econometria-1/20-el-metodo-delta.qmd). Ese resultado coincide con el que se obtuvo allí aplicando el método delta a $1/\bar X_n$.
+
+Cuando el modelo está mal especificado, el estimador converge a un valor $\vect{\theta}^*$ que no es el verdadero, y el sándwich no se simplifica. Sea el modelo exponencial ajustado a datos uniformes en $(0,1)$, con $\E[X]=1/2$ y $\Var(X)=1/12$. El estimador $\hat\lambda_n=1/\bar X_n$ converge a $\lambda^*=2$. Aquí $A=1/\lambda^{*2}=1/4$ y $B=\Var(1/\lambda^*-X)=\Var(X)=1/12$, de modo que el sándwich vale $A^{-2}B=16/12=1.333$, mientras que la varianza calculada como si el modelo fuera correcto, $\lambda^{*2}=4$, la triplica. El método delta aplicado a $1/\bar X_n$ con $g'(1/2)=-4$ confirma el valor: $16\cdot\tfrac1{12}=1.333$.

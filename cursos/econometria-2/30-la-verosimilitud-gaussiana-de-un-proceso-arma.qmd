@@ -1,0 +1,41 @@
+---
+title: "La verosimilitud gaussiana de un proceso ARMA"
+description: "La función de verosimilitud de una muestra de un proceso ARMA gaussiano, su descomposición en errores de predicción mediante la factorización de Cholesky de la matriz de autocovarianzas, la verosimilitud exacta y condicional del AR(1) y el algoritmo del MA(1)."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Predicción]
+---
+
+Los modelos ARMA se estiman por máxima verosimilitud, pero las observaciones de una serie no son independientes y la verosimilitud no es un producto de densidades marginales. Para un proceso gaussiano, la densidad conjunta de la muestra es una normal multivariante con la matriz de autocovarianzas del modelo, y su evaluación exige invertir esa matriz. La descomposición en errores de predicción reduce el cálculo a una suma de $T$ términos que se calculan secuencialmente, y es la base de los algoritmos numéricos de estimación. Esta nota la deduce con la proyección de la [Nota “El espacio L2 y la proyección lineal”](25-el-espacio-l2-y-la-proyeccion.qmd) y el proceso de Gram–Schmidt de la [Nota “Ortogonalidad, proyección y el teorema de la mejor aproximación”](../matematica-2/05-ortogonalidad-proyeccion-y-mejor-aproximacion.qmd).
+
+Sea $\{X_t\}$ un ARMA gaussiano causal e invertible con vector de parámetros $\vect{\vartheta}=(\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q,\sigma^2,\mu)$, y sea $\vect{X}=(X_1,\ldots,X_T)^{\top}$ la muestra. Su ley es $\N_T(\mu\mathbf{1},\mat{\Gamma}_T(\vect{\vartheta}))$, donde $\mat{\Gamma}_T=(\gamma(i-j))_{i,j}$ se calcula con las fórmulas de las notas anteriores. La matriz es definida positiva: dado $\vect{a}\neq\vect{0}$, sea $k$ el mayor índice con $a_k\neq0$; entonces $\vect{a}^{\top}\vect{X}=a_k\varepsilon_k+(\text{un elemento de }H_{k-1})$, con $\varepsilon_k\perp H_{k-1}$ por el teorema del ruido fundamental, y $\Var(\vect{a}^{\top}\vect{X})\geq a_k^2\sigma^2>0$. La log-verosimilitud exacta es
+$$
+\ell(\vect{\vartheta})=-\frac T2\ln(2\pi)-\frac12\ln\det\mat{\Gamma}_T-\frac12(\vect{x}-\mu\mathbf{1})^{\top}\mat{\Gamma}_T^{-1}(\vect{x}-\mu\mathbf{1}).
+$$ {#eq-loglik-gaussiana}
+
+::: {#thm-descomposicion-errores-prediccion}
+## Descomposición en errores de predicción
+
+Sean $\hat X_1=\mu$ y, para $t\geq2$, $\hat X_t=\mu+P_{\mathrm{span}\{X_1,\ldots,X_{t-1}\}}(X_t-\mu)$ el predictor lineal óptimo basado en las observaciones previas, con $u_t=X_t-\hat X_t$ y $v_t=\E[u_t^2]>0$. Entonces $\mat{\Gamma}_T=\mat{C}\mat{D}\mat{C}^{\top}$ con $\mat{C}$ triangular inferior con diagonal unitaria y $\mat{D}=\mathrm{diag}(v_1,\ldots,v_T)$, y
+$$
+\ell(\vect{\vartheta})=-\frac12\sum_{t=1}^T\Bigl[\ln(2\pi v_t)+\frac{(x_t-\hat x_t)^2}{v_t}\Bigr].
+$$ {#eq-loglik-prediccion}
+
+:::
+
+::: {.proof}
+Las variables $u_1,\ldots,u_T$ se obtienen de $X_1-\mu,\ldots,X_T-\mu$ por el proceso de Gram–Schmidt, de modo que cada $X_t-\mu=u_t+\sum_{s<t}c_{ts}u_s$ para ciertos coeficientes, es decir, $\vect{X}-\mu\mathbf{1}=\mat{C}\vect{u}$ con $\mat{C}$ triangular inferior de diagonal unitaria. Los $u_t$ son ortogonales entre sí: $u_t\perp\mathrm{span}\{X_1,\ldots,X_{t-1}\}$, que contiene a $u_s$ para $s<t$. Entonces $\Var(\vect{u})=\mat{D}$ y $\mat{\Gamma}_T=\Var(\mat{C}\vect{u})=\mat{C}\mat{D}\mat{C}^{\top}$. Como $\det\mat{C}=1$, $\det\mat{\Gamma}_T=\prod_tv_t$ por la multiplicatividad del determinante, y $(\vect{x}-\mu\mathbf{1})^{\top}\mat{\Gamma}_T^{-1}(\vect{x}-\mu\mathbf{1})=\vect{u}^{\top}\mat{D}^{-1}\vect{u}=\sum_tu_t^2/v_t$, porque $\mat{\Gamma}_T^{-1}=\mat{C}^{-\top}\mat{D}^{-1}\mat{C}^{-1}$ y $\mat{C}^{-1}(\vect{x}-\mu\mathbf{1})=\vect{u}$. Sustituyendo en @eq-loglik-gaussiana se obtiene @eq-loglik-prediccion.
+
+:::
+
+La fórmula dice que la verosimilitud es el producto de las densidades normales de cada observación dada la historia anterior, con media el pronóstico a un paso y varianza el error cuadrático medio del pronóstico. Para un AR(p), una vez que se han observado $p$ valores, el predictor óptimo solo usa los últimos $p$, y el error de predicción es el propio ruido, de modo que $v_t=\sigma^2$ para $t>p$. Para el AR(1), $\hat X_1=\mu$, $v_1=\gamma(0)=\sigma^2/(1-\phi^2)$, y para $t\geq2$, $\hat X_t=\mu+\phi(X_{t-1}-\mu)$ y $v_t=\sigma^2$. La log-verosimilitud exacta resulta
+$$
+\ell=-\frac T2\ln(2\pi\sigma^2)+\frac12\ln(1-\phi^2)-\frac{(1-\phi^2)(x_1-\mu)^2}{2\sigma^2}-\frac1{2\sigma^2}\sum_{t=2}^T\bigl(x_t-\mu-\phi(x_{t-1}-\mu)\bigr)^2 .
+$$ {#eq-loglik-ar1}
+Si se condiciona en la primera observación y se omiten sus términos, se obtiene la ***log-verosimilitud condicional***, $-\tfrac{T-1}2\ln(2\pi\sigma^2)-\tfrac1{2\sigma^2}\sum_{t\geq2}(x_t-\mu-\phi(x_{t-1}-\mu))^2$, que es la de una regresión por mínimos cuadrados de $x_t$ sobre $x_{t-1}$. Con $\mu=0$ su máximo está en $\hat\phi=\sum_{t\geq2}x_tx_{t-1}/\sum_{t\geq2}x_{t-1}^2$ y $\hat\sigma^2=\tfrac1{T-1}\sum_{t\geq2}(x_t-\hat\phi x_{t-1})^2$.
+
+Con números, para la muestra $x=(0.5,0.9,0.4,0.8,1.1)$, $\hat\phi=2.01/1.86=1.081$ y $\hat\sigma^2=0.648/4=0.162$; el valor de $\hat\phi$ supera uno, otro recordatorio de que la estimación condicional no impone la estacionariedad. Evaluada en $\phi=0.8$ y $\sigma^2=0.16$, la log-verosimilitud exacta es $-3.288$ y la condicional es $-2.493$, y su diferencia, $-0.795$, es la log-densidad de $x_1=0.5$ bajo la normal estacionaria de media cero y varianza $0.16/(1-0.64)=0.444$.
+
+En el MA(1) los errores de predicción se calculan con la factorización de una matriz tridiagonal. La matriz $\mat{\Gamma}_T$ tiene $\gamma(0)=\sigma^2(1+\theta^2)$ en la diagonal, $\gamma(1)=\sigma^2\theta$ en las diagonales adyacentes y ceros en las demás. Se propone $\mat{C}$ con $c_{t,t-1}=\gamma(1)/v_{t-1}$ y las demás entradas bajo la diagonal nulas, y $v_1=\gamma(0)$, $v_t=\gamma(0)-\gamma(1)^2/v_{t-1}$. Entonces $(\mat{C}\mat{D}\mat{C}^{\top})_{t,t-1}=c_{t,t-1}v_{t-1}=\gamma(1)$ y $(\mat{C}\mat{D}\mat{C}^{\top})_{tt}=v_t+c_{t,t-1}^2v_{t-1}=v_t+\gamma(1)^2/v_{t-1}=\gamma(0)$, y las demás entradas son cero, de modo que la factorización es la buscada. Los errores de predicción se obtienen con la recursión $u_1=x_1-\mu$ y $u_t=x_t-\mu-c_{t,t-1}u_{t-1}$.
+
+Con $\theta=0.5$, $\sigma^2=1$ y la muestra $x=(0.3,-0.2,0.4)$ con $\mu=0$, $\gamma(0)=1.25$, $\gamma(1)=0.5$, $v=(1.25,\,1.05,\,1.0119)$, y $c_{21}=0.4$, $c_{32}=0.476$, de donde $u=(0.3,\,-0.32,\,0.552)$. La log-verosimilitud es $-\tfrac12\sum_t[\ln(2\pi v_t)+u_t^2/v_t]=-3.134$, y el producto $v_1v_2v_3=1.328$ coincide con $\det\mat{\Gamma}_3$ calculado directamente. La optimización numérica de $\ell$ sobre $\vect{\vartheta}$ usa los métodos de la [Nota “Métodos numéricos de optimización”](../matematica-3/12-metodos-numericos-de-optimizacion.qmd). La teoría asintótica de los estimadores obtenidos, que para datos dependientes requiere un teorema central del límite para procesos distinto del de datos independientes que se demostró en la parte de verosimilitud, no se desarrolla en estos apuntes.

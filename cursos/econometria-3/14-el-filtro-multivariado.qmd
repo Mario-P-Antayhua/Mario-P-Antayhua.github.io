@@ -1,0 +1,58 @@
+---
+title: "El filtro multivariado"
+description: "El algoritmo completo del filtro de Kalman con observaciones vectoriales, la inversión de la matriz de varianza de la innovación, el tratamiento de datos faltantes y la equivalencia entre procesar las observaciones en bloque o una por una."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Filtro de Kalman]
+---
+
+Las dos notas anteriores dedujeron las etapas de predicción y de actualización con la notación matricial general, de modo que ya contienen el filtro con observaciones vectoriales. Esta nota reúne el algoritmo completo y trata dos situaciones prácticas. La primera es que algunas de las $N$ series no estén disponibles en una fecha, algo habitual con indicadores que se publican con rezagos distintos. La segunda es el costo de invertir la matriz $\mat{F}_t$ de $N\times N$: cuando los errores de medición son independientes entre series, se puede procesar una serie por vez con escalares, y el resultado es idéntico.
+
+::: {#thm-algoritmo-kalman}
+## Algoritmo completo del filtro de Kalman
+
+Dados $\vect{a}_{1\mid0}$ y $\mat{P}_{1\mid0}$, para $t=1,\ldots,n$ se calculan:
+
+1. *Innovación y su varianza:* $\vect{v}_t=\vect{y}_t-\mat{Z}_t\vect{a}_{t\mid t-1}-\vect{d}_t$ y $\mat{F}_t=\mat{Z}_t\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}+\mat{H}_t$.
+2. *Ganancia:* $\mat{K}_t=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}\mat{F}_t^{-1}$.
+3. *Actualización:* $\vect{a}_{t\mid t}=\vect{a}_{t\mid t-1}+\mat{K}_t\vect{v}_t$ y $\mat{P}_{t\mid t}=\mat{P}_{t\mid t-1}-\mat{K}_t\mat{F}_t\mat{K}_t^{\top}$.
+4. *Predicción:* $\vect{a}_{t+1\mid t}=\mat{T}_{t+1}\vect{a}_{t\mid t}+\vect{c}_{t+1}$ y $\mat{P}_{t+1\mid t}=\mat{T}_{t+1}\mat{P}_{t\mid t}\mat{T}_{t+1}^{\top}+\mat{R}_{t+1}\mat{Q}_{t+1}\mat{R}_{t+1}^{\top}$.
+
+Bajo el modelo gaussiano, $\vect{a}_{t\mid t}=\E[\vect{\alpha}_t\mid\mathcal{Y}_t]$ y $\mat{P}_{t\mid t}=\Var(\vect{\alpha}_t\mid\mathcal{Y}_t)$ para todo $t$, y las innovaciones $\vect{v}_1,\ldots,\vect{v}_n$ son independientes con $\vect{v}_t\sim\N(\vect{0},\mat{F}_t)$.
+
+:::
+
+::: {.proof}
+Las igualdades para $\vect{a}_{t\mid t}$ y $\mat{P}_{t\mid t}$ se obtienen por inducción: si $\vect{\alpha}_{t-1}\mid\mathcal{Y}_{t-1}$ es normal con los momentos del paso anterior, la predicción da los de $\vect{\alpha}_t\mid\mathcal{Y}_{t-1}$, y la actualización los de $\vect{\alpha}_t\mid\mathcal{Y}_t$; la base es la distribución inicial. Para las innovaciones, $\vect{v}_t$ es función de $\mathcal{Y}_t$ y condicionalmente en $\mathcal{Y}_{t-1}$ es $\N(\vect{0},\mat{F}_t)$ por la etapa de predicción. Esa distribución no depende de $\mathcal{Y}_{t-1}$, de modo que $\vect{v}_t$ es independiente de $\mathcal{Y}_{t-1}$, y como $\vect{v}_1,\ldots,\vect{v}_{t-1}$ son funciones de $\mathcal{Y}_{t-1}$, $\vect{v}_t$ es independiente de ellas. Por inducción son mutuamente independientes.
+
+:::
+
+La independencia de las innovaciones es el hecho que convierte la verosimilitud de la muestra en un producto de densidades, porque la densidad conjunta de las observaciones es el producto de las densidades de las innovaciones. Cuando algunas componentes de $\vect{y}_t$ faltan, se descartan las filas correspondientes.
+
+::: {#prp-datos-faltantes}
+## Datos faltantes
+
+Si en $t$ solo se observan las componentes de un subconjunto $S$ de índices, se aplican las etapas 1 a 3 reemplazando $\vect{y}_t,\mat{Z}_t,\vect{d}_t,\mat{H}_t$ por sus filas y submatrices en $S$. Si no se observa nada, $\vect{a}_{t\mid t}=\vect{a}_{t\mid t-1}$ y $\mat{P}_{t\mid t}=\mat{P}_{t\mid t-1}$.
+
+:::
+
+::: {.proof}
+La información en $t$ es $\mathcal{Y}_{t-1}$ más $\vect{y}_{t,S}=\mat{Z}_{t,S}\vect{\alpha}_t+\vect{d}_{t,S}+\vect{\varepsilon}_{t,S}$, un modelo de medición del mismo tipo con matrices más pequeñas, y la etapa de actualización se aplica a él. Sin observaciones, la información no cambia y las distribuciones condicionales tampoco.
+
+:::
+
+El procesamiento secuencial reduce la inversión de una matriz de $N\times N$ a $N$ divisiones. Se aplica cuando $\mat{H}_t$ es diagonal, de modo que los errores de medición de las distintas series son independientes.
+
+::: {#prp-procesamiento-secuencial}
+## Equivalencia del procesamiento secuencial
+
+Si $\mat{H}_t=\mathrm{diag}(h_1,\ldots,h_N)$, la actualización con el vector $\vect{y}_t$ es igual a la sucesión de $N$ actualizaciones escalares: con $\vect{a}^{(0)}=\vect{a}_{t\mid t-1}$ y $\mat{P}^{(0)}=\mat{P}_{t\mid t-1}$, para $i=1,\ldots,N$, $f_i=\vect{z}_i^{\top}\mat{P}^{(i-1)}\vect{z}_i+h_i$, $\vect{k}_i=\mat{P}^{(i-1)}\vect{z}_i/f_i$, $\vect{a}^{(i)}=\vect{a}^{(i-1)}+\vect{k}_i(y_{ti}-\vect{z}_i^{\top}\vect{a}^{(i-1)}-d_i)$ y $\mat{P}^{(i)}=\mat{P}^{(i-1)}-\vect{k}_if_i\vect{k}_i^{\top}$, donde $\vect{z}_i^{\top}$ es la $i$-ésima fila de $\mat{Z}_t$. Entonces $\vect{a}^{(N)}=\vect{a}_{t\mid t}$ y $\mat{P}^{(N)}=\mat{P}_{t\mid t}$.
+
+:::
+
+::: {.proof}
+Como los errores de medición son independientes entre series, y también de $\vect{\alpha}_t$ y del pasado, el modelo de medición con $\vect{y}_t$ equivale a $N$ mediciones escalares condicionalmente independientes dado el estado. La distribución de $\vect{\alpha}_t$ dado $\mathcal{Y}_{t-1}$ y las primeras $i$ observaciones es entonces la que resulta de actualizar la anterior con la observación $i$, por la regla de Bayes aplicada de manera sucesiva, y la actualización escalar es el caso $N=1$ del teorema de actualización. La distribución final condicional en todas las observaciones no depende del orden ni del agrupamiento, y es la de la actualización conjunta.
+
+:::
+
+Con números, sea un estado escalar con creencia $\N(0,2)$, medido por dos series con $\mat{Z}=(1,1)^{\top}$, $\mat{H}=\mathrm{diag}(1,2)$ y observaciones $\vect{y}=(1.0,1.4)^{\top}$. En bloque: $\mat{F}=\left(\begin{smallmatrix}3&2\\2&4\end{smallmatrix}\right)$, $\mat{K}=(0.5,\ 0.25)$, $a=0.5\cdot1.0+0.25\cdot1.4=0.85$ y $P=2-\mat{K}\mat{F}\mat{K}^{\top}=0.5$. Secuencialmente: la primera serie da $f_1=3$, $k_1=2/3$, $a^{(1)}=0.667$ y $P^{(1)}=0.667$; la segunda da $f_2=0.667+2=2.667$, $k_2=0.25$, $a^{(2)}=0.667+0.25(1.4-0.667)=0.85$ y $P^{(2)}=0.667-0.25^2\cdot2.667=0.5$. Los resultados coinciden. Si la segunda serie falta, el filtro usa solo la primera y queda $a=0.667$, $P=0.667$: la incertidumbre baja menos.

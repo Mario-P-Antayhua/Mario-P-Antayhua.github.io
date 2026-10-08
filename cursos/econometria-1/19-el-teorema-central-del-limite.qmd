@@ -1,0 +1,59 @@
+---
+title: "El teorema central del límite"
+description: "El teorema central del límite para vectores aleatorios independientes e idénticamente distribuidos con covarianza finita, demostrado con el método de reemplazo de Lindeberg, y su versión estudentizada."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Convergencia]
+---
+
+La ley de los grandes números dice que el promedio se acerca a la media, pero no dice qué tan cerca ni con qué forma se distribuye el error. El teorema central del límite responde: multiplicado por $\sqrt n$, el error del promedio tiene una distribución límite normal, sin importar cuál sea la distribución de las observaciones. Por eso la normal es el modelo de las estimaciones en muestras grandes. La demostración de esta nota reemplaza, una por una, las observaciones por variables normales con los mismos dos primeros momentos y controla el error de cada reemplazo con el desarrollo de Taylor de la [Nota “La aproximación de Taylor y la matriz hessiana”](../matematica-3/06-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd). Usa los resultados sobre la normal de la [Nota “La distribución normal multivariante”](13-la-distribucion-normal-multivariante.qmd) y la suficiencia de las funciones de prueba suaves.
+
+Para una matriz simétrica y semidefinida positiva $\mat{\Sigma}$, se denota $\N_k(\vect{0},\mat{\Sigma})$ la ley de $\mat{\Sigma}^{1/2}\vect{Z}$ con $\vect{Z}$ de coordenadas $\N(0,1)$ independientes; coincide con la definición por densidad cuando $\mat{\Sigma}$ es definida positiva, por el teorema de representación de la normal.
+
+::: {#thm-tcl}
+## Teorema central del límite
+
+Sean $\vect{X}_1,\vect{X}_2,\ldots$ vectores aleatorios iid en $\mathbb{R}^k$ con media $\vect{\mu}$ y matriz de covarianzas $\mat{\Sigma}$ finitas. Entonces
+$$
+\sqrt n\,(\bar{\vect{X}}_n-\vect{\mu})=\frac1{\sqrt n}\sum_{i=1}^n(\vect{X}_i-\vect{\mu})\overset{d}{\to}\N_k(\vect{0},\mat{\Sigma}).
+$$ {#eq-tcl}
+
+:::
+
+::: {.proof}
+Sustituyendo $\vect{X}_i$ por $\vect{X}_i-\vect{\mu}$ se supone $\vect{\mu}=\vect{0}$. Por el axioma de existencia de variables independientes, se construyen en un mismo espacio las sucesiones $\vect{X}_i$ y $\vect{Y}_i=\mat{\Sigma}^{1/2}\vect{Z}_i$, con $\vect{Z}_i$ vectores de coordenadas $\N(0,1)$ independientes, todas mutuamente independientes. Se definen $\vect{S}_n=n^{-1/2}\sum_{i=1}^n\vect{X}_i$ y $\vect{T}_n=n^{-1/2}\sum_{i=1}^n\vect{Y}_i$. La suma $n^{-1/2}\sum_i\vect{Z}_i$ es una transformación lineal de rango $k$ del vector normal estándar de $nk$ coordenadas, con matriz de filas ortonormales, de modo que por el corolario de transformaciones lineales de una normal es $\N_k(\vect{0},\Imat)$, y entonces $\vect{T}_n\sim\N_k(\vect{0},\mat{\Sigma})$ para todo $n$.
+
+Sea $g\in C^3_b$ y sean $M_2=\sup\|\mat{H}_g\|_F$ y $L$ una constante de Lipschitz de $\mat{H}_g$ en norma de Frobenius, que existe porque las terceras derivadas están acotadas. Para $\vect{u},\vect{\delta}\in\mathbb{R}^k$, la fórmula de Taylor de segundo orden con resto de Lagrange escribe $g(\vect{u}+\vect{\delta})=g(\vect{u})+\langle\nabla g(\vect{u}),\vect{\delta}\rangle+\tfrac12\vect{\delta}^{\top}\mat{H}_g(\vect{u})\vect{\delta}+r(\vect{u},\vect{\delta})$ con $r=\tfrac12\vect{\delta}^{\top}\bigl[\mat{H}_g(\vect{u}+\theta\vect{\delta})-\mat{H}_g(\vect{u})\bigr]\vect{\delta}$. De ahí, por la desigualdad de Cauchy–Schwarz, $|r|\leq\tfrac L2\|\vect{\delta}\|^3$ por la propiedad de Lipschitz, y $|r|\leq M_2\|\vect{\delta}\|^2$ por la cota de la hessiana, es decir,
+$$
+|r(\vect{u},\vect{\delta})|\leq\min\bigl\{a\|\vect{\delta}\|^3,\ b\|\vect{\delta}\|^2\bigr\},\qquad a=L/2,\ b=M_2 .
+$$ {#eq-resto-taylor-tcl}
+
+*Reemplazo.* Para $i=1,\ldots,n$ sea $\vect{U}_i=n^{-1/2}(\vect{Y}_1+\cdots+\vect{Y}_{i-1}+\vect{X}_{i+1}+\cdots+\vect{X}_n)$, de modo que $\vect{U}_i+\vect{X}_i/\sqrt n$ y $\vect{U}_i+\vect{Y}_i/\sqrt n$ son las sumas con la observación $i$ sin reemplazar y reemplazada. Con $\vect{V}_i=\vect{U}_i+\vect{X}_i/\sqrt n$ se tiene $\vect{V}_1=\vect{S}_n$, $\vect{V}_{n+1}=\vect{T}_n$ y $\vect{V}_{i+1}=\vect{U}_i+\vect{Y}_i/\sqrt n$, y la suma telescópica da
+$$
+\E[g(\vect{S}_n)]-\E[g(\vect{T}_n)]=\sum_{i=1}^{n}\E\bigl[g(\vect{U}_i+\vect{X}_i/\sqrt n)-g(\vect{U}_i+\vect{Y}_i/\sqrt n)\bigr].
+$$
+Se desarrolla cada término con $\vect{\delta}=\vect{X}_i/\sqrt n$ y con $\vect{\delta}=\vect{Y}_i/\sqrt n$. Los términos de orden cero se cancelan. Como $\vect{U}_i$ es independiente de $\vect{X}_i$ y de $\vect{Y}_i$, que tienen media cero, el teorema de la esperanza de un producto de independientes da $\E[\langle\nabla g(\vect{U}_i),\vect{X}_i\rangle]=\langle\E[\nabla g(\vect{U}_i)],\E[\vect{X}_i]\rangle=0$, y lo mismo para $\vect{Y}_i$. Para los términos cuadráticos, por la misma independencia, $\E[\vect{X}_i^{\top}\mat{H}_g(\vect{U}_i)\vect{X}_i]=\tr\bigl(\E[\mat{H}_g(\vect{U}_i)]\,\E[\vect{X}_i\vect{X}_i^{\top}]\bigr)=\tr\bigl(\E[\mat{H}_g(\vect{U}_i)]\mat{\Sigma}\bigr)$, y el mismo valor para $\vect{Y}_i$, porque ambos tienen segundo momento $\mat{\Sigma}$; se cancelan. Quedan solo los restos, y por @eq-resto-taylor-tcl,
+$$
+\bigl|\E[g(\vect{S}_n)]-\E[g(\vect{T}_n)]\bigr|\leq\sum_{i=1}^n\Bigl(\E\bigl|r(\vect{U}_i,\tfrac{\vect{X}_i}{\sqrt n})\bigr|+\E\bigl|r(\vect{U}_i,\tfrac{\vect{Y}_i}{\sqrt n})\bigr|\Bigr)\leq\varepsilon_n(\vect{X}_1)+\varepsilon_n(\vect{Y}_1),
+$$
+con $\varepsilon_n(\vect{W}):=\E\bigl[\min\{a\|\vect{W}\|^3/\sqrt n,\ b\|\vect{W}\|^2\}\bigr]$, porque cada sumando está acotado por $\tfrac1n\varepsilon_n$ y hay $n$ sumandos. Para $\vect{W}=\vect{X}_1$ o $\vect{Y}_1$, el integrando tiende a cero puntualmente cuando $n\to\infty$ y está dominado por $b\|\vect{W}\|^2$, que es integrable porque el segundo momento es finito; la convergencia dominada (E5) da $\varepsilon_n(\vect{W})\to0$.
+
+*Conclusión.* Entonces $\E[g(\vect{S}_n)]-\E[g(\vect{T}_n)]\to0$, y como $\E[g(\vect{T}_n)]=\E[g(\vect{Z}^*)]$ para $\vect{Z}^*\sim\N_k(\vect{0},\mat{\Sigma})$ no depende de $n$, $\E[g(\vect{S}_n)]\to\E[g(\vect{Z}^*)]$ para toda $g\in C^3_b$. El teorema de las funciones de prueba suaves da $\vect{S}_n\overset{d}{\to}\N_k(\vect{0},\mat{\Sigma})$.
+
+:::
+
+Para una variable, con varianza $\sigma^2>0$, el resultado dice que $\sqrt n(\bar X_n-\mu)/\sigma\overset{d}{\to}\N(0,1)$, y como $\sqrt n(\bar X_n-\mu)/\sigma$ tiene función de distribución $F_n$, el teorema de caracterización da $F_n(x)\to\Phi(x)$ en todo $x$, porque $\Phi$ es continua. La varianza poblacional rara vez se conoce, pero el teorema de Slutsky permite reemplazarla por la varianza muestral.
+
+::: {#cor-tcl-estudentizado}
+## Versión estudentizada
+
+Si $X_i$ son iid con media $\mu$ y varianza $\sigma^2\in(0,\infty)$, entonces $\sqrt n(\bar X_n-\mu)/\hat\sigma_n\overset{d}{\to}\N(0,1)$, con $\hat\sigma_n^2=\tfrac1n\sum_i(X_i-\bar X_n)^2$. En consecuencia, el intervalo $\bar X_n\pm1.96\,\hat\sigma_n/\sqrt n$ contiene a $\mu$ con probabilidad que tiende a $0.95$.
+
+:::
+
+::: {.proof}
+Por el teorema, $\sqrt n(\bar X_n-\mu)/\sigma\overset{d}{\to}\N(0,1)$, y por la [Proposición “Consistencia de la varianza muestral”](16-leyes-de-los-grandes-numeros.qmd#prp-varianza-muestral) y la continuidad de la raíz cuadrada, $\hat\sigma_n/\sigma\overset{p}{\to}1$. El teorema de Slutsky (iii) da que el cociente $\sqrt n(\bar X_n-\mu)/\sigma\big/(\hat\sigma_n/\sigma)$ converge en distribución a $\N(0,1)/1$. El evento $\{|\bar X_n-\mu|\leq1.96\hat\sigma_n/\sqrt n\}$ es $\{|T_n|\leq1.96\}$ con $T_n$ la estadística estudentizada, y como $\Phi$ es continua, $\Prob{|T_n|\leq1.96}\to\Prob{|Z|\leq1.96}=0.95$.
+
+:::
+
+Con números, sean $X_i$ de Bernoulli con $p=0.3$, de modo que $\sigma^2=0.21$. La probabilidad $\Prob{\bar X_n\leq0.35}$ se aproxima por $\Phi\bigl(0.05\sqrt n/\sqrt{0.21}\bigr)$. Para $n=10$ el valor exacto de la binomial es $0.6496$ y la aproximación $0.6350$; para $n=100$, $0.8839$ y $0.8624$; para $n=1000$, $0.99971$ y $0.99972$. La aproximación mejora al crecer $n$, como el teorema asegura, aunque no dice con qué rapidez.

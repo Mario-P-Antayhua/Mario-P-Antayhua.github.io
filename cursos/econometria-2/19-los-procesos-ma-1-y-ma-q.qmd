@@ -1,0 +1,51 @@
+---
+title: "Los procesos MA(1) y MA(q)"
+description: "Los procesos de medias móviles como filtros finitos de un ruido blanco, su estacionariedad automática, su autocovarianza que se anula después del rezago q, la cota de la autocorrelación del MA(1) y la existencia de dos parámetros que dan la misma autocovarianza."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+Si el AR modela la persistencia mediante el pasado de la propia serie, el modelo de medias móviles la modela mediante el pasado de los choques: la serie es un promedio ponderado de las perturbaciones recientes. Cada choque afecta a la serie durante un número finito de períodos y luego desaparece. Esa memoria finita se refleja en que la autocorrelación se anula después de $q$ rezagos, una propiedad que, junto con la del AR, permite reconocer el tipo de modelo a partir de los datos.
+
+::: {#def-maq}
+## Proceso MA(q)
+
+Un proceso $\{X_t\}$ es un ***MA(q)*** si $X_t=\mu+\varepsilon_t+\theta_1\varepsilon_{t-1}+\cdots+\theta_q\varepsilon_{t-q}=\mu+\theta(L)\varepsilon_t$, con $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$, $\theta(z)=1+\theta_1z+\cdots+\theta_qz^q$ y $\theta_q\neq0$. El caso $q=1$ es el ***MA(1)***.
+
+:::
+
+Como el filtro es finito, el proceso es estacionario sin ninguna condición sobre los coeficientes, y su autocovarianza se obtiene directamente de la fórmula del efecto de un filtro sobre un ruido blanco.
+
+::: {#prp-autocovarianza-ma}
+## Autocovarianza de un MA(q)
+
+Todo MA(q) es débilmente estacionario con media $\mu$ y, con $\theta_0=1$ y $\theta_j=0$ para $j>q$,
+$$
+\gamma(h)=\sigma^2\sum_{j=0}^{q-|h|}\theta_j\theta_{j+|h|}\quad(|h|\leq q),\qquad\gamma(h)=0\quad(|h|>q).
+$$ {#eq-autocovarianza-ma}
+
+:::
+
+::: {.proof}
+Es el caso de la proposición del efecto de un filtro finito sobre un proceso estacionario con $X_t$ ruido blanco, cuya autocovarianza es $\gamma_\varepsilon(k)=\sigma^2\mathbf{1}_{\{k=0\}}$. Entonces $\gamma(h)=\sum_{i,j}\theta_i\theta_j\gamma_\varepsilon(h-j+i)$ solo suma los términos con $j=h+i$, es decir, $\sum_i\theta_i\theta_{i+h}\sigma^2$ con $0\leq i,\ i+h\leq q$, que es la expresión enunciada para $h\geq0$ y se extiende a $h<0$ por simetría. Si $|h|>q$, no existen $i$ con ambos índices en $\{0,\ldots,q\}$ y la suma es vacía.
+
+:::
+
+La autocovarianza se anula a partir del rezago $q+1$: dos observaciones separadas por más de $q$ períodos no comparten ningún choque. Con números, el MA(1) con $\theta=0.5$ y $\sigma^2=1$ tiene $\gamma(0)=1+0.25=1.25$, $\gamma(1)=0.5$ y $\rho(1)=0.4$. Un MA(2) con $\theta=(0.6,0.3)$ tiene $\gamma(0)=1+0.36+0.09=1.45$, $\gamma(1)=0.6+0.6\cdot0.3=0.78$, $\gamma(2)=0.3$ y $\gamma(h)=0$ para $h\geq3$, de modo que $\rho(1)=0.538$ y $\rho(2)=0.207$.
+
+La autocorrelación del MA(1) tiene un rango limitado, y cada valor admisible se obtiene con dos parámetros distintos.
+
+::: {#prp-ma1-rango}
+## La autocorrelación del MA(1) y su doble origen
+
+Para un MA(1), $\rho(1)=\theta/(1+\theta^2)$ y $|\rho(1)|\leq1/2$, con igualdad si y solo si $|\theta|=1$. Los parámetros $\theta$ y $1/\theta$, con varianzas $\sigma^2$ y $\sigma^2\theta^2$ respectivamente, producen exactamente la misma función de autocovarianza.
+
+:::
+
+::: {.proof}
+De la fórmula, $\gamma(0)=\sigma^2(1+\theta^2)$ y $\gamma(1)=\sigma^2\theta$, y entonces $\rho(1)=\theta/(1+\theta^2)$. Como $(1-|\theta|)^2\geq0$ equivale a $2|\theta|\leq1+\theta^2$, se tiene $|\rho(1)|\leq1/2$, con igualdad solo si $|\theta|=1$. Con $\tilde\theta=1/\theta$ y $\tilde\sigma^2=\sigma^2\theta^2$, $\tilde\gamma(0)=\sigma^2\theta^2(1+1/\theta^2)=\sigma^2(\theta^2+1)$ y $\tilde\gamma(1)=\sigma^2\theta^2/\theta=\sigma^2\theta$, que coinciden con $\gamma(0)$ y $\gamma(1)$.
+
+:::
+
+Con números, $\theta=0.5$ con $\sigma^2=1$ y $\tilde\theta=2$ con $\tilde\sigma^2=0.25$ tienen ambos $\gamma(0)=1.25$ y $\gamma(1)=0.5$, y $\rho(1)=0.5/1.25=2/5=0.4$. Con solo los segundos momentos es imposible distinguir un MA(1) con $\theta=0.5$ de uno con $\theta=2$, lo que obliga a elegir una de las dos representaciones.

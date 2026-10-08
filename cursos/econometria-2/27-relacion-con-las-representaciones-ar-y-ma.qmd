@@ -1,0 +1,48 @@
+---
+title: "Relación con las representaciones AR y MA"
+description: "Los coeficientes de las representaciones de media móvil infinita y autorregresiva infinita como series inversas, y la identificación de las innovaciones de un ARMA causal e invertible con las de la descomposición de Wold."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Predicción]
+---
+
+Un mismo proceso admite varias representaciones lineales. Una expresa la serie con los choques presentes y pasados, la otra expresa el choque con la serie presente y pasada. En un ARMA causal e invertible ambas existen y sus coeficientes son inversos entre sí. Esta nota prueba esa relación y demuestra que, en ese caso, el ruido del modelo coincide con el error de predicción lineal del teorema de Wold, de modo que el modelo ARMA es la descomposición de Wold del proceso. Se apoya en las nociones de la [Nota “El teorema de descomposición de Wold”](26-el-teorema-de-descomposicion-de-wold.qmd) y el [Teorema “Solución causal de un ARMA”](21-el-proceso-arma-p-q.qmd#thm-arma-causal).
+
+::: {#def-causal-invertible}
+## Proceso causal e invertible
+
+Un proceso estacionario $\{X_t\}$ con media $\mu$ es ***causal*** respecto de un ruido blanco $\{\varepsilon_t\}$ si $X_t-\mu=\sum_{j\geq0}\psi_j\varepsilon_{t-j}$ con $\sum|\psi_j|<\infty$, e ***invertible*** si $\varepsilon_t=\sum_{j\geq0}\pi_j(X_{t-j}-\mu)$ con $\sum|\pi_j|<\infty$. Se normalizan $\psi_0=\pi_0=1$.
+
+:::
+
+La relación entre los coeficientes sigue de sustituir una representación en la otra.
+
+::: {#prp-psi-pi-inversos}
+## Los coeficientes $\psi$ y $\pi$ son inversos
+
+Si el proceso es causal e invertible respecto del mismo ruido blanco, entonces $\psi(z)\pi(z)=1$ para $|z|\leq1$, es decir, $\sum_{i=0}^k\psi_i\pi_{k-i}=0$ para todo $k\geq1$. En un ARMA con raíces de $\phi$ y $\theta$ fuera del círculo, $\psi(z)=\theta(z)/\phi(z)$ y $\pi(z)=\phi(z)/\theta(z)$.
+
+:::
+
+::: {.proof}
+Sustituyendo la representación causal en la invertible, $\varepsilon_t=\sum_j\pi_j\sum_i\psi_i\varepsilon_{t-j-i}=\sum_k\bigl(\sum_{i+j=k}\psi_i\pi_j\bigr)\varepsilon_{t-k}$, donde el reordenamiento se justifica por la convergencia absoluta de los coeficientes y por la continuidad de la combinación lineal en $L^2$. Como el ruido blanco tiene varianza positiva y las variables $\varepsilon_{t-k}$ son ortogonales, comparar con $\varepsilon_t=1\cdot\varepsilon_t$ obliga a $\sum_{i+j=k}\psi_i\pi_j$ igual a $1$ para $k=0$ y a $0$ para $k\geq1$ (tomando el producto interno con cada $\varepsilon_{t-k}$). Esa es la identidad de coeficientes del producto $\psi(z)\pi(z)=1$. Para el ARMA, las representaciones del teorema de solución causal y de invertibilidad dan $\psi=\theta/\phi$ y $\pi=\phi/\theta$.
+
+:::
+
+Con números, el AR(1) con $\phi=0.8$ tiene $\psi_j=0.8^j$ y $\pi=(1,-0.8,0,0,\ldots)$, porque $\pi(z)=1-0.8z$. El MA(1) con $\theta=0.5$ tiene $\psi=(1,0.5,0,\ldots)$ y $\pi_j=(-0.5)^j$. El ARMA(1,1) con $\phi=0.8$ y $\theta=0.4$ tiene $\psi_j=1.2\cdot0.8^{j-1}$ para $j\geq1$ y $\pi(z)=(1-0.8z)/(1+0.4z)$, es decir, $\pi_0=1$ y $\pi_j=-1.2(-0.4)^{j-1}$ para $j\geq1$: $\pi_1=-1.2$, $\pi_2=0.48$, $\pi_3=-0.192$. Se verifica $\sum_{i}\psi_i\pi_{2-i}=0.48+1.2(-1.2)+0.96=0$ para $k=2$.
+
+El teorema siguiente es la conexión con Wold: el ruido de un ARMA causal e invertible no es un ruido cualquiera sino el error de predicción óptimo.
+
+::: {#thm-ruido-fundamental}
+## El ruido de un ARMA invertible es la innovación de Wold
+
+Sea $X_t-\mu=\sum_j\psi_j\varepsilon_{t-j}$ un ARMA causal e invertible respecto del ruido blanco $\varepsilon_t\sim\mathrm{RB}(0,\sigma^2)$, y sea $H_t$ el subespacio cerrado generado por $\{X_s:s\leq t\}$. Entonces $\varepsilon_t=X_t-\mu-P_{H_{t-1}}(X_t-\mu)$, de modo que $\varepsilon_t$ es la innovación de Wold, los $\psi_j$ son los coeficientes de Wold y la parte determinista es nula.
+
+:::
+
+::: {.proof}
+Se supone $\mu=0$. Por invertibilidad, cada $\varepsilon_s$ es límite de combinaciones de los $X_u$ con $u\leq s$, de modo que $\varepsilon_s\in H_s$. Por causalidad, cada $X_u$ es límite de combinaciones de $\varepsilon_v$ con $v\leq u$, de modo que $H_{t-1}$ está contenido en el subespacio cerrado generado por $\{\varepsilon_s:s\leq t-1\}$, y como $\varepsilon_t$ es ortogonal a todos esos $\varepsilon_s$, $\varepsilon_t\perp H_{t-1}$. Además $X_t-\varepsilon_t=\sum_{j\geq1}\psi_j\varepsilon_{t-j}$ es límite de combinaciones de $\varepsilon_{t-j}\in H_{t-j}\subseteq H_{t-1}$, y pertenece a $H_{t-1}$. Entonces $X_t=(X_t-\varepsilon_t)+\varepsilon_t$ con el primer término en $H_{t-1}$ y el segundo ortogonal a $H_{t-1}$, de modo que $P_{H_{t-1}}X_t=X_t-\varepsilon_t$ por el teorema de la proyección. Los coeficientes de Wold son $\E[X_t\varepsilon_{t-j}]/\sigma^2=\psi_j$, y la suma $\sum_j\psi_j\varepsilon_{t-j}$ ya es igual a $X_t$, por lo que $V_t=0$.
+
+:::
+
+La hipótesis de invertibilidad no es un detalle. Un MA(1) con $\theta=2$ y $\sigma^2=1$ tiene la misma autocovarianza que el invertible con $\tilde\theta=0.5$ y $\tilde\sigma^2=4$. Como la descomposición de Wold depende solo de la estructura de segundo orden del proceso, la innovación de Wold de ese proceso es $\tilde\varepsilon_t$ del modelo invertible, con varianza $4$, y no el $\varepsilon_t$ original, que tiene varianza $1$ pero no se puede recuperar del pasado de la serie. El error cuadrático medio de predecir un paso adelante es entonces $4$, no $1$. Por eso los modelos ARMA se escriben con raíces del polinomio de medias móviles fuera del círculo: así el ruido que se estima es el error de predicción.

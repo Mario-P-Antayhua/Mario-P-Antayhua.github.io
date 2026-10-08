@@ -1,0 +1,64 @@
+---
+title: "Los complejos"
+description: "Los números complejos como pares de reales, su estructura de cuerpo, el conjugado y el módulo con sus propiedades, y por qué no admiten un orden."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sistemas numéricos]
+---
+
+Queda una limitación algebraica de naturaleza distinta a las anteriores: ningún real tiene cuadrado negativo, porque el cuadrado de un real no nulo es positivo, de modo que la ecuación $x^2=-1$ no tiene solución en $\mathbb{R}$. Los números complejos se construyen, una vez más, como pares ordenados, aunque sin pasar por una relación de equivalencia, porque cada par de reales se declara directamente un número complejo distinto.
+
+::: {#def-complejos}
+## Los números complejos
+
+El conjunto de los números complejos es $\mathbb{C}:=\mathbb{R}\times\mathbb{R}$, con las operaciones
+$$
+(a,b)+(c,d):=(a+c,\ b+d),
+\qquad
+(a,b)\cdot(c,d):=(ac-bd,\ ad+bc).
+$$ {#eq-operaciones-complejos}
+Se identifica $a\in\mathbb{R}$ con $(a,0)$, se escribe $i:=(0,1)$ y se denota $a+bi:=(a,b)$.
+
+:::
+
+La fórmula del producto está construida para que $i^2=-1$: $i^2=(0,1)\cdot(0,1)=(0\cdot0-1\cdot1,\ 0\cdot1+1\cdot0)=(-1,0)=-1$. La identificación de $a$ con $(a,0)$ respeta las operaciones, porque $(a,0)+(c,0)=(a+c,0)$ y $(a,0)\cdot(c,0)=(ac,0)$. Con números concretos, para $z=3+2i$ y $w=1-4i$ el producto es $zw=(3\cdot1-2\cdot(-4))+(3\cdot(-4)+2\cdot1)i=11-10i$, que coincide con multiplicar $(3+2i)(1-4i)$ de forma algebraica usual y sustituir $i^2=-1$. Igual que en los pasos anteriores, la ampliación debe conservar la estructura: todo complejo no nulo tiene inverso y valen las leyes de $\mathbb{R}$.
+
+El módulo y el conjugado permiten expresar ese inverso y medir la distancia entre complejos.
+
+::: {#def-modulo-conjugado}
+## Conjugado y módulo
+
+El ***conjugado*** de $z=a+bi$ es $\bar z:=a-bi$, y su ***módulo*** es $|z|:=\sqrt{a^2+b^2}$, que existe por el [Teorema “Existencia de raíces cuadradas”](16-los-reales-el-axioma-de-completitud.qmd#thm-existe-raiz-2). Las partes real e imaginaria son $\operatorname{Re}z:=a$ y $\operatorname{Im}z:=b$.
+
+:::
+
+Con el conjugado y el módulo definidos, se pueden establecer en una sola proposición las propiedades que hacen de $\mathbb{C}$ un cuerpo y del módulo una medida de distancia compatible con el producto.
+
+::: {#prp-complejos-cuerpo}
+## $\mathbb{C}$ es un cuerpo y el módulo es una norma multiplicativa
+
+Con $0=(0,0)$ y $1=(1,0)$: (i) la suma y el producto son asociativos y conmutativos, $1$ y $0$ son neutros y el producto distribuye sobre la suma; (ii) $z\bar z=|z|^2$ y $\overline{zw}=\bar z\,\bar w$; (iii) si $z\neq0$, entonces $z^{-1}=\bar z/|z|^2$; (iv) $|zw|=|z||w|$; (v) $|z+w|\leq|z|+|w|$, y $|z|=0$ si y solo si $z=0$.
+
+:::
+
+::: {.proof}
+Para (i), la suma es la de $\mathbb{R}^2$ coordenada a coordenada. El producto es conmutativo porque $(ac-bd,ad+bc)=(ca-db,cb+da)$ y asociativo porque, al desarrollar, ambos $\bigl((ac-bd)e-(ad+bc)f,\ (ac-bd)f+(ad+bc)e\bigr)$ y $\bigl(a(ce-df)-b(cf+de),\ a(cf+de)+b(ce-df)\bigr)$ son $(ace-bde-adf-bcf,\ acf-bdf+ade+bce)$. La distributividad se verifica igual, y los neutros se leen de las fórmulas.
+
+Para (ii), $(a+bi)(a-bi)=(a\cdot a-b(-b),\ a(-b)+ba)=(a^2+b^2,0)=|z|^2$, y el conjugado de un producto es el producto de los conjugados al comparar $(ac-bd,\,-(ad+bc))$ con $(a,-b)\cdot(c,-d)=(ac-bd,\,-ad-bc)$. Para (iii), (ii) da $z\cdot\bigl(\bar z/|z|^2\bigr)=1$ si $|z|^2\neq0$, y $|z|^2=a^2+b^2>0$ cuando $(a,b)\neq(0,0)$. Para (iv), por (ii), $|zw|^2=zw\,\overline{zw}=(z\bar z)(w\bar w)=|z|^2|w|^2$, y se toma raíz cuadrada con el [Lema “Monotonía del cuadrado en $\mathbb{R}$”](16-los-reales-el-axioma-de-completitud.qmd#lem-monotonia-cuadrado-r).
+
+Para (v), se desarrolla $|z+w|^2=(z+w)(\bar z+\bar w)=|z|^2+|w|^2+2\operatorname{Re}(z\bar w)$, y $\operatorname{Re}u\leq|u|$ porque $a\leq\sqrt{a^2+b^2}$; entonces $2\operatorname{Re}(z\bar w)\leq2|z\bar w|=2|z||w|$ por (iv) y
+$$
+|z+w|^2\leq|z|^2+|w|^2+2|z||w|=(|z|+|w|)^2 .
+$$
+El [Lema “Monotonía del cuadrado en $\mathbb{R}$”](16-los-reales-el-axioma-de-completitud.qmd#lem-monotonia-cuadrado-r) da $|z+w|\leq|z|+|w|$. La última afirmación es inmediata de la definición.
+
+:::
+
+Con los datos del ejemplo, $|z|=\sqrt{13}$, $|w|=\sqrt{17}$ y $|zw|=|11-10i|=\sqrt{221}=\sqrt{13}\sqrt{17}$, como establece (iv); y $z^{-1}=(3-2i)/13=\tfrac3{13}-\tfrac2{13}i$, que satisface $zz^{-1}=(9+4)/13+0i=1$.
+
+::: {#nota-c-no-ordenado .callout-note appearance="simple" title="Nota: ℂ no es un cuerpo ordenado"}
+En un cuerpo ordenado el cuadrado de todo elemento no nulo es positivo. Si $\mathbb{C}$ admitiera un orden compatible con sus operaciones, $i^2=-1$ debería ser positivo; pero $1=1^2$ también lo es, y la suma $1+(-1)=0$ de dos positivos sería positiva, lo que contradice que $0$ no es positivo. Por eso $\mathbb{C}$ no puede dotarse de ningún orden compatible con la suma y el producto, y nociones que dependen esencialmente de un orden, como el supremo o los intervalos, no tienen contraparte en $\mathbb{C}$. Lo que sí tiene $\mathbb{C}$ es una noción de distancia, $|z-w|$, que satisface las tres propiedades de una métrica.
+
+:::
+
+Con los cinco sistemas $\mathbb{N}\subset\mathbb{Z}\subset\mathbb{Q}\subset\mathbb{R}\subset\mathbb{C}$ construidos, el análisis puede apoyarse en la completitud de $\mathbb{R}$ y en el módulo de $\mathbb{C}$.

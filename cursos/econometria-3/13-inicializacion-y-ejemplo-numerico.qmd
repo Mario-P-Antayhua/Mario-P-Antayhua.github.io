@@ -1,0 +1,53 @@
+---
+title: "Inicialización y ejemplo numérico"
+description: "Las condiciones iniciales del filtro de Kalman, estacionaria y difusa, el filtro completo calculado a mano para un nivel local con cinco observaciones y la convergencia de la covarianza predicha al estado estacionario demostrada como una contracción."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Filtro de Kalman]
+---
+
+Las dos etapas del filtro necesitan un punto de partida: la distribución del estado antes de ver el primer dato. Esa elección es delicada, porque si la inicialización es mala, las primeras estimaciones lo son. Hay dos situaciones. Si el sistema es estacionario, la distribución inicial correcta existe y se calcula. Si el estado no es estacionario, como un paseo aleatorio, no hay distribución inicial natural, y se recurre a una inicialización que expresa la ignorancia. Después de fijar el inicio, la nota recorre el filtro completo con un ejemplo de cinco datos y estudia hacia dónde converge la incertidumbre.
+
+Para la primera predicción se necesita la distribución de $\vect{\alpha}_1$ antes de los datos, $\vect{a}_{1\mid0}$ y $\mat{P}_{1\mid0}$. Con las matrices invariantes y los valores propios de $\mat{T}$ de módulo menor que uno, la ***inicialización estacionaria*** toma $\vect{a}_{1\mid0}=(\Imat-\mat{T})^{-1}\vect{c}$ y $\mat{P}_{1\mid0}=\mat{\Sigma}_{\alpha}$, la solución de la [Ecuación de la nota “Qué es un modelo de espacio-estado”](03-que-es-un-modelo-espacio-estado.qmd#eq-lyapunov-estado), de modo que el estado tiene desde el inicio su distribución de largo plazo. Para estados no estacionarios, la ***inicialización difusa*** toma $\mat{P}_{1\mid0}=\kappa\mat{P}^{\infty}$ con $\kappa\to\infty$, de modo que la varianza a priori de las componentes no estacionarias es infinita y la primera observación las determina.
+
+::: {#prp-inicializacion-difusa}
+## Inicialización difusa del nivel local
+
+En el nivel local con $P_{1\mid0}=\kappa$, la ganancia de la primera observación es $K_1=\kappa/(\kappa+\sigma_\varepsilon^2)$, que tiende a uno cuando $\kappa\to\infty$. En el límite, $a_{1\mid1}=y_1$ y $P_{1\mid1}=\sigma_\varepsilon^2$, valores que no dependen de $a_{1\mid0}$.
+
+:::
+
+::: {.proof}
+Con $\mat{Z}=1$, $F_1=\kappa+\sigma_\varepsilon^2$ y $K_1=\kappa/F_1$. Entonces $a_{1\mid1}=a_{1\mid0}+K_1(y_1-a_{1\mid0})=(1-K_1)a_{1\mid0}+K_1y_1$, y como $1-K_1=\sigma_\varepsilon^2/(\kappa+\sigma_\varepsilon^2)\to0$, el límite es $y_1$. La varianza es $P_{1\mid1}=(1-K_1)\kappa=\kappa\sigma_\varepsilon^2/(\kappa+\sigma_\varepsilon^2)\to\sigma_\varepsilon^2$.
+
+:::
+
+El filtro difuso no usa la primera observación para evaluar la verosimilitud, porque su varianza de predicción $F_1$ es infinita; la verosimilitud difusa empieza en $t=2$. Con la inicialización fijada, se calcula el filtro para el nivel local con $\sigma_\varepsilon^2=1$, $\sigma_\eta^2=0.5$ y los datos $y=(1.2,\,0.8,\,1.5,\,1.9,\,1.4)$. Para $t=1$, la inicialización difusa da $a_{1\mid1}=1.2$ y $P_{1\mid1}=1$. Para $t\geq2$, se aplican la predicción, $a_{t\mid t-1}=a_{t-1\mid t-1}$ y $P_{t\mid t-1}=P_{t-1\mid t-1}+0.5$, y la actualización de la nota anterior.
+
+| $t$ | $y_t$ | $a_{t\mid t-1}$ | $P_{t\mid t-1}$ | $v_t$ | $F_t$ | $K_t$ | $a_{t\mid t}$ | $P_{t\mid t}$ |
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| 1 | 1.2 | difusa | difusa | no aplica | no aplica | 1 | 1.2000 | 1.0000 |
+| 2 | 0.8 | 1.2000 | 1.5000 | −0.4000 | 2.5000 | 0.6000 | 0.9600 | 0.6000 |
+| 3 | 1.5 | 0.9600 | 1.1000 | 0.5400 | 2.1000 | 0.5238 | 1.2429 | 0.5238 |
+| 4 | 1.9 | 1.2429 | 1.0238 | 0.6571 | 2.0238 | 0.5059 | 1.5753 | 0.5059 |
+| 5 | 1.4 | 1.5753 | 1.0059 | −0.1753 | 2.0059 | 0.5015 | 1.4874 | 0.5015 |
+
+: Filtro de Kalman del nivel local con inicialización difusa. {#tbl-filtro-nivel-local}
+
+Cada fila es una repetición de las mismas operaciones. Por ejemplo, para $t=3$: $P_{3\mid2}=0.6+0.5=1.1$, $F_3=1.1+1=2.1$, $K_3=1.1/2.1=0.5238$, $v_3=1.5-0.96=0.54$, $a_{3\mid3}=0.96+0.5238\cdot0.54=1.2429$ y $P_{3\mid3}=1.1-0.5238^2\cdot2.1=0.5238$. En la tabla se observa que la ganancia y la varianza se estabilizan en pocos períodos: $K_t$ pasa de $0.60$ a $0.50$ y $P_{t\mid t-1}$ de $1.5$ a $1.006$. La log-verosimilitud difusa, la suma desde $t=2$ de $-\tfrac12[\ln2\pi+\ln F_t+v_t^2/F_t]$, es $-5.421$. Una implementación independiente de la misma recursión, con una varianza inicial muy grande, reproduce todas las columnas de la tabla.
+
+La estabilización se explica con álgebra. En el nivel local, la varianza predicha evoluciona según $P_{t+1\mid t}=f(P_{t\mid t-1})$ con $f(P)=\dfrac{P\sigma_\varepsilon^2}{P+\sigma_\varepsilon^2}+\sigma_\eta^2$, porque $P_{t\mid t}=P_{t\mid t-1}\sigma_\varepsilon^2/(P_{t\mid t-1}+\sigma_\varepsilon^2)$ y luego se suma $\sigma_\eta^2$.
+
+::: {#thm-estado-estacionario-filtro}
+## Convergencia al estado estacionario del filtro del nivel local
+
+Para $\sigma_\varepsilon^2,\sigma_\eta^2>0$, la ecuación $P=f(P)$ tiene una única solución positiva, $P^*=\tfrac12\bigl(\sigma_\eta^2+\sqrt{\sigma_\eta^4+4\sigma_\eta^2\sigma_\varepsilon^2}\bigr)$, y para cualquier $P_{1\mid0}\geq0$, $P_{t+1\mid t}\to P^*$ con $|P_{t+1\mid t}-P^*|\leq\rho^{t-1}|P_{2\mid1}-P^*|$ y $\rho=\sigma_\varepsilon^4/(\sigma_\varepsilon^2+\sigma_\eta^2)^2<1$. En el límite, $K=P^*/(P^*+\sigma_\varepsilon^2)$.
+
+:::
+
+::: {.proof}
+La ecuación $P=f(P)$ equivale a $P^2-\sigma_\eta^2P-\sigma_\eta^2\sigma_\varepsilon^2=0$ al multiplicar por $P+\sigma_\varepsilon^2$, cuya única raíz positiva es $P^*$. Para $P\geq0$, $f(P)\geq\sigma_\eta^2$, de modo que $f$ aplica $[0,\infty)$ en $[\sigma_\eta^2,\infty)$, y desde $t=2$ la sucesión permanece en $I=[\sigma_\eta^2,\infty)$, que es cerrado y por tanto completo. La derivada es $f'(P)=\sigma_\varepsilon^4/(P+\sigma_\varepsilon^2)^2$, positiva y decreciente en $P$, de modo que en $I$ cumple $0<f'(P)\leq\rho$. Por el teorema del valor medio, $|f(P)-f(Q)|\leq\rho|P-Q|$ en $I$, es decir, $f$ es una contracción, y el teorema del punto fijo de una contracción da la convergencia geométrica al único punto fijo, que está en $I$ y coincide con $P^*$.
+
+:::
+
+Con $\sigma_\varepsilon^2=1$ y $\sigma_\eta^2=0.5$, $P^*=\tfrac12(0.5+\sqrt{0.25+2})=1$, la ganancia límite es $K=1/2=0.5$ y la cota de contracción es $\rho=1/2.25=0.444$. En la tabla, $P_{t\mid t-1}-1$ vale $0.5,\ 0.1,\ 0.0238,\ 0.0059$, cada término cerca de la cuarta parte del anterior, porque cerca del punto fijo la razón de convergencia es $f'(1)=1/4$. El filtro del nivel local se convierte, a partir de ese momento, en una media móvil exponencial con peso fijo $K$ sobre el dato nuevo.

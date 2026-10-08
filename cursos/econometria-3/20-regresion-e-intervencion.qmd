@@ -1,0 +1,29 @@
+---
+title: "Regresión e intervención"
+description: "La inclusión de variables explicativas y de intervención en un modelo estructural mediante un estado aumentado con matriz de medición variable, la identificación de sus coeficientes y su estimación en una serie simulada con un salto de nivel conocido."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Modelos estructurales]
+---
+
+Una política económica, un cambio de método estadístico o una crisis alteran la serie en una fecha conocida, y se quiere medir cuánto. Una variable explicativa observable, como el precio de un insumo, puede además explicar parte del movimiento de la serie. En ambos casos el efecto es un coeficiente multiplicado por una variable que se conoce, y el modelo de espacio-estado lo estima junto con los componentes no observables. Esta nota muestra cómo se incorpora, cuándo el coeficiente se puede separar de los demás componentes y qué ocurre en un ejemplo con un salto de nivel conocido.
+
+Sea $y_t=\mu_t+\vect{w}_t^{\top}\vect{\delta}+\varepsilon_t$, donde $\mu_t$ es un componente estructural, por ejemplo un nivel local, $\vect{w}_t\in\mathbb{R}^k$ reúne las variables explicativas y de intervención observadas, y $\vect{\delta}$ es un vector de coeficientes constantes. Se trata como parte del estado: $\vect{\alpha}_t=(\mu_t,\vect{\delta}^{\top})^{\top}$, con transición $\mu_t=\mu_{t-1}+\eta_t$, $\vect{\delta}_t=\vect{\delta}_{t-1}$, es decir, $\mat{T}=\Imat$, $\mat{R}=(1,\vect{0}^{\top})^{\top}$ y $\mat{Q}=\sigma_\eta^2$, y la ***matriz de medición variable*** $\mat{Z}_t=(1,\vect{w}_t^{\top})$. Los coeficientes no tienen perturbación y su inicialización es difusa. El filtro entrega en cada período la estimación de $\vect{\delta}$ con los datos hasta $t$, y la estimación del último período es la que usa toda la muestra.
+
+Una variable de intervención codifica el evento. Para una fecha $\tau$ se usan el ***escalón*** $w_t=\mathbf{1}\{t\geq\tau\}$, que representa un cambio permanente de nivel, el ***pulso*** $w_t=\mathbf{1}\{t=\tau\}$, un efecto de un solo período como un dato atípico, y la ***rampa*** $w_t=\max\{t-\tau+1,0\}$, un cambio de pendiente. El coeficiente $\delta$ es el tamaño del efecto, en las unidades de la serie. Para que $\vect{\delta}$ pueda separarse del resto del modelo, sus variables no deben reproducir un componente que ya está en el estado.
+
+::: {#prp-no-identificacion-regresion}
+## Colinealidad entre regresor y componente determinista
+
+Si el modelo contiene una tendencia determinista, $y_t=\mu_0+\beta t+\varepsilon_t+\gamma x_t$ con la regresora $x_t=t$, la distribución de las observaciones depende de $(\beta,\gamma)$ solo a través de $\beta+\gamma$, de modo que ambos coeficientes no están identificados por separado.
+
+:::
+
+::: {.proof}
+La media de $y_t$ es $\mu_0+(\beta+\gamma)t$, y la distribución de $y_t$ es la de una normal con esa media y la varianza del error, de modo que cualquier par con la misma suma produce la misma distribución. La verosimilitud es constante sobre la recta $\beta+\gamma=\text{constante}$, y no tiene un máximo único.
+
+:::
+
+La regla práctica que se deriva es que un regresor no debe replicar un componente del estado. Con un nivel local estocástico, la intervención de escalón no es colineal con el nivel, porque el nivel puede absorber un salto solo mediante una perturbación improbable de gran magnitud, mientras que el coeficiente lo hace con un solo parámetro. Con números, se simuló una serie de nivel local con $\sigma_\varepsilon=1$ y $\sigma_\eta=0.15$, $n=100$, a la que se sumó un salto de $4$ unidades en $t=50$. Con el estado $(\mu_t,\delta)$, la matriz de medición $\mat{Z}_t=(1,w_t)$ con $w_t=\mathbf{1}\{t\geq50\}$ y los parámetros verdaderos, el filtro produce en $t=100$ la estimación $\hat\delta=4.19$ con desviación estándar $0.55$, de modo que el valor verdadero $4$ está dentro de un desvío. La razón $4.19/0.55=7.6$ muestra que el salto es claramente distinto de cero. La log-verosimilitud difusa con la intervención es $-144.5$ y sin ella, $-165.1$, una mejora de $20.6$ unidades, que confirma que el salto es una característica real de los datos y no un artefacto del error de medición.
+
+La interpretación económica del coeficiente de una intervención depende del tipo. Un escalón significa que, desde la fecha, el nivel de la serie es $\delta$ unidades mayor que el que habría tenido; un pulso, que en la fecha la serie fue $\delta$ unidades mayor y volvió a su senda; una rampa, que desde la fecha la serie crece $\delta$ unidades más por período. Cuando se sospecha un efecto que se disipa gradualmente, se multiplica la intervención por una variable que decae, y la estimación del coeficiente sigue siendo lineal. La alternativa de dejar que el nivel absorba el salto, con una varianza $\sigma_\eta^2$ más grande, reduce la precisión de todas las estimaciones: el filtro trata como posibles saltos de la misma magnitud en cualquier fecha, y aumenta la incertidumbre del nivel en todo el período.

@@ -1,0 +1,34 @@
+---
+title: "Componentes estacionales"
+description: "La equivalencia entre las formas de variables ficticias y trigonométrica del componente estacional determinista, demostrada con la ortogonalidad de las funciones periódicas, y el modelo estructural básico con tendencia, estacionalidad y error aplicado a una serie trimestral simulada."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Modelos estructurales]
+---
+
+Una serie trimestral de ventas puede crecer de forma sostenida y, además, repetir cada año un patrón de altas y bajas. Para estimar el crecimiento hay que separar el patrón estacional, y para pronosticar hay que extrapolar ambos. Las dos maneras de construir el componente estacional en espacio-estado, con variables ficticias y con funciones trigonométricas, parecen distintas. Esta nota demuestra que cuando el patrón es determinista describen exactamente el mismo conjunto de patrones, y construye el modelo estructural básico, que reúne la tendencia local, la estacionalidad y el error de medición.
+
+Sea $\mathcal{S}_s$ el conjunto de las sucesiones $(S_t)_{t\in\mathbb{Z}}$ de período $s$ y con suma cero en un período, $S_{t+s}=S_t$ y $\sum_{t=1}^sS_t=0$. Es un espacio vectorial de dimensión $s-1$, porque cada sucesión queda determinada por $S_1,\ldots,S_{s-1}$ y el último valor es menos la suma de los demás. La forma de variables ficticias sin perturbaciones genera exactamente $\mathcal{S}_s$, por la proposición de sus propiedades. El resultado siguiente muestra que la forma trigonométrica también.
+
+::: {#thm-estacionalidad-equivalente}
+## La forma trigonométrica genera el mismo espacio de patrones
+
+Las funciones $\cos(\lambda_jt)$ y $\sin(\lambda_jt)$ para $j=1,\ldots,\lfloor(s-1)/2\rfloor$, con $\lambda_j=2\pi j/s$, junto con $(-1)^t$ si $s$ es par, forman una base de $\mathcal{S}_s$.
+
+:::
+
+::: {.proof}
+Cada una de las $s-1$ funciones tiene período $s$, porque $s\lambda_j=2\pi j$, y suma cero en un período: con $z=e^{i\lambda_j}\neq1$, $\sum_{t=0}^{s-1}z^t=(1-z^s)/(1-z)=0$ por la suma geométrica y $z^s=1$, y las partes real e imaginaria son las sumas del coseno y del seno; para $(-1)^t$ con $s$ par la suma de un período es $0$ por pares. Pertenecen a $\mathcal{S}_s$. Son linealmente independientes: para $j\neq k$, la suma $\sum_{t=0}^{s-1}e^{i(\lambda_j-\lambda_k)t}$ es cero por la misma razón, porque $e^{i(\lambda_j-\lambda_k)}\neq1$, y de allí se deducen las relaciones de ortogonalidad $\sum_t\cos(\lambda_jt)\cos(\lambda_kt)=0$ y análogas para $j\neq k$, y los productos cruzados de seno y coseno son cero, mientras que $\sum_t\cos^2(\lambda_jt)=\sum_t\sin^2(\lambda_jt)=s/2>0$ si $\lambda_j\neq\pi$. Un conjunto de $s-1$ vectores no nulos mutuamente ortogonales es linealmente independiente, y como $\dim\mathcal{S}_s=s-1$, es una base.
+
+:::
+
+Por esta razón los dos modelos de estacionalidad determinista dan las mismas estimaciones. Con números, sea una serie trimestral ($s=4$) simulada con $n=80$ datos: un nivel que sigue un paseo aleatorio con desvío $0.2$, un patrón estacional $(1.5,\,-0.5,\,-1,\,0)$ que se repite cada año y un error de medición con desvío $0.5$. El modelo estructural básico con el estado $(\mu_t,S_t,S_{t-1},S_{t-2})$ en la forma de variables ficticias, y el equivalente con el estado $(\mu_t,S_{1t},S^*_{1t},S_{2t})$ en la forma trigonométrica, ambos con estacionalidad determinista, estimados con el suavizador y las varianzas verdaderas, entregan el mismo patrón, que en el último año es $(1.480,\,-0.490,\,-0.911,\,-0.079)$ en ambos casos. La raíz del error cuadrático medio respecto del patrón verdadero es $0.060$ en las dos versiones. La estimación mejora con la muestra, porque cada fase del año se observa $20$ veces y los errores se promedian.
+
+::: {#def-modelo-estructural-basico}
+## Modelo estructural básico
+
+El ***modelo estructural básico*** es $y_t=\mu_t+S_t+\varepsilon_t$ con $\mu_t$ una tendencia lineal local (o un nivel local), $S_t$ un componente estacional con perturbación $\omega_t$ y $\varepsilon_t$ el error de medición, todos independientes. Su estado tiene dimensión $2+(s-1)$ con tendencia lineal local, y $1+(s-1)$ con nivel local, y los parámetros son las varianzas $\sigma_\varepsilon^2,\sigma_\eta^2,\sigma_\zeta^2,\sigma_\omega^2$.
+
+:::
+
+Cuando $\sigma_\omega^2=0$ el patrón estacional es fijo, y cuando es positiva el patrón evoluciona: la forma con perturbaciones permite que, por ejemplo, el aumento de las ventas de diciembre crezca con el tiempo. Cuál de las dos situaciones describe a la serie se decide con la estimación de $\sigma_\omega^2$ por máxima verosimilitud. Una vez estimado el modelo, el suavizador entrega por separado los tres componentes, y la serie ajustada estacionalmente es $y_t-\hat S_{t\mid n}$. Los pronósticos del modelo continúan el nivel y la pendiente y repiten el patrón estacional, y sus intervalos crecen con el horizonte por la acumulación de la incertidumbre de la tendencia.

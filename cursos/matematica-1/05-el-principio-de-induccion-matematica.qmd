@@ -1,8 +1,8 @@
 ---
 title: "El principio de inducción matemática"
-description: "Los cuatro métodos constructivos anteriores demuestran una afirmación cuantificada universalmente considerando un elemento arbitrario del dominio y razonando sobre él sin usar ninguna propiedad particular suya."
+description: "El principio de inducción, su uso en la suma de los primeros naturales, la inducción fuerte y el principio del buen orden."
 author: "Mario Peñaloza"
-date: 2026-10-07
+date: 2026-10-08
 categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
 ---
 
@@ -48,7 +48,7 @@ Entonces $P(n)$ es verdadera para todo $n\in\mathbb{N}$.
 :::
 
 Antes de usarlo conviene aclarar su estatus lógico, que es distinto del de
-los resultados anteriores de esta sección.
+los resultados anteriores de esta nota.
 
 ::: {#nota-induccion-axioma .callout-note appearance="simple" title="Nota: por qué este teorema no se demuestra con los métodos anteriores"}
 El @thm-induccion no es una consecuencia de la lógica proposicional
@@ -59,12 +59,10 @@ natural aislado fuera de esa cadena.
 
 :::
 
-Cuando más adelante se construyan los naturales desde sus axiomas, este
-principio se presentará como uno de los axiomas de partida y no como un
-teorema derivado. Aquí se presenta como teorema porque, para los propósitos
-inmediatos, basta con saber usarlo con solidez, y su justificación última se
-pospone deliberadamente a ese momento posterior, sin que eso reste ningún
-rigor a las demostraciones que se hagan con él mientras tanto.
+Por esa razón el principio se adopta aquí como punto de partida y no se
+deduce de lo anterior: su uso es seguro siempre que se verifiquen las dos
+condiciones, y su justificación última pertenece a la construcción de los
+propios números naturales.
 
 La demostración por inducción de una afirmación $P(n)$ tiene, en
 consecuencia, una estructura fija de dos partes: probar $P(1)$ de forma
@@ -150,24 +148,48 @@ $P(n)$ eslabón por eslabón hasta cualquier natural.
 
 :::
 
-Existe una variante del principio, llamada ***inducción
-fuerte***, en la que el paso inductivo puede apoyarse no solo en el caso
-inmediatamente anterior, $P(k)$, sino en todos los casos anteriores a la vez,
-$P(1),P(2),\ldots,P(k)$. Ambas versiones son lógicamente equivalentes, y la
-elección de una u otra en una demostración concreta es una cuestión de cuál
-resulta más natural para el argumento, no una diferencia de fondo en lo que
-puede demostrarse con cada una.
+Con frecuencia el paso inductivo necesita no solo el caso inmediatamente
+anterior, $P(k)$, sino todos los anteriores a la vez. La variante que lo
+permite se llama inducción fuerte, y se deduce del principio ordinario.
 
-Para cerrar esta sección conviene anticipar dónde reaparecerá la herramienta
-que acaba de construirse. El principio de inducción se invocará cada vez que
-una afirmación dependa de un índice entero que avanza paso a paso: al
-establecer la fórmula cerrada de la varianza del error de predicción de un
-proceso autorregresivo, al justificar la recursión que resuelve la ecuación
-de Riccati iteración tras iteración, o al propagar el estado de un sistema
-dinámico $h$ periodos hacia adelante a partir de su valor en un periodo $t$.
-En cada uno de esos casos, reconocer que el argumento tiene la estructura de
-una base más un paso inductivo es lo que permitirá escribir la demostración
-con solidez, en vez de conformarse con verificar la fórmula para los primeros
-valores y confiar en que el patrón continúa, error que la
-[Idea central “Métodos de demostración”](04-metodos-de-demostracion.qmd#idea-contraejemplo-metodo) ya advirtió que nunca constituye una
-demostración.
+::: {#prp-induccion-fuerte}
+## Inducción fuerte
+
+Sea $P(n)$ una función proposicional definida para $n\in\mathbb{N}$. Si, para
+cada $k\in\mathbb{N}$, la verdad de $P(j)$ para todo natural $j<k$ implica la
+verdad de $P(k)$, entonces $P(n)$ es verdadera para todo $n\in\mathbb{N}$.
+
+:::
+
+::: {.proof}
+La estrategia consiste en aplicar el @thm-induccion no a $P$, sino a la
+proposición más fuerte $Q(n)$: «$P(j)$ es verdadera para todo $j\le n$».
+
+Para la base, $Q(1)$ afirma $P(1)$. La hipótesis de la proposición, aplicada a
+$k=1$, pide que $P(j)$ sea verdadera para todo $j<1$; como no hay naturales
+menores que $1$, esa condición se cumple por vacuidad, y la hipótesis entrega
+$P(1)$.
+
+Para el paso inductivo, supóngase $Q(k)$, es decir, que $P(j)$ es verdadera para
+todo $j\le k$. Esto equivale a que $P(j)$ sea verdadera para todo $j<k+1$, de
+modo que la hipótesis de la proposición, aplicada a $k+1$, entrega $P(k+1)$.
+Junto con $Q(k)$, esto da $Q(k+1)$.
+
+Por el @thm-induccion, $Q(n)$ es verdadera para todo $n$, y en particular
+$P(n)$ lo es, porque $Q(n)$ incluye a $P(n)$.
+
+:::
+
+La inducción fuerte es la herramienta indicada cuando el caso $k$ se apoya en casos anteriores no consecutivos. Una consecuencia inmediata, que se usa para probar que un conjunto de naturales tiene un primer elemento, es el principio del buen orden.
+
+::: {#prp-buen-orden}
+## Buen orden de $\mathbb{N}$
+
+Todo subconjunto no vacío $S\subseteq\mathbb{N}$ tiene un menor elemento: existe $s_0\in S$ con $s_0\leq s$ para todo $s\in S$.
+
+:::
+
+::: {.proof}
+Se prueba la contrarrecíproca: si $S$ no tiene menor elemento, entonces $S=\varnothing$. Sea $P(n)$ la proposición «$n\notin S$» y se aplica la [Proposición “Inducción fuerte”](#prp-induccion-fuerte). Supóngase que $P(j)$ vale para todo $j<k$, es decir, que ningún natural menor que $k$ está en $S$. Si $k$ estuviera en $S$, sería su menor elemento, porque ningún natural menor que $k$ pertenece a $S$; esto contradice que $S$ no tiene menor elemento, de modo que $k\notin S$ y $P(k)$ vale. Por la inducción fuerte, $P(n)$ vale para todo $n$, es decir, $S=\varnothing$.
+
+:::

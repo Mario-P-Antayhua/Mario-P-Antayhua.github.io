@@ -1,0 +1,62 @@
+---
+title: "Estimación por máxima verosimilitud"
+description: "La verosimilitud de un modelo de espacio-estado como producto de las densidades de las innovaciones, el ciclo de estimación con el filtro, la concentración de un parámetro de escala, la identificación de las varianzas del nivel local y un ejemplo numérico verificado."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Filtro de Kalman]
+---
+
+Hasta aquí las matrices del modelo se han tomado como conocidas. En la práctica, las varianzas de las perturbaciones, y a veces coeficientes de la transición, son parámetros desconocidos que hay que estimar con los datos. El filtro de Kalman produce, como subproducto, la función de verosimilitud de la muestra, y con ella se aplica la estimación por máxima verosimilitud de la parte de verosimilitud de Econometría II. Esta nota deduce la verosimilitud, describe el ciclo de estimación, muestra cómo eliminar un parámetro de escala del problema numérico y discute qué parámetros pueden estimarse.
+
+Sea $\vect{\psi}$ el vector de parámetros desconocidos del que dependen las matrices del modelo. La densidad conjunta de las observaciones se factoriza con la regla del producto de probabilidades como $p(\vect{y}_1,\ldots,\vect{y}_n;\vect{\psi})=\prod_{t=1}^np(\vect{y}_t\mid\mathcal{Y}_{t-1};\vect{\psi})$.
+
+::: {#thm-verosimilitud-espacio-estado}
+## Verosimilitud mediante la descomposición del error de predicción
+
+Para el modelo gaussiano, con $\vect{v}_t$ y $\mat{F}_t$ calculados por el filtro de Kalman con los parámetros $\vect{\psi}$ y suponiendo cada $\mat{F}_t$ invertible,
+$$
+\ell(\vect{\psi})=\ln p(\vect{y}_1,\ldots,\vect{y}_n;\vect{\psi})=-\frac{nN}2\ln(2\pi)-\frac12\sum_{t=1}^n\Bigl[\ln\det\mat{F}_t+\vect{v}_t^{\top}\mat{F}_t^{-1}\vect{v}_t\Bigr].
+$$ {#eq-loglik-kalman}
+
+:::
+
+::: {.proof}
+Por la etapa de predicción, $\vect{y}_t\mid\mathcal{Y}_{t-1}\sim\N(\hat{\vect{y}}_{t\mid t-1},\mat{F}_t)$, cuya log-densidad en $\vect{y}_t$ es $-\tfrac N2\ln(2\pi)-\tfrac12\ln\det\mat{F}_t-\tfrac12\vect{v}_t^{\top}\mat{F}_t^{-1}\vect{v}_t$ con $\vect{v}_t=\vect{y}_t-\hat{\vect{y}}_{t\mid t-1}$. Se toma logaritmo de la factorización y se suma.
+
+:::
+
+La fórmula es la misma que la de la verosimilitud de un ARMA gaussiano como suma de errores de predicción. En el caso difuso, la primera observación no aporta a la verosimilitud, que se suma desde el período en que las varianzas de predicción son finitas.
+
+La estimación sigue un ciclo. Se parte de un valor inicial de $\vect{\psi}$. Se corre el filtro para obtener $\vect{v}_t$ y $\mat{F}_t$ y se evalúa $\ell(\vect{\psi})$. Un algoritmo de optimización numérica de la [Nota “Métodos numéricos de optimización”](../matematica-3/12-metodos-numericos-de-optimizacion.qmd) propone un nuevo valor, y se repite hasta que $\ell$ deja de mejorar. Como las varianzas deben ser positivas, conviene reparametrizar con $\sigma^2=e^{\theta}$ y optimizar sobre $\theta\in\mathbb{R}$. El filtro se ejecuta en cada evaluación de $\ell$, y por eso importa que sea barato.
+
+Cuando todas las varianzas del modelo son múltiplos de una sola, el número de parámetros del problema numérico baja en uno.
+
+::: {#prp-concentracion-escala}
+## Concentración de la escala
+
+Supóngase $\mat{H}_t=\sigma^2\mat{H}^*_t$, $\mat{Q}_t=\sigma^2\mat{Q}^*_t$ y $\mat{P}_{1\mid0}=\sigma^2\mat{P}^*_{1\mid0}$, con $\mat{H}^*_t,\mat{Q}^*_t,\mat{P}^*_{1\mid0}$ libres de $\sigma^2$. Entonces el filtro con $(\mat{H}^*_t,\mat{Q}^*_t,\mat{P}^*_{1\mid0})$ entrega $\vect{v}_t$, $\mat{K}_t$ y $\vect{a}_{t\mid t}$ idénticos, y $\mat{F}_t=\sigma^2\mat{F}^*_t$, $\mat{P}_{t\mid t-1}=\sigma^2\mat{P}^*_{t\mid t-1}$. La log-verosimilitud se maximiza en $\hat\sigma^2=\tfrac1{nN}\sum_t\vect{v}_t^{\top}\mat{F}_t^{*-1}\vect{v}_t$, y la verosimilitud concentrada es $\ell_c=-\tfrac{nN}2\bigl(\ln2\pi+1+\ln\hat\sigma^2\bigr)-\tfrac12\sum_t\ln\det\mat{F}^*_t$.
+
+:::
+
+::: {.proof}
+Por inducción, si $\mat{P}_{t\mid t-1}=\sigma^2\mat{P}^*_{t\mid t-1}$, entonces $\mat{F}_t=\sigma^2(\mat{Z}_t\mat{P}^*_{t\mid t-1}\mat{Z}_t^{\top}+\mat{H}^*_t)=\sigma^2\mat{F}^*_t$ y $\mat{K}_t=\sigma^2\mat{P}^*\mat{Z}_t^{\top}(\sigma^2\mat{F}^*)^{-1}=\mat{K}^*_t$, de modo que la actualización y la predicción conservan la proporcionalidad y las medias no cambian. Sustituyendo $\mat{F}_t=\sigma^2\mat{F}_t^*$ en @eq-loglik-kalman, $\ell=-\tfrac{nN}2\ln(2\pi\sigma^2)-\tfrac12\sum_t\ln\det\mat{F}_t^*-\tfrac1{2\sigma^2}S$ con $S=\sum_t\vect{v}_t^{\top}\mat{F}_t^{*-1}\vect{v}_t$. La derivada respecto de $\sigma^2$ es $-\tfrac{nN}{2\sigma^2}+\tfrac{S}{2\sigma^4}$, positiva si $\sigma^2<S/(nN)$ y negativa si es mayor, de modo que el máximo está en $\hat\sigma^2=S/(nN)$. Sustituir da $\ell_c$.
+
+:::
+
+Con números, se estimó el nivel local con los $100$ datos simulados de la primera nota ($\sigma_\varepsilon^2=1$, $\sigma_\eta^2=0.09$ verdaderos). Con inicialización difusa, la maximización numérica de la verosimilitud en los dos parámetros da $\hat\sigma_\varepsilon^2=1.305$ y $\hat\sigma_\eta^2=0.145$ con log-verosimilitud $-170.43$, resultados que coinciden con los de una implementación independiente. Con la concentración, solo se optimiza el cociente $q=\sigma_\eta^2/\sigma_\varepsilon^2$: la verosimilitud concentrada vale $-178.50,\ -171.31,\ -170.49,\ -170.55,\ -171.72,\ -174.05$ para $q=0.01,\ 0.05,\ 0.09,\ 0.15,\ 0.3,\ 0.6$, con máximo en $\hat q=0.111$ y $\hat\sigma^2=1.305$, de donde $\hat\sigma_\eta^2=\hat q\hat\sigma^2=0.145$. La estimación de la varianza del nivel es mayor que el valor verdadero $0.09$ y la del error de medición también: con $100$ datos la incertidumbre muestral de estos parámetros es grande.
+
+No todos los parámetros se pueden estimar con cualquier modelo. Un parámetro está ***identificado*** si distintos valores producen distintas distribuciones de las observaciones. En el nivel local los dos parámetros de varianza están identificados por las dos primeras autocovarianzas de la serie diferenciada.
+
+::: {#prp-identificacion-nivel-local}
+## Identificación del nivel local
+
+La serie diferenciada $\Delta y_t=\eta_t+\varepsilon_t-\varepsilon_{t-1}$ tiene $\gamma(0)=\sigma_\eta^2+2\sigma_\varepsilon^2$, $\gamma(1)=-\sigma_\varepsilon^2$ y $\gamma(h)=0$ para $h\geq2$. En consecuencia, $\sigma_\varepsilon^2=-\gamma(1)$ y $\sigma_\eta^2=\gamma(0)+2\gamma(1)$ quedan determinados por la distribución de $\Delta y_t$.
+
+:::
+
+::: {.proof}
+Como $\Delta\mu_t=\eta_t$, $\Delta y_t=\eta_t+\varepsilon_t-\varepsilon_{t-1}$, una combinación lineal de ruidos blancos no correlacionados. Su varianza es $\sigma_\eta^2+2\sigma_\varepsilon^2$, su covarianza de primer orden es $\Cov(\varepsilon_t-\varepsilon_{t-1},\varepsilon_{t-1}-\varepsilon_{t-2})=-\sigma_\varepsilon^2$, y no comparte ruidos a mayor distancia. Despejando, se obtienen las fórmulas.
+
+:::
+
+Los estimadores por momentos, con las autocovarianzas muestrales de la serie simulada, dan $\hat\sigma_\varepsilon^2=1.35$ y $\hat\sigma_\eta^2=0.083$, cercanos a los de máxima verosimilitud. Hay modelos con parámetros no identificados: si se escribe $y_t=\mu_t+\varepsilon_t+\varepsilon'_t$ con dos errores independientes, solo la suma $\sigma_\varepsilon^2+\sigma_{\varepsilon'}^2$ afecta a la distribución de las observaciones, y la verosimilitud es constante a lo largo de la recta donde esa suma es fija. Los intentos de estimarlos por separado fracasan: el optimizador no converge o devuelve cualquier punto de la recta.

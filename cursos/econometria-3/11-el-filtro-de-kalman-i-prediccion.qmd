@@ -1,0 +1,47 @@
+---
+title: "El filtro de Kalman I: la etapa de predicción"
+description: "La notación de estados predichos y filtrados, la predicción del estado y de su matriz de covarianza un paso adelante, la predicción de la observación con su innovación y su varianza, y la predicción a varios pasos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría III, Filtro de Kalman]
+---
+
+El filtro de Kalman alterna dos etapas. La de predicción proyecta hacia adelante lo que se sabe del estado usando la ecuación de transición, y la de actualización corrige esa proyección con la observación del período. Esta nota deduce la primera. Ocurre sin mirar el dato nuevo, y su resultado es una distribución para el estado y otra para la observación que está por llegar. La deducción usa la normalidad conjunta del sistema y el hecho de que las perturbaciones futuras son independientes de todo lo observado.
+
+Sea $\mathcal{Y}_t=\{\vect{y}_1,\ldots,\vect{y}_t\}$ la información disponible al final del período $t$, con $\mathcal{Y}_0$ vacía. Se denotan los momentos condicionales del estado
+$$
+\vect{a}_{t\mid t-1}=\E[\vect{\alpha}_t\mid\mathcal{Y}_{t-1}],\quad\mat{P}_{t\mid t-1}=\Var(\vect{\alpha}_t\mid\mathcal{Y}_{t-1}),\quad\vect{a}_{t\mid t}=\E[\vect{\alpha}_t\mid\mathcal{Y}_t],\quad\mat{P}_{t\mid t}=\Var(\vect{\alpha}_t\mid\mathcal{Y}_t),
+$$ {#eq-notacion-kalman}
+llamados ***predichos*** los de la primera pareja y ***filtrados*** los de la segunda. Por la normalidad conjunta del modelo, la distribución de $\vect{\alpha}_t$ dado $\mathcal{Y}_s$ es normal, determinada por esos dos momentos, y se parte de $\vect{a}_{0\mid0}=\vect{a}_0$ y $\mat{P}_{0\mid0}=\mat{P}_0$. Lo que se necesita es un hecho de independencia.
+
+::: {#lem-independencia-perturbacion}
+## La perturbación nueva es independiente del pasado
+
+Para cada $t\geq1$, $\vect{\eta}_t$ es independiente de $(\vect{\alpha}_{t-1},\mathcal{Y}_{t-1})$, y $\vect{\varepsilon}_t$ es independiente de $(\vect{\alpha}_t,\mathcal{Y}_{t-1})$.
+
+:::
+
+::: {.proof}
+Por la proposición de normalidad conjunta, $\vect{\alpha}_{t-1}$ y $\mathcal{Y}_{t-1}$ son funciones de $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_{t-1},\vect{\varepsilon}_1,\ldots,\vect{\varepsilon}_{t-1})$, que es independiente de $\vect{\eta}_t$ por la hipótesis de independencia mutua. Del mismo modo, $\vect{\alpha}_t$ y $\mathcal{Y}_{t-1}$ son funciones de $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_t,\vect{\varepsilon}_1,\ldots,\vect{\varepsilon}_{t-1})$, independiente de $\vect{\varepsilon}_t$.
+
+:::
+
+::: {#thm-prediccion-kalman}
+## Etapa de predicción
+
+Si $\vect{\alpha}_{t-1}\mid\mathcal{Y}_{t-1}\sim\N(\vect{a}_{t-1\mid t-1},\mat{P}_{t-1\mid t-1})$, entonces $\vect{\alpha}_t\mid\mathcal{Y}_{t-1}\sim\N(\vect{a}_{t\mid t-1},\mat{P}_{t\mid t-1})$ con
+$$
+\vect{a}_{t\mid t-1}=\mat{T}_t\vect{a}_{t-1\mid t-1}+\vect{c}_t,\qquad\mat{P}_{t\mid t-1}=\mat{T}_t\mat{P}_{t-1\mid t-1}\mat{T}_t^{\top}+\mat{R}_t\mat{Q}_t\mat{R}_t^{\top}.
+$$ {#eq-prediccion-estado}
+La observación $\vect{y}_t$ dado $\mathcal{Y}_{t-1}$ es normal con media $\hat{\vect{y}}_{t\mid t-1}=\mat{Z}_t\vect{a}_{t\mid t-1}+\vect{d}_t$ y varianza $\mat{F}_t=\mat{Z}_t\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}+\mat{H}_t$. Además, $\Cov(\vect{\alpha}_t,\vect{y}_t\mid\mathcal{Y}_{t-1})=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}$.
+
+:::
+
+::: {.proof}
+Condicionalmente en $\mathcal{Y}_{t-1}$, $\vect{\alpha}_t=\mat{T}_t\vect{\alpha}_{t-1}+\vect{c}_t+\mat{R}_t\vect{\eta}_t$ es suma de una función afín de $\vect{\alpha}_{t-1}$, cuya distribución condicional es la dada, y de $\mat{R}_t\vect{\eta}_t$, que por el lema es independiente de $(\vect{\alpha}_{t-1},\mathcal{Y}_{t-1})$ y conserva su distribución $\N(\vect{0},\mat{Q}_t)$. La suma de normales independientes es normal, con media y varianza la suma de las medias y las varianzas, y las transformaciones afines multiplican la media por $\mat{T}_t$ y la varianza por $\mat{T}_t(\cdot)\mat{T}_t^{\top}$; esto da @eq-prediccion-estado. Para la observación, $\vect{y}_t=\mat{Z}_t\vect{\alpha}_t+\vect{d}_t+\vect{\varepsilon}_t$ con $\vect{\varepsilon}_t$ independiente de $(\vect{\alpha}_t,\mathcal{Y}_{t-1})$, de modo que la media condicional es $\mat{Z}_t\vect{a}_{t\mid t-1}+\vect{d}_t$ y la varianza es $\mat{Z}_t\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}+\mat{H}_t$. La covarianza condicional es $\Cov(\vect{\alpha}_t,\mat{Z}_t\vect{\alpha}_t+\vect{\varepsilon}_t\mid\mathcal{Y}_{t-1})=\mat{P}_{t\mid t-1}\mat{Z}_t^{\top}$, porque $\vect{\varepsilon}_t$ es independiente y de media cero.
+
+:::
+
+La innovación o error de predicción de la observación es $\vect{v}_t=\vect{y}_t-\hat{\vect{y}}_{t\mid t-1}$, con media cero y varianza $\mat{F}_t$. En la ecuación de la covarianza del estado, el primer término propaga la incertidumbre anterior por la dinámica del sistema y el segundo la aumenta con la varianza de las perturbaciones de transición $\mat{R}_t\mat{Q}_t\mat{R}_t^{\top}$: la predicción siempre agrega incertidumbre cuando hay perturbaciones, porque el estado se movió de una manera que no se observó. La varianza de la innovación tiene dos fuentes, la incertidumbre sobre el estado y el error de medición, y por eso nunca es menor que $\mat{H}_t$.
+
+Con números, para el modelo de nivel local con $\sigma_\varepsilon^2=1$ y $\sigma_\eta^2=0.5$, y después de la primera observación $y_1=1.2$ con $a_{1\mid1}=1.2$ y $P_{1\mid1}=1$ (un nivel inicial sobre el cual no había información previa, de modo que la primera observación lo determina salvo el error de medición), la predicción es $a_{2\mid1}=1.2$, $P_{2\mid1}=1+0.5=1.5$, $\hat y_{2\mid1}=1.2$ y $F_2=1.5+1=2.5$. La predicción a más pasos aplica la misma recursión sin correcciones, porque no llegan datos: con $\vect{a}_{t+h\mid t}=\mat{T}\vect{a}_{t+h-1\mid t}$ y $\mat{P}_{t+h\mid t}=\mat{T}\mat{P}_{t+h-1\mid t}\mat{T}^{\top}+\mat{R}\mat{Q}\mat{R}^{\top}$. En el nivel local, $a_{t+h\mid t}=a_{t\mid t}$ y $P_{t+h\mid t}=P_{t\mid t}+h\sigma_\eta^2$, que crece linealmente. Para un estado AR(1) con $T=0.8$, $Q=1$, $a_{t\mid t}=2$ y $P_{t\mid t}=0.5$, las predicciones son $1.6,\,1.28,\,1.024,\,0.819$ para $h=1,\ldots,4$ y las varianzas $1.32,\,1.845,\,2.181,\,2.396$, que crecen hacia la varianza estacionaria $1/(1-0.64)=2.778$.

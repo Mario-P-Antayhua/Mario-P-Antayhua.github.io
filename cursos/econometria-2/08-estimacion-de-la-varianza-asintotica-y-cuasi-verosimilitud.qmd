@@ -1,0 +1,42 @@
+---
+title: "Estimación de la varianza asintótica y cuasi-verosimilitud"
+description: "El parámetro pseudo-verdadero como minimizador de la divergencia de Kullback–Leibler, la consistencia del estimador sándwich de la varianza asintótica y los intervalos de confianza de Wald, con un ejemplo numérico."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Verosimilitud]
+---
+
+La varianza asintótica del estimador depende de matrices poblacionales que no se conocen, y para construir intervalos de confianza hay que estimarlas. Esta nota muestra cómo estimar el sándwich con promedios muestrales evaluados en el estimador, y qué estima el procedimiento cuando el modelo no es correcto. En ese caso el estimador de máxima verosimilitud se llama de ***cuasi-máxima verosimilitud***, y converge al parámetro que hace que el modelo se parezca lo más posible a la verdad en el sentido de Kullback–Leibler.
+
+::: {#prp-pseudo-verdadero}
+## El parámetro pseudo-verdadero
+
+Sean $X_i$ iid con densidad verdadera $g$ y $\{f(\cdot;\vect{\theta})\}$ un modelo posiblemente incorrecto con $f(\cdot;\vect{\theta})>0$ en el soporte de $g$, y $Q(\vect{\theta})=\E_g[\ln f(X;\vect{\theta})]$ finita. Entonces maximizar $Q$ equivale a minimizar $\mathrm{KL}(g\|f(\cdot;\vect{\theta}))$ sobre $\vect{\theta}$. Su maximizador $\vect{\theta}^*$, si existe, es el ***parámetro pseudo-verdadero***, y si $g=f(\cdot;\vect{\theta}_0)$ con el modelo identificado, $\vect{\theta}^*=\vect{\theta}_0$.
+
+:::
+
+::: {.proof}
+Si $\E_g[\ln g(X)]$ es finita, $\mathrm{KL}(g\|f_{\vect{\theta}})=\E_g[\ln g(X)]-Q(\vect{\theta})$, y el primer término no depende de $\vect{\theta}$, de modo que maximizar $Q$ es minimizar la divergencia. Si $g$ pertenece al modelo e identifica a $\vect{\theta}_0$, el corolario del máximo único de la nota de la desigualdad de información da $\vect{\theta}^*=\vect{\theta}_0$.
+
+:::
+
+Con la misma notación del teorema de normalidad asintótica, las matrices $\mat{A}$ y $\mat{B}$ se estiman reemplazando esperanzas por promedios y $\vect{\theta}^*$ por $\hat{\vect{\theta}}_n$:
+$$
+\hat{\mat{A}}_n=-\frac1n\sum_{i=1}^n\mat{H}(X_i,\hat{\vect{\theta}}_n),\qquad\hat{\mat{B}}_n=\frac1n\sum_{i=1}^n\nabla q(X_i,\hat{\vect{\theta}}_n)\,\nabla q(X_i,\hat{\vect{\theta}}_n)^{\top},\qquad\hat{\mat{C}}_n=\hat{\mat{A}}_n^{-1}\hat{\mat{B}}_n\hat{\mat{A}}_n^{-1}.
+$$ {#eq-sandwich-estimado}
+
+::: {#thm-sandwich-consistente}
+## Consistencia del estimador sándwich
+
+Bajo las condiciones (N1)–(N5) del teorema de normalidad asintótica y la condición adicional $\E\bigl[\sup_{\vect{\theta}\in N}\|\nabla q(X,\vect{\theta})\|^2\bigr]<\infty$, se cumple $\hat{\mat{A}}_n\overset{p}{\to}\mat{A}$, $\hat{\mat{B}}_n\overset{p}{\to}\mat{B}$ y $\hat{\mat{C}}_n\overset{p}{\to}\mat{A}^{-1}\mat{B}\mat{A}^{-1}$.
+
+:::
+
+::: {.proof}
+Con probabilidad que tiende a uno, $\hat{\vect{\theta}}_n\in N$. Por la ley uniforme de los grandes números aplicada a las entradas de $\mat{H}$, $\sup_{N}\|\tfrac1n\sum_i\mat{H}(X_i,\vect{\theta})-\E[\mat{H}(X,\vect{\theta})]\|\overset{p}{\to}0$, y la función $\vect{\theta}\mapsto\E[\mat{H}(X,\vect{\theta})]$ es continua; como $\hat{\vect{\theta}}_n\overset{p}{\to}\vect{\theta}^*$, $\hat{\mat{A}}_n\overset{p}{\to}-\E[\mat{H}(X,\vect{\theta}^*)]=\mat{A}$. Del mismo modo, las entradas de $\nabla q\nabla q^{\top}$ son continuas en $\vect{\theta}$ y están dominadas por $\sup_N\|\nabla q\|^2$, integrable, de modo que la ley uniforme da $\hat{\mat{B}}_n\overset{p}{\to}\E[\nabla q\nabla q^{\top}(X,\vect{\theta}^*)]=\mat{B}$, porque $\E[\nabla q(X,\vect{\theta}^*)]=\vect{0}$. Como $\mat{A}$ es invertible, la inversa es continua en $\mat{A}$, y el teorema de funciones continuas y convergencia en probabilidad da $\hat{\mat{C}}_n\overset{p}{\to}\mat{A}^{-1}\mat{B}\mat{A}^{-1}$.
+
+:::
+
+Para un parámetro escalar, el error estándar es $\mathrm{ee}(\hat\theta_n)=\sqrt{\hat C_n/n}$, y la combinación del teorema de normalidad asintótica con el teorema de Slutsky da $(\hat\theta_n-\theta^*)/\mathrm{ee}(\hat\theta_n)\overset{d}{\to}\N(0,1)$. En consecuencia, el ***intervalo de Wald*** $\hat\theta_n\pm1.96\,\mathrm{ee}(\hat\theta_n)$ cubre a $\theta^*$ con probabilidad que tiende a $0.95$. Bajo especificación correcta, $\mat{A}=\mat{B}=\mat{I}$ y bastan $\hat{\mat{A}}_n^{-1}$ o $\hat{\mat{B}}_n^{-1}$ como estimador de la varianza.
+
+Con números, para la muestra exponencial $x=(1.2,0.7,2.1,0.4,1.6)$, $\hat\lambda=0.8333$. La hessiana de una observación es $-1/\lambda^2$, de modo que $\hat A=1/\hat\lambda^2=1.44$. Los scores son $1/\hat\lambda-x_i=(0,0.5,-0.9,0.8,-0.4)$, que suman cero, y $\hat B=\tfrac15(0+0.25+0.81+0.64+0.16)=0.372$. El error estándar basado en el modelo, $\sqrt{\hat A^{-1}/n}=\hat\lambda/\sqrt n=0.373$, da el intervalo $[0.10,\,1.56]$, y el sándwich, $\sqrt{\hat B/(\hat A^2n)}=0.189$, da $[0.46,\,1.21]$. La muestra de cinco datos es demasiado pequeña para que la aproximación normal sea confiable, y el ejemplo ilustra solo el cálculo. Si los datos fueran en realidad exponenciales, ambos errores estándar estimarían el mismo número; si no lo fueran, solo el sándwich sería válido.

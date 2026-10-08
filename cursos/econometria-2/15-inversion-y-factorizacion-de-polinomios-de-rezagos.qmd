@@ -1,0 +1,60 @@
+---
+title: "Inversión y factorización de polinomios de rezagos"
+description: "La completitud de L2, la inversión de un factor de rezago con raíz fuera del círculo unitario mediante una serie convergente en media cuadrática, su unicidad entre procesos de varianza acotada y la inversión de un polinomio completo con coeficientes absolutamente sumables."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Operador de rezago]
+---
+
+Un modelo como $(1-\lambda L)X_t=\varepsilon_t$ dice que $X_t$ es una transformación de $\varepsilon_t$, pero lo que se quiere es lo contrario: expresar $X_t$ como función de los choques. Eso exige invertir el polinomio de rezagos, es decir, encontrar un filtro $\psi(L)$ con $\psi(L)\phi(L)=1$. Para polinomios ordinarios el inverso no existe, pero con series infinitas sí, siempre que converjan. Esta nota demuestra que la inversión es posible, y única entre los procesos de varianza acotada, exactamente cuando las raíces están fuera del círculo unitario.
+
+Una serie infinita de variables aleatorias necesita un modo de convergencia. Se usa la norma de $L^2$, $\|Y\|=\sqrt{\E[Y^2]}$, que cumple la desigualdad triangular $\|Y+Z\|\leq\|Y\|+\|Z\|$ por la desigualdad de Cauchy–Schwarz, y se acepta como parte del marco que el espacio es completo.
+
+::: {#ax-l2-completo .callout-important appearance="simple" title="Axioma: Completitud de $L^2$"}
+Si $Y_1,Y_2,\ldots$ son variables aleatorias con $\E[Y_n^2]<\infty$ y $\E[(Y_n-Y_m)^2]\to0$ cuando $n,m\to\infty$, existe una variable aleatoria $Y$ con $\E[Y^2]<\infty$ y $\E[(Y_n-Y)^2]\to0$.
+
+:::
+
+Con ello, una serie $\sum_ja_jX_{t-j}$ de un proceso de varianza acotada converge en media cuadrática cuando los coeficientes son sumables.
+
+::: {#prp-serie-l2}
+## Convergencia de series en media cuadrática
+
+Sea $\{X_t\}$ un proceso con $\sup_t\E[X_t^2]=M<\infty$ y $\{a_j\}$ coeficientes con $\sum_{j\geq0}|a_j|<\infty$. Entonces las sumas parciales $S_n=\sum_{j=0}^na_jX_{t-j}$ convergen en media cuadrática a una variable $Y_t=\sum_{j\geq0}a_jX_{t-j}$ con $\E[Y_t^2]\leq M\bigl(\sum_j|a_j|\bigr)^2$. Además, la serie converge absolutamente casi seguramente si $\sup_t\E|X_t|<\infty$.
+
+:::
+
+::: {.proof}
+Para $n>m$, la desigualdad triangular da $\|S_n-S_m\|\leq\sum_{j=m+1}^n|a_j|\,\|X_{t-j}\|\leq\sqrt M\sum_{j=m+1}^n|a_j|\to0$, porque son colas de una serie convergente. Entonces $\{S_n\}$ es de Cauchy en $L^2$ y converge a una variable $Y_t$ por el axioma de completitud, con $\|Y_t\|\leq\sqrt M\sum_j|a_j|$. Para la convergencia absoluta, $\E\sum_j|a_j||X_{t-j}|\leq\sup_t\E|X_t|\sum_j|a_j|<\infty$ por convergencia monótona, de modo que la suma es finita casi seguramente, y el límite puntual coincide con el límite en media cuadrática casi seguramente porque una subsucesión de $S_n$ converge casi seguramente al límite en $L^2$.
+
+:::
+
+Con ello se invierte el factor más simple.
+
+::: {#thm-inversion-primer-orden}
+## Inversión de $1-\lambda L$
+
+Sea $\{X_t\}$ con $\sup_t\E[X_t^2]<\infty$. (i) Si $|\lambda|<1$, el proceso $Y_t=\sum_{j\geq0}\lambda^jX_{t-j}$ satisface $(1-\lambda L)Y_t=X_t$, y es la única solución de esa ecuación con varianza acotada. (ii) Si $|\lambda|>1$, el proceso $Y_t=-\sum_{j\geq1}\lambda^{-j}X_{t+j}$ satisface $(1-\lambda L)Y_t=X_t$ y es la única solución con varianza acotada, pero depende de valores futuros de $X$.
+
+:::
+
+::: {.proof}
+Para (i), la serie converge en media cuadrática por la proposición anterior con $a_j=\lambda^j$. Las sumas parciales satisfacen $(1-\lambda L)S_n=\sum_{j=0}^n\lambda^jX_{t-j}-\sum_{j=0}^n\lambda^{j+1}X_{t-1-j}=X_t-\lambda^{n+1}X_{t-n-1}$, y el último término tiende a cero en media cuadrática, porque su norma es a lo sumo $|\lambda|^{n+1}\sqrt M$. Como $L$ conserva la convergencia en media cuadrática, $(1-\lambda L)Y_t=X_t$. Para la unicidad, si $Y_t$ y $\tilde Y_t$ son soluciones con varianza acotada, su diferencia $D_t$ cumple $D_t=\lambda D_{t-1}$, de modo que $D_t=\lambda^nD_{t-n}$ y $\E[D_t^2]\leq\lambda^{2n}\sup_s\E[D_s^2]\to0$, y entonces $D_t=0$ casi seguramente. Para (ii), la serie converge por la proposición anterior con coeficientes $a_j=-\lambda^{-j}$ aplicados a los adelantos. Un cálculo directo da $Y_t-\lambda Y_{t-1}=-\sum_{j\geq1}\lambda^{-j}X_{t+j}+\sum_{m\geq0}\lambda^{-m}X_{t+m}=X_t$, porque tras reindexar la segunda suma todos los términos con $m\geq1$ se cancelan con la primera. Para la unicidad, la diferencia $D_t$ de dos soluciones con varianza acotada cumple $D_t=\lambda D_{t-1}$, es decir, $D_t=\lambda^{-n}D_{t+n}$, y $\E[D_t^2]\leq\lambda^{-2n}\sup_s\E[D_s^2]\to0$.
+
+:::
+
+El caso $|\lambda|=1$ no tiene solución estacionaria en general. Si la ecuación $(1-L)Y_t=\varepsilon_t$ con ruido blanco de varianza $\sigma^2$ tuviera una solución con $\E[Y_t^2]\leq V$ para todo $t$, entonces $Y_t-Y_{t-n}=\sum_{j=0}^{n-1}\varepsilon_{t-j}$ tendría varianza $n\sigma^2$, mientras que la desigualdad triangular en $L^2$ da $\|Y_t-Y_{t-n}\|\leq2\sqrt V$, y entonces $n\sigma^2\leq4V$ para todo $n$, lo que es imposible. El resultado para un polinomio completo se obtiene componiendo las inversiones.
+
+::: {#thm-inversion-polinomio}
+## Inversión de un polinomio con raíces fuera del círculo
+
+Sea $\phi(L)=\prod_{j=1}^p(1-\lambda_jL)$ con $|\lambda_j|<1$. Existen coeficientes $\psi_0=1,\psi_1,\psi_2,\ldots$ con $\sum_j|\psi_j|\leq\prod_{j=1}^p(1-|\lambda_j|)^{-1}<\infty$, determinados por la recursión $\psi_k=\sum_{i=1}^{\min\{k,p\}}\phi_i\psi_{k-i}$ (para $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p$), tales que $\phi(z)\sum_k\psi_kz^k=1$ para $|z|\leq1$. Para todo proceso $\{X_t\}$ con varianza acotada, $Y_t=\sum_{k\geq0}\psi_kX_{t-k}$ es la única solución con varianza acotada de $\phi(L)Y_t=X_t$.
+
+:::
+
+::: {.proof}
+Se define $\psi(z)=\prod_{j=1}^p\bigl(\sum_{k\geq0}\lambda_j^kz^k\bigr)$, producto de series geométricas absolutamente convergentes para $|z|\leq1$. Por el lema del producto de Cauchy de series absolutamente convergentes del [Lema “Producto de Cauchy de series absolutamente convergentes”](../matematica-1/33-exponencial-y-logaritmo.qmd#lem-producto-series), aplicado repetidamente, el producto es la serie $\sum_k\psi_kz^k$ con $\psi_k=\sum_{k_1+\cdots+k_p=k}\prod_i\lambda_i^{k_i}$, y $\sum_k|\psi_k|\leq\prod_j\sum_{k}|\lambda_j|^k=\prod_j(1-|\lambda_j|)^{-1}$. Como $\sum_k\lambda_j^kz^k=(1-\lambda_jz)^{-1}$, se tiene $\phi(z)\psi(z)=1$, y comparando los coeficientes de $z^k$ en ambos lados se obtiene $\psi_k-\sum_{i=1}^{\min\{k,p\}}\phi_i\psi_{k-i}=0$ para $k\geq1$, la recursión, con $\psi_0=1$. Para la solución, se aplican sucesivamente los inversos de los factores $(1-\lambda_jL)$ del teorema anterior, cada uno con varianza acotada de entrada y de salida, y la composición de las series, justificada por la convergencia absoluta de los coeficientes, es $\sum_k\psi_kL^k$. La unicidad se sigue de la unicidad en cada factor.
+
+:::
+
+Con números, para $\phi(L)=1-1.2L+0.35L^2=(1-0.5L)(1-0.7L)$, la recursión $\psi_k=1.2\psi_{k-1}-0.35\psi_{k-2}$ da $1,\ 1.2,\ 1.09,\ 0.888,\ 0.684,\ 0.510,\ \ldots$, que coincide con la fórmula $\psi_k=(0.7^{k+1}-0.5^{k+1})/0.2$. La suma es $\sum_k\psi_k=1/\phi(1)=1/0.15=6.667$, igual a la cota $\prod(1-|\lambda_j|)^{-1}=1/(0.5\cdot0.3)$ porque todos los coeficientes son positivos. Si una raíz estuviera dentro del círculo, por ejemplo $\phi(L)=1-1.5L$, la inversión causal diverge ($1.5^k\to\infty$) y la única solución con varianza acotada usa valores futuros del proceso.

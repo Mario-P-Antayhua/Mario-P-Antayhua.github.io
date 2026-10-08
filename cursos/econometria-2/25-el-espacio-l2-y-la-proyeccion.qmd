@@ -1,0 +1,53 @@
+---
+title: "El espacio L2 y la proyección lineal"
+description: "El espacio de variables aleatorias de segundo momento finito como espacio con producto interno completo, la proyección sobre subespacios cerrados, su caracterización por ortogonalidad y los límites de proyecciones sobre subespacios crecientes y decrecientes."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Predicción]
+---
+
+Predecir una variable con una combinación lineal de otras es un problema de proyección: se busca el elemento de un subespacio que está más cerca, en el sentido del error cuadrático medio. Con un número finito de regresores, el problema se resuelve en dimensión finita con el álgebra lineal de la [Nota “Ortogonalidad, proyección y el teorema de la mejor aproximación”](../matematica-2/05-ortogonalidad-proyeccion-y-mejor-aproximacion.qmd). Predecir un proceso a partir de todo su pasado exige proyectar sobre un subespacio generado por infinitos regresores, y para eso se necesita la teoría en el espacio de variables aleatorias con segundo momento finito, que es completo. Esta nota la desarrolla y prueba los límites de proyecciones que usan el teorema de Wold y la predicción.
+
+El espacio $L^2$ es el conjunto de variables aleatorias $X$ con $\E[X^2]<\infty$, identificando las que coinciden casi seguramente. Es un espacio vectorial, con producto interno $\langle X,Y\rangle=\E[XY]$, finito por la desigualdad de Cauchy–Schwarz, y norma $\|X\|=\sqrt{\E[X^2]}$. Dos elementos son ***ortogonales***, $X\perp Y$, si $\langle X,Y\rangle=0$. La norma satisface la ley del paralelogramo, $\|X+Y\|^2+\|X-Y\|^2=2\|X\|^2+2\|Y\|^2$, que se obtiene expandiendo los cuadrados, y el teorema de Pitágoras, $\|X+Y\|^2=\|X\|^2+\|Y\|^2$ si $X\perp Y$. Por el axioma de completitud, toda sucesión de Cauchy converge. Un subespacio $M\subseteq L^2$ es ***cerrado*** si contiene los límites de sus sucesiones convergentes, y el ***subespacio cerrado generado*** por un conjunto $S$ es la clausura de las combinaciones lineales finitas de elementos de $S$.
+
+::: {#thm-proyeccion-l2}
+## Teorema de la proyección
+
+Sea $M\subseteq L^2$ un subespacio cerrado y $X\in L^2$. Existe un único $\hat X=P_MX\in M$ tal que $\|X-\hat X\|=\min_{m\in M}\|X-m\|$, y está caracterizado por la condición $X-\hat X\perp M$. Además, $\|X\|^2=\|\hat X\|^2+\|X-\hat X\|^2$.
+
+:::
+
+::: {.proof}
+Sea $d=\inf_{m\in M}\|X-m\|$ y $m_n\in M$ con $\|X-m_n\|\to d$. Por la ley del paralelogramo aplicada a $X-m_n$ y $X-m_k$, $\|m_n-m_k\|^2=2\|X-m_n\|^2+2\|X-m_k\|^2-4\bigl\|X-\tfrac{m_n+m_k}2\bigr\|^2$, y como $\tfrac{m_n+m_k}2\in M$, el último término es a lo sumo $-4d^2$. Entonces $\|m_n-m_k\|^2\leq2\|X-m_n\|^2+2\|X-m_k\|^2-4d^2\to0$, de modo que $\{m_n\}$ es de Cauchy y converge a un $\hat X\in L^2$, que pertenece a $M$ por ser cerrado, con $\|X-\hat X\|=d$. Para la ortogonalidad, si $u\in M$ y $t\in\mathbb{R}$, $\hat X+tu\in M$, de modo que $d^2\leq\|X-\hat X-tu\|^2=d^2-2t\langle X-\hat X,u\rangle+t^2\|u\|^2$, es decir, $2t\langle X-\hat X,u\rangle\leq t^2\|u\|^2$ para todo $t$, lo que obliga a $\langle X-\hat X,u\rangle=0$. Recíprocamente, si $m'\in M$ cumple $X-m'\perp M$, entonces para todo $u\in M$, por Pitágoras, $\|X-u\|^2=\|X-m'\|^2+\|m'-u\|^2$, que se minimiza únicamente en $u=m'$; esto da la unicidad. La última igualdad es Pitágoras con $\hat X\perp X-\hat X$.
+
+:::
+
+El operador $P_M$ es lineal, por la caracterización por ortogonalidad, y se compone bien con subespacios anidados.
+
+::: {#prp-proyeccion-anidada}
+## Proyección sobre subespacios anidados
+
+Si $M\subseteq N$ son subespacios cerrados, $P_MP_NX=P_MX$.
+
+:::
+
+::: {.proof}
+$P_MP_NX\in M$, y para $u\in M\subseteq N$, $\langle X-P_MP_NX,u\rangle=\langle X-P_NX,u\rangle+\langle P_NX-P_MP_NX,u\rangle=0+0$, porque $X-P_NX\perp N\ni u$ y $P_NX-P_MP_NX\perp M\ni u$. La caracterización por ortogonalidad identifica $P_MP_NX$ con $P_MX$.
+
+:::
+
+Los siguientes límites permiten pasar de proyecciones sobre espacios de dimensión finita a proyecciones sobre espacios generados por infinitos elementos.
+
+::: {#prp-limites-proyecciones}
+## Límites de proyecciones
+
+(i) Si $M_1\subseteq M_2\subseteq\cdots$ son subespacios cerrados y $M$ es la clausura de $\bigcup_nM_n$, entonces $P_{M_n}X\to P_MX$ en $L^2$. (ii) Si $M_1\supseteq M_2\supseteq\cdots$ son subespacios cerrados y $M=\bigcap_nM_n$, entonces $P_{M_n}X\to P_MX$ en $L^2$.
+
+:::
+
+::: {.proof}
+Para (i), sea $\varepsilon>0$. Como $P_MX$ está en la clausura de $\bigcup_nM_n$, existe $N$ y $u\in M_N$ con $\|P_MX-u\|<\varepsilon$. Para $n\geq N$, como $P_{M_n}X\in M$ y $X-P_MX\perp M$, Pitágoras da $\|X-P_{M_n}X\|^2=\|X-P_MX\|^2+\|P_MX-P_{M_n}X\|^2$, y como $P_{M_n}X$ es el mejor elemento de $M_n\ni u$, $\|X-P_{M_n}X\|^2\leq\|X-u\|^2=\|X-P_MX\|^2+\|P_MX-u\|^2$. Entonces $\|P_MX-P_{M_n}X\|\leq\|P_MX-u\|<\varepsilon$. Para (ii), sea $Y_n=P_{M_n}X$. Para $n>m$, $Y_n=P_{M_n}Y_m$ por la proyección anidada, de modo que $Y_m-Y_n\perp M_n\ni Y_n$ y Pitágoras da $\|Y_m-Y_n\|^2=\|Y_m\|^2-\|Y_n\|^2$. La sucesión $\|Y_n\|^2$ es decreciente y acotada inferiormente por cero, luego convergente, y entonces $\{Y_n\}$ es de Cauchy y converge a un $Y$. Como $Y_n\in M_k$ para $n\geq k$ y $M_k$ es cerrado, $Y\in M_k$ para todo $k$, es decir, $Y\in M$. Para $u\in M\subseteq M_n$, $\langle X-Y_n,u\rangle=0$, y al pasar al límite $\langle X-Y,u\rangle=0$. La caracterización por ortogonalidad da $Y=P_MX$.
+
+:::
+
+La conexión con los temas anteriores es directa. La esperanza condicional de la [Nota “Esperanza condicional”](../econometria-1/14-esperanza-condicional.qmd) es la proyección de $Y$ sobre el subespacio de las funciones de $\vect{X}$ con segundo momento finito, y el mejor predictor lineal de la [Nota “Covarianza y correlación”](../econometria-1/11-covarianza-y-correlacion.qmd) es la proyección sobre el subespacio generado por $1$ y $X$. Con números, sea $\Omega=\{1,2,3,4\}$ con probabilidad $1/4$ en cada punto, $X(\omega)=\omega^2$ y $M$ el subespacio generado por $1$ y $\omega$. Con $\E[\omega]=2.5$, $\E[\omega^2]=7.5$ y $\E[\omega^3]=25$, la proyección es $a+b\omega$ con $b=\Cov(\omega,\omega^2)/\Var(\omega)=6.25/1.25=5$ y $a=7.5-5\cdot2.5=-5$, que toma los valores $0,5,10,15$ frente a los de $X$, $1,4,9,16$. El residuo $(1,-1,-1,1)$ es ortogonal a $1$ y a $\omega$, porque $\sum r=0$ y $\sum r\omega=1-2-3+4=0$.

@@ -1,0 +1,99 @@
+---
+title: "Matrices como transformaciones lineales, rango y sistemas de ecuaciones"
+description: "Transformaciones lineales y su representación matricial, núcleo e imagen, el teorema del rango, la solución de sistemas lineales, la igualdad entre rango por filas y por columnas y la relación entre el núcleo y el espacio de filas."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
+---
+
+El producto de una matriz por un vector tiene una lectura geométrica: transforma vectores de $\mathbb{R}^n$ en vectores de $\mathbb{R}^m$ respetando la suma y el escalamiento. Esa lectura permite trasladar a las matrices los conceptos de subespacio, base y dimensión, y resolver sistemas de ecuaciones con un criterio exacto de existencia y unicidad.
+
+::: {#def-transformacion-lineal}
+## Transformación lineal
+
+Una función $T:\mathbb{R}^n\to\mathbb{R}^m$ es una ***transformación lineal*** si $T(\alpha\vect{x}+\beta\vect{y})=\alpha T(\vect{x})+\beta T(\vect{y})$ para todos $\vect{x},\vect{y}\in\mathbb{R}^n$ y $\alpha,\beta\in\mathbb{R}$.
+
+:::
+
+Toda matriz $\mat{A}\in\mathbb{R}^{m\times n}$ define una transformación lineal $T_{\mat{A}}(\vect{x}):=\mat{A}\vect{x}$, por la distributividad de la [Proposición “Propiedades algebraicas del producto matricial”](06-operaciones-matriciales.qmd#prp-propiedades-producto). El recíproco también es cierto, y es lo que justifica identificar ambas nociones.
+
+::: {#prp-lineal-es-matriz}
+## Toda transformación lineal es una matriz
+
+Si $T:\mathbb{R}^n\to\mathbb{R}^m$ es lineal, existe una única $\mat{A}\in\mathbb{R}^{m\times n}$ con $T=T_{\mat{A}}$, y sus columnas son $T(\vect{e}_1),\ldots,T(\vect{e}_n)$.
+
+:::
+
+::: {.proof}
+Sea $\mat{A}$ la matriz de columnas $T(\vect{e}_j)$. Para $\vect{x}=\sum_jx_j\vect{e}_j$, la linealidad da $T(\vect{x})=\sum_jx_jT(\vect{e}_j)=\mat{A}\vect{x}$, por la lectura del producto como combinación lineal de columnas. La unicidad se sigue de que $\mat{A}\vect{e}_j$ es la $j$-ésima columna de $\mat{A}$, que debe ser $T(\vect{e}_j)$.
+
+:::
+
+Dos subespacios asociados a toda matriz resumen lo que la transformación conserva y lo que pierde.
+
+::: {#def-nucleo-imagen}
+## Núcleo, imagen y rango
+
+Sea $\mat{A}\in\mathbb{R}^{m\times n}$. El ***núcleo*** es $\ker(\mat{A}):=\{\vect{x}\in\mathbb{R}^n:\mat{A}\vect{x}=\vect{0}\}$ y la ***imagen*** es $\operatorname{Im}(\mat{A}):=\{\mat{A}\vect{x}:\vect{x}\in\mathbb{R}^n\}$, que coincide con la envoltura lineal de las columnas de $\mat{A}$. El ***rango*** es $\rango(\mat{A}):=\dim\operatorname{Im}(\mat{A})$.
+
+:::
+
+Que sean subespacios no es una convención sino un resultado: si $\vect{x},\vect{y}\in\ker(\mat{A})$, entonces $\mat{A}(\alpha\vect{x}+\beta\vect{y})=\alpha\mat{A}\vect{x}+\beta\mat{A}\vect{y}=\vect{0}$; y si $\vect{u}=\mat{A}\vect{x}$ y $\vect{v}=\mat{A}\vect{y}$, entonces $\alpha\vect{u}+\beta\vect{v}=\mat{A}(\alpha\vect{x}+\beta\vect{y})\in\operatorname{Im}(\mat{A})$; en ambos casos el criterio de subespacio de la [Proposición “Criterio de subespacio”](01-espacios-vectoriales-y-subespacios.qmd#prp-criterio-subespacio) se cumple. El rango cuenta cuántas columnas de $\mat{A}$ son independientes, y el núcleo mide cuánta información se pierde: $\mat{A}\vect{x}=\mat{A}\vect{y}$ equivale a $\vect{x}-\vect{y}\in\ker(\mat{A})$. La relación cuantitativa entre ambos es el teorema del rango.
+
+::: {#thm-teorema-rango}
+## Teorema del rango
+
+Para toda $\mat{A}\in\mathbb{R}^{m\times n}$, $\rango(\mat{A})+\dim\ker(\mat{A})=n$.
+
+:::
+
+::: {.proof}
+Sea $k=\dim\ker(\mat{A})$ y $\{\vect{v}_1,\ldots,\vect{v}_k\}$ una base de $\ker(\mat{A})$; por la [Proposición “Completar a una base y dimensión de los subespacios”](02-independencia-lineal-base-y-dimension.qmd#prp-completar-base), se completa a una base $\{\vect{v}_1,\ldots,\vect{v}_n\}$ de $\mathbb{R}^n$. La estrategia consiste en probar que $\{\mat{A}\vect{v}_{k+1},\ldots,\mat{A}\vect{v}_n\}$ es una base de $\operatorname{Im}(\mat{A})$, lo que da $\rango(\mat{A})=n-k$.
+
+Generan la imagen: un $\vect{y}=\mat{A}\vect{x}$ tiene $\vect{x}=\sum_{i=1}^{n}\alpha_i\vect{v}_i$, y como $\mat{A}\vect{v}_i=\vect{0}$ para $i\leq k$, $\vect{y}=\sum_{i=k+1}^{n}\alpha_i\mat{A}\vect{v}_i$. Son independientes: si $\sum_{i>k}\beta_i\mat{A}\vect{v}_i=\vect{0}$, entonces $\mat{A}\bigl(\sum_{i>k}\beta_i\vect{v}_i\bigr)=\vect{0}$, de modo que $\sum_{i>k}\beta_i\vect{v}_i\in\ker(\mat{A})$ y es combinación de $\vect{v}_1,\ldots,\vect{v}_k$; la unicidad de coordenadas de la [Proposición “Coordenadas únicas”](02-independencia-lineal-base-y-dimension.qmd#prp-coordenadas) respecto de la base completa obliga a todos los $\beta_i=0$.
+
+:::
+
+El teorema da un criterio exacto para los sistemas lineales $\mat{A}\vect{x}=\vect{b}$.
+
+::: {#prp-sistemas-lineales}
+## Existencia y unicidad en un sistema lineal
+
+Sea $\mat{A}\in\mathbb{R}^{m\times n}$ y $\vect{b}\in\mathbb{R}^m$. (i) El sistema $\mat{A}\vect{x}=\vect{b}$ tiene solución si y solo si $\vect{b}\in\operatorname{Im}(\mat{A})$, es decir, si y solo si $\rango[\mat{A}\mid\vect{b}]=\rango(\mat{A})$. (ii) Si $\vect{x}_p$ es una solución, el conjunto de soluciones es $\vect{x}_p+\ker(\mat{A})$. (iii) La solución es única si y solo si $\ker(\mat{A})=\{\vect{0}\}$, que ocurre si y solo si $\rango(\mat{A})=n$.
+
+:::
+
+::: {.proof}
+La parte (i) es la definición de imagen; y $\rango[\mat{A}\mid\vect{b}]=\rango(\mat{A})$ equivale a que añadir $\vect{b}$ no aumente la dimensión de la envoltura de las columnas, es decir, a $\vect{b}\in\operatorname{Im}(\mat{A})$ por el inciso (iii) de la proposición de completar bases. Para (ii), si $\mat{A}\vect{x}=\vect{b}$, entonces $\mat{A}(\vect{x}-\vect{x}_p)=\vect{0}$, de modo que $\vect{x}\in\vect{x}_p+\ker(\mat{A})$; y recíprocamente $\mat{A}(\vect{x}_p+\vect{z})=\vect{b}$ para $\vect{z}\in\ker(\mat{A})$. La parte (iii) se sigue de (ii) y del teorema del rango, porque $\dim\ker(\mat{A})=n-\rango(\mat{A})$.
+
+:::
+
+Con números, sea $\mat{A}=\left(\begin{smallmatrix}1&2&3\\2&4&6\\1&0&1\end{smallmatrix}\right)$. Sus columnas $\vect{c}_1=(1,2,1)$, $\vect{c}_2=(2,4,0)$ y $\vect{c}_3=(3,6,1)$ cumplen $\vect{c}_3=\vect{c}_1+\vect{c}_2$, y $\vect{c}_1,\vect{c}_2$ no son proporcionales, de modo que $\rango(\mat{A})=2$. El núcleo se obtiene de $(x_1+x_3)\vect{c}_1+(x_2+x_3)\vect{c}_2=\vect{0}$, que exige $x_1=x_2=-x_3$, de modo que $\ker(\mat{A})=\operatorname{gen}\{(1,1,-1)\}$ tiene dimensión $1$ y $2+1=3=n$, como dice el teorema. El sistema $\mat{A}\vect{x}=(6,12,2)$ tiene la solución particular $(1,1,1)$, y por la proposición su conjunto de soluciones es $(1,1,1)+t(1,1,-1)$, $t\in\mathbb{R}$.
+
+El rango se definió mediante las columnas. Que el rango calculado con las filas sea el mismo número no es evidente, y su demostración usa la proyección ortogonal de la nota anterior.
+
+::: {#lem-nucleo-complemento}
+## Dimensión del complemento ortogonal en $\mathbb{R}^n$
+
+Para todo subespacio $S\subseteq\mathbb{R}^n$, $\dim S+\dim S^{\perp}=n$.
+
+:::
+
+::: {.proof}
+Sean $\{\vect{s}_1,\ldots,\vect{s}_k\}$ una base de $S$ y $\{\vect{t}_1,\ldots,\vect{t}_l\}$ una base de $S^{\perp}$. La unión es independiente: si $\sum\alpha_i\vect{s}_i+\sum\beta_j\vect{t}_j=\vect{0}$, el vector $\sum\alpha_i\vect{s}_i=-\sum\beta_j\vect{t}_j$ está en $S\cap S^{\perp}=\{\vect{0}\}$, y la independencia de cada base da todos los coeficientes nulos. La unión genera $\mathbb{R}^n$: por la [Proposición “Existencia y unicidad de la proyección ortogonal”](05-ortogonalidad-proyeccion-y-mejor-aproximacion.qmd#prp-proyeccion-existencia), todo $\vect{v}$ es $\hat{\vect{v}}+(\vect{v}-\hat{\vect{v}})$ con $\hat{\vect{v}}\in S$ y $\vect{v}-\hat{\vect{v}}\in S^{\perp}$. Es una base de $\mathbb{R}^n$ y $k+l=n$.
+
+:::
+
+::: {#cor-rango-fila-columna}
+## Rango por filas y por columnas, y núcleo ortogonal a las filas
+
+Para toda $\mat{A}\in\mathbb{R}^{m\times n}$: (i) $\rango(\mat{A}^{\top})=\rango(\mat{A})$, es decir, el espacio generado por las filas tiene la misma dimensión que el generado por las columnas; (ii) el espacio generado por las filas de $\mat{A}$, $\operatorname{Im}(\mat{A}^{\top})$, es exactamente $\ker(\mat{A})^{\perp}$.
+
+:::
+
+::: {.proof}
+Cada fila $\vect{r}_i$ de $\mat{A}$ cumple $\langle\vect{r}_i,\vect{x}\rangle=(\mat{A}\vect{x})_i=0$ para $\vect{x}\in\ker(\mat{A})$, de modo que las filas pertenecen a $\ker(\mat{A})^{\perp}$, y por lo tanto $\operatorname{Im}(\mat{A}^{\top})\subseteq\ker(\mat{A})^{\perp}$. Por el lema anterior y el teorema del rango, $\dim\ker(\mat{A})^{\perp}=n-\dim\ker(\mat{A})=\rango(\mat{A})$, de donde $\rango(\mat{A}^{\top})\leq\rango(\mat{A})$. Aplicando este resultado a $\mat{A}^{\top}$ se obtiene $\rango(\mat{A})\leq\rango(\mat{A}^{\top})$, y por lo tanto la igualdad (i). Con ella, $\operatorname{Im}(\mat{A}^{\top})$ es un subespacio de $\ker(\mat{A})^{\perp}$ de la misma dimensión, y por la [Proposición “Completar a una base y dimensión de los subespacios”](02-independencia-lineal-base-y-dimension.qmd#prp-completar-base)(iii) coincide con él, lo que prueba (ii).
+
+:::
+
+En el ejemplo, las filas $(1,2,3)$ y $(1,0,1)$ generan el espacio de filas, de dimensión $2=\rango(\mat{A})$, y ambas son ortogonales al generador $(1,1,-1)$ del núcleo, porque $1+2-3=0$ y $1+0-1=0$.

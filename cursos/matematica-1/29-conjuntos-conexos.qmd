@@ -1,0 +1,47 @@
+---
+title: "Conjuntos conexos"
+description: "Conjuntos separados y conexos en un espacio métrico, y la caracterización completa de los conexos de ℝ como los conjuntos sin huecos, es decir, los intervalos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Topología de la recta y del espacio]
+---
+
+La conexidad es una propiedad de naturaleza distinta a las anteriores: no describe cercanía ni cubrimientos, sino la imposibilidad de partir un conjunto en dos piezas mutuamente distantes. En $\mathbb{R}$ coincide con la idea intuitiva de conjunto sin huecos, y esa coincidencia se demuestra abajo.
+
+::: {#def-conexo}
+## Conjuntos separados y conexos
+
+$A,B\subseteq X$ están ***separados*** si $A\cap\overline{B}=\varnothing$ y $\overline{A}\cap B=\varnothing$. Un conjunto $E$ es ***conexo*** si no puede escribirse como $E=A\cup B$ con $A,B$ no vacíos y separados.
+
+:::
+
+«Separados» es una condición más fuerte que «disjuntos»: dos conjuntos disjuntos pueden compartir un punto límite, en cuyo caso no están separados. El caso más sencillo de conjunto no conexo aprovecha una brecha entre dos piezas.
+
+::: {#exm-no-conexo-numerico}
+## Un conjunto no conexo, con la separación explícita
+
+Sea $E=[0,1]\cup[2,3]\subseteq\mathbb{R}$, con $A=[0,1]$ y $B=[2,3]$. Ambos son cerrados, de modo que $\overline{A}=A$ y $\overline{B}=B$, y $A\cap\overline{B}=A\cap B=\varnothing$ y, simétricamente, $\overline{A}\cap B=\varnothing$. Los conjuntos $A$ y $B$ están separados, y como $E=A\cup B$, $E$ no es conexo. La brecha de longitud $1$ entre $1$ y $2$ es lo que hace posible la separación. En cambio $(0,1)\cup[1,2]$ no se descompone así: $(0,1)$ y $[1,2]$ son disjuntos pero $1\in\overline{(0,1)}\cap[1,2]$, y de hecho ese conjunto es el intervalo $(0,2]$, que sí es conexo.
+
+:::
+
+En $\mathbb{R}$ la conexidad se caracteriza por no tener huecos.
+
+La conexidad de un subconjunto de la recta se puede decidir sin recurrir a la definición, y la caracterización siguiente coincide exactamente con la noción intuitiva de conjunto sin huecos: un conjunto es conexo si contiene todo punto situado entre dos de sus puntos.
+
+::: {#thm-conexos-r}
+## Caracterización de los conexos de $\mathbb{R}$
+
+$E\subseteq\mathbb{R}$ es conexo si y solo si para todos $x,y\in E$ con $x<y$ y todo $z$ con $x<z<y$ se cumple $z\in E$. Estos conjuntos son exactamente los intervalos (acotados o no, abiertos, cerrados o semiabiertos), los conjuntos de un punto y el vacío.
+
+:::
+
+::: {.proof}
+Para la implicación directa se prueba la contrarrecíproca. Sea $E$ un conjunto con $x<z<y$, $x,y\in E$ y $z\notin E$. Se definen $A:=E\cap(-\infty,z)$ y $B:=E\cap(z,\infty)$. Ambos son no vacíos, porque $x\in A$ e $y\in B$, y $E=A\cup B$ porque $z\notin E$. Además están separados: $A\subseteq(-\infty,z]$, que es cerrado, de modo que $\overline{A}\subseteq(-\infty,z]$ por la parte (iii) del [Teorema “Propiedades de la clausura”](26-conjuntos-abiertos-cerrados-y-la-clausura.qmd#thm-clausura), y $B\subseteq(z,\infty)$ no tiene puntos en $(-\infty,z]$; por lo tanto $\overline{A}\cap B=\varnothing$, y de modo simétrico $A\cap\overline{B}=\varnothing$. Entonces $E$ no es conexo.
+
+Para la implicación recíproca, sea $E$ un conjunto sin huecos y supóngase, por contradicción, que $E=A\cup B$ con $A,B$ no vacíos y separados. Se eligen $a\in A$ y $b\in B$; como $A\cap\overline{B}=\varnothing$ y $B\subseteq\overline{B}$, $a\neq b$, y sin pérdida de generalidad $a<b$ (en otro caso se intercambian los papeles). Por la hipótesis, $[a,b]\subseteq E$. El conjunto $A\cap[a,b]$ es no vacío, porque contiene a $a$, y está acotado superiormente por $b$; sea $z:=\sup(A\cap[a,b])$. Por la [Proposición “El supremo de un conjunto acotado pertenece a su clausura”](26-conjuntos-abiertos-cerrados-y-la-clausura.qmd#prp-sup-en-clausura), $z\in\overline{A}$, y $a\leq z\leq b$ implica $z\in E$.
+
+Si $z\in B$, entonces $z\in\overline{A}\cap B=\varnothing$, una contradicción. Si $z\in A$, entonces $z\notin\overline{B}$, porque $A\cap\overline{B}=\varnothing$, y en particular $z\neq b$, de modo que $z<b$. Como $z\notin\overline{B}$, existe $r>0$ con $N_r(z)\cap B=\varnothing$. Cualquier punto $w$ con $z<w<\min\{z+r,b\}$ está en $[a,b]\subseteq E=A\cup B$, no está en $B$, y por lo tanto está en $A\cap[a,b]$, lo que contradice que $z$ sea cota superior de ese conjunto. Entonces $E$ es conexo.
+
+Finalmente, si $E\neq\varnothing$ es un conjunto sin huecos con $\alpha=\inf E$ y $\beta=\sup E$ (finitos o no), para todo $z$ con $\alpha<z<\beta$ existen $x,y\in E$ con $x<z<y$, de modo que $z\in E$; por lo tanto $(\alpha,\beta)\subseteq E\subseteq[\alpha,\beta]$ y $E$ es uno de los cuatro intervalos con extremos $\alpha$ y $\beta$.
+
+:::

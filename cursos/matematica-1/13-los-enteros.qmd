@@ -1,0 +1,171 @@
+---
+title: "Los enteros"
+description: "Construcción de los enteros como clases de equivalencia de pares de naturales, con sus operaciones, su estructura de anillo conmutativo y su orden."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas I, Sistemas numéricos]
+---
+
+En $\mathbb{N}$ la ecuación $x+5=3$ no tiene solución, y reparar esa carencia sin perder las propiedades de la [Proposición “Propiedades de la suma y del producto en $\mathbb{N}$”](12-los-naturales-axiomas-de-peano.qmd#prp-aritmetica-n) es el problema que resuelve esta nota. La idea consiste en representar cada entero, incluidos los que todavía no existen como objetos, mediante un par de naturales que codifica una diferencia: el par $(a,b)$ representa lo que informalmente se escribe $a-b$. Como distintos pares representan la misma diferencia, hace falta primero una relación que identifique cuándo dos pares corresponden al mismo entero, y solo después declarar que los enteros son, por definición, las clases que esa relación produce.
+
+::: {#def-relacion-enteros}
+## Relación de equivalencia en $\mathbb{N}\times\mathbb{N}$
+
+En $\mathbb{N}\times\mathbb{N}$ se define $(a,b)\sim(c,d)$ si y solo si $a+d=b+c$.
+
+:::
+
+La condición $a+d=b+c$ es la reformulación de $a-b=c-d$ que evita la resta: sumando $b+d$ a ambos miembros de $a-b=c-d$ se obtiene exactamente $a+d=b+c$, que tiene sentido en $\mathbb{N}$. Antes de usarla para definir $\mathbb{Z}$ hay que verificar que es una relación de equivalencia en el sentido de la [Definición “Relación de equivalencia y clase de equivalencia”](09-relaciones-de-equivalencia-y-de-orden.qmd#def-relacion-equivalencia).
+
+::: {#prp-sim-enteros-equivalencia}
+## $\sim$ es una relación de equivalencia
+
+La relación de la @def-relacion-enteros es reflexiva, simétrica y transitiva.
+
+:::
+
+::: {.proof}
+Para la reflexividad, la conmutatividad de la suma da $a+b=b+a$, que es la condición $(a,b)\sim(a,b)$.
+
+Para la simetría, si $(a,b)\sim(c,d)$, es decir, $a+d=b+c$, la conmutatividad da $c+b=d+a$, que es $(c,d)\sim(a,b)$.
+
+Para la transitividad, sean $(a,b)\sim(c,d)$ y $(c,d)\sim(e,f)$, es decir,
+$$
+a+d=b+c
+\qquad\text{y}\qquad
+c+f=d+e .
+$$ {#eq-transitividad-hipotesis}
+Sumando miembro a miembro las dos igualdades y reordenando con la asociatividad y la conmutatividad,
+$$
+(a+f)+(c+d)=(b+e)+(c+d).
+$$
+La cancelación de la [Proposición “Propiedades de la suma y del producto en $\mathbb{N}$”](12-los-naturales-axiomas-de-peano.qmd#prp-aritmetica-n)(iii), con $c+d$ como término común, da $a+f=b+e$, que es $(a,b)\sim(e,f)$.
+
+:::
+
+Para fijar la intuición con números: los pares $(7,4)$ y $(10,7)$ cumplen $(7,4)\sim(10,7)$, porque $7+7=14=4+10$, y ambos representan al entero $3$. En cambio $(7,4)\not\sim(5,1)$, porque $7+1=8$ y $4+5=9$, en concordancia con que $7-4=3$ y $5-1=4$ son diferentes. Verificada la relación, puede darse la definición formal.
+
+::: {#def-enteros}
+## Los enteros y sus operaciones
+
+El conjunto de los enteros es $\mathbb{Z}:=(\mathbb{N}\times\mathbb{N})/\!\sim$, el conjunto cociente de la [Definición “Conjunto cociente”](09-relaciones-de-equivalencia-y-de-orden.qmd#def-cociente) por la @def-relacion-enteros. La suma y el producto se definen por
+$$
+[(a,b)]+[(c,d)] := [(a+c,\,b+d)],
+\qquad
+[(a,b)]\cdot[(c,d)] := [(ac+bd,\,ad+bc)].
+$$ {#eq-operaciones-enteros}
+
+:::
+
+Las fórmulas traducen la aritmética de diferencias: si $(a,b)$ representa $a-b$ y $(c,d)$ representa $c-d$, la suma $(a-b)+(c-d)=(a+c)-(b+d)$ es $[(a+c,b+d)]$ y el producto $(a-b)(c-d)=(ac+bd)-(ad+bc)$ es $[(ac+bd,\,ad+bc)]$. Hay un punto delicado que la fórmula por sí sola no resuelve: cada entero tiene muchos representantes, de modo que antes de aceptar las operaciones hay que comprobar que el resultado no depende del representante usado.
+
+::: {#lem-buena-def-z}
+## Buena definición de las operaciones en $\mathbb{Z}$
+
+Si $(a,b)\sim(a',b')$ y $(c,d)\sim(c',d')$, entonces $(a+c,\,b+d)\sim(a'+c',\,b'+d')$ y $(ac+bd,\,ad+bc)\sim(a'c'+b'd',\,a'd'+b'c')$.
+
+:::
+
+::: {.proof}
+Las hipótesis son
+$$
+a+b'=b+a'
+\qquad\text{y}\qquad
+c+d'=d+c' .
+$$ {#eq-buena-def-hipotesis}
+
+Para la suma, se suman miembro a miembro las dos igualdades de @eq-buena-def-hipotesis y se reordena:
+$$
+(a+c)+(b'+d')=(b+d)+(a'+c'),
+$$
+que es la condición $(a+c,b+d)\sim(a'+c',b'+d')$.
+
+Para el producto se cambia primero el representante de $(a,b)$ y después el de $(c,d)$. Multiplicando la primera igualdad de @eq-buena-def-hipotesis por $c$ y por $d$ se obtienen, por la distributividad,
+$$
+ac+b'c=bc+a'c
+\qquad\text{y}\qquad
+ad+b'd=bd+a'd .
+$$ {#eq-buena-def-paso1}
+Se parte de $(ac+bd)+(a'd+b'c)$. Sumando $bd+a'd$ a ambos miembros de la primera igualdad de @eq-buena-def-paso1 y usando la segunda para reemplazar $bd+a'd$ por $ad+b'd$,
+$$
+\begin{aligned}
+(ac+bd)+(a'd+b'c) &= (ac+b'c)+(bd+a'd) \\
+(ac+bd)+(a'd+b'c) &= (bc+a'c)+(bd+a'd) \\
+(ac+bd)+(a'd+b'c) &= (bc+a'c)+(ad+b'd) \\
+(ac+bd)+(a'd+b'c) &= (ad+bc)+(a'c+b'd),
+\end{aligned}
+$$
+que es $(ac+bd,\,ad+bc)\sim(a'c+b'd,\,a'd+b'c)$. Ahora se cambia el representante de $(c,d)$ manteniendo $(a',b')$. Multiplicando la segunda igualdad de @eq-buena-def-hipotesis por $a'$ y por $b'$,
+$$
+a'c+a'd'=a'd+a'c'
+\qquad\text{y}\qquad
+b'c+b'd'=b'd+b'c' .
+$$
+Entonces
+$$
+\begin{aligned}
+(a'c+b'd)+(a'd'+b'c') &= (a'c+a'd')+(b'd+b'c') \\
+(a'c+b'd)+(a'd'+b'c') &= (a'd+a'c')+(b'c+b'd') \\
+(a'c+b'd)+(a'd'+b'c') &= (a'd+b'c)+(a'c'+b'd'),
+\end{aligned}
+$$
+que es $(a'c+b'd,\,a'd+b'c)\sim(a'c'+b'd',\,a'd'+b'c')$. La transitividad de la @prp-sim-enteros-equivalencia encadena ambas relaciones y da la segunda afirmación del lema.
+
+:::
+
+El lema legitima escribir $[(a,b)]+[(c,d)]$ sin precisar los representantes. Con las operaciones aseguradas, se verifica que $\mathbb{Z}$ tiene la estructura algebraica que se buscaba.
+
+::: {#prp-z-anillo}
+## $\mathbb{Z}$ es un anillo conmutativo con unidad
+
+Con $0:=[(1,1)]$ y $1:=[(2,1)]$, y para todos $x,y,z\in\mathbb{Z}$: la suma y el producto son asociativos y conmutativos; $x+0=x$ y $x\cdot1=x$; todo $x=[(a,b)]$ tiene un opuesto $-x:=[(b,a)]$ con $x+(-x)=0$; y $x\cdot(y+z)=x\cdot y+x\cdot z$.
+
+:::
+
+::: {.proof}
+Se calcula en representantes, y en cada caso la igualdad vale entre los pares mismos, no solo entre sus clases, por las propiedades de $\mathbb{N}$. Sean $x=[(a,b)]$, $y=[(c,d)]$ y $z=[(e,f)]$.
+
+La suma es conmutativa y asociativa porque $[(a+c,b+d)]=[(c+a,d+b)]$ y $[(a+c+e,b+d+f)]$ se obtiene agrupando de cualquier manera. El producto es conmutativo porque $(ac+bd,ad+bc)=(ca+db,cb+da)$. Es asociativo porque ambos lados valen $[(ace+bde+adf+bcf,\ acf+bdf+ade+bce)]$, como se ve al desarrollar $\bigl((ac+bd)e+(ad+bc)f,\ (ac+bd)f+(ad+bc)e\bigr)$ y $\bigl(a(ce+df)+b(cf+de),\ a(cf+de)+b(ce+df)\bigr)$.
+
+Para el neutro aditivo, $[(a,b)]+[(1,1)]=[(a+1,b+1)]=[(a,b)]$ porque $(a+1)+b=(b+1)+a$. Para el opuesto, $[(a,b)]+[(b,a)]=[(a+b,a+b)]=[(1,1)]$ porque $(a+b)+1=(a+b)+1$. Para el neutro multiplicativo, $[(a,b)]\cdot[(2,1)]=[(2a+b,\,a+2b)]$, y $(2a+b)+b=2a+2b=a+(a+2b)$ muestra que es $[(a,b)]$. Para la distributividad, $x\cdot(y+z)=[(ac+ae+bd+bf,\ ad+af+bc+be)]$ y $x\cdot y+x\cdot z=[(ac+bd+ae+bf,\ ad+bc+af+be)]$ son el mismo par.
+
+:::
+
+Los naturales originales viven dentro de $\mathbb{Z}$ mediante la identificación $n\mapsto[(n+1,1)]$. Esta función es inyectiva, porque $(n+1,1)\sim(m+1,1)$ significa $n+1+1=1+m+1$ y la cancelación da $n=m$, y conserva las operaciones: $[(n+1,1)]+[(m+1,1)]=[(n+m+2,2)]=[(n+m+1,1)]$ porque $(n+m+2)+1=2+(n+m+1)$; y $[(n+1,1)]\cdot[(m+1,1)]=[((n+1)(m+1)+1,\ n+m+2)]=[(nm+1,1)]$ porque $(n+1)(m+1)+1+1=nm+n+m+3=(n+m+2)+(nm+1)$. Por eso se escribe $\mathbb{N}\subset\mathbb{Z}$, y en adelante $a-b$ designa a $a+(-b)$.
+
+El orden de $\mathbb{Z}$ se define a partir de los positivos.
+
+::: {#def-orden-z}
+## Orden en $\mathbb{Z}$
+
+Un entero $[(a,b)]$ es ***positivo*** si $b<a$ en $\mathbb{N}$. Se escribe $x<y$ si $y-x$ es positivo, y $x\leq y$ si $x<y$ o $x=y$.
+
+:::
+
+La definición del orden reduce las comparaciones entre enteros a decidir si una diferencia es positiva, de modo que sus propiedades se siguen de las de los positivos. Esas propiedades, que hay que verificar una por una, son las siguientes.
+
+::: {#prp-orden-z}
+## El orden de $\mathbb{Z}$ está bien definido y es total
+
+(i) Ser positivo no depende del representante. (ii) Para todo $x\in\mathbb{Z}$ se cumple exactamente una de: $x$ es positivo, $x=0$, $-x$ es positivo. (iii) La suma y el producto de enteros positivos son positivos. En consecuencia, $<$ es transitivo, total y compatible con la suma y con el producto por un positivo.
+
+:::
+
+::: {.proof}
+Para (i), sea $(a,b)\sim(c,d)$ con $a=b+k$. De $a+d=b+c$ se sigue $b+k+d=b+c$, y la cancelación da $k+d=c$, de modo que $d<c$.
+
+Para (ii), sea $x=[(a,b)]$. Por la tricotomía de la [Proposición “El orden de $\mathbb{N}$ es total y compatible con las operaciones”](12-los-naturales-axiomas-de-peano.qmd#prp-orden-n), se cumple exactamente una de $b<a$, $a=b$, $a<b$. En el primer caso $x$ es positivo; en el segundo, $(a,a)\sim(1,1)$ y $x=0$; en el tercero, $-x=[(b,a)]$ es positivo.
+
+Para (iii), sean $[(a,b)]$ y $[(c,d)]$ positivos, con $a=b+k$ y $c=d+l$. La suma es $[(a+c,b+d)]$ con $a+c=(b+d)+(k+l)$, positiva. En el producto $[(ac+bd,\,ad+bc)]$ se tiene $ac+bd=(ad+bc)+kl$, como se ve al desarrollar $ac=(b+k)(d+l)=bd+bl+kd+kl$ y $ad+bc=(b+k)d+b(d+l)=2bd+kd+bl$, de modo que el producto es positivo.
+
+La transitividad, la totalidad y la compatibilidad son consecuencias de estos tres hechos, porque $z-x=(z-y)+(y-x)$ y porque el producto de un positivo por un positivo es positivo.
+
+:::
+
+Como ilustración, se suman los enteros representados por $(7,4)$, que es $3$, y por $(2,6)$, que es $-4$. Por @eq-operaciones-enteros,
+$$
+[(7,4)]+[(2,6)]=[(9,10)],
+$$
+y $(9,10)$ representa a $9-10=-1$, coherente con $3+(-4)=-1$. El @lem-buena-def-z garantiza que el resultado no depende de los representantes: con $(10,7)\sim(7,4)$ y $(5,9)\sim(2,6)$, que cumple $5+6=11=9+2$, se obtiene $[(10,7)]+[(5,9)]=[(15,16)]$, que también representa a $-1$. Para el producto se usan $(4,1)$, que representa a $3$, y $(1,5)$, que representa a $-4$: $[(4,1)]\cdot[(1,5)]=[(4+5,\,20+1)]=[(9,21)]$, que representa a $9-21=-12$, coherente con $3\times(-4)=-12$.
+
+Con $\mathbb{Z}$ construido, aparece la limitación que motiva el paso siguiente: la ecuación $2x=3$ no tiene solución en $\mathbb{Z}$, porque un entero multiplicado por $2$ nunca es impar. Reparar esa carencia introduciendo inversos multiplicativos es el problema que resuelve la construcción de los racionales.

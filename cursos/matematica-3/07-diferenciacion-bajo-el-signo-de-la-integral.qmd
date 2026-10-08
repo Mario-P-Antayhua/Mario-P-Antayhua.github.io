@@ -1,0 +1,79 @@
+---
+title: "Diferenciación bajo el signo de la integral"
+description: "La regla de Leibniz para integrales sobre intervalos compactos y no acotados, con demostración mediante continuidad uniforme y control de colas, y la regla con límites de integración variables."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Cálculo integral]
+---
+
+Una esperanza es una integral que depende de los parámetros del modelo, de modo que derivarla respecto de uno de ellos exige decidir si se puede derivar dentro de la integral. La respuesta no es siempre afirmativa, y por eso se necesitan condiciones precisas. Esta nota prueba la regla en dos escenarios: el intervalo compacto, donde basta la continuidad uniforme, y el intervalo no acotado, donde se añade una función dominante cuya integral controla las colas.
+
+::: {#thm-leibniz}
+## Regla de Leibniz en un intervalo compacto
+
+Sea $\Theta\subseteq\mathbb{R}$ un intervalo abierto y $f:[a,b]\times\Theta\to\mathbb{R}$ continua, con derivada parcial $\partial f/\partial\theta$ existente y continua en $[a,b]\times\Theta$. Entonces $F(\theta):=\int_a^bf(x,\theta)\,dx$ es derivable en $\Theta$ y
+$$
+F'(\theta)=\int_a^b\frac{\partial f}{\partial\theta}(x,\theta)\,dx .
+$$ {#eq-leibniz}
+
+:::
+
+::: {.proof}
+Se fija $\theta\in\Theta$ y $\delta>0$ con $[\theta-\delta,\theta+\delta]\subseteq\Theta$. El conjunto $K=[a,b]\times[\theta-\delta,\theta+\delta]$ es compacto y $\partial f/\partial\theta$ es continua en él, de modo que el [Teorema “Continuidad uniforme en un compacto”](../matematica-1/30-limites-y-continuidad-de-funciones.qmd#thm-continuidad-uniforme) la hace uniformemente continua. Dado $\varepsilon>0$, existe entonces $\eta\in(0,\delta)$ tal que $\bigl|\tfrac{\partial f}{\partial\theta}(x,s)-\tfrac{\partial f}{\partial\theta}(x,\theta)\bigr|<\varepsilon$ para todo $x\in[a,b]$ siempre que $|s-\theta|<\eta$; la elección de $\eta$ no depende de $x$.
+
+Para $0<|h|<\eta$, el cociente incremental de $F$ es una sola integral por la linealidad de la [Proposición “Propiedades de la integral”](01-la-integral-de-riemann.qmd#prp-propiedades-integral), que se aplica a las funciones continuas $x\mapsto f(x,\theta+h)$ y $x\mapsto f(x,\theta)$:
+$$
+\frac{F(\theta+h)-F(\theta)}{h}=\int_a^b\frac{f(x,\theta+h)-f(x,\theta)}{h}\,dx .
+$$
+Para cada $x$, el [Teorema “Teorema de Rolle y del valor medio”](../matematica-1/31-la-derivada-de-una-variable.qmd#thm-valor-medio) aplicado a $s\mapsto f(x,s)$ entre $\theta$ y $\theta+h$ da un punto $\xi_x$ con $|\xi_x-\theta|<|h|<\eta$ tal que el integrando es $\tfrac{\partial f}{\partial\theta}(x,\xi_x)$. Por la elección de $\eta$, ese valor difiere de $\tfrac{\partial f}{\partial\theta}(x,\theta)$ en menos de $\varepsilon$, para todo $x$ a la vez. La monotonía de la integral aplicada a la diferencia entre el integrando y $\tfrac{\partial f}{\partial\theta}(x,\theta)$ da
+$$
+\Bigl|\frac{F(\theta+h)-F(\theta)}{h}-\int_a^b\frac{\partial f}{\partial\theta}(x,\theta)\,dx\Bigr|\leq\varepsilon\,(b-a),
+$$
+y como $\varepsilon$ es arbitrario, el cociente converge a la integral de la derivada parcial.
+
+:::
+
+La demostración muestra dónde se usa cada hipótesis: la continuidad uniforme sobre un compacto permite que un mismo $\eta$ sirva para todos los $x$ a la vez, y eso es lo que justifica intercambiar el límite en $h$ con la integral. Con números, para $f(x,\theta)=e^{\theta x}$ en $[0,1]$, $F(\theta)=\int_0^1e^{\theta x}\,dx=(e^\theta-1)/\theta$, cuya derivada en $\theta=1$ es $(\theta e^\theta-e^\theta+1)/\theta^2=1$; por otro lado, la regla da $F'(1)=\int_0^1xe^x\,dx=1$, el valor calculado por partes en la [Nota “El teorema fundamental del cálculo”](02-teorema-fundamental-del-calculo.qmd). Ambos cálculos coinciden.
+
+El intervalo compacto no cubre las integrales sobre $[a,\infty)$ que aparecen con las densidades. En ese caso la continuidad uniforme sobre un compacto sigue sirviendo en cada $[a,R]$, y el resto se controla con una función dominante.
+
+::: {#thm-leibniz-impropia}
+## Regla de Leibniz en un intervalo no acotado
+
+Sea $\Theta\subseteq\mathbb{R}$ un intervalo abierto y $f:[a,\infty)\times\Theta\to\mathbb{R}$ continua, con $\partial f/\partial\theta$ existente y continua, tal que $\int_a^\infty f(x,\theta)\,dx$ converge para cada $\theta\in\Theta$. Si existe $g:[a,\infty)\to[0,\infty)$ continua con $\int_a^\infty g$ convergente y $\bigl|\tfrac{\partial f}{\partial\theta}(x,\theta)\bigr|\leq g(x)$ para todo $(x,\theta)$, entonces $F(\theta):=\int_a^\infty f(x,\theta)\,dx$ es derivable y $F'(\theta)=\int_a^\infty\tfrac{\partial f}{\partial\theta}(x,\theta)\,dx$, donde la integral converge.
+
+:::
+
+::: {.proof}
+La integral de $\partial f/\partial\theta(\cdot,\theta)$ converge por la [Proposición “Criterio de comparación para integrales impropias”](03-integrales-impropias-y-la-integral-gaussiana.qmd#prp-comparacion-integrales), porque está acotada en valor absoluto por $g$. Se fija $\theta\in\Theta$ y $\varepsilon>0$, y se elige $R\geq a$ con $\int_R^\infty g<\varepsilon$. Para $h\neq0$ con $\theta+h\in\Theta$, el cociente incremental es
+$$
+\frac{F(\theta+h)-F(\theta)}{h}=\int_a^R\frac{f(x,\theta+h)-f(x,\theta)}{h}\,dx+\int_R^\infty\frac{f(x,\theta+h)-f(x,\theta)}{h}\,dx ,
+$$
+donde la segunda integral converge por ser diferencia de dos integrales convergentes. Por el teorema del valor medio, el integrando de la segunda integral es $\tfrac{\partial f}{\partial\theta}(x,\xi_x)$ con $\xi_x$ en $\Theta$, de modo que su módulo no supera $g(x)$, y entonces $\bigl|\int_R^\infty(\cdots)\bigr|\leq\int_R^\infty g<\varepsilon$. El mismo argumento da $\bigl|\int_R^\infty\tfrac{\partial f}{\partial\theta}(x,\theta)\,dx\bigr|<\varepsilon$. La primera integral es un cociente incremental sobre el intervalo compacto $[a,R]$, y el teorema anterior lo hace converger a $\int_a^R\tfrac{\partial f}{\partial\theta}(x,\theta)\,dx$ cuando $h\to0$. Entonces, para $|h|$ suficientemente pequeño, el cociente completo difiere de $\int_a^\infty\tfrac{\partial f}{\partial\theta}(x,\theta)\,dx$ en menos de $3\varepsilon$: menos de $\varepsilon$ por la primera integral, menos de $\varepsilon$ por la cola del cociente y menos de $\varepsilon$ por la cola de la derivada parcial. Como $\varepsilon$ es arbitrario, se obtiene la fórmula.
+
+:::
+
+Con números, para $f(x,\theta)=e^{-\theta x}$ en $[0,\infty)$ con $\theta\in(c,\infty)$, $c>0$, la derivada parcial es $-xe^{-\theta x}$, acotada en módulo por $g(x)=xe^{-cx}$, que es integrable. Se tiene $F(\theta)=\int_0^\infty e^{-\theta x}\,dx=1/\theta$ y $F'(\theta)=-1/\theta^2$, mientras que la regla da $-\int_0^\infty xe^{-\theta x}\,dx$, que por partes con $u=x$ y $v'=e^{-\theta x}$ vale $-\bigl([-xe^{-\theta x}/\theta]_0^\infty+\frac1\theta\int_0^\infty e^{-\theta x}\,dx\bigr)=-1/\theta^2$. Los dos cálculos coinciden.
+
+Cuando los límites de integración también dependen de $\theta$, aparecen dos términos adicionales, que provienen del teorema fundamental del cálculo.
+
+::: {#cor-leibniz-limites-variables}
+## Regla de Leibniz con límites variables
+
+Sean $f:[\alpha,\beta]\times\Theta\to\mathbb{R}$ continua, con $\partial f/\partial\theta$ continua, y $u,v:\Theta\to[\alpha,\beta]$ derivables. Entonces $F(\theta):=\int_{u(\theta)}^{v(\theta)}f(x,\theta)\,dx$ es derivable y
+$$
+F'(\theta)=f\bigl(v(\theta),\theta\bigr)\,v'(\theta)-f\bigl(u(\theta),\theta\bigr)\,u'(\theta)+\int_{u(\theta)}^{v(\theta)}\frac{\partial f}{\partial\theta}(x,\theta)\,dx .
+$$ {#eq-leibniz-limites-variables}
+
+:::
+
+::: {.proof}
+Se define $\Phi(p,q,\theta):=\int_p^qf(x,\theta)\,dx$ en $[\alpha,\beta]^2\times\Theta$, de modo que $F(\theta)=\Phi(u(\theta),v(\theta),\theta)$. Sus derivadas parciales son $\partial\Phi/\partial q=f(q,\theta)$ y $\partial\Phi/\partial p=-f(p,\theta)$ por la primera parte del teorema fundamental del cálculo del [Teorema “Teorema fundamental del cálculo, primera parte”](02-teorema-fundamental-del-calculo.qmd#thm-fundamental-calculo), y $\partial\Phi/\partial\theta=\int_p^q\tfrac{\partial f}{\partial\theta}(x,\theta)\,dx$ por el teorema anterior. Las dos primeras son continuas porque $f$ lo es. Para la tercera, con $h(x,\theta):=\tfrac{\partial f}{\partial\theta}(x,\theta)$ y $M$ una cota de $|h|$ en un compacto $[\alpha,\beta]\times[\theta_0-\delta,\theta_0+\delta]$,
+$$
+\Bigl|\int_p^qh(x,\theta)\,dx-\int_{p_0}^{q_0}h(x,\theta_0)\,dx\Bigr|\leq M\,|p-p_0|+M\,|q-q_0|+(\beta-\alpha)\sup_x|h(x,\theta)-h(x,\theta_0)| ,
+$$
+y el supremo tiende a cero cuando $\theta\to\theta_0$ por la continuidad uniforme de $h$ en ese compacto. Con las tres parciales continuas, la [Proposición “Diferenciabilidad y derivadas parciales”](04-diferenciacion-en-varias-variables.qmd#prp-diferenciabilidad-parciales) da la diferenciabilidad de $\Phi$, y el [Teorema “Regla de la cadena en varias variables”](04-diferenciacion-en-varias-variables.qmd#thm-regla-cadena-multivariable) aplicada a $\theta\mapsto(u(\theta),v(\theta),\theta)$ produce @eq-leibniz-limites-variables.
+
+:::
+
+Con números, para $f(x,\theta)=\theta x$, $u(\theta)=0$ y $v(\theta)=\theta^2$, $F(\theta)=\theta\int_0^{\theta^2}x\,dx=\theta^5/2$ y $F'(\theta)=5\theta^4/2$. La fórmula da $f(\theta^2,\theta)\cdot2\theta=\theta^3\cdot2\theta=2\theta^4$ para el límite superior, cero para el inferior, y $\int_0^{\theta^2}x\,dx=\theta^4/2$ para la derivada parcial, cuya suma es $5\theta^4/2$.

@@ -1,0 +1,64 @@
+---
+title: "Vector de medias y matriz de covarianzas"
+description: "El vector de medias y la matriz de covarianzas de un vector aleatorio, su simetría y semidefinición positiva, su transformación bajo mapas afines, la esperanza de formas cuadráticas y la estandarización."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría I, Vectores aleatorios]
+---
+
+Las variables de un modelo econométrico se tratan juntas como un vector, y sus medias y covarianzas se organizan en un vector y una matriz. El álgebra matricial permite entonces calcular la media y la covarianza de cualquier combinación lineal de un golpe, sin escribir sumas. Esta nota define esos objetos, demuestra que la matriz de covarianzas es simétrica y semidefinida positiva, y obtiene las reglas de transformación que se usarán en toda la regresión. Se apoya en el álgebra de las notas [Nota “Operaciones matriciales y sus propiedades algebraicas”](../matematica-2/06-operaciones-matriciales.qmd) y [Nota “Formas cuadráticas y matrices definidas positivas”](../matematica-2/12-formas-cuadraticas-y-matrices-definidas-positivas.qmd) y en la covarianza de la [Nota “Covarianza y correlación”](11-covarianza-y-correlacion.qmd).
+
+::: {#def-media-covarianza-vector}
+## Vector de medias y matriz de covarianzas
+
+Sea $\vect{X}=(X_1,\ldots,X_k)^{\top}$ un vector aleatorio con segundos momentos finitos. Su ***vector de medias*** es $\vect{\mu}=\E[\vect{X}]=(\E[X_1],\ldots,\E[X_k])^{\top}$ y su ***matriz de covarianzas*** es $\mat{\Sigma}=\Var(\vect{X}):=\E\bigl[(\vect{X}-\vect{\mu})(\vect{X}-\vect{\mu})^{\top}\bigr]$, la matriz $k\times k$ con entradas $\Sigma_{ij}=\Cov(X_i,X_j)$. La esperanza de un vector o de una matriz aleatoria se toma entrada por entrada.
+
+:::
+
+La diagonal de $\mat{\Sigma}$ contiene las varianzas y las demás entradas las covarianzas. Las propiedades siguientes son la base del cálculo con vectores aleatorios.
+
+::: {#prp-covarianza-vector}
+## Propiedades de la matriz de covarianzas
+
+Sea $\vect{X}$ con media $\vect{\mu}$ y covarianza $\mat{\Sigma}$, $\mat{A}\in\mathbb{R}^{p\times k}$ y $\vect{b}\in\mathbb{R}^p$. Entonces: (i) $\mat{\Sigma}=\E[\vect{X}\vect{X}^{\top}]-\vect{\mu}\vect{\mu}^{\top}$; (ii) $\E[\mat{A}\vect{X}+\vect{b}]=\mat{A}\vect{\mu}+\vect{b}$; (iii) $\Var(\mat{A}\vect{X}+\vect{b})=\mat{A}\mat{\Sigma}\mat{A}^{\top}$; (iv) $\mat{\Sigma}$ es simétrica y semidefinida positiva, con $\vect{a}^{\top}\mat{\Sigma}\vect{a}=\Var(\vect{a}^{\top}\vect{X})$; (v) $\mat{\Sigma}$ es definida positiva si y solo si ninguna combinación lineal no trivial $\vect{a}^{\top}\vect{X}$ es constante casi seguramente.
+
+:::
+
+::: {.proof}
+Para (i), se expande $(\vect{X}-\vect{\mu})(\vect{X}-\vect{\mu})^{\top}=\vect{X}\vect{X}^{\top}-\vect{\mu}\vect{X}^{\top}-\vect{X}\vect{\mu}^{\top}+\vect{\mu}\vect{\mu}^{\top}$ y se toma esperanza entrada por entrada. Para (ii), cada coordenada de $\mat{A}\vect{X}+\vect{b}$ es una combinación lineal de las $X_j$ más una constante, y la linealidad de la esperanza da el resultado. Para (iii), $\mat{A}\vect{X}+\vect{b}-\E[\cdot]=\mat{A}(\vect{X}-\vect{\mu})$, de modo que $\Var(\mat{A}\vect{X}+\vect{b})=\E[\mat{A}(\vect{X}-\vect{\mu})(\vect{X}-\vect{\mu})^{\top}\mat{A}^{\top}]=\mat{A}\mat{\Sigma}\mat{A}^{\top}$, porque la esperanza es lineal y $\mat{A}$ no es aleatoria. Para (iv), la simetría se sigue de $\Cov(X_i,X_j)=\Cov(X_j,X_i)$, y con $\mat{A}=\vect{a}^{\top}$ en (iii), $\vect{a}^{\top}\mat{\Sigma}\vect{a}=\Var(\vect{a}^{\top}\vect{X})\geq0$. Para (v), $\vect{a}^{\top}\mat{\Sigma}\vect{a}=0$ equivale a $\Var(\vect{a}^{\top}\vect{X})=0$, que por la [Proposición “Propiedades de la varianza”](05-momentos-y-desigualdades-fundamentales.qmd#prp-varianza) equivale a que $\vect{a}^{\top}\vect{X}$ sea constante casi seguramente.
+
+:::
+
+Con números, sea $\vect{X}=(X_1,X_2)^{\top}$ con $\vect{\mu}=(1,2)^{\top}$ y $\mat{\Sigma}=\left(\begin{smallmatrix}4&2\\2&3\end{smallmatrix}\right)$, cuyos valores propios son $(7\pm\sqrt{17})/2\approx5.56$ y $1.44$, ambos positivos. La combinación $\vect{Y}=\mat{A}\vect{X}$ con $\mat{A}=\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$ tiene media $(3,-1)^{\top}$ y covarianza $\mat{A}\mat{\Sigma}\mat{A}^{\top}=\left(\begin{smallmatrix}11&1\\1&3\end{smallmatrix}\right)$: la varianza de $X_1+X_2$ es $4+3+2\cdot2=11$ y la de $X_1-X_2$ es $4+3-4=3$, como indica la fórmula de la varianza de una suma.
+
+Para dos vectores se define la covarianza cruzada $\Cov(\vect{X},\vect{Y})=\E[(\vect{X}-\vect{\mu}_X)(\vect{Y}-\vect{\mu}_Y)^{\top}]$, y el cálculo de (iii) da $\Cov(\mat{A}\vect{X},\mat{B}\vect{Y})=\mat{A}\Cov(\vect{X},\vect{Y})\mat{B}^{\top}$. La esperanza de una forma cuadrática del vector involucra la traza, que se vio en la [Proposición “Propiedad cíclica de la traza”](../matematica-2/06-operaciones-matriciales.qmd#prp-traza-ciclica).
+
+::: {#prp-esperanza-forma-cuadratica}
+## Esperanza de una forma cuadrática
+
+Si $\vect{X}$ tiene media $\vect{\mu}$ y covarianza $\mat{\Sigma}$ y $\mat{A}\in\mathbb{R}^{k\times k}$, entonces $\E[\vect{X}^{\top}\mat{A}\vect{X}]=\vect{\mu}^{\top}\mat{A}\vect{\mu}+\tr(\mat{A}\mat{\Sigma})$.
+
+:::
+
+::: {.proof}
+Como $\vect{X}^{\top}\mat{A}\vect{X}$ es un escalar, es igual a su traza, y la propiedad cíclica de la traza da $\vect{X}^{\top}\mat{A}\vect{X}=\tr(\mat{A}\vect{X}\vect{X}^{\top})$. La traza es una combinación lineal de entradas, de modo que conmuta con la esperanza, y $\E[\vect{X}\vect{X}^{\top}]=\mat{\Sigma}+\vect{\mu}\vect{\mu}^{\top}$ por (i). Entonces $\E[\vect{X}^{\top}\mat{A}\vect{X}]=\tr(\mat{A}\mat{\Sigma})+\tr(\mat{A}\vect{\mu}\vect{\mu}^{\top})=\tr(\mat{A}\mat{\Sigma})+\vect{\mu}^{\top}\mat{A}\vect{\mu}$.
+
+:::
+
+Con $\mat{A}=\Imat$ se obtiene $\E\|\vect{X}\|^2=\|\vect{\mu}\|^2+\tr\mat{\Sigma}$; con el vector del ejemplo, $\|\vect{\mu}\|^2=5$ y $\tr\mat{\Sigma}=7$, de modo que $\E[X_1^2+X_2^2]=12$, que coincide con $(4+1)+(3+4)$.
+
+Finalmente, toda matriz simétrica semidefinida positiva es la matriz de covarianzas de algún vector, y toda matriz de covarianzas definida positiva se puede reducir a la identidad.
+
+::: {#prp-estandarizacion}
+## Realización y estandarización
+
+(i) Si $\mat{\Sigma}\in\mathbb{R}^{k\times k}$ es simétrica y semidefinida positiva y $\vect{\mu}\in\mathbb{R}^k$, existe un vector aleatorio con media $\vect{\mu}$ y covarianza $\mat{\Sigma}$. (ii) Si $\vect{X}$ tiene covarianza definida positiva $\mat{\Sigma}$ y media $\vect{\mu}$, el vector $\vect{Z}=\mat{\Sigma}^{-1/2}(\vect{X}-\vect{\mu})$ tiene media cero y covarianza $\Imat$.
+
+:::
+
+::: {.proof}
+Para (i), por el axioma de existencia de variables independientes existe un vector $\vect{Z}$ de $k$ variables independientes $\N(0,1)$, con media cero y covarianza $\Imat$ porque las coordenadas son independientes, tienen varianza uno y covarianzas cruzadas nulas. Con la raíz cuadrada $\mat{\Sigma}^{1/2}$ de la [Proposición “Raíz cuadrada de una matriz semidefinida positiva”](../matematica-2/12-formas-cuadraticas-y-matrices-definidas-positivas.qmd#prp-raiz-cuadrada-matricial), el vector $\vect{\mu}+\mat{\Sigma}^{1/2}\vect{Z}$ tiene media $\vect{\mu}$ y covarianza $\mat{\Sigma}^{1/2}\Imat\mat{\Sigma}^{1/2}=\mat{\Sigma}$ por (ii) y (iii) de la proposición anterior. Para (ii), se aplica (iii) con $\mat{A}=\mat{\Sigma}^{-1/2}$, que es simétrica: $\Var(\vect{Z})=\mat{\Sigma}^{-1/2}\mat{\Sigma}\mat{\Sigma}^{-1/2}=\Imat$.
+
+:::
+
+Para la matriz del ejemplo, la estandarización transforma las dos variables correlacionadas en dos variables no correlacionadas de varianza uno, un paso previo habitual al análisis de datos multivariados.

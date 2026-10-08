@@ -1,8 +1,8 @@
 ---
 title: "Proposiciones y conectores lógicos"
-description: "Todo el conocimiento matemático se organiza en enunciados que se afirman verdaderos a partir de otros enunciados ya aceptados, mediante una cadena de razonamiento que cualquier lector pueda verificar paso a paso."
+description: "Qué es una proposición, la función proposicional y los cinco conectores lógicos con sus definiciones."
 author: "Mario Peñaloza"
-date: 2026-10-07
+date: 2026-10-08
 categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
 ---
 
@@ -21,12 +21,12 @@ sigue, es la estructura argumentativa: qué forma debe tener una cadena de
 razonamiento para que efectivamente establezca lo que pretende establecer, y
 no algo distinto o nada en absoluto.
 
-Esta sección construye los tres componentes en ese orden, y termina con el
-principio de inducción matemática, que es la primera herramienta de
-demostración genuinamente nueva respecto de la lógica elemental. La
-inducción reaparecerá una y otra vez a lo largo de todo lo que viene, cada
-vez que una fórmula dependa de un índice entero y haya que probarla para
-todos sus valores a la vez, así que conviene entenderla bien desde ahora.
+Esta nota se ocupa del primero y del segundo: precisa qué es una proposición
+y cómo se combinan las proposiciones mediante conectores. La estructura
+argumentativa, es decir, los métodos de demostración, se construye en las
+notas siguientes sobre esa base.
+
+Una convención del resto de la serie: los ejemplos de estas primeras notas usan los números naturales $\mathbb{N}=\{1,2,3,\ldots\}$, los enteros y los reales con su aritmética y su orden habituales. Las notas sobre los sistemas numéricos construyen cada uno de esos sistemas y demuestran las propiedades de esa aritmética, de modo que lo que aquí se usa como conocido queda justificado más abajo en la serie.
 
 El punto de partida es delimitar qué tipo de enunciados admite tratamiento
 lógico. No todo lo que puede escribirse en español cumple los requisitos, y
@@ -57,14 +57,15 @@ sustituya en lugar de $x$: es verdadero para $x=17$ y falso para $x=18$. Este
 tipo de enunciado, con una variable libre, recibe el nombre de
 ***función proposicional***, y se convierte en una proposición
 genuina solo cuando la variable se fija en un valor concreto o se liga
-mediante un cuantificador, tema que ocupará la [Subsección “Cuantificadores y su negación”](03-cuantificadores-y-su-negacion.qmd).
+mediante un cuantificador, que indica sobre cuántos elementos de un conjunto
+de referencia se afirma la propiedad.
 
 Existe, por último, una clase de enunciados que parecen proposiciones pero no
 lo son, y su estudio marca el límite exacto de lo que la lógica proposicional
 puede tratar.
 
 ::: {#nota-paradoja .callout-note appearance="simple" title="Nota: la proposición autorreferencial no es un descuido"}
-Considérese el enunciado ”esta afirmación es falsa”. Si se supone verdadero,
+Considérese el enunciado “esta afirmación es falsa”. Si se supone verdadero,
 entonces lo que afirma debe cumplirse, es decir, debe ser falso; y si se
 supone falso, entonces lo que niega no se cumple, de modo que debe ser
 verdadero. Ninguna de las dos asignaciones es consistente consigo misma, y
@@ -76,9 +77,7 @@ verdad.
 
 Este ejemplo, lejos de ser un juego de palabras vacío, es la razón por la
 cual la definición exige un valor de verdad único desde el principio, en vez
-de darlo por sentado. La autorreferencia volverá a aparecer, con
-consecuencias mucho más productivas, en el teorema de Cantor de la sección
-siguiente.
+de darlo por sentado.
 
 Fijado qué es una proposición, corresponde ver cómo se combinan. Las
 proposiciones simples se unen mediante ***conectores lógicos***

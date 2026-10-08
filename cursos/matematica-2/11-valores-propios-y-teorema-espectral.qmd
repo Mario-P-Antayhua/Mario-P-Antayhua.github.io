@@ -1,0 +1,114 @@
+---
+title: "Valores propios, triangularización y teorema espectral"
+description: "Valores y vectores propios, el polinomio característico, la triangularización de toda matriz cuadrada, los valores propios de potencias y productos de Kronecker, la condición para que las potencias de una matriz se anulen, y el teorema espectral de las matrices simétricas."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas II, Álgebra lineal]
+---
+
+El determinante decide si una transformación lineal es invertible, pero no dice nada de su comportamiento geométrico: qué direcciones estira, cuáles comprime y cuáles deja intactas salvo por un cambio de escala. Esa información la capturan los valores y vectores propios. Esta nota los estudia en dos escenarios: para una matriz cuadrada cualquiera, donde los valores propios pueden ser complejos y determinan si las potencias de la matriz se anulan, y para las matrices simétricas, donde son reales y existe una base ortonormal de vectores propios.
+
+Para que los valores propios existan en general hay que trabajar con números complejos. Los espacios vectoriales sobre $\mathbb{C}$ se definen con los mismos axiomas que sobre $\mathbb{R}$, con escalares complejos, y todos los resultados de las notas sobre dimensión, rango, determinante y matrices particionadas valen sin cambio, porque sus demostraciones solo usan los axiomas de cuerpo, que $\mathbb{C}$ cumple por la [Proposición “$\mathbb{C}$ es un cuerpo y el módulo es una norma multiplicativa”](../matematica-1/17-los-complejos.qmd#prp-complejos-cuerpo).
+
+::: {#def-valor-propio}
+## Valor propio, vector propio y polinomio característico
+
+Sea $\mat{A}\in\mathbb{C}^{n\times n}$. Un escalar $\lambda\in\mathbb{C}$ es un ***valor propio*** de $\mat{A}$ si existe $\vect{v}\in\mathbb{C}^n$ no nulo, llamado ***vector propio*** asociado, con $\mat{A}\vect{v}=\lambda\vect{v}$. El ***polinomio característico*** de $\mat{A}$ es $p(\lambda):=\det(\mat{A}-\lambda\Imat)$.
+
+:::
+
+Como $\mat{A}\vect{v}=\lambda\vect{v}$ equivale a $(\mat{A}-\lambda\Imat)\vect{v}=\vect{0}$, que admite una solución no nula si y solo si $\mat{A}-\lambda\Imat$ no es invertible, por el [Teorema “Caracterización de la invertibilidad”](08-el-determinante-y-la-invertibilidad.qmd#thm-caracterizacion-invertibilidad) los valores propios son exactamente las raíces del polinomio característico. Ese polinomio tiene grado $n$, y por el [Teorema “Teorema fundamental del álgebra”](../matematica-1/35-polinomios-y-el-teorema-fundamental-del-algebra.qmd#thm-fundamental-algebra) tiene $n$ raíces complejas contadas con multiplicidad, de modo que toda matriz cuadrada compleja tiene al menos un valor propio. La traza y el determinante se expresan con ellos.
+
+::: {#prp-traza-determinante-propios}
+## Traza y determinante en términos de los valores propios
+
+Si $\lambda_1,\ldots,\lambda_n$ son los valores propios de $\mat{A}$ contados con multiplicidad, entonces $\tr(\mat{A})=\sum_i\lambda_i$ y $\det(\mat{A})=\prod_i\lambda_i$.
+
+:::
+
+::: {.proof}
+Por el corolario de factorización, $p(\lambda)=(-1)^n\prod_i(\lambda-\lambda_i)=\prod_i(\lambda_i-\lambda)$. Evaluando en $\lambda=0$, $p(0)=\det\mat{A}=\prod_i\lambda_i$. Para la traza se comparan los coeficientes de $\lambda^{n-1}$. En el producto, ese coeficiente es $(-1)^{n-1}\sum_i\lambda_i$. En $\det(\mat{A}-\lambda\Imat)=\sum_\sigma\operatorname{sgn}(\sigma)\prod_i(a_{i\sigma(i)}-\lambda\delta_{i\sigma(i)})$, con $\delta_{ij}=1$ si $i=j$ y $0$ si no, una permutación $\sigma\neq\mathrm{id}$ tiene a lo sumo $n-2$ puntos fijos, de modo que su término tiene grado a lo sumo $n-2$ en $\lambda$; el único término de grado $n-1$ viene de la identidad, $\prod_i(a_{ii}-\lambda)$, cuyo coeficiente de $\lambda^{n-1}$ es $(-1)^{n-1}\sum_ia_{ii}$.
+
+:::
+
+El resultado central del caso general es que toda matriz cuadrada compleja es semejante a una matriz triangular, cuyos valores propios se leen en la diagonal.
+
+::: {#thm-triangularizacion}
+## Triangularización
+
+Para toda $\mat{A}\in\mathbb{C}^{n\times n}$ existe una matriz invertible $\mat{P}$ tal que $\mat{U}=\mat{P}^{-1}\mat{A}\mat{P}$ es triangular superior. Los elementos diagonales de $\mat{U}$ son los valores propios de $\mat{A}$.
+
+:::
+
+::: {.proof}
+Se procede por inducción sobre $n$; para $n=1$ no hay nada que probar. Sea $\lambda$ un valor propio de $\mat{A}$, que existe por lo anterior, con vector propio $\vect{v}_1$. Por la [Proposición “Completar a una base y dimensión de los subespacios”](02-independencia-lineal-base-y-dimension.qmd#prp-completar-base), $\vect{v}_1$ se completa a una base $\{\vect{v}_1,\ldots,\vect{v}_n\}$ de $\mathbb{C}^n$, y la matriz $\mat{Q}$ de columnas $\vect{v}_j$ es invertible por la [Proposición “Existencia y unicidad en un sistema lineal”](07-matrices-transformaciones-lineales-y-rango.qmd#prp-sistemas-lineales). Como $\mat{A}\mat{Q}\vect{e}_1=\mat{A}\vect{v}_1=\lambda\vect{v}_1=\mat{Q}(\lambda\vect{e}_1)$, la primera columna de $\mat{Q}^{-1}\mat{A}\mat{Q}$ es $\lambda\vect{e}_1$, de modo que $\mat{Q}^{-1}\mat{A}\mat{Q}=\begin{pmatrix}\lambda&\vect{w}^{\top}\\\vect{0}&\mat{A}_1\end{pmatrix}$ con $\mat{A}_1\in\mathbb{C}^{(n-1)\times(n-1)}$. Por la hipótesis de inducción, $\mat{A}_1=\mat{R}\mat{U}_1\mat{R}^{-1}$ con $\mat{U}_1$ triangular superior, y con $\mat{P}=\mat{Q}\begin{pmatrix}1&\vect{0}^{\top}\\\vect{0}&\mat{R}\end{pmatrix}$ se obtiene, por el producto por bloques, que $\mat{P}^{-1}\mat{A}\mat{P}=\begin{pmatrix}\lambda&\vect{w}^{\top}\mat{R}\\\vect{0}&\mat{U}_1\end{pmatrix}$, que es triangular superior. Por último, el determinante de $\mat{A}-\mu\Imat=\mat{P}(\mat{U}-\mu\Imat)\mat{P}^{-1}$ es el de $\mat{U}-\mu\Imat$, igual al producto $\prod_i(u_{ii}-\mu)$, de modo que los $u_{ii}$ son los valores propios.
+
+:::
+
+La triangularización permite calcular los valores propios de potencias y de productos de Kronecker, dos objetos que aparecen en los sistemas dinámicos.
+
+::: {#cor-propios-potencias-kronecker}
+## Valores propios de potencias y de productos de Kronecker
+
+Si $\mat{A}$ y $\mat{B}$ tienen valores propios $\lambda_1,\ldots,\lambda_n$ y $\mu_1,\ldots,\mu_m$, entonces $\mat{A}^k$ tiene valores propios $\lambda_i^k$, y $\mat{A}\otimes\mat{B}$ tiene valores propios $\lambda_i\mu_j$ para todos los pares $(i,j)$.
+
+:::
+
+::: {.proof}
+Sean $\mat{A}=\mat{P}\mat{U}\mat{P}^{-1}$ y $\mat{B}=\mat{R}\mat{V}\mat{R}^{-1}$ con $\mat{U},\mat{V}$ triangulares superiores. Entonces $\mat{A}^k=\mat{P}\mat{U}^k\mat{P}^{-1}$, y $\mat{U}^k$ es triangular superior con diagonal $u_{ii}^k$. Por las reglas del producto de Kronecker de la [Proposición “Reglas del producto de Kronecker y del operador vec”](10-producto-de-kronecker-y-operador-vec.qmd#prp-reglas-kronecker)(i), $(\mat{P}\otimes\mat{R})(\mat{U}\otimes\mat{V})(\mat{P}^{-1}\otimes\mat{R}^{-1})=\mat{A}\otimes\mat{B}$ y $(\mat{P}\otimes\mat{R})(\mat{P}^{-1}\otimes\mat{R}^{-1})=\Imat$. La matriz $\mat{U}\otimes\mat{V}$ es triangular superior, porque sus bloques bajo la diagonal son $u_{ij}\mat{V}=\mat{0}$ para $i>j$ y los de la diagonal son $u_{ii}\mat{V}$, triangulares, con diagonal $u_{ii}v_{jj}$. Por la triangularización, los valores propios de $\mat{A}\otimes\mat{B}$ son esos productos.
+
+:::
+
+Un uso inmediato es decidir cuándo las potencias de una matriz tienden a cero, condición central en la estabilidad de un sistema dinámico.
+
+::: {#thm-potencias-matriz}
+## Potencias de una matriz y valores propios
+
+Sea $\mat{A}\in\mathbb{C}^{n\times n}$. (i) Si todos sus valores propios cumplen $|\lambda_i|<1$, existen $C>0$ y $\rho\in(0,1)$ con $|(\mat{A}^k)_{ij}|\leq C\rho^k$ para todo $k$; en consecuencia, la serie $\sum_{k\geq0}\mat{A}^k$ converge entrada a entrada, $\Imat-\mat{A}$ es invertible y $\sum_{k\geq0}\mat{A}^k=(\Imat-\mat{A})^{-1}$; y $\Imat-\mat{A}\otimes\mat{A}$ es invertible. (ii) Si algún valor propio cumple $|\lambda_i|\geq1$, $\mat{A}^k$ no tiende a cero.
+
+:::
+
+::: {.proof}
+Para (ii), si $\mat{A}\vect{v}=\lambda\vect{v}$ con $\vect{v}\neq\vect{0}$, entonces $\mat{A}^k\vect{v}=\lambda^k\vect{v}$ y $\|\lambda^k\vect{v}\|=|\lambda|^k\|\vect{v}\|\geq\|\vect{v}\|\not\to0$.
+
+Para (i), sea $\mat{A}=\mat{P}\mat{U}\mat{P}^{-1}$ con $\mat{U}$ triangular superior y diagonal $u_{ii}=\lambda_i$, y sea $r:=\max|\lambda_i|<1$. Para $\varepsilon>0$ se define $\mat{D}_\varepsilon=\operatorname{diag}(1,\varepsilon,\ldots,\varepsilon^{n-1})$; la matriz $\mat{W}=\mat{D}_\varepsilon^{-1}\mat{U}\mat{D}_\varepsilon$ tiene entradas $w_{ij}=u_{ij}\varepsilon^{j-i}$ para $j\geq i$ y $0$ en otro caso. Con la norma $\|\mat{X}\|:=\max_i\sum_j|x_{ij}|$, que cumple $\|\mat{X}\mat{Y}\|\leq\|\mat{X}\|\,\|\mat{Y}\|$ porque $\sum_j|\sum_lx_{il}y_{lj}|\leq\sum_l|x_{il}|\sum_j|y_{lj}|\leq\|\mat{X}\|\,\|\mat{Y}\|$, se elige $\varepsilon$ tan pequeño que $\|\mat{W}\|\leq r+\delta=:\rho<1$ con $\delta=(1-r)/2$, lo que es posible porque las entradas fuera de la diagonal tienen un factor $\varepsilon^{j-i}$ con $j-i\geq1$ y la diagonal de $\mat{W}$ es $\lambda_i$. Entonces $\|\mat{W}^k\|\leq\rho^k$, y $\mat{A}^k=\mat{P}\mat{D}_\varepsilon\mat{W}^k\mat{D}_\varepsilon^{-1}\mat{P}^{-1}$ tiene entradas acotadas por $C\rho^k$ con una constante $C$ que depende de $\mat{P}$ y $\varepsilon$ pero no de $k$.
+
+La serie $\sum_k\mat{A}^k$ converge entrada a entrada por comparación con la geométrica $\sum C\rho^k$. Las sumas parciales $\mat{S}_N=\sum_{k=0}^{N}\mat{A}^k$ cumplen $(\Imat-\mat{A})\mat{S}_N=\Imat-\mat{A}^{N+1}\to\Imat$, de modo que $(\Imat-\mat{A})\mat{S}=\Imat$ para el límite $\mat{S}$, y $\Imat-\mat{A}$ es invertible con $\mat{S}=(\Imat-\mat{A})^{-1}$. Por último, los valores propios de $\Imat-\mat{A}\otimes\mat{A}$ son $1-\lambda_i\lambda_j$ (por el corolario anterior y la triangularización, porque restar la identidad desplaza la diagonal), y $|\lambda_i\lambda_j|<1$ los hace no nulos, de modo que el determinante, que es su producto, es no nulo.
+
+:::
+
+Con números, la matriz $\mat{A}=\left(\begin{smallmatrix}0.5&0.4\\0&0.3\end{smallmatrix}\right)$ es triangular con valores propios $0.5$ y $0.3$, de modo que $\mat{A}^k\to\mat{0}$: $\mat{A}^2=\left(\begin{smallmatrix}0.25&0.32\\0&0.09\end{smallmatrix}\right)$ y la suma $\sum\mat{A}^k=(\Imat-\mat{A})^{-1}=\left(\begin{smallmatrix}0.5&-0.4\\0&0.7\end{smallmatrix}\right)^{-1}=\left(\begin{smallmatrix}2&8/7\\0&10/7\end{smallmatrix}\right)$. Los valores propios de $\mat{A}\otimes\mat{A}$ son $0.25$, $0.15$, $0.15$ y $0.09$.
+
+El caso de las matrices simétricas es especial: los valores propios son reales y existe una base ortonormal de vectores propios. Se demuestra sin usar números complejos, mediante un argumento variacional que usa los resultados de compacidad y de valores extremos de la primera parte. Se dice que $\mat{A}\in\mathbb{R}^{n\times n}$ es simétrica cuando $\mat{A}^{\top}=\mat{A}$, y entonces $\langle\mat{A}\vect{x},\vect{y}\rangle=\vect{x}^{\top}\mat{A}^{\top}\vect{y}=\langle\vect{x},\mat{A}\vect{y}\rangle$. Un subespacio $W\subseteq\mathbb{R}^n$ es ***invariante*** si $\mat{A}\vect{w}\in W$ para todo $\vect{w}\in W$.
+
+::: {#thm-espectral-simetricas}
+## Teorema espectral para matrices simétricas
+
+Sea $\mat{A}\in\mathbb{R}^{n\times n}$ simétrica y $W\subseteq\mathbb{R}^n$ un subespacio invariante de dimensión $k\geq1$. Entonces $W$ tiene una base ortonormal formada por vectores propios de $\mat{A}$, con valores propios reales. En particular, $\mathbb{R}^n$ tiene una base ortonormal de vectores propios de $\mat{A}$.
+
+:::
+
+::: {.proof}
+Se induce sobre $k$. La esfera $\{\vect{x}\in W:\|\vect{x}\|=1\}$ es cerrada y acotada, de modo que es compacta por Heine–Borel, y no vacía; la función continua $q(\vect{x})=\vect{x}^{\top}\mat{A}\vect{x}$ alcanza en ella un máximo $\lambda_1$ en algún $\vect{x}_1$ por el [Teorema “Teorema de los valores extremos”](../matematica-1/30-limites-y-continuidad-de-funciones.qmd#thm-weierstrass-valores-extremos). Se prueba que $\vect{x}_1$ es un vector propio. Sea $\vect{y}\in W$ unitario y ortogonal a $\vect{x}_1$, y $t\in\mathbb{R}$. El vector $\vect{x}_1+t\vect{y}$ tiene norma al cuadrado $1+t^2$, de modo que $q\bigl((\vect{x}_1+t\vect{y})/\sqrt{1+t^2}\bigr)\leq\lambda_1$, es decir, $q(\vect{x}_1+t\vect{y})\leq\lambda_1(1+t^2)$. Desarrollando con la simetría, $q(\vect{x}_1+t\vect{y})=\lambda_1+2t\langle\mat{A}\vect{x}_1,\vect{y}\rangle+t^2q(\vect{y})$, de donde
+$$
+2t\,\langle\mat{A}\vect{x}_1,\vect{y}\rangle\leq t^2\bigl(\lambda_1-q(\vect{y})\bigr)\qquad\text{para todo }t\in\mathbb{R}.
+$$
+Dividiendo por $t>0$ y haciendo $t\to0^+$ se obtiene $\langle\mat{A}\vect{x}_1,\vect{y}\rangle\leq0$; dividiendo por $t<0$ (que invierte la desigualdad) y haciendo $t\to0^-$ se obtiene $\geq0$. Entonces $\langle\mat{A}\vect{x}_1,\vect{y}\rangle=0$ para todo $\vect{y}\in W$ ortogonal a $\vect{x}_1$ (para un $\vect{y}$ no unitario se normaliza). Sea $c:=\langle\mat{A}\vect{x}_1,\vect{x}_1\rangle$ y $\vect{z}:=\mat{A}\vect{x}_1-c\vect{x}_1$. Por la invarianza, $\vect{z}\in W$, y $\langle\vect{z},\vect{x}_1\rangle=c-c=0$, de modo que $\vect{z}$ es ortogonal a $\vect{x}_1$; por lo anterior, $\langle\vect{z},\vect{z}\rangle=\langle\mat{A}\vect{x}_1,\vect{z}\rangle-c\langle\vect{x}_1,\vect{z}\rangle=0-0=0$, y la definición positiva da $\vect{z}=\vect{0}$. Entonces $\mat{A}\vect{x}_1=c\,\vect{x}_1$ con $c=\lambda_1$ real: $\vect{x}_1$ es un vector propio.
+
+Si $k=1$, $\{\vect{x}_1\}$ es la base buscada. Si $k>1$, el subespacio $W'=\{\vect{w}\in W:\langle\vect{w},\vect{x}_1\rangle=0\}$ es el núcleo de la función lineal $\vect{w}\mapsto\langle\vect{w},\vect{x}_1\rangle$ de $W$ en $\mathbb{R}$, que es sobreyectiva porque $\langle\vect{x}_1,\vect{x}_1\rangle=1$; por el teorema del rango, $\dim W'=k-1$. Además es invariante: para $\vect{w}\in W'$, $\mat{A}\vect{w}\in W$ y $\langle\mat{A}\vect{w},\vect{x}_1\rangle=\langle\vect{w},\mat{A}\vect{x}_1\rangle=\lambda_1\langle\vect{w},\vect{x}_1\rangle=0$. La hipótesis de inducción da una base ortonormal de $W'$ formada por vectores propios, y junto con $\vect{x}_1$ forma una base ortonormal de $W$.
+
+:::
+
+::: {#cor-diagonalizacion-ortogonal}
+## Diagonalización ortogonal y cota de Rayleigh
+
+Si $\mat{A}\in\mathbb{R}^{n\times n}$ es simétrica, existen una matriz ortogonal $\mat{Q}$ (es decir, $\mat{Q}^{\top}\mat{Q}=\Imat$) y una matriz diagonal $\mat{\Lambda}$ tales que $\mat{A}=\mat{Q}\mat{\Lambda}\mat{Q}^{\top}$, con las columnas de $\mat{Q}$ los vectores propios ortonormales y la diagonal de $\mat{\Lambda}$ los valores propios $\lambda_1\leq\cdots\leq\lambda_n$. Además $\tr(\mat{A})=\sum_i\lambda_i$, $\det(\mat{A})=\prod_i\lambda_i$ y, para todo $\vect{x}$, $\lambda_1\|\vect{x}\|^2\leq\vect{x}^{\top}\mat{A}\vect{x}\leq\lambda_n\|\vect{x}\|^2$.
+
+:::
+
+::: {.proof}
+Sea $\mat{Q}$ la matriz cuyas columnas son la base ortonormal del teorema; la ortonormalidad de las columnas equivale a $\mat{Q}^{\top}\mat{Q}=\Imat$. La identidad $\mat{A}\vect{q}_i=\lambda_i\vect{q}_i$ para cada columna se reescribe $\mat{A}\mat{Q}=\mat{Q}\mat{\Lambda}$. Como $\det(\mat{Q}^{\top})\det(\mat{Q})=1$, $\mat{Q}$ es invertible y $\mat{Q}^{-1}=\mat{Q}^{\top}$, de modo que $\mat{A}=\mat{Q}\mat{\Lambda}\mat{Q}^{\top}$. Para la traza, la propiedad cíclica da $\tr(\mat{Q}\mat{\Lambda}\mat{Q}^{\top})=\tr(\mat{\Lambda}\mat{Q}^{\top}\mat{Q})=\tr(\mat{\Lambda})$, y para el determinante, $\det(\mat{Q})\det(\mat{\Lambda})\det(\mat{Q}^{\top})=\det(\mat{\Lambda})$. Para la cota, con $\vect{y}=\mat{Q}^{\top}\vect{x}$ se tiene $\|\vect{y}\|=\|\vect{x}\|$ y $\vect{x}^{\top}\mat{A}\vect{x}=\vect{y}^{\top}\mat{\Lambda}\vect{y}=\sum_i\lambda_iy_i^2$, que está entre $\lambda_1\sum y_i^2$ y $\lambda_n\sum y_i^2$.
+
+:::
+
+La descomposición $\mat{A}=\mat{Q}\mat{\Lambda}\mat{Q}^{\top}$, llamada descomposición espectral, separa a $\mat{A}$ en dos partes de naturaleza distinta: la matriz ortogonal $\mat{Q}$, que solo rota o refleja sin alterar longitudes ni ángulos, y la diagonal $\mat{\Lambda}$, que concentra toda la acción de escalamiento en sus valores propios. Con números, $\mat{A}=\left(\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\right)$ tiene valores propios $1$ y $3$, con vectores propios ortonormales $(1,-1)/\sqrt2$ y $(1,1)/\sqrt2$; se comprueba que $\tr\mat{A}=4=1+3$ y $\det\mat{A}=3=1\cdot3$, y que $\vect{x}^{\top}\mat{A}\vect{x}=2x_1^2+2x_1x_2+2x_2^2$ está entre $\|\vect{x}\|^2$ y $3\|\vect{x}\|^2$.

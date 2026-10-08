@@ -1,0 +1,102 @@
+---
+title: "Condiciones de optimalidad sin restricciones"
+description: "La condición de primer orden, las condiciones necesarias y suficientes de segundo orden mediante la hessiana, la convexidad de funciones de varias variables y la suficiencia de la condición de primer orden bajo convexidad."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Matemática para Economistas III, Optimización]
+---
+
+El teorema de Weierstrass garantiza que el óptimo existe bajo ciertas condiciones, pero no dice cómo encontrarlo. En un punto interior donde la función es diferenciable, la aproximación lineal no deja ninguna dirección de mejora disponible si el punto es óptimo, y eso da una ecuación que los candidatos deben satisfacer. Esa ecuación no distingue entre mínimos, máximos y puntos de silla, y la curvatura, que recoge la hessiana, resuelve la ambigüedad.
+
+::: {#thm-fermat}
+## Condición necesaria de primer orden
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$ diferenciable en $\vect{x}^*\in D$. Si $\vect{x}^*$ es un óptimo local de $f$, entonces $\nabla f(\vect{x}^*)=\vect{0}$.
+
+:::
+
+::: {.proof}
+Se trata el caso del mínimo; el del máximo se obtiene aplicando el resultado a $-f$. Para cada $i$, la función de una variable $\phi_i(t):=f(\vect{x}^*+t\vect{e}_i)$ está definida en un intervalo abierto alrededor de $0$, porque $D$ es abierto, y tiene un mínimo local en $t=0$, porque $\vect{x}^*$ lo es de $f$. Además es derivable en $0$ con $\phi_i'(0)=\tfrac{\partial f}{\partial x_i}(\vect{x}^*)$ por la [Proposición “Diferenciabilidad y derivadas parciales”](04-diferenciacion-en-varias-variables.qmd#prp-diferenciabilidad-parciales). El [Teorema “Teorema de Fermat”](../matematica-1/31-la-derivada-de-una-variable.qmd#thm-fermat-una-variable) da $\phi_i'(0)=0$, de modo que cada coordenada del gradiente es nula.
+
+:::
+
+Un punto con $\nabla f(\vect{x}^*)=\vect{0}$ es un ***punto crítico***. La condición identifica candidatos, pero no más que eso: la función $f(x,y)=x^2-y^2$ tiene gradiente $(2x,-2y)$ nulo en el origen, y a lo largo del eje $x$ el origen es un mínimo mientras que a lo largo del eje $y$ es un máximo. Para decidir hay que mirar la curvatura, y es la hessiana la que la contiene. La condición necesaria de segundo orden se obtiene reduciendo el problema a una variable en cada dirección.
+
+::: {#thm-segundo-orden-necesaria}
+## Condición necesaria de segundo orden
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$ de clase $C^2$. Si $\vect{x}^*$ es un mínimo local de $f$, entonces $\nabla f(\vect{x}^*)=\vect{0}$ y $\mat{H}_f(\vect{x}^*)$ es semidefinida positiva. Si es un máximo local, $\mat{H}_f(\vect{x}^*)$ es semidefinida negativa.
+
+:::
+
+::: {.proof}
+La condición sobre el gradiente es el teorema anterior. Para la hessiana, se fija $\vect{h}\in\mathbb{R}^n$ y se define $g(t):=f(\vect{x}^*+t\vect{h})$, que tiene un mínimo local en $t=0$, con $g'(0)=\langle\nabla f(\vect{x}^*),\vect{h}\rangle=0$ y $g''(0)=\vect{h}^{\top}\mat{H}_f(\vect{x}^*)\vect{h}$ por la regla de la cadena. El [Corolario “Taylor de segundo orden con resto pequeño”](../matematica-1/32-teorema-de-taylor-en-una-variable.qmd#cor-taylor-segundo-orden) da $g(t)-g(0)=\tfrac12g''(0)t^2+R(t)$ con $R(t)/t^2\to0$. Como $g(t)-g(0)\geq0$ para $|t|$ pequeño, al dividir por $t^2$ resulta $\tfrac12g''(0)+R(t)/t^2\geq0$, y haciendo $t\to0$, $g''(0)\geq0$. Como $\vect{h}$ es arbitrario, la hessiana es semidefinida positiva. El caso del máximo se obtiene aplicando lo anterior a $-f$.
+
+:::
+
+La contrapositiva descarta candidatos: si en un punto crítico la hessiana tiene un valor propio positivo y otro negativo, entonces el punto no es mínimo ni máximo local, y se llama ***punto de silla***. Esa es la situación de $f(x,y)=x^2-y^2$, cuya hessiana $\mathrm{diag}(2,-2)$ tiene valores propios de ambos signos. La condición suficiente cambia la semidefinición por la definición estricta.
+
+::: {#thm-segundo-orden-suficiente}
+## Condición suficiente de segundo orden
+
+Sea $D\subseteq\mathbb{R}^n$ abierto, $f:D\to\mathbb{R}$ de clase $C^2$ y $\vect{x}^*\in D$ con $\nabla f(\vect{x}^*)=\vect{0}$ y $\mat{H}_f(\vect{x}^*)$ definida positiva. Entonces $\vect{x}^*$ es un mínimo local estricto de $f$.
+
+:::
+
+::: {.proof}
+Sea $c>0$ el menor valor propio de $\mat{H}_f(\vect{x}^*)$. Por la descomposición de la demostración del [Teorema “Caracterización espectral de la definición positiva”](../matematica-2/12-formas-cuadraticas-y-matrices-definidas-positivas.qmd#thm-definida-positiva-espectral), $\vect{h}^{\top}\mat{H}_f(\vect{x}^*)\vect{h}=\sum_i\lambda_iy_i^2\geq c\|\vect{y}\|^2=c\|\vect{h}\|^2$. La fórmula de Taylor del [Teorema “Fórmula de Taylor de segundo orden”](06-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#thm-taylor-segundo-orden), con $\nabla f(\vect{x}^*)=\vect{0}$, da $f(\vect{x}^*+\vect{h})-f(\vect{x}^*)=\tfrac12\vect{h}^{\top}\mat{H}_f(\vect{x}^*)\vect{h}+R(\vect{h})\geq\tfrac c2\|\vect{h}\|^2+R(\vect{h})$ con $R(\vect{h})/\|\vect{h}\|^2\to0$. Existe entonces $\delta>0$ con $|R(\vect{h})|<\tfrac c4\|\vect{h}\|^2$ para $0<\|\vect{h}\|<\delta$, y para esos $\vect{h}$ la diferencia es mayor que $\tfrac c4\|\vect{h}\|^2>0$.
+
+:::
+
+Con números, $f(x,y)=x^3-3x+y^2$ tiene gradiente $(3x^2-3,\ 2y)$, que se anula en $(1,0)$ y $(-1,0)$. La hessiana es $\mathrm{diag}(6x,\,2)$: en $(1,0)$ es $\mathrm{diag}(6,2)$, definida positiva, de modo que es un mínimo local estricto con $f(1,0)=-2$; en $(-1,0)$ es $\mathrm{diag}(-6,2)$, indefinida, de modo que es un punto de silla. El mínimo local no es global, porque $f(-3,0)=-18<-2$. Para decidir cuándo un punto crítico es un mínimo global se necesita la noción de convexidad.
+
+::: {#def-convexidad}
+## Conjunto convexo y función convexa
+
+Un conjunto $D\subseteq\mathbb{R}^n$ es ***convexo*** si $\lambda\vect{x}+(1-\lambda)\vect{y}\in D$ para todos $\vect{x},\vect{y}\in D$ y $\lambda\in[0,1]$. Una función $f:D\to\mathbb{R}$ definida en un convexo es ***convexa*** si $f\bigl(\lambda\vect{x}+(1-\lambda)\vect{y}\bigr)\leq\lambda f(\vect{x})+(1-\lambda)f(\vect{y})$ para todos $\vect{x},\vect{y}\in D$ y $\lambda\in[0,1]$, y ***estrictamente convexa*** si la desigualdad es estricta cuando $\vect{x}\neq\vect{y}$ y $\lambda\in(0,1)$.
+
+:::
+
+La convexidad de una función de varias variables se reduce a la de sus restricciones a rectas, para las cuales ya se conocen las caracterizaciones de la [Nota “Convexidad en una variable y la desigualdad de Jensen”](../matematica-1/36-convexidad-y-desigualdad-de-jensen.qmd).
+
+::: {#prp-convexidad-rectas}
+## La convexidad se verifica sobre rectas
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y convexo y $f:D\to\mathbb{R}$. Entonces $f$ es convexa si y solo si, para todos $\vect{x}\in D$ y $\vect{h}\in\mathbb{R}^n$, la función $g(t):=f(\vect{x}+t\vect{h})$ es convexa en el intervalo abierto $I=\{t:\vect{x}+t\vect{h}\in D\}$.
+
+:::
+
+::: {.proof}
+Si $f$ es convexa y $s,t\in I$, $\lambda\in[0,1]$, entonces $\vect{x}+(\lambda s+(1-\lambda)t)\vect{h}=\lambda(\vect{x}+s\vect{h})+(1-\lambda)(\vect{x}+t\vect{h})$, y la convexidad de $f$ da $g(\lambda s+(1-\lambda)t)\leq\lambda g(s)+(1-\lambda)g(t)$. Recíprocamente, dados $\vect{x},\vect{y}\in D$, se toma $\vect{h}=\vect{y}-\vect{x}$; el intervalo $I$ contiene a $0$ y a $1$, y la convexidad de $g$ en esos puntos es $f(\lambda\vect{y}+(1-\lambda)\vect{x})\leq\lambda f(\vect{y})+(1-\lambda)f(\vect{x})$. El conjunto $I$ es un intervalo abierto porque $D$ es abierto y convexo.
+
+:::
+
+Con ello la convexidad se lee en la hessiana, y se obtiene la desigualdad de la tangente que hace suficiente a la condición de primer orden.
+
+::: {#thm-convexidad-hessiana}
+## Convexidad, hessiana y plano tangente
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y convexo y $f:D\to\mathbb{R}$ de clase $C^2$. Entonces: (i) $f$ es convexa si y solo si $\mat{H}_f(\vect{x})$ es semidefinida positiva para todo $\vect{x}\in D$; (ii) si $\mat{H}_f(\vect{x})$ es definida positiva para todo $\vect{x}$, entonces $f$ es estrictamente convexa; (iii) si $f$ es convexa, $f(\vect{y})\geq f(\vect{x})+\langle\nabla f(\vect{x}),\vect{y}-\vect{x}\rangle$ para todos $\vect{x},\vect{y}\in D$, con desigualdad estricta cuando $\vect{y}\neq\vect{x}$ si $f$ es estrictamente convexa.
+
+:::
+
+::: {.proof}
+Para $\vect{x}\in D$ y $\vect{h}\in\mathbb{R}^n$, la función $g(t)=f(\vect{x}+t\vect{h})$ cumple $g'(t)=\langle\nabla f(\vect{x}+t\vect{h}),\vect{h}\rangle$ y $g''(t)=\vect{h}^{\top}\mat{H}_f(\vect{x}+t\vect{h})\vect{h}$ por la regla de la cadena. Para (i), si $\mat{H}_f$ es semidefinida positiva en todo $D$, entonces $g''\geq0$ en el intervalo $I$ de la proposición, de modo que $g$ es convexa por el [Teorema “Convexidad, derivada y recta tangente”](../matematica-1/36-convexidad-y-desigualdad-de-jensen.qmd#thm-convexidad-derivada), y $f$ es convexa por la proposición. Recíprocamente, si $f$ es convexa, cada $g$ es convexa, y el mismo teorema da $g''(0)=\vect{h}^{\top}\mat{H}_f(\vect{x})\vect{h}\geq0$ para todo $\vect{h}$. Para (ii), si $\mat{H}_f$ es definida positiva y $\vect{h}\neq\vect{0}$, entonces $g''>0$ y $g$ es estrictamente convexa por el mismo teorema; tomando $\vect{x},\vect{y}$ distintos y $\vect{h}=\vect{y}-\vect{x}$ se obtiene la convexidad estricta de $f$ en el segmento. Para (iii), la afirmación (c) del teorema de una variable aplicada a $g$ en $0$ y $1$ da $g(1)\geq g(0)+g'(0)$, que es la desigualdad buscada con $\vect{h}=\vect{y}-\vect{x}$, y es estricta si $g$ es estrictamente convexa.
+
+:::
+
+La condición de primer orden resulta entonces suficiente.
+
+::: {#cor-primer-orden-suficiente-convexa}
+## Bajo convexidad, el primer orden es necesario y suficiente
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y convexo y $f:D\to\mathbb{R}$ de clase $C^2$ y convexa. Entonces $\vect{x}^*\in D$ es un mínimo global de $f$ si y solo si $\nabla f(\vect{x}^*)=\vect{0}$. Si $f$ es estrictamente convexa, el mínimo global es único.
+
+:::
+
+::: {.proof}
+La necesidad es el teorema de la condición de primer orden, porque un mínimo global es un mínimo local. Para la suficiencia, el inciso (iii) del teorema anterior con $\nabla f(\vect{x}^*)=\vect{0}$ da $f(\vect{y})\geq f(\vect{x}^*)$ para todo $\vect{y}\in D$. Si $f$ es estrictamente convexa y hubiera dos mínimos globales distintos, la desigualdad estricta de (iii) en uno de ellos daría $f(\vect{y})>f(\vect{x}^*)$ para el otro, lo que contradice que ambos tengan el mismo valor mínimo.
+
+:::
+
+Con números, para $f(x_1,x_2)=x_1^2+x_1x_2+2x_2^2-x_1$ del [Ejemplo “Gradiente y hessiana de una forma cuadrática”](06-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#exm-gradiente-hessiana-cuadratica), la hessiana constante $\left(\begin{smallmatrix}2&1\\1&4\end{smallmatrix}\right)$ tiene polinomio característico $\lambda^2-6\lambda+7$ y valores propios $3\pm\sqrt2\approx4.41,\ 1.59$, ambos positivos, de modo que $f$ es estrictamente convexa en $\mathbb{R}^2$. El sistema $2x_1+x_2-1=0$, $x_1+4x_2=0$ da el único punto crítico $(4/7,\,-1/7)$, que es entonces el único mínimo global, con valor $f=16/49-4/49+2/49-28/49=-2/7\approx-0.286$. La existencia del mínimo ya estaba garantizada por la coercividad del [Ejemplo “Una forma cuadrática definida positiva es coerciva”](08-existencia-de-un-optimo.qmd#exm-cuadratica-coerciva), y la convexidad estricta agrega que el punto crítico lo identifica sin ambigüedad.

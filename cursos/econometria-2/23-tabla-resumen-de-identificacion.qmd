@@ -1,0 +1,22 @@
+---
+title: "Tabla resumen de identificación"
+description: "El patrón de la función de autocorrelación y de la autocorrelación parcial que distingue a los modelos AR, MA y ARMA, con la justificación de cada fila y la recuperación de los parámetros de un MA(1) a partir de sus valores teóricos."
+author: "Mario Peñaloza"
+date: 2026-10-08
+categories: [Econometría II, Modelos ARMA]
+---
+
+Los resultados de las notas anteriores permiten decidir, a partir de la forma de las funciones de autocorrelación y de autocorrelación parcial, qué tipo de modelo describe un proceso. Esta nota reúne los patrones en una tabla, indica en qué resultado se apoya cada fila, y muestra con un ejemplo cómo se recuperan los parámetros. Es un resumen de resultados ya demostrados y no añade ninguno nuevo.
+
+| Modelo | Función de autocorrelación $\rho(h)$ | Autocorrelación parcial $\alpha(h)$ |
+|:--|:--|:--|
+| AR($p$) causal | Decae geométricamente (con posibles oscilaciones); satisface la recursión de Yule–Walker | Se anula para $h>p$; $\alpha(p)=\phi_p$ |
+| MA($q$) | Se anula para $h>q$ | Decae, sin anularse |
+| ARMA($p,q$) | Decae geométricamente desde el rezago $q+1$ | Decae, sin anularse |
+| Ruido blanco | Cero para $h\neq0$ | Cero para $h\geq1$ |
+
+La fila del AR resume dos resultados. La autocorrelación cumple $\rho(h)=\sum_i\phi_i\rho(h-i)$ para $h\geq1$ por las ecuaciones de Yule–Walker, una ecuación en diferencias lineal cuyas soluciones son combinaciones de potencias de los inversos de las raíces, que tienen módulo menor que uno, de modo que decae geométricamente. Y la autocorrelación parcial se anula después de $p$ por el teorema de la autocorrelación parcial de un AR(p). La fila del MA descansa en la autocovarianza, que se anula después de $q$ por la proposición de la autocovarianza de un MA(q), y en que un MA invertible tiene una representación autorregresiva de orden infinito, $\varepsilon_t=\sum_j\pi_j(X_{t-j}-\mu)$, de modo que su regresión sobre un número finito de rezagos nunca es exacta y la autocorrelación parcial no se anula. En el ARMA, la recursión de autocovarianzas para $h>q$ es la del AR, y la representación autorregresiva infinita impide que la autocorrelación parcial se anule.
+
+El uso de la tabla es de identificación en sentido amplio: de los valores teóricos de las dos funciones se deduce el modelo y sus parámetros. Supóngase que las autocorrelaciones teóricas de un proceso son $\rho(1)=0.4$ y $\rho(h)=0$ para $h\geq2$, y que las autocorrelaciones parciales son $\alpha(1)=0.4$, $\alpha(2)=-0.190$, $\alpha(3)=0.094$, con alternancia de signo y decaimiento. El corte de $\rho$ en el rezago $1$ y el decaimiento de $\alpha$ indican un MA(1). Para recuperar el parámetro, $\rho(1)=\theta/(1+\theta^2)=0.4$ equivale a $0.4\theta^2-\theta+0.4=0$, con soluciones $\theta=0.5$ y $\theta=2$. La representación invertible es $\theta=0.5$, y la varianza se obtiene de $\gamma(0)=\sigma^2(1+\theta^2)$: si $\gamma(0)=1.25$, entonces $\sigma^2=1$. Se verifica que los valores de $\alpha(h)$ coinciden con los de la autocorrelación parcial de un MA(1) con $\theta=0.5$ ya calculados.
+
+Un caso distinto es el de $\rho(1)=0.88$, $\rho(2)=0.704$, $\rho(3)=0.563$, con cociente constante $0.8$ desde el rezago $1$ y una autocorrelación parcial que no se anula. El decaimiento geométrico de $\rho$ con razón $0.8$ y el valor inicial $\rho(1)=0.88>0.8$ indican un ARMA(1,1) con $\phi=0.8$, porque en un AR(1) puro $\rho(1)$ sería igual a la razón. De la fórmula $\rho(1)=(1+\phi\theta)(\phi+\theta)/(1+2\phi\theta+\theta^2)$ con $\phi=0.8$ y $\rho(1)=0.88$ resulta $\theta=0.4$ como la solución invertible. Estas lecturas valen para las funciones teóricas; con una muestra finita, las funciones estimadas fluctúan alrededor de las teóricas, y la discriminación entre modelos depende del tamaño de la muestra y de la magnitud de los coeficientes.
