@@ -83,7 +83,7 @@ algún $\vect{\lambda}^*\in\mathbb{R}^m$, que es
 
 :::
 
-::: {#idea-precio-sombra .callout-tip appearance=“simple” title=“Idea central: El multiplicador de Lagrange como precio sombra”}
+::: {#idea-precio-sombra .callout-tip appearance="simple" title="Idea central: El multiplicador de Lagrange como precio sombra"}
 Cada componente $\lambda_j^*$ mide cuánto cambiaría el valor óptimo de
 $f$ ante una relajación marginal de la $j$-ésima restricción, es decir,
 ante un cambio infinitesimal del cero del lado derecho de

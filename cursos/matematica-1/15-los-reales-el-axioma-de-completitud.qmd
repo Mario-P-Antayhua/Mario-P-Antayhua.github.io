@@ -38,7 +38,7 @@ verificar para el racional candidato en la [Proposición “El conjunto S=rinℚ
 el siguiente axioma garantiza, de manera incondicional, dentro de
 $\mathbb{R}$.
 
-::: {#ax-completitud .callout-important appearance=“simple” title=“Axioma: Axioma de completitud”}
+::: {#ax-completitud .callout-important appearance="simple" title="Axioma: Axioma de completitud"}
 Todo subconjunto no vacío de $\mathbb{R}$ acotado superiormente tiene
 supremo en $\mathbb{R}$.
 
@@ -46,7 +46,7 @@ supremo en $\mathbb{R}$.
 
 Conviene precisar qué cambia el axioma respecto de lo que ya había en $\mathbb{Q}$, porque no agrega ninguna operación nueva sino una propiedad de naturaleza distinta.
 
-::: {#idea-completitud-resuelve .callout-tip appearance=“simple” title=“Idea central: Qué resuelve exactamente la completitud”}
+::: {#idea-completitud-resuelve .callout-tip appearance="simple" title="Idea central: Qué resuelve exactamente la completitud"}
 El axioma de completitud no añade ninguna operación algebraica nueva a las
 que ya tenía $\mathbb{Q}$: $\mathbb{R}$ sigue siendo un cuerpo ordenado, con
 las mismas reglas de suma, producto y orden. Lo que añade es una garantía de

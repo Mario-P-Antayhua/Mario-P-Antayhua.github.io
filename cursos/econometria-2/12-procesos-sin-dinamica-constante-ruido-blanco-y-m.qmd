@@ -24,7 +24,7 @@ secciones siguientes: el proceso autorregresivo de la
 elaboradas del mismo ingrediente básico que aparece aquí, el ruido
 blanco, organizado de maneras cada vez más ricas.
 
-::: {#idea-seis-pasos .callout-tip appearance=“simple” title=“Idea central: El procedimiento de derivación de momentos”}
+::: {#idea-seis-pasos .callout-tip appearance="simple" title="Idea central: El procedimiento de derivación de momentos"}
 Cada proceso de esta sección se analiza siguiendo el mismo
 procedimiento de seis pasos: calcular la media $\mu_t$; calcular la
 varianza $\Var(Y_t)$; calcular la autocovarianza $\gamma(t,t-j)$ para un
@@ -88,7 +88,7 @@ ninguno de estos cálculos, porque los tres primeros pasos del
 procedimiento solo involucran momentos de primer y segundo orden, en
 los que las tres definiciones coinciden por construcción.
 
-::: {#nota-variantes-ruido-blanco .callout-note appearance=“simple” title=“Nota: Por qué la distinción entre las tres variantes de ruido blanco importa”}
+::: {#nota-variantes-ruido-blanco .callout-note appearance="simple" title="Nota: Por qué la distinción entre las tres variantes de ruido blanco importa"}
 Aunque los dos primeros momentos no distinguen a las tres variantes, sus
 propiedades de orden superior sí difieren, y esa diferencia resulta
 decisiva más adelante. La incorrelación del ruido blanco débil no

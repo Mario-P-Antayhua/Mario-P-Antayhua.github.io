@@ -59,7 +59,7 @@ sentido de contener todo punto entre dos de sus elementos. La
 demostración de la equivalencia no aporta técnica nueva, así que se deja
 esbozada en lugar de completa.
 
-::: {#nota-por-que-se-omite-la-demostracion .callout-note appearance=“simple” title=“Nota: por qué se omite la demostración completa”}
+::: {#nota-por-que-se-omite-la-demostracion .callout-note appearance="simple" title="Nota: por qué se omite la demostración completa"}
 La dirección directa se prueba por contradicción, tomando
 $A=E\cap(-\infty,z)$ y $B=E\cap(z,\infty)$ como una separación de $E$ en
 caso de que $z\notin E$; la recíproca se apoya en el axioma de

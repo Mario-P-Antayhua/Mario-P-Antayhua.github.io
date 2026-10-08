@@ -98,7 +98,7 @@ igualdad enunciada.
 
 :::
 
-::: {#idea-informacion-bhhh .callout-tip appearance=“simple” title=“Idea central: La igualdad de la información y el método BHHH”}
+::: {#idea-informacion-bhhh .callout-tip appearance="simple" title="Idea central: La igualdad de la información y el método BHHH"}
 Este teorema es, precisamente, el que justifica el
 [Definición “Método BHHH”](../matematica-3/08-metodos-numericos-de-optimizacion.qmd#def-bhhh) de la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd): como
 $n^{-1}\sum_i\vect{s}_i(\vect{\theta})\vect{s}_i(\vect{\theta})^{\top}$

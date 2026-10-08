@@ -129,7 +129,7 @@ cuál base se elija. Por convención, $\dim(\{\vect{0}\})=0$.
 
 Esta definición tiene una lectura estadística inmediata que conviene explicitar antes de seguir.
 
-::: {#idea-dimension-grados-libertad .callout-tip appearance=“simple” title=“Idea central: La dimensión como grados de libertad”}
+::: {#idea-dimension-grados-libertad .callout-tip appearance="simple" title="Idea central: La dimensión como grados de libertad"}
 La dimensión mide cuántas direcciones genuinamente independientes admite
 un espacio, y esa lectura tiene un correlato exacto en el modelo de
 regresión lineal. Si $\mat{X}$ es la matriz de regresores de tamaño

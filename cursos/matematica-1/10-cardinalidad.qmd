@@ -166,7 +166,7 @@ biyectiva es, en particular, sobreyectiva.
 La consecuencia de este teorema es inmediata y transforma por completo la
 imagen del infinito.
 
-::: {#idea-cantor-consecuencia .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-cantor-consecuencia .callout-tip appearance="simple" title="Idea central"}
 Tomando $A=\mathbb{N}$ en el @thm-cantor se obtiene que
 $\mathcal{P}(\mathbb{N})$ no es numerable, porque no puede ser equipotente a
 $\mathbb{N}$. Existe, entonces, al menos un tipo de infinito estrictamente
@@ -183,7 +183,7 @@ con propiedad en la sección siguiente.
 Para cerrar el panorama de la cardinalidad conviene mencionar, sin
 desarrollarlo, un resultado que suele acompañar a los anteriores.
 
-::: {#nota-schroder-bernstein .callout-note appearance=“simple” title=“Nota: el teorema de Schröder–Bernstein”}
+::: {#nota-schroder-bernstein .callout-note appearance="simple" title="Nota: el teorema de Schröder–Bernstein"}
 Para comparar cardinalidades sin necesidad de exhibir una biyección
 explícita, basta a menudo con encontrar dos funciones inyectivas en
 direcciones opuestas: si existen $f:A\to B$ y $g:B\to A$ ambas inyectivas,

@@ -122,7 +122,7 @@ $\vect{x}\in K$.
 
 :::
 
-::: {#idea-compacidad-indispensable .callout-tip appearance=“simple” title=“Idea central: Por qué la compacidad es indispensable”}
+::: {#idea-compacidad-indispensable .callout-tip appearance="simple" title="Idea central: Por qué la compacidad es indispensable"}
 Ninguna de las dos hipótesis del @thm-weierstrass, ni la
 acotación ni la clausura, puede omitirse. La función $f(x)=x$ en el
 conjunto acotado pero no cerrado $(0,1)$ no alcanza ni máximo ni mínimo,

@@ -50,7 +50,7 @@ trayectoria de este proceso oscila, con amplitud constante gobernada por
 $\sigma$, alrededor de una recta con pendiente $\delta$, en lugar de
 alrededor de un nivel fijo.
 
-::: {#nota-tendencia-polinomica .callout-note appearance=“simple” title=“Nota: Tendencia determinística polinómica”}
+::: {#nota-tendencia-polinomica .callout-note appearance="simple" title="Nota: Tendencia determinística polinómica"}
 La generalización natural de la @def-tendencia-lineal reemplaza la
 recta $c+\delta t$ por un polinomio de grado $p$ en $t$,
 $Y_t:=\beta_0+\beta_1t+\cdots+\beta_pt^p+\rblanco_t$. Los mismos tres

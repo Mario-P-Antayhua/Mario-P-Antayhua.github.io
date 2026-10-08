@@ -66,7 +66,7 @@ obtiene $|\Corr(X,Y)|\leq 1$, que es la desigualdad enunciada.
 
 :::
 
-::: {#idea-incorrelacion-independencia .callout-tip appearance=“simple” title=“Idea central: Incorrelación no implica independencia”}
+::: {#idea-incorrelacion-independencia .callout-tip appearance="simple" title="Idea central: Incorrelación no implica independencia"}
 La [Idea central “Independencia y correlación”](02-probabilidad-condicional-e-independencia.qmd#idea-independencia-correlacion) de la [Sección “Espacios de probabilidad”](01-espacios-de-probabilidad.qmd)
 ya anticipó que la independencia de dos variables implica
 $\Cov(X,Y)=0$: si $X$ y $Y$ son independientes, la esperanza del

@@ -136,7 +136,7 @@ directamente $\autocorr{j}=\phi^j$.
 
 :::
 
-![Función de autocorrelación de un AR(1) con $\phi=0.7$: decae geométricamente hacia cero sin cortarse nunca en ningún rezago finito. Cuando $\phi<0$, la misma fórmula $\rho_j=\phi^j$ produce un decaimiento con signo alternante en lugar de monótono.](../../assets/img/fig/econometria-2-22-el-proceso-ar-1-1.svg){#fig-fac-ar1 fig-alt=“Función de autocorrelación de un AR(1) con $\phi=0.7$: decae geométricamente hacia cero sin cortarse nunca en ningún rezago finito. Cuando $\phi<0$, la misma fórmula $\rho_j=\phi^j$ produce un decaimiento con signo alternante en lugar de monótono.”}
+![Función de autocorrelación de un AR(1) con $\phi=0.7$: decae geométricamente hacia cero sin cortarse nunca en ningún rezago finito. Cuando $\phi<0$, la misma fórmula $\rho_j=\phi^j$ produce un decaimiento con signo alternante en lugar de monótono.](../../assets/img/fig/econometria-2-22-el-proceso-ar-1-1.svg){#fig-fac-ar1 fig-alt="Función de autocorrelación de un AR(1) con $\phi=0.7$: decae geométricamente hacia cero sin cortarse nunca en ningún rezago finito. Cuando $\phi<0$, la misma fórmula $\rho_j=\phi^j$ produce un decaimiento con signo alternante en lugar de monótono."}
 
 El resultado $\autocorr{j}=\phi^j$ es, quizás, la fórmula más
 recordada de toda la econometría de series de tiempo elementales: dice

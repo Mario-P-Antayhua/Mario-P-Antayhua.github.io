@@ -75,7 +75,7 @@ $\mathbb{C}$.
 
 :::
 
-::: {#nota-c-no-ordenado .callout-note appearance=“simple” title=“Nota: $\mathbb{C}$ no es un cuerpo ordenado”}
+::: {#nota-c-no-ordenado .callout-note appearance="simple" title="Nota: $\mathbb{C}$ no es un cuerpo ordenado"}
 En cualquier cuerpo ordenado, el cuadrado de todo elemento no nulo es
 positivo, tal como se usó repetidamente en la construcción de $\mathbb{R}$.
 Pero si $\mathbb{C}$ admitiera un orden compatible con sus operaciones,
@@ -90,7 +90,7 @@ contraparte dentro de $\mathbb{C}$.
 
 Con los complejos se completa la cadena de extensiones, y mirarla en conjunto muestra el patrón que se repite en cada paso.
 
-::: {#idea-patron-extensiones .callout-tip appearance=“simple” title=“Idea central: El patrón común de las extensiones sucesivas”}
+::: {#idea-patron-extensiones .callout-tip appearance="simple" title="Idea central: El patrón común de las extensiones sucesivas"}
 Las cuatro construcciones de esta sección comparten una misma anatomía, que
 conviene retener porque reaparecerá bajo otras formas en secciones
 posteriores del documento: se identifica una ecuación concreta sin solución

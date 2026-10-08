@@ -63,7 +63,7 @@ Existe, por último, una clase de enunciados que parecen proposiciones pero no
 lo son, y su estudio marca el límite exacto de lo que la lógica proposicional
 puede tratar.
 
-::: {#nota-paradoja .callout-note appearance=“simple” title=“Nota: la proposición autorreferencial no es un descuido”}
+::: {#nota-paradoja .callout-note appearance="simple" title="Nota: la proposición autorreferencial no es un descuido"}
 Considérese el enunciado ”esta afirmación es falsa”. Si se supone verdadero,
 entonces lo que afirma debe cumplirse, es decir, debe ser falso; y si se
 supone falso, entonces lo que niega no se cumple, de modo que debe ser

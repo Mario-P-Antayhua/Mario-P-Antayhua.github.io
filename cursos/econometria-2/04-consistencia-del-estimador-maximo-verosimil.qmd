@@ -33,7 +33,7 @@ el espacio de parámetros permita que $\hat{\vect{\theta}}_n$ se escape
 hacia una región sin sentido económico. Las condiciones que siguen
 descartan, una por una, cada una de esas posibilidades.
 
-::: {#sup-regularidad-consistencia .callout-warning appearance=“simple” title=“Supuestos: Condiciones de regularidad para la consistencia”}
+::: {#sup-regularidad-consistencia .callout-warning appearance="simple" title="Supuestos: Condiciones de regularidad para la consistencia"}
 1. **Identificabilidad.** Para $\vect{\theta}\neq
         \vect{\theta}_0$, $f(\cdot;\vect{\theta})\neq
         f(\cdot;\vect{\theta}_0)$ como densidades, de modo que

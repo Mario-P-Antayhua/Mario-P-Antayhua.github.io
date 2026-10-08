@@ -153,7 +153,7 @@ $\|\vect{u}+\vect{v}\|\leq\|\vect{u}\|+\|\vect{v}\|$.
 
 :::
 
-::: {#nota-paralelogramo .callout-note appearance=“simple” title=“Nota: Ley del paralelogramo”}
+::: {#nota-paralelogramo .callout-note appearance="simple" title="Nota: Ley del paralelogramo"}
 Toda norma inducida por un producto interno satisface
 $\|\vect{u}+\vect{v}\|^{2}+\|\vect{u}-\vect{v}\|^{2}
 =2\|\vect{u}\|^{2}+2\|\vect{v}\|^{2}$, identidad que se obtiene sumando el

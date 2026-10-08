@@ -64,7 +64,7 @@ Una propiedad casi inmediata, pero que se usará repetidamente sin
 mencionarla de nuevo, es que la estructura métrica se hereda a cualquier
 subconjunto sin necesidad de ninguna verificación adicional.
 
-::: {#nota-subespacio-metrico .callout-note appearance=“simple” title=“Nota: todo subconjunto hereda la métrica”}
+::: {#nota-subespacio-metrico .callout-note appearance="simple" title="Nota: todo subconjunto hereda la métrica"}
 Si $X$ es un espacio métrico y $Y\subseteq X$, entonces $Y$ es también un
 espacio métrico con la misma función $d$ restringida a $Y\times Y$: las
 tres condiciones de la @def-espacio-metrico se siguen cumpliendo al

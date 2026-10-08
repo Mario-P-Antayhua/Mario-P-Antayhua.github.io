@@ -61,7 +61,7 @@ $\lim_{h\to 0}\int_a^b\partial f/\partial\theta(x,\xi(x))\,dx=
 
 :::
 
-::: {#idea-anticipacion-leibniz-fisher .callout-tip appearance=“simple” title=“Idea central: Anticipación: la regla de Leibniz y el score de la verosimilitud”}
+::: {#idea-anticipacion-leibniz-fisher .callout-tip appearance="simple" title="Idea central: Anticipación: la regla de Leibniz y el score de la verosimilitud"}
 La [Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd) definirá el score de una función de
 verosimilitud como la derivada, respecto del parámetro $\theta$, del
 logaritmo de la densidad, y demostrará que su esperanza es cero

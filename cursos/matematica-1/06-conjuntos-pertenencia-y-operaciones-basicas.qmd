@@ -109,7 +109,7 @@ Esta proposición, de apariencia modesta, es en realidad el método de
 demostración que se usará sin excepción cada vez que haga falta probar que
 dos conjuntos construidos de maneras distintas son en realidad el mismo.
 
-::: {#idea-doble-inclusion-metodo .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-doble-inclusion-metodo .callout-tip appearance="simple" title="Idea central"}
 Para probar $A=B$ se demuestran las dos inclusiones por separado, cada una
 como una demostración directa o por casos de un condicional, exactamente con
 las herramientas de la [Subsección “Métodos de demostración”](04-metodos-de-demostracion.qmd). Este patrón reaparecerá, sin ir
@@ -268,7 +268,7 @@ y, por la @def-igualdad-conjuntos, son iguales.
 Esta demostración ilustra un principio general que ahorrará trabajo repetidas
 veces en lo que sigue.
 
-::: {#idea-demorgan-traduccion .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-demorgan-traduccion .callout-tip appearance="simple" title="Idea central"}
 Toda identidad entre conjuntos definidos mediante $\cup$, $\cap$ y
 complemento se traduce, elemento a elemento, en una equivalencia lógica entre
 proposiciones del tipo $x\in A$; y esa equivalencia lógica ya fue demostrada,

@@ -39,7 +39,7 @@ sin repeticiones ni puntos de partida espurios; el tercero es el que hace
 todo el trabajo en las demostraciones por inducción de las secciones
 siguientes.
 
-::: {#ax-peano .callout-important appearance=“simple” title=“Axioma: Axiomas de Peano”}
+::: {#ax-peano .callout-important appearance="simple" title="Axioma: Axiomas de Peano"}
 El conjunto $\mathbb{N}$ está dotado de un elemento distinguido $1\in\mathbb{N}$
 y de una función sucesor $s:\mathbb{N}\to\mathbb{N}$ que satisfacen las tres
 condiciones siguientes.
@@ -69,7 +69,7 @@ Aquí se reencuentra esa misma propiedad, ahora como axioma fundacional en
 lugar de teorema derivado, precisamente porque en esta sección $\mathbb{N}$
 ya no se supone dado: se está construyendo desde el principio.
 
-::: {#nota-aritmetica-n-conocida .callout-note appearance=“simple” title=“Nota: Suma y producto en $\mathbb{N}$ se dan por conocidos”}
+::: {#nota-aritmetica-n-conocida .callout-note appearance="simple" title="Nota: Suma y producto en $\mathbb{N}$ se dan por conocidos"}
 Los axiomas de Peano bastan, junto con definiciones recursivas de la suma y
 el producto que no se detallan aquí por no aportar ninguna técnica nueva,
 para reconstruir toda la aritmética elemental de $\mathbb{N}$: asociatividad,

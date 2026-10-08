@@ -64,7 +64,7 @@ positiva.
 
 :::
 
-::: {#idea-aplicaciones-definida-positiva .callout-tip appearance=“simple” title=“Idea central: Dos apariciones recurrentes de las matrices definidas positivas”}
+::: {#idea-aplicaciones-definida-positiva .callout-tip appearance="simple" title="Idea central: Dos apariciones recurrentes de las matrices definidas positivas"}
 Dos objetos que reaparecerán en secciones posteriores son, en esencia,
 matrices simétricas semidefinidas o definidas positivas. La primera es
 la matriz de varianza y covarianza de un vector aleatorio, que la

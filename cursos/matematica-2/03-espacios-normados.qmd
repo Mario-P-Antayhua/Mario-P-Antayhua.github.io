@@ -56,7 +56,7 @@ que proviene de un producto interno, en el sentido que precisa la
 
 :::
 
-![Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro.](../../assets/img/fig/matematica-2-03-espacios-normados-1.svg){#fig-bolas-unitarias fig-alt=“Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro.”}
+![Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro.](../../assets/img/fig/matematica-2-03-espacios-normados-1.svg){#fig-bolas-unitarias fig-alt="Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro."}
 
 Con una norma fijada, el espacio vectorial hereda automáticamente una
 estructura métrica, lo que conecta esta subsección con la

@@ -6,7 +6,7 @@ date: 2026-10-07
 categories: [Matemática para Economistas II, Álgebra matricial]
 ---
 
-::: {#idea-matriz-transformacion .callout-tip appearance=“simple” title=“Idea central: Una matriz es una transformación lineal”}
+::: {#idea-matriz-transformacion .callout-tip appearance="simple" title="Idea central: Una matriz es una transformación lineal"}
 Toda matriz $\mat{A}\in\mathbb{R}^{m\times n}$ define una función
 $T_{\mat{A}}:\mathbb{R}^n\to\mathbb{R}^m$ mediante
 $T_{\mat{A}}(\vect{x}):=\mat{A}\vect{x}$, y esa función satisface

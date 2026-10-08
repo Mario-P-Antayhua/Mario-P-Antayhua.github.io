@@ -127,7 +127,7 @@ Conviene detenerse un momento en el alcance de este resultado antes de
 seguir con la teoría general de las series, porque su presencia en el resto
 del documento va mucho más allá de un ejemplo entre otros.
 
-::: {#idea-geometrica-uso .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-geometrica-uso .callout-tip appearance="simple" title="Idea central"}
 Esta es, con diferencia, la serie que más se usará en el resto del
 documento. La condición de estabilidad de un proceso AR(1), $|\phi|<1$, es
 exactamente la condición que este teorema exige para que
@@ -213,7 +213,7 @@ casi siempre más simple, de encontrar una serie geométrica u otra serie ya
 conocida que la domine término a término, y es exactamente en esa forma en
 la que se aplicará más adelante.
 
-::: {#idea-comparacion-uso .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-comparacion-uso .callout-tip appearance="simple" title="Idea central"}
 Este criterio, combinado con la serie geométrica, es exactamente el
 argumento que sostiene la sumabilidad cuadrática exigida a los coeficientes
 $\psi_k$ de la representación de Wold: si $|\psi_k|$ decae más rápido que

@@ -42,7 +42,7 @@ lados.
 
 :::
 
-![El punto relleno pertenece al conjunto; el punto hueco marca un punto límite que no pertenece al conjunto y que impide que sea cerrado.](../../assets/img/fig/matematica-1-25-conjuntos-abiertos-cerrados-y-la-clausura-1.svg){#fig-abierto-cerrado fig-alt=“El punto relleno pertenece al conjunto; el punto hueco marca un punto límite que no pertenece al conjunto y que impide que sea cerrado.”}
+![El punto relleno pertenece al conjunto; el punto hueco marca un punto límite que no pertenece al conjunto y que impide que sea cerrado.](../../assets/img/fig/matematica-1-25-conjuntos-abiertos-cerrados-y-la-clausura-1.svg){#fig-abierto-cerrado fig-alt="El punto relleno pertenece al conjunto; el punto hueco marca un punto límite que no pertenece al conjunto y que impide que sea cerrado."}
 
 El comentario anterior muestra que abierto y cerrado se verifican punto
 por punto, pero la relación entre ambas nociones es, en realidad, una sola

@@ -137,7 +137,7 @@ De las seis equivalencias recién probadas, cinco son útiles como herramientas
 de cálculo, pero una de ellas tiene un peso muy superior al resto, porque
 sostendrá un método de demostración completo.
 
-::: {#idea-contrarreciproco .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-contrarreciproco .callout-tip appearance="simple" title="Idea central"}
 La equivalencia entre $p\rightarrow q$ y su contrarrecíproco
 $\neg q\rightarrow\neg p$ es, con diferencia, la más importante de la lista
 para lo que sigue. Probar que $p$ implica $q$ es exactamente lo mismo que

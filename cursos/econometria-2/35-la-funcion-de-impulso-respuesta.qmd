@@ -20,7 +20,7 @@ $\psi_k=\partial Y_{t+k}/\partial\rblanco_t$.
 
 Esta definición responde una pregunta que los economistas formulan con frecuencia, y su lectura económica merece una explicación aparte.
 
-::: {#idea-lectura-impulso-respuesta .callout-tip appearance=“simple” title=“Idea central: Lectura económica de la función de impulso-respuesta”}
+::: {#idea-lectura-impulso-respuesta .callout-tip appearance="simple" title="Idea central: Lectura económica de la función de impulso-respuesta"}
 La función de impulso-respuesta traduce los coeficientes puramente
 algebraicos de la representación de Wold en una pregunta que cualquier
 economista reconoce de inmediato: si hoy ocurre un choque inesperado de

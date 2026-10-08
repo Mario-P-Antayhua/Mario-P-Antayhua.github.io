@@ -80,7 +80,7 @@ sí se usará repetidamente a partir de la [Sección “Consistencia del estimad
 
 :::
 
-::: {#idea-llgn-tcl-estimacion .callout-tip appearance=“simple” title=“Idea central: Consistencia y normalidad como plantilla para la estimación”}
+::: {#idea-llgn-tcl-estimacion .callout-tip appearance="simple" title="Idea central: Consistencia y normalidad como plantilla para la estimación"}
 Estos dos teoremas son la plantilla que la [Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd)
 reproducirá, en una forma más general, para el estimador máximo
 verosímil: la ley débil de los grandes números garantizará su

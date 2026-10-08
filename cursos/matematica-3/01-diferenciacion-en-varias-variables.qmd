@@ -191,7 +191,7 @@ $\mat{J}_f(\vect{q})\mat{J}_g(\vect{p})$, que es
 
 :::
 
-::: {#idea-gradiente-direccion-maxima .callout-tip appearance=“simple” title=“Idea central: El gradiente apunta en la dirección de máximo crecimiento”}
+::: {#idea-gradiente-direccion-maxima .callout-tip appearance="simple" title="Idea central: El gradiente apunta en la dirección de máximo crecimiento"}
 Para un vector unitario $\vect{u}$, la derivada direccional de $f$ en
 $\vect{p}$ a lo largo de $\vect{u}$ es
 $\langle\nabla f(\vect{p}),\vect{u}\rangle$, un caso particular de la

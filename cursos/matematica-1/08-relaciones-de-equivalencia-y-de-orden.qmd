@@ -127,7 +127,7 @@ si $x$ pertenece al mismo conjunto de la partición que $a$, que es $A_i$.
 Este teorema tendrá un uso muy concreto en la sección siguiente, y conviene
 anticiparlo para que su relevancia no pase inadvertida.
 
-::: {#idea-particion-uso-futuro .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-particion-uso-futuro .callout-tip appearance="simple" title="Idea central"}
 El @thm-equivalencia-particion es la herramienta que permitirá
 construir los números enteros como clases de equivalencia de pares de
 naturales, y los racionales como clases de equivalencia de pares de enteros.

@@ -79,7 +79,7 @@ sencilla y no usa la completitud de $\mathbb{R}$ en ningún paso; es la
 segunda mitad, el recíproco, la que sí depende de ella de manera esencial,
 como se explica a continuación.
 
-::: {#idea-cauchy-completitud .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-cauchy-completitud .callout-tip appearance="simple" title="Idea central"}
 El @thm-criterio-cauchy es, en el fondo, una reformulación del axioma
 de completitud en el lenguaje de las sucesiones: dice que $\mathbb{R}$ no
 tiene “huecos” en el sentido de que toda sucesión cuyos términos se

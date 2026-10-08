@@ -166,7 +166,7 @@ uno por uno, todos los momentos de $X$, y su comportamiento cerca de
 $t=0$ determina de forma única a toda la distribución subyacente, no
 solo a sus momentos por separado.
 
-::: {#idea-mgf-unicidad .callout-tip appearance=“simple” title=“Idea central: Por qué importa la función generadora de momentos”}
+::: {#idea-mgf-unicidad .callout-tip appearance="simple" title="Idea central: Por qué importa la función generadora de momentos"}
 Cuando $M_X$ existe en una vecindad de cero, sus derivadas sucesivas en
 $t=0$ reproducen los momentos de $X$, porque
 $M_X^{(k)}(0)=\Esp{X^k}$, un hecho que se obtiene derivando bajo el

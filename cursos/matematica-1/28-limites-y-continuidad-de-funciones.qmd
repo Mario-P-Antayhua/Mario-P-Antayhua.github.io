@@ -143,7 +143,7 @@ lo cual la equivalencia queda establecida en ambas direcciones.
 
 :::
 
-::: {#idea-continuidad-plim .callout-tip appearance=“simple” title=“Idea central: Por qué importa la continuidad para la estimación”}
+::: {#idea-continuidad-plim .callout-tip appearance="simple" title="Idea central: Por qué importa la continuidad para la estimación"}
 La caracterización por sucesiones es la que conecta la continuidad con
 la convergencia en probabilidad que la [Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd)
 desarrollará: si un estimador $\hat\theta_n$ converge en probabilidad a

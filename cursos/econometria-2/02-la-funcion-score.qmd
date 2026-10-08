@@ -79,7 +79,7 @@ densidad $f(\cdot;\vect{\theta}_0)$, en el sentido de la
 
 :::
 
-::: {#idea-consecuencias-score-cero .callout-tip appearance=“simple” title=“Idea central: Consecuencias de la esperanza nula del score”}
+::: {#idea-consecuencias-score-cero .callout-tip appearance="simple" title="Idea central: Consecuencias de la esperanza nula del score"}
 Esta proposición, de apariencia técnica, tiene dos consecuencias que
 reaparecerán constantemente en lo que sigue. La primera es conceptual:
 como cada $\vect{s}_i(\vect{\theta}_0)$ tiene esperanza cero, la suma

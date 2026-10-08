@@ -53,7 +53,7 @@ El caso del cuantificador universal aplicado a un dominio vacío merece
 mención aparte, porque su tratamiento suele resultar contraintuitivo y sin
 embargo es una consecuencia directa de la definición que acaba de darse.
 
-::: {#nota-vacua .callout-note appearance=“simple” title=“Nota: verdad vacua”}
+::: {#nota-vacua .callout-note appearance="simple" title="Nota: verdad vacua"}
 Si $U=\varnothing$, entonces $\forall x\in U,\ P(x)$ es verdadera para
 cualquier función proposicional $P$, sin importar cuál sea, porque la
 definición exige que no exista ningún elemento de $U$ que incumpla $P$, y en
@@ -154,7 +154,7 @@ produce una disyunción de negaciones. La analogía no es casual, puesto que un
 cuantificador universal sobre un dominio finito puede pensarse como una gran
 conjunción de todos los casos, y uno existencial como una gran disyunción.
 
-::: {#nota-regla-practica-negacion .callout-note appearance=“simple” title=“Nota: una regla práctica que se usará sin excepción”}
+::: {#nota-regla-practica-negacion .callout-note appearance="simple" title="Nota: una regla práctica que se usará sin excepción"}
 Para negar una proposición con varios cuantificadores anidados, el
 @thm-negacion-cuantificadores se aplica de afuera hacia adentro, uno a
 la vez, intercambiando cada $\forall$ por $\exists$ y viceversa, hasta que la

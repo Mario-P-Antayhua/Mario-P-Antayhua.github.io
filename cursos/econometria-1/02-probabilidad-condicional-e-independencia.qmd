@@ -100,7 +100,7 @@ probabilidad de $A$.
 
 La independencia de eventos es la versión más sencilla de una idea que se generaliza a variables aleatorias, y conviene distinguirla desde ahora de la ausencia de correlación.
 
-::: {#idea-independencia-correlacion .callout-tip appearance=“simple” title=“Idea central: Independencia y correlación”}
+::: {#idea-independencia-correlacion .callout-tip appearance="simple" title="Idea central: Independencia y correlación"}
 La independencia de eventos de esta subsección es la versión más
 primitiva de una idea que reaparecerá, en un lenguaje distinto, para
 variables aleatorias: la [Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd) definirá la

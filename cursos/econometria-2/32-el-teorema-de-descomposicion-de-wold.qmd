@@ -68,7 +68,7 @@ notas, de modo que se acepta aquí como resultado citado.
 
 :::
 
-::: {#idea-wold-garantias .callout-tip appearance=“simple” title=“Idea central: Qué garantiza el teorema de Wold y qué no garantiza”}
+::: {#idea-wold-garantias .callout-tip appearance="simple" title="Idea central: Qué garantiza el teorema de Wold y qué no garantiza"}
 El teorema garantiza la existencia de *alguna* representación
 MA($\infty$) con innovaciones incorrelacionadas, pero no garantiza que
 esas innovaciones sean independientes entre sí, una condición más fuerte

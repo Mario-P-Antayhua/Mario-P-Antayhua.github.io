@@ -17,7 +17,7 @@ pierde: aquella en la que el caso correspondiente a $n$ se apoya de manera
 natural en el caso correspondiente a $n-1$. Para esa situación hace falta un
 método distinto, cuya idea conviene presentar primero de forma intuitiva.
 
-::: {#nota-domino .callout-note appearance=“simple” title=“Nota: la intuición del dominó”}
+::: {#nota-domino .callout-note appearance="simple" title="Nota: la intuición del dominó"}
 Imagínese una fila infinita de fichas de dominó, numeradas $1,2,3,\ldots$,
 colocadas de tal manera que si una ficha cualquiera cae, necesariamente
 empuja y hace caer a la siguiente. Si además se garantiza que la primera
@@ -50,7 +50,7 @@ Entonces $P(n)$ es verdadera para todo $n\in\mathbb{N}$.
 Antes de usarlo conviene aclarar su estatus lógico, que es distinto del de
 los resultados anteriores de esta sección.
 
-::: {#nota-induccion-axioma .callout-note appearance=“simple” title=“Nota: por qué este teorema no se demuestra con los métodos anteriores”}
+::: {#nota-induccion-axioma .callout-note appearance="simple" title="Nota: por qué este teorema no se demuestra con los métodos anteriores"}
 El @thm-induccion no es una consecuencia de la lógica proposicional
 estudiada hasta aquí, sino que refleja una propiedad estructural de los
 números naturales mismos, a saber, que todo natural se alcanza desde el $1$
@@ -137,7 +137,7 @@ la fórmula es verdadera para todo $n\in\mathbb{N}$.
 Vale la pena señalar con precisión qué se demuestra en cada parte, porque es
 una confusión frecuente y consecuente.
 
-::: {#idea-induccion-dos-partes .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-induccion-dos-partes .callout-tip appearance="simple" title="Idea central"}
 La base de inducción es una afirmación concreta, sobre el número $1$
 únicamente, y se prueba de manera directa sin ninguna suposición adicional.
 El paso inductivo, en cambio, no afirma que $P(k)$ sea verdadera; afirma el

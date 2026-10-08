@@ -56,7 +56,7 @@ según qué se sostenga fijo, y confundir una lectura con la otra es una
 fuente frecuente de errores conceptuales que conviene descartar de
 inmediato.
 
-::: {#idea-verosimilitud-probabilidad .callout-tip appearance=“simple” title=“Idea central: Verosimilitud frente a probabilidad”}
+::: {#idea-verosimilitud-probabilidad .callout-tip appearance="simple" title="Idea central: Verosimilitud frente a probabilidad"}
 La función $f(\vect{x};\vect{\theta})$ es la misma en la
 [Definición “Esperanza matemática”](../econometria-1/04-esperanza-matematica-y-momentos.qmd#def-esperanza) de la [Sección “Espacios de probabilidad”](../econometria-1/01-espacios-de-probabilidad.qmd) y en la
 @def-verosimilitud anterior, y sin embargo las dos lecturas son

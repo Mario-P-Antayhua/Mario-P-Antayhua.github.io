@@ -42,7 +42,7 @@ $\Cov(Y_t,Y_{t-j})=\Cov\bigl(\sum_{i=1}^{t}\rblanco_i,
 varianzas de los términos comunes a ambas sumas, en número
 $\min(t,t-j)=t-j$.
 
-::: {#idea-confusion-tendencia-paseo .callout-tip appearance=“simple” title=“Idea central: Por qué la tendencia y el paseo aleatorio con deriva se confunden visualmente”}
+::: {#idea-confusion-tendencia-paseo .callout-tip appearance="simple" title="Idea central: Por qué la tendencia y el paseo aleatorio con deriva se confunden visualmente"}
 La tabla de contraste deja ver que la tendencia determinística lineal y
 el paseo aleatorio con deriva comparten la misma media,
 $c+\delta t$ frente a $Y_0+\delta t$, ambas crecientes en línea recta;

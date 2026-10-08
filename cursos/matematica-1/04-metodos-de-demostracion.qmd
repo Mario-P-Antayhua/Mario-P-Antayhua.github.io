@@ -173,7 +173,7 @@ al método. No se dedujo directamente que $\sqrt{2}$ fuera irracional, cosa
 que resultaría difícil de intentar: se supuso lo contrario y se avanzó por un
 camino perfectamente válido hasta chocar con algo que ya se sabía falso.
 
-::: {#idea-contradiccion-uso .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-contradiccion-uso .callout-tip appearance="simple" title="Idea central"}
 Este patrón, el de avanzar con total normalidad a partir de una hipótesis y
 usar el choque final como prueba de que la hipótesis nunca pudo sostenerse,
 es el que distingue a la demostración por contradicción de las dos
@@ -274,7 +274,7 @@ que no es primo por tener a $41$ como factor propio. El valor $n=41$ es un
 contraejemplo, y basta él solo para refutar la afirmación universal, sin
 importar cuántos casos anteriores la hayan confirmado.
 
-::: {#idea-contraejemplo-metodo .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-contraejemplo-metodo .callout-tip appearance="simple" title="Idea central"}
 Este ejemplo deja una lección que trasciende la aritmética particular:
 comprobar una afirmación universal en muchos casos concretos, incluso en
 cuarenta casos consecutivos, nunca constituye una demostración, porque

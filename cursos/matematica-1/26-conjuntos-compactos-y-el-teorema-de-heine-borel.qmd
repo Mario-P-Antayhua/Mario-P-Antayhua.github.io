@@ -53,7 +53,7 @@ que ningún $G_n$ solo baste.
 
 :::
 
-![Tres abiertos de la colección $\{G_x\}$ del @exm-cubrimiento-si-finito, traslapados consecutivamente, bastan para cubrir todo $[0,1]$.](../../assets/img/fig/matematica-1-26-conjuntos-compactos-y-el-teorema-de-heine-borel-1.svg){#fig-cubrimiento-finito fig-alt=“Tres abiertos de la colección $\{G_x\}$ del @exm-cubrimiento-si-finito, traslapados consecutivamente, bastan para cubrir todo $[0,1]$.”}
+![Tres abiertos de la colección $\{G_x\}$ del @exm-cubrimiento-si-finito, traslapados consecutivamente, bastan para cubrir todo $[0,1]$.](../../assets/img/fig/matematica-1-26-conjuntos-compactos-y-el-teorema-de-heine-borel-1.svg){#fig-cubrimiento-finito fig-alt="Tres abiertos de la colección $\{G_x\}$ del @exm-cubrimiento-si-finito, traslapados consecutivamente, bastan para cubrir todo $[0,1]$."}
 
 El primer resultado formal sobre conjuntos compactos conecta la
 compacidad, que se define en términos de cubrimientos, con las nociones

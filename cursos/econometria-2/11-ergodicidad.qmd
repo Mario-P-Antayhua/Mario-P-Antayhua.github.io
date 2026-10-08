@@ -41,7 +41,7 @@ que el argumento de esa ley no se traslada de manera automática y hace
 falta una condición adicional sobre cómo decae la dependencia temporal
 del proceso a medida que crece la separación entre observaciones.
 
-::: {#idea-ergodicidad-sumabilidad .callout-tip appearance=“simple” title=“Idea central: Por qué la sumabilidad de las autocovarianzas basta para la ergodicidad”}
+::: {#idea-ergodicidad-sumabilidad .callout-tip appearance="simple" title="Idea central: Por qué la sumabilidad de las autocovarianzas basta para la ergodicidad"}
 Un cálculo directo, análogo al de la varianza del promedio muestral en
 la demostración de la ley débil de los grandes números del
 [Teorema “Ley débil de los grandes números”](../econometria-1/06-leyes-de-los-grandes-numeros-y-el-teorema-centra.qmd#thm-llgn) de la [Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd), pero ahora sin suponer
@@ -65,7 +65,7 @@ no volverá a cuestionarse en ninguna de esas secciones posteriores.
 
 Antes de seguir conviene aclarar que la ergodicidad y la estacionariedad son propiedades distintas.
 
-::: {#nota-estacionariedad-ergodicidad-independientes .callout-note appearance=“simple” title=“Nota: Estacionariedad y ergodicidad son propiedades independientes”}
+::: {#nota-estacionariedad-ergodicidad-independientes .callout-note appearance="simple" title="Nota: Estacionariedad y ergodicidad son propiedades independientes"}
 Ninguna de las dos propiedades implica la otra. Un proceso puede ser
 estacionario sin ser ergódico: si $Y_t=Z$ para todo $t$, con $Z$ una
 única variable aleatoria sorteada una sola vez al inicio del proceso, el

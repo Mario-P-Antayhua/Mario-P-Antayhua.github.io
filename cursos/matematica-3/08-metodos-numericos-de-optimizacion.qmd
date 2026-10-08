@@ -99,7 +99,7 @@ $\widehat{\mat{H}}(\vect{\theta}_k)$ es, en una vecindad razonable del
 óptimo, un sustituto estadísticamente justificado de la hessiana
 verdadera, y no una mera conveniencia de cálculo.
 
-::: {#idea-ascenso-pronunciado-comparacion .callout-tip appearance=“simple” title=“Idea central: El ascenso más pronunciado y la comparación de los tres métodos”}
+::: {#idea-ascenso-pronunciado-comparacion .callout-tip appearance="simple" title="Idea central: El ascenso más pronunciado y la comparación de los tres métodos"}
 El tercer método, llamado ***ascenso más pronunciado*** o
 ***ascenso rápido***, prescinde por completo de la
 curvatura y actualiza en la dirección

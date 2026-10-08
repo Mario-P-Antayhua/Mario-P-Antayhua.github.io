@@ -178,7 +178,7 @@ la respuesta es negativa, y conviene dejar constancia explícita del
 contraejemplo antes de continuar, porque el error de suponer el recíproco
 aparecerá con facilidad más adelante si no se corrige aquí.
 
-::: {#nota-acotada-no-converge .callout-note appearance=“simple” title=“Nota: el recíproco es falso”}
+::: {#nota-acotada-no-converge .callout-note appearance="simple" title="Nota: el recíproco es falso"}
 Estar acotada no basta para converger: la sucesión $x_n=(-1)^n$ está acotada
 por $M=1$, pero oscila entre $-1$ y $1$ sin acercarse a ningún valor único,
 y no es difícil verificar mediante la @def-limite-sucesion que ningún

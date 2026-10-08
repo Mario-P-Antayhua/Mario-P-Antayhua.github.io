@@ -56,7 +56,7 @@ efectivamente satisface la definición de límite. Ese orden de razonamiento,
 existencia antes que cálculo, es exactamente el que se necesitará para
 tratar sucesiones cuyo límite no admite expresión cerrada.
 
-::: {#idea-monotona-uso .callout-tip appearance=“simple” title=“Idea central”}
+::: {#idea-monotona-uso .callout-tip appearance="simple" title="Idea central"}
 Este teorema es la primera consecuencia genuinamente nueva del axioma de
 completitud sobre sucesiones, en el sentido de que no podría probarse en
 $\mathbb{Q}$: es exactamente el mecanismo detrás de la convergencia de la

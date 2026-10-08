@@ -23,7 +23,7 @@ esta sección.
 
 La posición de las raíces respecto del círculo unitario admite una lectura geométrica que ayuda a retenerla.
 
-::: {#idea-raices-circulo-unitario .callout-tip appearance=“simple” title=“Idea central: Qué significa geométricamente una raíz dentro o fuera del círculo unitario”}
+::: {#idea-raices-circulo-unitario .callout-tip appearance="simple" title="Idea central: Qué significa geométricamente una raíz dentro o fuera del círculo unitario"}
 Cada raíz $z_i$ es un número complejo, y su distancia al origen,
 $|z_i|$, se compara con el ***círculo unitario***, el
 conjunto $\{z\in\mathbb{C}:|z|=1\}$ del plano complejo. Una raíz con

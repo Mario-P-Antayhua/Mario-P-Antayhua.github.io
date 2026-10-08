@@ -165,7 +165,7 @@ $\Var(\vect{Z})$.
 
 :::
 
-::: {#idea-anticipacion-kalman-normal .callout-tip appearance=“simple” title=“Idea central: Anticipación: la actualización bayesiana del filtro de Kalman”}
+::: {#idea-anticipacion-kalman-normal .callout-tip appearance="simple" title="Idea central: Anticipación: la actualización bayesiana del filtro de Kalman"}
 La fórmula de la media condicional del @cor-normal-condicional
 tiene una lectura idéntica a la del principio de ortogonalidad de la
 [Corolario “Principio de ortogonalidad para la esperanza condicional”](08-esperanza-condicional.qmd#cor-principio-ortogonalidad-esperanza) de la

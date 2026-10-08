@@ -203,7 +203,7 @@ basta con reconocer un producto interno y un subespacio de dimensión
 finita para heredar, sin ningún trabajo adicional, tanto la existencia y
 unicidad de un óptimo como su caracterización mediante ortogonalidad.
 
-::: {#idea-anticipacion-prediccion-optima .callout-tip appearance=“simple” title=“Idea central: Anticipación: de la proyección abstracta a la esperanza condicional”}
+::: {#idea-anticipacion-prediccion-optima .callout-tip appearance="simple" title="Idea central: Anticipación: de la proyección abstracta a la esperanza condicional"}
 El @thm-mejor-aproximacion-general se demostró sin mencionar
 variables aleatorias, precisamente para poder reutilizarlo sin
 modificación alguna. La [sección sobre la predicción óptima](../econometria-3/index.qmd) tomará como $V$ el
@@ -272,4 +272,4 @@ regresores, en el sentido exacto de la
 
 :::
 
-![La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.](../../assets/img/fig/matematica-2-05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo-1.svg){#fig-proyeccion-r3 fig-alt=“La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.”}
+![La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.](../../assets/img/fig/matematica-2-05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo-1.svg){#fig-proyeccion-r3 fig-alt="La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$."}

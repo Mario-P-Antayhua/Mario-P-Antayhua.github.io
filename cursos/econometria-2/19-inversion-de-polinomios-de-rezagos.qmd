@@ -58,7 +58,7 @@ $\phi(\Lag)\bigl[\sum_{j=0}^{\infty}\phi^j\Lag^j\bigr]Y_t=Y_t$.
 
 :::
 
-::: {#idea-anticipacion-ar1-inversion .callout-tip appearance=“simple” title=“Idea central: Anticipación: la representación MA($\infty$) de un AR(1)”}
+::: {#idea-anticipacion-ar1-inversion .callout-tip appearance="simple" title="Idea central: Anticipación: la representación MA($\infty$) de un AR(1)"}
 Este teorema es, en esencia, todo el trabajo algebraico que
 la [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) necesitará para escribir la solución de un proceso
 autorregresivo de primer orden $Y_t=\phi Y_{t-1}+\rblanco_t$, que en
