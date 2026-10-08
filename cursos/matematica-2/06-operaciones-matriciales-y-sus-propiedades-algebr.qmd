@@ -1,0 +1,263 @@
+---
+title: "Operaciones matriciales y sus propiedades algebraicas"
+description: "Operaciones matriciales y sus propiedades algebraicas. Incluye Matriz, Suma, escalamiento y producto matricial y Propiedades algebraicas del producto matricial."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas II, Álgebra matricial]
+---
+
+La [Sección “Espacios vectoriales y subespacios”](01-espacios-vectoriales-y-subespacios.qmd) desarrolló espacios vectoriales abstractos y
+demostró, en su ejemplo final, que la proyección ortogonal sobre el
+espacio columna de una matriz $\mat{X}$ coincide con el estimador de
+mínimos cuadrados ordinarios. Esa coincidencia no fue casual: toda la
+maquinaria de la regresión lineal, de la estimación por máxima
+verosimilitud y, más adelante, del filtro de Kalman, se expresa en el
+lenguaje de matrices, y esta sección construye las herramientas
+algebraicas necesarias para manipularlas con el mismo rigor con el que
+se manipuló $\mathbb{R}^n$ en la sección anterior. El recorrido tiene
+cinco etapas. Primero se fijan las operaciones básicas entre matrices y
+sus propiedades algebraicas. Segundo, se reinterpreta a una matriz como
+una transformación lineal entre espacios vectoriales, lo que conecta el
+rango de una matriz con la dimensión de la [Sección “Espacios vectoriales y subespacios”](01-espacios-vectoriales-y-subespacios.qmd).
+Tercero, el determinante permite decidir cuándo una transformación
+lineal es invertible. Cuarto, los valores y vectores propios describen
+las direcciones que una matriz respeta salvo un cambio de escala, un
+resultado que se usará repetidamente a partir de la
+[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd). Quinto, las formas cuadráticas y las matrices
+definidas positivas cierran la sección, porque son la estructura exacta
+que adoptan las matrices de varianza y covarianza y las matrices
+hessianas que la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd) necesitará para garantizar que
+un punto crítico sea efectivamente un mínimo.
+
+Como en la sección anterior, conviene subrayar que ningún resultado de
+lo que sigue depende de que las matrices representen coeficientes de
+regresión o covarianzas entre variables aleatorias: los axiomas del
+producto matricial, del determinante y de los valores propios son
+puramente algebraicos, y es solo al llegar a la [Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd)
+y a la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd) que esos mismos resultados se
+reinterpretan en un contexto estadístico. Esa separación entre el
+argumento algebraico y su aplicación posterior es la que permite
+demostrar cada resultado una sola vez y usarlo tantas veces como haga
+falta más adelante, sin repetir el argumento cada vez que cambie el
+contexto en el que las matrices aparecen.
+
+::: {#def-matriz}
+## Matriz
+
+Una ***matriz*** de tamaño $m\times n$ sobre $\mathbb{R}$ es
+un arreglo rectangular
+
+$$
+\mat{A} =
+  \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn}
+  \end{pmatrix},
+$$
+
+con $a_{ij}\in\mathbb{R}$ para $i=1,\ldots,m$ y $j=1,\ldots,n$. El
+conjunto de todas las matrices $m\times n$ se denota
+$\mathbb{R}^{m\times n}$; cuando $m=n$ la matriz se llama
+***cuadrada***, y cuando $n=1$ se identifica con el vector
+$\vect{a}\in\mathbb{R}^m$ de la [Sección “Espacios vectoriales y subespacios”](01-espacios-vectoriales-y-subespacios.qmd).
+:::
+
+Con $\mathbb{R}^{m\times n}$ definido como conjunto, hace falta dotarlo
+de las operaciones que lo convierten en un espacio vectorial en el
+sentido de la [Definición “Espacio vectorial”](01-espacios-vectoriales-y-subespacios.qmd#def-espacio-vectorial), y de una operación adicional,
+el producto matricial, que no tiene análogo directo en $\mathbb{R}^n$.
+
+::: {#def-operaciones-matrices}
+## Suma, escalamiento y producto matricial
+
+Para $\mat{A},\mat{B}\in\mathbb{R}^{m\times n}$ y $\alpha\in\mathbb{R}$,
+la suma y el escalamiento se definen entrada a entrada,
+$(\mat{A}+\mat{B})_{ij}:=a_{ij}+b_{ij}$ y
+$(\alpha\mat{A})_{ij}:=\alpha a_{ij}$. Para
+$\mat{A}\in\mathbb{R}^{m\times k}$ y $\mat{B}\in\mathbb{R}^{k\times n}$,
+el ***producto matricial*** $\mat{A}\mat{B}\in
+\mathbb{R}^{m\times n}$ se define por
+
+$$
+(\mat{A}\mat{B})_{ij} := \sum_{\ell=1}^{k} a_{i\ell}\,b_{\ell j},
+$$
+
+que solo está definido cuando el número de columnas de $\mat{A}$
+coincide con el número de filas de $\mat{B}$.
+:::
+
+Con la suma y el escalamiento así definidos, $\mathbb{R}^{m\times n}$
+satisface los cuatro axiomas de la [Definición “Espacio vectorial”](01-espacios-vectoriales-y-subespacios.qmd#def-espacio-vectorial) de forma
+directa, entrada a entrada, exactamente como lo hace $\mathbb{R}^n$; por
+eso todo lo desarrollado en la [Sección “Espacios vectoriales y subespacios”](01-espacios-vectoriales-y-subespacios.qmd) sobre bases,
+dimensión y normas se hereda a $\mathbb{R}^{m\times n}$ sin necesidad de
+volver a demostrarlo. El producto matricial, en cambio, es una operación
+nueva, y no hereda todas las propiedades a las que la multiplicación de
+números reales tiene acostumbrada la intuición.
+
+::: {#prp-propiedades-producto}
+## Propiedades algebraicas del producto matricial
+
+Siempre que los productos involucrados estén definidos, el producto
+matricial es asociativo, $\mat{A}(\mat{B}\mat{C})=(\mat{A}\mat{B})\mat{C}$,
+y distribuye sobre la suma,
+$\mat{A}(\mat{B}+\mat{C})=\mat{A}\mat{B}+\mat{A}\mat{C}$. Sin embargo, el
+producto matricial no es, en general, conmutativo.
+:::
+
+::: {.proof}
+La asociatividad se verifica entrada a entrada. Para $\mat{A}\in
+\mathbb{R}^{m\times k}$, $\mat{B}\in\mathbb{R}^{k\times p}$ y $\mat{C}\in
+\mathbb{R}^{p\times n}$, la entrada $(i,j)$ de $\mat{A}(\mat{B}\mat{C})$ es
+
+$$
+\begin{aligned}
+\bigl(\mat{A}(\mat{B}\mat{C})\bigr)_{ij}
+  &= \sum_{\ell=1}^{k} a_{i\ell}\Bigl(\sum_{r=1}^{p} b_{\ell r}c_{rj}\Bigr),
+   \\
+  \bigl(\mat{A}(\mat{B}\mat{C})\bigr)_{ij}
+  &= \sum_{r=1}^{p}\Bigl(\sum_{\ell=1}^{k}a_{i\ell}b_{\ell r}\Bigr)c_{rj}
+  = \bigl((\mat{A}\mat{B})\mat{C}\bigr)_{ij},
+\end{aligned}
+$$ {#eq-asociatividad-paso1}
+
+donde el paso de @eq-asociatividad-paso1 a
+@eq-asociatividad-paso1 solo reordena una suma finita de
+productos, lo cual es lícito porque la suma y el producto de números
+reales conmutan entre sí. La distributividad se obtiene del mismo modo,
+factorizando $a_{i\ell}$ de la suma de $b_{\ell j}+c_{\ell j}$.
+
+Para la no conmutatividad basta un contraejemplo, porque la propiedad
+falla incluso cuando ambos productos están definidos. Con
+$\mat{A}=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$ y
+$\mat{B}=\left(\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right)$ se obtiene
+$\mat{A}\mat{B}=\left(\begin{smallmatrix}0&0\\0&0\end{smallmatrix}\right)$ mientras
+que $\mat{B}\mat{A}=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$, de
+modo que $\mat{A}\mat{B}\neq\mat{B}\mat{A}$ y la conmutatividad no puede
+darse por supuesta en ningún argumento posterior que involucre productos
+de matrices.
+:::
+
+La falta de conmutatividad no es un detalle menor: cada vez que se
+manipule una ecuación matricial, como las que aparecerán en la
+estimación por mínimos cuadrados generalizados o en las ecuaciones del
+filtro de Kalman, el orden de los factores debe respetarse exactamente
+como se escriba, porque invertirlo produce en general un objeto distinto
+o incluso de otro tamaño. Una segunda operación que reaparecerá
+constantemente es la transposición, que intercambia filas por columnas.
+
+::: {#def-transpuesta}
+## Transpuesta
+
+La ***transpuesta*** de $\mat{A}\in\mathbb{R}^{m\times n}$ es
+la matriz $\mat{A}^{\top}\in\mathbb{R}^{n\times m}$ definida por
+$(\mat{A}^{\top})_{ij}:=a_{ji}$. Una matriz cuadrada $\mat{A}$ es
+***simétrica*** si $\mat{A}^{\top}=\mat{A}$.
+:::
+
+La transposición se comporta de manera sencilla frente a las operaciones anteriores, con un detalle fácil de olvidar: invierte el orden de los factores de un producto.
+
+::: {#prp-propiedades-transpuesta}
+## Propiedades de la transpuesta
+
+Para $\mat{A},\mat{B}$ de tamaños compatibles y $\alpha\in\mathbb{R}$,
+$(\mat{A}+\mat{B})^{\top}=\mat{A}^{\top}+\mat{B}^{\top}$,
+$(\alpha\mat{A})^{\top}=\alpha\mat{A}^{\top}$,
+$(\mat{A}^{\top})^{\top}=\mat{A}$, y, cuando el producto $\mat{A}\mat{B}$
+está definido, $(\mat{A}\mat{B})^{\top}=\mat{B}^{\top}\mat{A}^{\top}$.
+:::
+
+::: {.proof}
+Las tres primeras identidades son inmediatas de la
+@def-transpuesta aplicada entrada a entrada. Para la cuarta,
+conviene comparar las entradas de ambos lados por separado. La entrada
+$(i,j)$ de $(\mat{A}\mat{B})^{\top}$ es, por definición de transpuesta,
+la entrada $(j,i)$ de $\mat{A}\mat{B}$,
+
+$$
+\bigl((\mat{A}\mat{B})^{\top}\bigr)_{ij}
+  = (\mat{A}\mat{B})_{ji}
+  = \sum_{\ell} a_{j\ell}\,b_{\ell i}.
+$$ {#eq-transpuesta-producto-1}
+
+Del otro lado, la entrada $(i,j)$ de $\mat{B}^{\top}\mat{A}^{\top}$ es,
+usando que $(\mat{B}^{\top})_{i\ell}=b_{\ell i}$ y
+$(\mat{A}^{\top})_{\ell j}=a_{j\ell}$,
+
+$$
+\bigl(\mat{B}^{\top}\mat{A}^{\top}\bigr)_{ij}
+  = \sum_{\ell}(\mat{B}^{\top})_{i\ell}(\mat{A}^{\top})_{\ell j}
+  = \sum_{\ell} b_{\ell i}\,a_{j\ell},
+$$ {#eq-transpuesta-producto-2}
+
+y como el producto de números reales conmuta, las sumas
+@eq-transpuesta-producto-1 y @eq-transpuesta-producto-2
+coinciden término a término para todo par $(i,j)$, lo que establece la
+igualdad de las dos matrices completas.
+:::
+
+El orden invertido en $(\mat{A}\mat{B})^{\top}=\mat{B}^{\top}\mat{A}^{\top}$
+se invocará sin nueva demostración en cuanto aparezca la matriz
+$\mat{X}^{\top}\mat{X}$ de la regresión lineal, cuya simetría depende
+exactamente de esta propiedad. Una última operación básica, la traza,
+reduce una matriz cuadrada a un único número y tiene un comportamiento
+frente al producto que resultará decisivo más adelante, en particular
+para calcular los grados de libertad de un modelo de regresión como la
+traza de su matriz de proyección.
+
+::: {#def-traza}
+## Traza
+
+La ***traza*** de una matriz cuadrada
+$\mat{A}\in\mathbb{R}^{n\times n}$ es la suma de sus elementos
+diagonales, $\tr(\mat{A}):=\sum_{i=1}^{n}a_{ii}$.
+:::
+
+La traza tiene una propiedad que permite reordenar productos de matrices, incluso cuando las matrices no tienen el mismo tamaño.
+
+::: {#prp-traza-ciclica}
+## Propiedad cíclica de la traza
+
+Para $\mat{A}\in\mathbb{R}^{m\times n}$ y $\mat{B}\in\mathbb{R}^{n\times m}$,
+$\tr(\mat{A}\mat{B})=\tr(\mat{B}\mat{A})$.
+:::
+
+::: {.proof}
+Ambos productos $\mat{A}\mat{B}$ y $\mat{B}\mat{A}$ son cuadrados, de
+tamaños $m\times m$ y $n\times n$ respectivamente, aunque en general
+distintos entre sí; lo que el resultado afirma es que sus trazas
+coinciden. Desarrollando directamente de la
+@def-operaciones-matrices y la @def-traza,
+
+$$
+\begin{aligned}
+\tr(\mat{A}\mat{B})
+  &= \sum_{i=1}^{m}(\mat{A}\mat{B})_{ii}
+  = \sum_{i=1}^{m}\sum_{j=1}^{n} a_{ij}b_{ji},
+   \\
+  \tr(\mat{A}\mat{B})
+  &= \sum_{j=1}^{n}\sum_{i=1}^{m} b_{ji}a_{ij}
+  = \sum_{j=1}^{n}(\mat{B}\mat{A})_{jj}
+  = \tr(\mat{B}\mat{A}),
+\end{aligned}
+$$ {#eq-traza-ciclica-1}
+
+donde el único paso no trivial, de @eq-traza-ciclica-1 a
+@eq-traza-ciclica-1, intercambia el orden de una suma doble
+finita, lo cual es lícito sin ninguna condición adicional, y reagrupa
+los índices para reconocer la definición de $(\mat{B}\mat{A})_{jj}$.
+:::
+
+La propiedad cíclica de la traza se invocará más adelante en dos
+contextos que, a primera vista, no tienen relación entre sí: al calcular
+la traza de la matriz de proyección en el [Ejemplo “La matriz de proyección es simétrica, idempotente y semidefinida positiva”](10-formas-cuadraticas-y-matrices-definidas-positiva.qmd#exm-matriz-proyeccion) de
+esta misma sección, y al calcular la varianza de una forma cuadrática de
+un vector aleatorio en la [Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd), donde permite
+intercambiar el orden de una matriz de covarianzas y una matriz de
+coeficientes dentro de una traza sin alterar el resultado. Con las
+operaciones básicas ya disponibles, el siguiente paso es reinterpretar a
+las matrices no como simples arreglos de números sino como las
+transformaciones lineales que en el fondo son, lo que permite trasladar
+directamente el aparato conceptual de la [Sección “Espacios vectoriales y subespacios”](01-espacios-vectoriales-y-subespacios.qmd).

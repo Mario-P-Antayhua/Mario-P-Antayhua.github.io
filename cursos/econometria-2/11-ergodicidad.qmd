@@ -1,0 +1,86 @@
+---
+title: "Ergodicidad"
+description: "Ergodicidad. Incluye Ergodicidad para la media."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos estocásticos, estacionariedad y ergodicidad]
+---
+
+La estacionariedad garantiza que $\mu$ y $\autocov{j}$ están bien
+definidos, sin depender de $t$, pero no garantiza por sí sola que se
+puedan *estimar* a partir de una trayectoria finita. Un proceso
+estacionario puede, en principio, quedar determinado por completo desde
+el primer instante por una única variable aleatoria que nunca vuelve a
+generar información nueva, en cuyo caso ninguna cantidad de datos
+adicionales mejoraría la estimación de sus momentos.
+
+::: {#def-ergodicidad}
+## Ergodicidad para la media
+
+Un proceso débilmente estacionario $\{Y_t\}$ es
+***ergódico para la media*** si el promedio muestral
+converge en media cuadrática a la media poblacional,
+
+$$
+\bar{Y}_n := \frac{1}{n}\sum_{t=1}^{n}Y_t
+  \xrightarrow{\text{m.c.}} \mu,
+$$
+
+en el sentido de la [Definición “Convergencia en media cuadrática”](../econometria-1/05-modos-de-convergencia.qmd#def-convergencia-l2) de la
+[Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd).
+:::
+
+La definición exige, en esencia, que promediar más observaciones de la
+misma trayectoria produzca una estimación cada vez mejor de $\mu$, en
+el mismo sentido en que promediar más observaciones independientes lo
+hacía en la ley de los grandes números de la
+[Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd). La diferencia crucial es que aquí las
+observaciones $Y_1,\ldots,Y_n$ no son independientes entre sí, de modo
+que el argumento de esa ley no se traslada de manera automática y hace
+falta una condición adicional sobre cómo decae la dependencia temporal
+del proceso a medida que crece la separación entre observaciones.
+
+::: {#idea-ergodicidad-sumabilidad .callout-tip appearance=“simple” title=“Idea central: Por qué la sumabilidad de las autocovarianzas basta para la ergodicidad”}
+Un cálculo directo, análogo al de la varianza del promedio muestral en
+la demostración de la ley débil de los grandes números del
+[Teorema “Ley débil de los grandes números”](../econometria-1/06-leyes-de-los-grandes-numeros-y-el-teorema-centra.qmd#thm-llgn) de la [Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd), pero ahora sin suponer
+independencia, da
+$\Var(\bar{Y}_n)=n^{-2}\sum_{t=1}^{n}\sum_{s=1}^{n}\autocov{t-s}$, una
+suma que involucra todas las autocovarianzas, no solo la varianza. Puede
+demostrarse que esta expresión tiende a cero cuando
+$n\to\infty$ siempre que $\sum_{j=-\infty}^{\infty}|\autocov{j}|<
+\infty$, es decir, siempre que las autocovarianzas sean absolutamente
+sumables y, en particular, que $\autocov{j}\to 0$ cuando $j\to\infty$:
+observaciones suficientemente separadas en el tiempo deben volverse
+aproximadamente incorrelacionadas para que el promedio muestral gane
+precisión al añadir más datos. Esta condición de sumabilidad se
+verificará explícitamente para cada uno de los procesos de la
+[Sección “Procesos sin dinámica: constante, ruido blanco y media”](12-procesos-sin-dinamica-constante-ruido-blanco-y-m.qmd) y, de manera general, para todo proceso
+autorregresivo estacionario de la [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) y todo proceso de medias
+móviles invertible de la [Sección “El proceso MA(1)”](27-el-proceso-ma-1.qmd), de modo que la ergodicidad
+no volverá a cuestionarse en ninguna de esas secciones posteriores.
+:::
+
+Antes de seguir conviene aclarar que la ergodicidad y la estacionariedad son propiedades distintas.
+
+::: {#nota-estacionariedad-ergodicidad-independientes .callout-note appearance=“simple” title=“Nota: Estacionariedad y ergodicidad son propiedades independientes”}
+Ninguna de las dos propiedades implica la otra. Un proceso puede ser
+estacionario sin ser ergódico: si $Y_t=Z$ para todo $t$, con $Z$ una
+única variable aleatoria sorteada una sola vez al inicio del proceso, el
+proceso es trivialmente estacionario, porque su distribución conjunta no
+cambia con desplazamientos temporales, pero $\bar{Y}_n=Z$ para todo $n$
+y nunca converge a $\mu=\Esp{Z}$ salvo que $Z$ sea degenerada, porque
+ninguna observación adicional aporta información nueva sobre el valor
+de $Z$ ya determinado desde el inicio. Un proceso puede, en cambio, ser
+ergódico sin ser estacionario, aunque ese caso es menos relevante en la
+práctica y no se detallará aquí. La distinción entre ambas propiedades
+es la que justifica tratarlas por separado, en lugar de como una sola
+condición combinada.
+:::
+
+Con la estacionariedad y la ergodicidad ya establecidas como los dos
+pilares que permiten trabajar con una sola trayectoria observada, la
+[Sección “Procesos sin dinámica: constante, ruido blanco y media”](12-procesos-sin-dinamica-constante-ruido-blanco-y-m.qmd) aplica de inmediato esta maquinaria a
+una colección de procesos concretos, verificando en cada caso si
+satisfacen ambas propiedades y calculando explícitamente su media, su
+varianza y su función de autocovarianza.

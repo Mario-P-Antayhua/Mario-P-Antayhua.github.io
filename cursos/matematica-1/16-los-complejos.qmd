@@ -1,0 +1,108 @@
+---
+title: "Los complejos"
+description: "Los complejos. Incluye Los números complejos y Inverso multiplicativo en mathbbC."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Los sistemas numéricos y la recta real]
+---
+
+Cerrado el ciclo de $\mathbb{N}$ a $\mathbb{R}$, queda todavía una
+limitación algebraica sin resolver, de naturaleza distinta a las
+anteriores: ningún real tiene cuadrado negativo, porque el cuadrado de
+cualquier real no nulo es positivo por la tricotomía del orden, así que la
+ecuación $x^2=-1$ no tiene solución dentro de $\mathbb{R}$. Los números
+complejos se construyen, una vez más, como pares ordenados, aunque en este
+caso sin necesidad de pasar por una relación de equivalencia, porque cada
+par de reales se declara directamente, sin identificaciones adicionales, un
+número complejo distinto.
+
+::: {#def-complejos}
+## Los números complejos
+
+El conjunto de los números complejos se define como
+$\mathbb{C}:=\mathbb{R}\times\mathbb{R}$, con las operaciones
+
+$$
+(a,b)+(c,d) := (a+c,\ b+d) ,
+  \qquad
+  (a,b)\cdot(c,d) := (ac-bd,\ ad+bc) .
+$$ {#eq-operaciones-complejos}
+
+Escribiendo $i:=(0,1)$, todo $(a,b)\in\mathbb{C}$ se denota $a+bi$.
+:::
+
+La fórmula del producto en @eq-operaciones-complejos está construida
+precisamente para que $i^2=-1$: en efecto,
+$i^2=(0,1)\cdot(0,1)=(0\cdot0-1\cdot1,\ 0\cdot1+1\cdot0)=(-1,0)=-1$, con lo
+cual la limitación de $\mathbb{R}$ queda resuelta por construcción. Para
+fijar ideas conviene calcular un producto con números concretos: con
+$z=3+2i$ y $w=1-4i$, la misma fórmula, aplicada con $a=3,b=2,c=1,d=-4$, da
+$zw=(3\cdot1-2\cdot(-4))+(3\cdot(-4)+2\cdot1)i=(3+8)+(-12+2)i=11-10i$, un
+resultado que coincide exactamente con multiplicar $(3+2i)(1-4i)$ de forma
+algebraica usual y sustituir $i^2=-1$ al final. Igual que ocurrió al pasar
+de $\mathbb{Z}$ a $\mathbb{Q}$, la ampliación algebraica no se detiene en la
+sola definición de las operaciones: conviene verificar también que todo
+elemento no nulo tiene inverso multiplicativo, cerrando así la estructura de
+cuerpo.
+
+::: {#cor-inverso-c}
+## Inverso multiplicativo en $\mathbb{C}$
+
+Todo $z=a+bi\in\mathbb{C}$ con $(a,b)\neq(0,0)$ tiene inverso
+multiplicativo, dado por
+
+$$
+z^{-1} = \frac{a}{a^2+b^2} - \frac{b}{a^2+b^2}\,i .
+$$
+:::
+
+::: {.proof}
+Aplicando @eq-operaciones-complejos al producto de $z=(a,b)$ por el
+candidato propuesto, escrito como par
+$\bigl(a/(a^2+b^2),\,-b/(a^2+b^2)\bigr)$, se obtiene
+
+$$
+z\cdot z^{-1}
+  = \left(\frac{a^2+b^2}{a^2+b^2},\ \frac{-ab+ab}{a^2+b^2}\right)
+  = (1,0) = 1 ,
+$$
+
+donde $a^2+b^2>0$ porque $(a,b)\neq(0,0)$, así que la división está bien
+definida; el producto es efectivamente el neutro multiplicativo de
+$\mathbb{C}$.
+:::
+
+::: {#nota-c-no-ordenado .callout-note appearance=“simple” title=“Nota: $\mathbb{C}$ no es un cuerpo ordenado”}
+En cualquier cuerpo ordenado, el cuadrado de todo elemento no nulo es
+positivo, tal como se usó repetidamente en la construcción de $\mathbb{R}$.
+Pero si $\mathbb{C}$ admitiera un orden compatible con sus operaciones,
+$i^2=-1$ debería ser positivo por esa misma propiedad, y sumando $1>0$ a
+ambos miembros se obtendría $0>0$, una contradicción. En consecuencia,
+$\mathbb{C}$ no puede dotarse de ningún orden compatible con la suma y el
+producto, y nociones que dependen esencialmente de un orden, como el
+supremo o los intervalos de las subsecciones anteriores, no tienen
+contraparte dentro de $\mathbb{C}$.
+:::
+
+Con los complejos se completa la cadena de extensiones, y mirarla en conjunto muestra el patrón que se repite en cada paso.
+
+::: {#idea-patron-extensiones .callout-tip appearance=“simple” title=“Idea central: El patrón común de las extensiones sucesivas”}
+Las cuatro construcciones de esta sección comparten una misma anatomía, que
+conviene retener porque reaparecerá bajo otras formas en secciones
+posteriores del documento: se identifica una ecuación concreta sin solución
+dentro del sistema disponible, se construye un sistema mayor, casi siempre
+mediante clases de equivalencia sobre pares del sistema anterior, y se
+verifica que las operaciones originales sobreviven intactas dentro de la
+identificación del sistema viejo como subconjunto del nuevo. La única
+excepción parcial es el paso de $\mathbb{Q}$ a $\mathbb{R}$, donde la
+limitación no fue algebraica sino topológica, y por eso la reparación exigió
+un axioma de naturaleza distinta, el de completitud, en lugar de una
+construcción explícita por pares.
+:::
+
+Con los cinco sistemas numéricos disponibles, $\mathbb{N}\subset\mathbb{Z}
+\subset\mathbb{Q}\subset\mathbb{R}\subset\mathbb{C}$, y con el axioma de
+completitud de $\mathbb{R}$ ya establecido como la propiedad estructural
+sobre la que se apoyará el resto del documento, puede abordarse el estudio
+de las sucesiones y series, cuyo comportamiento asintótico depende de
+manera esencial de esa misma completitud.

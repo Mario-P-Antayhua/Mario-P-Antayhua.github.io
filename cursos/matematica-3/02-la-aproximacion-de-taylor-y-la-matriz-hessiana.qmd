@@ -1,0 +1,162 @@
+---
+title: "La aproximación de Taylor y la matriz hessiana"
+description: "La aproximación de Taylor y la matriz hessiana. Incluye Matriz hessiana, Igualdad de las derivadas parciales cruzadas y Fórmula de Taylor de segundo orden."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas III, Cálculo diferencial e integral]
+---
+
+El gradiente da la mejor aproximación *lineal* de $f$ cerca de un
+punto; para muchos propósitos, en particular para distinguir un mínimo
+de un máximo o de un punto de silla en la
+[Sección “Existencia de un óptimo: el teorema de Weierstrass”](04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd), esa aproximación lineal no basta, porque su
+segunda derivada es idénticamente nula. Hace falta, entonces, una
+aproximación cuadrática, y el objeto que reúne toda la información de
+segundo orden es la matriz hessiana.
+
+::: {#def-hessiana}
+## Matriz hessiana
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$ dos veces
+diferenciable en $\vect{p}\in D$. La ***matriz hessiana***
+de $f$ en $\vect{p}$ es la matriz $\mat{H}_f(\vect{p})\in
+\mathbb{R}^{n\times n}$ con entradas
+$(\mat{H}_f(\vect{p}))_{ij}:=\dfrac{\partial^2 f}{\partial x_i\partial
+x_j}(\vect{p})$.
+:::
+
+Nada en la definición anterior obliga a que
+$\partial^2 f/\partial x_i\partial x_j$ coincida con
+$\partial^2 f/\partial x_j\partial x_i$, es decir, a que el orden en que
+se toman las dos derivadas parciales sea irrelevante; que en efecto lo
+sea, bajo una condición de continuidad razonable, es un hecho que no se
+puede dar por sentado y que tiene una consecuencia importante para la
+[Sección “Operaciones matriciales y sus propiedades algebraicas”](../matematica-2/06-operaciones-matriciales-y-sus-propiedades-algebr.qmd): si la hessiana es siempre simétrica, toda
+la teoría espectral desarrollada ahí, incluida la caracterización de la
+definición positiva, se aplica directamente a ella.
+
+::: {#thm-schwarz-clairaut}
+## Igualdad de las derivadas parciales cruzadas
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$ tal que las
+derivadas parciales de segundo orden
+$\partial^2 f/\partial x_i\partial x_j$ y
+$\partial^2 f/\partial x_j\partial x_i$ existen en una vecindad de
+$\vect{p}\in D$ y son continuas en $\vect{p}$. Entonces
+$\dfrac{\partial^2 f}{\partial x_i\partial x_j}(\vect{p})=
+\dfrac{\partial^2 f}{\partial x_j\partial x_i}(\vect{p})$.
+:::
+
+::: {.proof}
+Basta considerar el caso $n=2$, con $\vect{p}=(p_1,p_2)$, porque el caso
+general se reduce a este fijando todas las coordenadas salvo las dos que
+intervienen en la derivada cruzada. La estrategia consiste en formar el
+cociente de diferencias de segundo orden
+
+$$
+\Delta(h,k) := f(p_1+h,p_2+k) - f(p_1+h,p_2) - f(p_1,p_2+k) + f(p_1,p_2)
+$$
+
+y calcular su límite, dividido por $hk$, de dos maneras distintas.
+Definiendo $\phi(x):=f(x,p_2+k)-f(x,p_2)$, se tiene
+$\Delta(h,k)=\phi(p_1+h)-\phi(p_1)$, y el teorema del valor medio de la
+[Teorema “Teorema del valor medio”](../matematica-1/29-la-derivada-de-una-funcion-de-una-variable.qmd#thm-valor-medio) aplicado a $\phi$ en el intervalo
+$[p_1,p_1+h]$ da un punto $c_1$ entre $p_1$ y $p_1+h$ con
+$\Delta(h,k)=h\,\phi'(c_1)=h\Bigl[\dfrac{\partial f}{\partial
+x_1}(c_1,p_2+k)-\dfrac{\partial f}{\partial x_1}(c_1,p_2)\Bigr]$.
+Aplicando de nuevo el teorema del valor medio, ahora a la función
+$y\mapsto\partial f/\partial x_1(c_1,y)$ en el intervalo $[p_2,p_2+k]$,
+se obtiene un punto $c_2$ entre $p_2$ y $p_2+k$ con
+
+$$
+\Delta(h,k) = hk\,\frac{\partial^2 f}{\partial x_2\partial x_1}(c_1,c_2).
+$$ {#eq-schwarz-clairaut-1}
+
+Repitiendo el mismo argumento pero agrupando $\Delta(h,k)$ primero a lo
+largo de la segunda coordenada y después de la primera se obtiene,
+simétricamente, un punto $(c_1',c_2')$ con
+
+$$
+\Delta(h,k) = hk\,\frac{\partial^2 f}{\partial x_1\partial x_2}
+  (c_1',c_2').
+$$ {#eq-schwarz-clairaut-2}
+
+Igualando @eq-schwarz-clairaut-1 con
+@eq-schwarz-clairaut-2, dividiendo por $hk\neq 0$ y haciendo
+$h,k\to 0$, los puntos $(c_1,c_2)$ y $(c_1',c_2')$ convergen ambos a
+$\vect{p}=(p_1,p_2)$ por estar atrapados entre $p_1$ y $p_1+h$, y entre
+$p_2$ y $p_2+k$, respectivamente; la continuidad de ambas derivadas
+cruzadas en $\vect{p}$, supuesta en la hipótesis, permite entonces
+pasar al límite en ambos lados y concluir
+$\partial^2 f/\partial x_2\partial x_1(\vect{p})=\partial^2 f/\partial
+x_1\partial x_2(\vect{p})$.
+:::
+
+Con la simetría de la hessiana establecida, la aproximación cuadrática
+de $f$ cerca de un punto queda completamente determinada por el valor de
+la función, su gradiente y su hessiana en ese punto, sin ningún término
+adicional que dependa del orden de las derivadas.
+
+::: {#thm-taylor-segundo-orden}
+## Fórmula de Taylor de segundo orden
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$ dos veces
+diferenciable con continuidad en $\vect{p}\in D$. Entonces, para
+$\vect{h}$ suficientemente pequeño,
+
+$$
+f(\vect{p}+\vect{h}) = f(\vect{p}) + \langle\nabla f(\vect{p}),
+  \vect{h}\rangle + \tfrac{1}{2}\vect{h}^{\top}\mat{H}_f(\vect{p})
+  \vect{h} + R(\vect{h}), \qquad
+  \frac{R(\vect{h})}{\|\vect{h}\|^{2}}\xrightarrow[\vect{h}\to
+  \vect{0}]{}0.
+$$ {#eq-taylor-segundo-orden}
+:::
+
+::: {.proof}
+Se define $g(t):=f(\vect{p}+t\vect{h})$ para $t\in[0,1]$, con
+$\vect{h}$ fijo y suficientemente pequeño para que el segmento quede
+dentro de $D$. La regla de la cadena de una variable, aplicada
+repetidamente, da $g'(t)=\langle\nabla f(\vect{p}+t\vect{h}),
+\vect{h}\rangle$ y $g''(t)=\vect{h}^{\top}\mat{H}_f(\vect{p}+t\vect{h})
+\vect{h}$, de modo que el problema se reduce a expandir la función de
+una sola variable $g$ alrededor de $t=0$. La fórmula de Taylor de
+segundo orden para funciones de una variable, que se obtiene aplicando
+el teorema del valor medio al resto de la expansión de primer orden de
+$g'$, da $g(1)=g(0)+g'(0)+\tfrac{1}{2}g''(0)+R$, con $R/\|\vect{h}\|^2\to
+0$ cuando $\vect{h}\to\vect{0}$ por la continuidad de $\mat{H}_f$ en
+$\vect{p}$. Sustituyendo $g(1)=f(\vect{p}+\vect{h})$, $g(0)=f(\vect{p})$,
+$g'(0)=\langle\nabla f(\vect{p}),\vect{h}\rangle$ y
+$g''(0)=\vect{h}^{\top}\mat{H}_f(\vect{p})\vect{h}$ se obtiene
+exactamente @eq-taylor-segundo-orden.
+:::
+
+::: {#exm-gradiente-hessiana-cuadratica}
+## Gradiente y hessiana de una forma cuadrática
+
+Sea $\mat{A}\in\mathbb{R}^{n\times n}$ simétrica, $\vect{b}\in
+\mathbb{R}^n$ y $f(\vect{x}):=\vect{x}^{\top}\mat{A}\vect{x}+
+\vect{b}^{\top}\vect{x}$, la forma general de la suma de cuadrados
+residual de una regresión lineal. Derivando entrada a entrada,
+$\partial f/\partial x_i(\vect{x})=2\sum_j a_{ij}x_j+b_i$, de modo que
+$\nabla f(\vect{x})=2\mat{A}\vect{x}+\vect{b}$; derivando una vez más,
+$\partial^2 f/\partial x_i\partial x_j=2a_{ij}$, de modo que
+$\mat{H}_f(\vect{x})=2\mat{A}$ para todo $\vect{x}$, sin dependencia del
+punto donde se evalúa, algo que solo ocurre porque $f$ es exactamente
+cuadrática y no tiene términos de orden superior. Como la hessiana no
+depende de $\vect{x}$, la fórmula de Taylor de la
+@thm-taylor-segundo-orden es, en este caso particular, exacta y no
+solo aproximada: $f(\vect{p}+\vect{h})=f(\vect{p})+\langle\nabla
+f(\vect{p}),\vect{h}\rangle+\vect{h}^{\top}\mat{A}\vect{h}$ para
+cualquier $\vect{h}$, sin ningún resto. Este cálculo es precisamente el
+que la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd) retomará para anular $\nabla f$ y
+resolver explícitamente por el mínimo de la suma de cuadrados residual.
+:::
+
+Con el gradiente, la hessiana y la aproximación de Taylor disponibles,
+queda completo el aparato diferencial que esta sección se propuso
+construir. Falta todavía la operación inversa a la derivada, la
+integral, que hasta aquí no se ha necesitado pero que resultará
+indispensable en cuanto se calculen esperanzas de variables aleatorias
+continuas a partir de la [Sección “Espacios de probabilidad”](../econometria-1/01-espacios-de-probabilidad.qmd), y cuya interacción con
+la derivada, en la forma de la regla de Leibniz, cerrará la sección.

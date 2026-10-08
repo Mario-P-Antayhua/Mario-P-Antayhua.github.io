@@ -1,0 +1,98 @@
+---
+title: "Normalidad asintótica"
+description: "Normalidad asintótica. Incluye Normalidad asintótica del estimador máximo verosímil."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Inferencia asintótica]
+---
+
+La consistencia garantiza que $\hat{\vect{\theta}}_n$ se acerca a
+$\vect{\theta}_0$, pero no dice nada sobre la escala ni la forma de las
+fluctuaciones alrededor de ese límite; el resultado siguiente, que
+reproduce exactamente la estructura de demostración del teorema central
+del límite de la [Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd) pero aplicada al score en lugar
+de a un promedio simple, completa esa descripción.
+
+::: {#thm-normalidad-asintotica}
+## Normalidad asintótica del estimador máximo verosímil
+
+Bajo los [Supuestos “Condiciones de regularidad para la consistencia”](04-consistencia-del-estimador-maximo-verosimil.qmd#sup-regularidad-consistencia) y condiciones adicionales
+de diferenciabilidad que permiten expandir el score en torno a
+$\vect{\theta}_0$,
+
+$$
+\sqrt{n}\bigl(\hat{\vect{\theta}}_n-\vect{\theta}_0\bigr)
+  \xrightarrow{d} N\bigl(\vect{0},\,\mathcal{I}(\vect{\theta}_0)^{-1}\bigr),
+$$
+
+donde $\mathcal{I}(\vect{\theta}_0)$ es la matriz de información de
+Fisher de la [Definición “Matriz de información de Fisher”](06-la-matriz-de-informacion-de-fisher.qmd#def-informacion-fisher) de esta misma sección.
+:::
+
+::: {.proof}
+Como $\hat{\vect{\theta}}_n$ es, por el [Teorema “Consistencia del estimador máximo verosímil”](04-consistencia-del-estimador-maximo-verosimil.qmd#thm-consistencia-emv), un
+óptimo interior con probabilidad que tiende a uno, el
+[Teorema “Condición necesaria de primer orden”](../matematica-3/05-condiciones-de-optimalidad-sin-restricciones.qmd#thm-fermat) de la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd) da
+$\vect{s}_n(\hat{\vect{\theta}}_n)=\vect{0}$. La estrategia consiste en
+expandir esta ecuación mediante la fórmula de Taylor de primer orden de
+la [Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd) alrededor de $\vect{\theta}_0$,
+
+$$
+\vect{0} = \vect{s}_n(\hat{\vect{\theta}}_n)
+  = \vect{s}_n(\vect{\theta}_0)
+  + \mat{H}_n(\bar{\vect{\theta}}_n)
+  \bigl(\hat{\vect{\theta}}_n-\vect{\theta}_0\bigr),
+$$ {#eq-taylor-score}
+
+donde $\mat{H}_n(\vect{\theta}):=\nabla_{\vect{\theta}}
+\vect{s}_n(\vect{\theta})^{\top}$ es la hessiana de $\ell_n$ en el
+sentido de la [Definición “Matriz hessiana”](../matematica-3/02-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#def-hessiana) de la [Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd), y
+$\bar{\vect{\theta}}_n$ es un punto intermedio entre
+$\hat{\vect{\theta}}_n$ y $\vect{\theta}_0$ que converge en probabilidad
+a $\vect{\theta}_0$ por la consistencia ya establecida. Despejando de
+@eq-taylor-score y multiplicando por $\sqrt{n}$,
+
+$$
+\sqrt{n}\bigl(\hat{\vect{\theta}}_n-\vect{\theta}_0\bigr)
+  = -\Bigl[\frac{1}{n}\mat{H}_n(\bar{\vect{\theta}}_n)\Bigr]^{-1}
+  \frac{1}{\sqrt{n}}\vect{s}_n(\vect{\theta}_0).
+$$ {#eq-normalidad-descomposicion}
+
+Se estudia cada factor de @eq-normalidad-descomposicion por
+separado. Para el primero, la ley de los grandes números de la
+[Teorema “Ley débil de los grandes números”](../econometria-1/06-leyes-de-los-grandes-numeros-y-el-teorema-centra.qmd#thm-llgn), aplicada a las segundas derivadas individuales
+$\nabla_{\vect{\theta}}\vect{s}_i(\vect{\theta})^{\top}$, junto con la
+continuidad de esas derivadas y la consistencia
+$\bar{\vect{\theta}}_n\xrightarrow{p}\vect{\theta}_0$, da
+$n^{-1}\mat{H}_n(\bar{\vect{\theta}}_n)\xrightarrow{p}
+-\mathcal{I}(\vect{\theta}_0)$, usando la primera forma de la
+información de Fisher que la [Definición “Matriz de información de Fisher”](06-la-matriz-de-informacion-de-fisher.qmd#def-informacion-fisher) definirá a
+continuación. Para el segundo factor, como
+$\vect{s}_n(\vect{\theta}_0)=\sum_{i=1}^{n}\vect{s}_i(\vect{\theta}_0)$
+es una suma de contribuciones independientes e idénticamente
+distribuidas con media cero, por la
+[Proposición “La esperanza del score es cero”](02-la-funcion-score.qmd#prp-esperanza-score-cero) de la [Sección “La función de verosimilitud y el estimador máximo verosímil”](01-la-funcion-de-verosimilitud-y-el-estimador-maxim.qmd), y
+varianza $\mathcal{I}(\vect{\theta}_0)$, por la segunda forma de la
+información de Fisher, el teorema central del límite de la
+[Teorema “Teorema central del límite de Lindeberg–Lévy”](../econometria-1/06-leyes-de-los-grandes-numeros-y-el-teorema-centra.qmd#thm-tcl) da directamente
+$n^{-1/2}\vect{s}_n(\vect{\theta}_0)\xrightarrow{d}
+N(\vect{0},\mathcal{I}(\vect{\theta}_0))$. Combinando ambos límites en
+@eq-normalidad-descomposicion mediante el lema de Slutsky, ya
+invocado en la demostración del [Teorema “Método delta”](../econometria-1/07-el-teorema-de-la-aplicacion-continua-y-el-metodo.qmd#thm-metodo-delta) de la
+[Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd), se obtiene
+
+$$
+\sqrt{n}\bigl(\hat{\vect{\theta}}_n-\vect{\theta}_0\bigr)
+  \xrightarrow{d} \mathcal{I}(\vect{\theta}_0)^{-1}\,
+  N\bigl(\vect{0},\mathcal{I}(\vect{\theta}_0)\bigr)
+  = N\bigl(\vect{0},\,\mathcal{I}(\vect{\theta}_0)^{-1}
+  \mathcal{I}(\vect{\theta}_0)\mathcal{I}(\vect{\theta}_0)^{-1}\bigr)
+  = N\bigl(\vect{0},\mathcal{I}(\vect{\theta}_0)^{-1}\bigr),
+$$
+
+donde el penúltimo paso aplica la
+[Proposición “Covarianza de una transformación lineal”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd#prp-covarianza-transformacion-lineal) de la
+[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd) a la transformación lineal por
+$\mathcal{I}(\vect{\theta}_0)^{-1}$, que es simétrica por serlo
+$\mathcal{I}(\vect{\theta}_0)$.
+:::

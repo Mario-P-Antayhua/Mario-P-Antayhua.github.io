@@ -1,0 +1,80 @@
+---
+title: "Sucesiones monótonas y el teorema de convergencia monótona"
+description: "La primera estrategia para garantizar convergencia sin conocer el límite de antemano explota una propiedad puramente cualitativa de la sucesión: que se mueva siempre en la misma dirección."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Sucesiones y series]
+---
+
+La primera estrategia para garantizar convergencia sin conocer el límite de
+antemano explota una propiedad puramente cualitativa de la sucesión: que se
+mueva siempre en la misma dirección.
+
+::: {#def-monotona}
+## Sucesión monótona
+
+Una sucesión $(x_n)$ es ***creciente*** si $x_n\leq x_{n+1}$
+para todo $n$, y ***decreciente*** si $x_n\geq x_{n+1}$ para
+todo $n$. Es ***monótona*** si es creciente o decreciente.
+:::
+
+Una sucesión monótona pero no acotada, como $x_n=n$, diverge con toda
+evidencia, así que la monotonía por sí sola no basta; lo que el siguiente
+teorema muestra es que la monotonía combinada con la acotación, que por la
+[Nota “el recíproco es falso”](17-sucesiones-y-su-limite.qmd#nota-acotada-no-converge) no bastaba sola, sí es una condición
+suficiente para la convergencia, y es precisamente aquí donde el axioma de
+completitud entra en juego de manera decisiva.
+
+::: {#thm-convergencia-monotona}
+## Teorema de convergencia monótona
+
+Toda sucesión monótona y acotada converge.
+:::
+
+::: {.proof}
+Supóngase que $(x_n)$ es creciente y acotada superiormente; el caso
+decreciente es análogo, tomando ínfimo en vez de supremo. Sea
+$A=\{x_n : n\in\mathbb{N}\}$; por hipótesis, $A$ es no vacío y acotado
+superiormente, así que por el [Axioma “Axioma de completitud”](15-los-reales-el-axioma-de-completitud.qmd#ax-completitud) existe $x=\sup A$. Se
+afirma $x_n\to x$.
+
+Dado $\varepsilon>0$, por la [Proposición “Caracterización del supremo mediante ε”](15-los-reales-el-axioma-de-completitud.qmd#prp-sup-epsilon) existe algún $x_N\in A$
+con $x_N>x-\varepsilon$. Como la sucesión es creciente, para todo $n\geq N$
+se tiene $x_n\geq x_N>x-\varepsilon$; y como $x$ es cota superior de $A$,
+$x_n\leq x$ para todo $n$, así que $x_n<x+\varepsilon$ trivialmente. Juntando
+ambas desigualdades, $x-\varepsilon<x_n\leq x<x+\varepsilon$, de donde
+$|x_n-x|<\varepsilon$ para todo $n\geq N$.
+:::
+
+Lo notable de esta demostración es que en ningún momento se calcula el
+límite antes de probar que existe: el supremo se construye por completitud,
+sin fórmula explícita, y solo después se verifica que ese número
+efectivamente satisface la definición de límite. Ese orden de razonamiento,
+existencia antes que cálculo, es exactamente el que se necesitará para
+tratar sucesiones cuyo límite no admite expresión cerrada.
+
+::: {#idea-monotona-uso .callout-tip appearance=“simple” title=“Idea central”}
+Este teorema es la primera consecuencia genuinamente nueva del axioma de
+completitud sobre sucesiones, en el sentido de que no podría probarse en
+$\mathbb{Q}$: es exactamente el mecanismo detrás de la convergencia de la
+sucesión de matrices de covarianza $\Pmse{t|t-1}$ del filtro de Kalman hacia
+un régimen estacionario, ya que esa sucesión, bajo las condiciones de
+estabilidad de la matriz de transición, resulta monótona y acotada en el
+sentido de las matrices semidefinidas positivas, una generalización directa
+de esta misma idea.
+:::
+
+La utilidad del teorema de convergencia monótona está, sin embargo, acotada
+a un tipo particular de sucesión: no toda sucesión que interesa en la
+práctica es monótona, y muchas oscilan de manera irregular sin dejar de
+converger, o sin converger pero teniendo, aun así, partes bien comportadas
+dentro de sí. Un ejemplo típico en el que la monotonía sí resuelve el
+problema de manera directa es el de una sucesión de sumas parciales de
+términos no negativos, que por construcción es creciente, de modo que basta
+verificar su acotación, sin necesidad de examinar la definición de límite
+en ningún momento; esa observación, aunque sencilla, es precisamente la que
+sostendrá más adelante el criterio de comparación para series. Fuera de ese
+tipo de casos, sin embargo, la monotonía simplemente no está disponible, y
+hace falta una estrategia distinta. Extraer las partes bien comportadas de
+una sucesión arbitraria acotada, aunque no sea monótona, es el objeto de la
+siguiente subsección.

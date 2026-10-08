@@ -1,0 +1,83 @@
+---
+title: "Covarianza y correlación entre dos variables"
+description: "Covarianza y correlación entre dos variables. Incluye Covarianza y coeficiente de correlación y La correlación está acotada entre -1 y 1."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría I, Vectores aleatorios y distribuciones multivariantes]
+---
+
+La matriz de covarianzas resume simultáneamente la relación entre todos
+los pares de componentes de un vector aleatorio, pero muchas veces
+interesa estudiar esa relación entre solo dos variables, y hacerlo en
+una escala que no dependa de las unidades en las que se midan.
+
+::: {#def-correlacion}
+## Covarianza y coeficiente de correlación
+
+Para variables aleatorias $X,Y$ con varianza finita, la
+***covarianza*** entre ellas es
+$\Cov(X,Y):=\Esp{(X-\Esp{X})(Y-\Esp{Y})}$, y su
+***coeficiente de correlación***, definido cuando
+$\Var(X),\Var(Y)>0$, es
+
+$$
+\Corr(X,Y) := \frac{\Cov(X,Y)}{\sqrt{\Var(X)}\sqrt{\Var(Y)}}.
+$$
+:::
+
+La covarianza depende de las unidades de $X$ y de $Y$: multiplicar $X$
+por diez multiplica la covarianza por diez, sin que eso signifique que
+la relación entre las dos variables se haya vuelto diez veces más
+fuerte. El coeficiente de correlación corrige exactamente ese defecto,
+dividiendo por las desviaciones estándar de ambas variables, y el
+resultado siguiente muestra que, tras esa corrección, la correlación
+queda automáticamente confinada a un rango fijo y universal, sin
+importar la distribución de $X$ ni de $Y$.
+
+::: {#prp-correlacion-acotada}
+## La correlación está acotada entre $-1$ y $1$
+
+Para cualesquiera $X,Y$ con varianza finita y positiva,
+$-1\leq\Corr(X,Y)\leq 1$.
+:::
+
+::: {.proof}
+Considérese el espacio de variables aleatorias con varianza finita
+dotado del producto interno $\langle U,V\rangle:=\Cov(U,V)$, que
+satisface los tres axiomas de la [Definición “Producto interno”](../matematica-2/04-espacios-con-producto-interno.qmd#def-producto-interno) por la
+misma verificación mecánica que ya se hizo, con el producto interno
+$\Esp{UV}$, en la demostración del
+[Teorema “La esperanza condicional es la proyección ortogonal óptima”](08-esperanza-condicional.qmd#thm-esperanza-condicional-proyeccion) de la
+[Sección “Modos de convergencia”](05-modos-de-convergencia.qmd). La norma inducida por este producto interno es
+$\|U\|=\sqrt{\Var(U)}$, y la desigualdad de Cauchy–Schwarz de la
+[Lema “Desigualdad de Cauchy–Schwarz”](../matematica-2/04-espacios-con-producto-interno.qmd#lem-cauchy-schwarz), aplicada a $X-\Esp{X}$ y $Y-\Esp{Y}$, da
+directamente
+
+$$
+|\Cov(X,Y)| = \bigl|\langle X-\Esp{X},\,Y-\Esp{Y}\rangle\bigr|
+  \leq \|X-\Esp{X}\|\,\|Y-\Esp{Y}\|
+  = \sqrt{\Var(X)}\sqrt{\Var(Y)},
+$$
+
+y dividiendo ambos lados entre $\sqrt{\Var(X)}\sqrt{\Var(Y)}>0$ se
+obtiene $|\Corr(X,Y)|\leq 1$, que es la desigualdad enunciada.
+:::
+
+::: {#idea-incorrelacion-independencia .callout-tip appearance=“simple” title=“Idea central: Incorrelación no implica independencia”}
+La [Idea central “Independencia y correlación”](02-probabilidad-condicional-e-independencia.qmd#idea-independencia-correlacion) de la [Sección “Espacios de probabilidad”](01-espacios-de-probabilidad.qmd)
+ya anticipó que la independencia de dos variables implica
+$\Cov(X,Y)=0$: si $X$ y $Y$ son independientes, la esperanza del
+producto se factoriza, $\Esp{(X-\Esp{X})(Y-\Esp{Y})}=
+\Esp{X-\Esp{X}}\,\Esp{Y-\Esp{Y}}=0$, usando que ambos factores tienen
+esperanza cero por construcción. El recíproco es falso en general: si
+$X\sim N(0,1)$ y $Y:=X^2$, entonces $\Cov(X,Y)=\Esp{X^3}-\Esp{X}\Esp{X^2}
+=0-0=0$ porque la distribución normal estándar es simétrica alrededor de
+cero, y sin embargo $Y$ está completamente determinada por $X$, la
+relación de dependencia más fuerte posible. La correlación solo detecta
+relaciones lineales, y $Y=X^2$ es una relación perfectamente
+determinística pero no lineal, invisible para la covarianza. La única
+excepción notable a esta asimetría, como mostrará la
+[Subsección “La distribución normal multivariante”](11-la-distribucion-normal-multivariante.qmd), ocurre cuando $X$ y $Y$ son
+conjuntamente normales, caso en el que incorrelación e independencia sí
+coinciden.
+:::

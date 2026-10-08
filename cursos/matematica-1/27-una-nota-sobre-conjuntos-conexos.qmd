@@ -1,0 +1,68 @@
+---
+title: "Una nota sobre conjuntos conexos"
+description: "La sección cierra con una propiedad distinta de todas las anteriores, porque no describe cercanía ni cubrimientos, sino la imposibilidad de partir un conjunto en dos piezas mutuamente distantes."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Espacios métricos y compacidad]
+---
+
+La sección cierra con una propiedad distinta de todas las anteriores,
+porque no describe cercanía ni cubrimientos, sino la imposibilidad de
+partir un conjunto en dos piezas mutuamente distantes.
+
+::: {#def-conexo}
+## Conjuntos separados y conexos
+
+$A,B\subseteq X$ están ***separados*** si
+$A\cap\overline{B}=\varnothing$ y $\overline{A}\cap B=\varnothing$. Un
+conjunto $E$ es ***conexo*** si no puede escribirse como
+$E=A\cup B$ con $A,B$ no vacíos y separados.
+:::
+
+Nótese que ”separados” es una condición más fuerte que “disjuntos”: dos
+conjuntos disjuntos pueden aun así compartir puntos límite, en cuyo caso
+no están separados en el sentido de esta definición. El caso más sencillo
+de conjunto no conexo aprovecha una brecha física entre dos piezas, que
+impide que compartan siquiera puntos límite.
+
+::: {#exm-no-conexo-numerico}
+## Un conjunto no conexo, con la separación explícita
+
+Sea $E=[0,1]\cup[2,3]\subseteq\mathbb{R}$. Con $A=[0,1]$ y $B=[2,3]$,
+ambos cerrados, de modo que $\overline{A}=A$ y $\overline{B}=B$, se
+obtiene $A\cap\overline{B}=A\cap B=\varnothing$ y, simétricamente,
+$\overline{A}\cap B=\varnothing$: $A$ y $B$ están separados según la
+@def-conexo, y como $E=A\cup B$, $E$ no es conexo. La brecha entre
+$1$ y $2$, de longitud $1$, es la que hace posible esta separación limpia
+entre las dos piezas.
+:::
+
+En $\mathbb{R}$, la conexidad tiene una caracterización particularmente
+simple, que coincide exactamente con la noción intuitiva de “conjunto sin
+huecos”.
+
+::: {#thm-conexos-r}
+## Caracterización de los conexos en $\mathbb{R}$
+
+$E\subseteq\mathbb{R}$ es conexo si y solo si para todos $x,y\in E$ con
+$x<y$, y todo $z$ con $x<z<y$, se cumple $z\in E$. En particular, los
+conexos de $\mathbb{R}$ son exactamente los intervalos.
+:::
+
+Esta caracterización es la razón por la cual, en $\mathbb{R}$, la
+conexidad rara vez se verifica a través de la @def-conexo
+directamente: basta comprobar que el conjunto no tiene huecos, en el
+sentido de contener todo punto entre dos de sus elementos. La
+demostración de la equivalencia no aporta técnica nueva, así que se deja
+esbozada en lugar de completa.
+
+::: {#nota-por-que-se-omite-la-demostracion .callout-note appearance=“simple” title=“Nota: por qué se omite la demostración completa”}
+La dirección directa se prueba por contradicción, tomando
+$A=E\cap(-\infty,z)$ y $B=E\cap(z,\infty)$ como una separación de $E$ en
+caso de que $z\notin E$; la recíproca se apoya en el axioma de
+completitud de $\mathbb{R}$. Ninguna de las dos direcciones introduce una
+técnica distinta de las ya usadas en esta sección, así que se deja el
+teorema enunciado sin más desarrollo; la conexidad, además, no vuelve a
+emplearse en las secciones siguientes, a diferencia de la compacidad, que
+reaparecerá constantemente a partir de la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd).
+:::

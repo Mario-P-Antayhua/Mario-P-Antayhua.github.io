@@ -102,21 +102,32 @@ website:
             text: "Macroeconomía III"
       - section: "Econometría"
         contents:
-          - href: cursos/econometria-1/index.qmd
-            text: "Econometría I"
-          - href: cursos/econometria-2/index.qmd
-            text: "Econometría II"
-          - href: cursos/econometria-3/index.qmd
-            text: "Econometría III"
-          - cursos/econometria-3/nivel-local.qmd
+          - section: "Econometría I"
+            href: cursos/econometria-1/index.qmd
+            contents:
+              - cursos/econometria-1/*-*.qmd
+          - section: "Econometría II"
+            href: cursos/econometria-2/index.qmd
+            contents:
+              - cursos/econometria-2/*-*.qmd
+          - section: "Econometría III"
+            href: cursos/econometria-3/index.qmd
+            contents:
+              - cursos/econometria-3/*-*.qmd
       - section: "Matemática para Economistas"
         contents:
-          - href: cursos/matematica-1/index.qmd
-            text: "Matemática para Economistas I"
-          - href: cursos/matematica-2/index.qmd
-            text: "Matemática para Economistas II"
-          - href: cursos/matematica-3/index.qmd
-            text: "Matemática para Economistas III"
+          - section: "Matemática para Economistas I"
+            href: cursos/matematica-1/index.qmd
+            contents:
+              - cursos/matematica-1/*-*.qmd
+          - section: "Matemática para Economistas II"
+            href: cursos/matematica-2/index.qmd
+            contents:
+              - cursos/matematica-2/*-*.qmd
+          - section: "Matemática para Economistas III"
+            href: cursos/matematica-3/index.qmd
+            contents:
+              - cursos/matematica-3/*-*.qmd
           - href: cursos/matematica-4/index.qmd
             text: "Matemática para Economistas IV"
       - href: material/index.qmd
@@ -174,6 +185,13 @@ crossref:
   cor-title: Corolario
   exm-title: Ejemplo
   exr-title: Ejercicio
+  proof-title: Demostración
+  remark-title: Observación
+  fig-title: Figura
+  tbl-title: Tabla
+  fig-prefix: Figura
+  tbl-prefix: Tabla
+  sec-prefix: Sección
 
 execute:
   freeze: auto

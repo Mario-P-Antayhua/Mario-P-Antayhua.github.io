@@ -1,0 +1,93 @@
+---
+title: "El proceso MA(1)"
+description: "El proceso MA(1). Incluye Proceso de medias móviles de orden uno y Momentos del MA(1)."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos de medias móviles y procesos ARMA]
+---
+
+La [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) construyó procesos cuya memoria se transmite de forma
+implícita, a través de una ecuación que relaciona $Y_t$ con sus propios
+valores pasados; esta sección construye la familia complementaria, en la
+que la memoria es explícita: el valor presente se escribe directamente
+como una combinación finita de choques de ruido blanco pasados, sin
+ninguna referencia a valores anteriores de $Y_t$ mismo. Esa diferencia
+aparentemente pequeña tiene una consecuencia importante, la
+invertibilidad, un problema que no tiene análogo en los procesos
+autorregresivos y que ocupará buena parte de la sección. El recorrido
+tiene cinco etapas: el MA(1) y su corte abrupto en la función de
+autocorrelación; el MA(q) general; la invertibilidad, su necesidad y su
+representación AR($\infty$) asociada; el proceso ARMA(p,q), que combina
+ambas estructuras y exige, simultáneamente, estacionariedad e
+invertibilidad; y una tabla final que resume, para las tres familias de
+procesos, el comportamiento de la función de autocorrelación y de la
+función de autocorrelación parcial, la base práctica de la metodología
+de identificación de modelos de series de tiempo.
+
+::: {#def-ma1}
+## Proceso de medias móviles de orden uno
+
+Un proceso $\{Y_t\}$ sigue un ***MA(1)*** si
+$Y_t=\rblanco_t+\theta\rblanco_{t-1}$, con $\theta\in\mathbb{R}$ y
+$\{\rblanco_t\}$ ruido blanco con varianza $\sigma^2$. En notación de
+rezagos, $Y_t=\theta(\Lag)\rblanco_t$ con $\theta(\Lag)=1+\theta\Lag$.
+:::
+
+A diferencia del AR(1), la ecuación del MA(1) ya está resuelta desde el
+momento en que se escribe: $Y_t$ es, literalmente, una combinación
+lineal finita de dos variables de ruido blanco, sin ninguna ecuación
+implícita que invertir, y en particular ningún proceso de medias
+móviles requiere ninguna condición sobre $\theta$ para estar bien
+definido o para ser estacionario, a diferencia de lo que exigía la
+condición $|\phi|<1$ del AR(1).
+
+::: {#prp-momentos-ma1}
+## Momentos del MA(1)
+
+Para el MA(1) de la @def-ma1, $\Esp{Y_t}=0$,
+$\Var(Y_t)=(1+\theta^2)\sigma^2$, $\autocov{1}=\theta\sigma^2$, y
+$\autocov{j}=0$ para $j\geq 2$; en consecuencia,
+$\autocorr{1}=\theta/(1+\theta^2)$ y $\autocorr{j}=0$ para $j\geq 2$.
+:::
+
+::: {.proof}
+La media es inmediata de la linealidad de la esperanza,
+$\Esp{Y_t}=\Esp{\rblanco_t}+\theta\Esp{\rblanco_{t-1}}=0$. Para la
+varianza, como $\rblanco_t$ y $\rblanco_{t-1}$ son incorrelacionados
+por ser ruido blanco, la
+[Proposición “Covarianza de una transformación lineal”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd#prp-covarianza-transformacion-lineal) de la
+[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd) da
+$\Var(Y_t)=\Var(\rblanco_t)+\theta^2\Var(\rblanco_{t-1})=
+\sigma^2+\theta^2\sigma^2=(1+\theta^2)\sigma^2$. Para la autocovarianza
+de orden uno,
+
+$$
+\autocov{1} = \Cov(Y_t,Y_{t-1})
+  = \Cov(\rblanco_t+\theta\rblanco_{t-1},\,
+  \rblanco_{t-1}+\theta\rblanco_{t-2})
+  = \theta\Var(\rblanco_{t-1}) = \theta\sigma^2,
+$$
+
+donde solo sobrevive el término cruzado que empareja a
+$\rblanco_{t-1}$ consigo mismo, porque $\rblanco_t$ es incorrelacionado
+con $\rblanco_{t-1}$ y con $\rblanco_{t-2}$, y $\rblanco_{t-1}$ es
+incorrelacionado con $\rblanco_{t-2}$, todos por ser ruido blanco. Para
+$j\geq 2$, $Y_t=\rblanco_t+\theta\rblanco_{t-1}$ e
+$Y_{t-j}=\rblanco_{t-j}+\theta\rblanco_{t-j-1}$ no comparten ningún
+índice de ruido blanco, porque los índices de $Y_t$ son $t$ y $t-1$,
+mientras que los de $Y_{t-j}$ son $t-j$ y $t-j-1$, ambos estrictamente
+menores que $t-1$ cuando $j\geq 2$, de modo que las cuatro covarianzas
+cruzadas se anulan y $\autocov{j}=0$. Dividiendo $\autocov{1}$ y
+$\autocov{j}$ entre $\autocov{0}=(1+\theta^2)\sigma^2$ se obtienen las
+autocorrelaciones enunciadas.
+:::
+
+El resultado $\autocorr{j}=0$ para $j\geq 2$ es exactamente el opuesto
+del comportamiento del AR(1): en lugar de decaer geométricamente sin
+llegar nunca a cero, la función de autocorrelación del MA(1) se anula
+abruptamente después del primer rezago, porque la memoria del proceso,
+al ser una combinación finita de solo dos choques, dura exactamente un
+periodo y ni uno más. Esta es la firma diagnóstica del MA(1) que, junto
+con el comportamiento complementario de la FACP que se detalla más
+adelante, permitirá distinguirlo de un AR(1) a partir de datos
+observados.

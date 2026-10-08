@@ -1,0 +1,118 @@
+---
+title: "Probabilidad condicional e independencia"
+description: "Probabilidad condicional e independencia. Incluye Probabilidad condicional, Teorema de Bayes y Independencia de eventos."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría I, Fundamentos de probabilidad]
+---
+
+::: {#def-probabilidad-condicional}
+## Probabilidad condicional
+
+Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad y
+$A,B\in\mathcal{F}$ con $\Prob{B}>0$. La ***probabilidad
+condicional*** de $A$ dado $B$ es
+$\Prob{A\mid B}:=\dfrac{\Prob{A\cap B}}{\Prob{B}}$.
+:::
+
+Fijado $B$ con $\Prob{B}>0$, la función $A\mapsto\Prob{A\mid B}$
+satisface, por verificación directa a partir de la
+@def-probabilidad-condicional, los dos axiomas de Kolmogorov de la
+[Definición “Espacio de probabilidad”](01-espacios-de-probabilidad.qmd#def-espacio-probabilidad), de modo que
+$(\Omega,\mathcal{F},\Prob{\cdot\mid B})$ es, por derecho propio, otro
+espacio de probabilidad: condicionar no abandona el marco axiomático, y
+todo lo demostrado para probabilidades no condicionales, incluida la
+[Proposición “Propiedades básicas de la probabilidad”](01-espacios-de-probabilidad.qmd#prp-propiedades-probabilidad), se aplica sin cambios a
+$\Prob{\cdot\mid B}$. Reescribiendo la definición como
+$\Prob{A\cap B}=\Prob{A\mid B}\Prob{B}$ se obtiene la regla de la
+multiplicación, y aplicándola en las dos direcciones posibles se llega
+al resultado que permite invertir el orden del condicionamiento.
+
+::: {#thm-bayes}
+## Teorema de Bayes
+
+Sean $A,B\in\mathcal{F}$ con $\Prob{A}>0$ y $\Prob{B}>0$. Entonces
+
+$$
+\Prob{A\mid B} = \frac{\Prob{B\mid A}\,\Prob{A}}{\Prob{B}}.
+$$ {#eq-bayes}
+:::
+
+::: {.proof}
+La @def-probabilidad-condicional aplicada dos veces, una vez
+condicionando en $B$ y otra en $A$, da las dos identidades
+$\Prob{A\cap B}=\Prob{A\mid B}\Prob{B}$ y
+$\Prob{A\cap B}=\Prob{B\mid A}\Prob{A}$, porque $A\cap B=B\cap A$.
+Igualando ambas expresiones para $\Prob{A\cap B}$ y despejando
+$\Prob{A\mid B}$, que es válido porque $\Prob{B}>0$, se obtiene
+exactamente @eq-bayes.
+:::
+
+::: {#exm-bayes-diagnostico}
+## Inversión de un test diagnóstico
+
+Una enfermedad afecta al $1\%$ de una población; sea $A$ el evento de
+padecerla, con $\Prob{A}=0.01$. Un test detecta la enfermedad
+correctamente en el $95\%$ de los casos cuando el paciente la tiene,
+$\Prob{B\mid A}=0.95$, donde $B$ es el evento de dar positivo, pero
+también arroja falsos positivos en el $5\%$ de los casos sin
+enfermedad, $\Prob{B\mid A^c}=0.05$. La probabilidad total de dar
+positivo se calcula descomponiendo $B$ en sus dos posibles orígenes,
+$\Prob{B}=\Prob{B\mid A}\Prob{A}+\Prob{B\mid A^c}\Prob{A^c}=
+(0.95)(0.01)+(0.05)(0.99)=0.059$. El @thm-bayes da entonces
+
+$$
+\Prob{A\mid B} = \frac{(0.95)(0.01)}{0.059} \approx 0.161,
+$$
+
+de modo que, pese a que el test acierta el $95\%$ de las veces sobre
+pacientes enfermos, solo alrededor del $16\%$ de quienes dan positivo
+están efectivamente enfermos. La razón es que la enfermedad es rara: la
+gran mayoría de la población no la tiene, y aunque la tasa de falsos
+positivos sea baja en términos relativos, sobre una base tan grande de
+personas sanas produce, en términos absolutos, casi tantos falsos
+positivos como verdaderos positivos genuinos. Este fenómeno, conocido
+como la falacia de la tasa base cuando se ignora, es la razón por la
+que interpretar $\Prob{B\mid A}$ como si fuera $\Prob{A\mid B}$, un
+error frecuente fuera del ámbito técnico, puede llevar a conclusiones
+completamente equivocadas.
+:::
+
+La probabilidad condicional describe cómo cambia la probabilidad de un
+evento al conocer otro; el caso particular en el que no cambia en
+absoluto merece un nombre propio, porque describe la ausencia de
+relación estadística entre dos eventos.
+
+::: {#def-independencia-eventos}
+## Independencia de eventos
+
+Dos eventos $A,B\in\mathcal{F}$ son ***independientes*** si
+$\Prob{A\cap B}=\Prob{A}\Prob{B}$. Cuando $\Prob{B}>0$, esta condición
+equivale, por la @def-probabilidad-condicional, a
+$\Prob{A\mid B}=\Prob{A}$: conocer que ocurrió $B$ no altera la
+probabilidad de $A$.
+:::
+
+La independencia de eventos es la versión más sencilla de una idea que se generaliza a variables aleatorias, y conviene distinguirla desde ahora de la ausencia de correlación.
+
+::: {#idea-independencia-correlacion .callout-tip appearance=“simple” title=“Idea central: Independencia y correlación”}
+La independencia de eventos de esta subsección es la versión más
+primitiva de una idea que reaparecerá, en un lenguaje distinto, para
+variables aleatorias: la [Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd) definirá la
+covarianza entre dos variables aleatorias y mostrará que la
+independencia siempre implica covarianza nula, pero no al revés, porque
+la covarianza solo detecta relaciones *lineales* entre variables,
+mientras que la independencia descarta cualquier relación, lineal o no.
+Esa asimetría es la razón por la que, en econometría, la ausencia de
+correlación nunca se usa como sinónimo de independencia salvo bajo el
+supuesto adicional de normalidad conjunta, caso en el que ambas
+nociones sí coinciden, como mostrará la
+[Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd).
+:::
+
+Los eventos y la probabilidad condicional bastan para describir
+experimentos con resultados cualitativos, como si una moneda cae cara o
+sello, pero la mayoría de las cantidades de interés económico son
+numéricas: un ingreso, una tasa de interés, un número de transacciones.
+La noción que traduce el lenguaje de eventos al de números es la
+variable aleatoria, tema de la subsección siguiente.

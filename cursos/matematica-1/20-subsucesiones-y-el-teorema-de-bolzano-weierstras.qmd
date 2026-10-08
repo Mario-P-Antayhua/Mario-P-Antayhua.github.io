@@ -1,0 +1,124 @@
+---
+title: "Subsucesiones y el teorema de Bolzano–Weierstrass"
+description: "La idea de subsucesión formaliza la operación de seleccionar, dentro de una sucesión dada, una lista infinita de sus términos que respete el orden original, descartando los demás."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Sucesiones y series]
+---
+
+La idea de subsucesión formaliza la operación de seleccionar, dentro de una
+sucesión dada, una lista infinita de sus términos que respete el orden
+original, descartando los demás.
+
+::: {#def-subsucesion}
+## Subsucesión
+
+Dada una sucesión $(x_n)$ y una sucesión estrictamente creciente de índices
+naturales $n_1<n_2<n_3<\cdots$, la sucesión $(x_{n_k})_{k=1}^{\infty}$ se
+llama una ***subsucesión*** de $(x_n)$.
+:::
+
+Antes de usar las subsucesiones como herramienta para sucesiones que no
+convergen, conviene verificar primero que, cuando la sucesión original sí
+converge, todas sus subsucesiones heredan ese mismo límite; de lo contrario
+el concepto de subsucesión no tendría ninguna relación útil con la
+convergencia ya estudiada.
+
+::: {#prp-subsucesion-limite}
+## Toda subsucesión de una sucesión convergente converge al mismo límite
+
+Si $x_n\to x$, entonces toda subsucesión $(x_{n_k})$ también converge a
+$x$.
+:::
+
+::: {.proof}
+Dado $\varepsilon>0$, existe $N$ tal que $|x_n-x|<\varepsilon$ para todo
+$n\geq N$. Como $n_1<n_2<\cdots$ son naturales estrictamente crecientes, se
+tiene $n_k\geq k$ para todo $k$, así que para $k\geq N$, $n_k\geq k\geq N$,
+y por lo tanto $|x_{n_k}-x|<\varepsilon$.
+:::
+
+Esta proposición tiene una lectura recíproca de gran valor práctico, aunque
+no se enuncie como tal: si dos subsucesiones de una misma sucesión convergen
+a límites distintos, la sucesión original no puede converger, porque de
+converger todas sus subsucesiones tendrían que compartir el mismo límite por
+la [Proposición “Unicidad del límite”](17-sucesiones-y-su-limite.qmd#prp-unicidad-limite). Ese criterio de divergencia por
+subsucesiones en desacuerdo es útil, pero requiere en principio poder exhibir
+subsucesiones convergentes dentro de una sucesión que ni siquiera se sabe
+si es monótona. El siguiente teorema, uno de los resultados centrales del
+análisis real, garantiza que ese requisito siempre puede satisfacerse
+mientras la sucesión esté acotada, sin importar cuán irregular sea su
+comportamiento.
+
+::: {#thm-bolzano-weierstrass}
+## Teorema de Bolzano–Weierstrass
+
+Toda sucesión acotada de números reales tiene una subsucesión convergente.
+:::
+
+::: {.proof}
+Sea $(x_n)$ acotada, con $|x_n|\leq M$ para todo $n$, de modo que todos los
+términos caen en $I_0=[-M,M]$. Se construye una sucesión de intervalos
+anidados por bisección: divídase $I_0$ en dos mitades de igual longitud;
+como $I_0$ contiene infinitos términos de la sucesión, al menos una de las
+dos mitades también los contiene; llámese a esa mitad $I_1$. Repítase el
+procedimiento sobre $I_1$ para obtener $I_2$, y así sucesivamente, de modo
+que cada $I_k$ contiene infinitos términos de $(x_n)$, tiene longitud
+$2M/2^k$, y $I_0\supseteq I_1\supseteq I_2\supseteq\cdots$.
+
+Por la [Teorema “Propiedad de los intervalos encajados”](15-los-reales-el-axioma-de-completitud.qmd#thm-intervalos-encajados), existe
+$x\in\bigcap_{k=0}^{\infty}I_k$. Se construye ahora la subsucesión: elíjase
+$n_1$ tal que $x_{n_1}\in I_1$; habiendo elegido $n_1<\cdots<n_{k-1}$,
+elíjase $n_k>n_{k-1}$ tal que $x_{n_k}\in I_k$, elección posible porque
+$I_k$ contiene infinitos términos de la sucesión original y por tanto
+alguno con índice mayor que $n_{k-1}$. Como tanto $x$ como $x_{n_k}$
+pertenecen a $I_k$, cuya longitud es $2M/2^k$, se tiene
+$|x_{n_k}-x|\leq 2M/2^k\to 0$ por el
+[Ejemplo “Un límite verificado directamente”](17-sucesiones-y-su-limite.qmd#exm-limite-directo) extendido a potencias de dos, de modo que
+$x_{n_k}\to x$.
+:::
+
+La construcción por bisección merece un comentario adicional: en cada paso
+se elige la mitad que contiene infinitos términos, y puede haber dos
+mitades que cumplan esa condición, en cuyo caso se elige cualquiera de
+ellas de manera arbitraria; lo único que importa para la demostración es
+que exista al menos una, nunca cuál se escoge. El resultado combina, de
+manera notable, dos ingredientes ya vistos: el axioma de completitud, a
+través del teorema de los intervalos encajados, y la propia noción de
+subsucesión, para producir un teorema de existencia puro, que no dice cuál
+es el límite de la subsucesión que garantiza, sino solamente que alguna
+existe. Esta información, aunque parcial, ya basta para obtener un criterio
+de divergencia útil en la práctica.
+
+::: {#cor-divergencia-subsucesiones}
+## Divergencia por subsucesiones en desacuerdo
+
+Si $(x_n)$ es acotada y no converge, entonces tiene al menos dos
+subsucesiones que convergen a límites distintos.
+:::
+
+::: {.proof}
+Por el @thm-bolzano-weierstrass, $(x_n)$ tiene alguna subsucesión
+convergente $(x_{n_k})\to x$. Si toda subsucesión convergente de $(x_n)$
+convergiera a ese mismo $x$, se probaría que la sucesión completa converge
+a $x$ mediante el mismo argumento de bisección aplicado a la cola de
+$(x_n)$ fuera de cualquier vecindad de $x$, lo cual contradice la hipótesis
+de no convergencia; por lo tanto debe existir una segunda subsucesión
+convergente a algún $y\neq x$.
+:::
+
+Este corolario es exactamente el que se usó de manera informal en la
+[Nota “el recíproco es falso”](17-sucesiones-y-su-limite.qmd#nota-acotada-no-converge), donde la sucesión $x_n=(-1)^n$ se declaró
+divergente sin una demostración completa: sus dos subsucesiones de índices
+pares e impares convergen, respectivamente, a $1$ y a $-1$, y el corolario
+confirma que esa discrepancia basta para descartar la convergencia de la
+sucesión completa. Debe notarse que el corolario exige que la sucesión esté
+acotada; sin esa hipótesis, la conclusión puede fallar de manera trivial,
+porque una sucesión no acotada como $x_n=n$ no tiene ninguna subsucesión
+convergente en absoluto, ni una ni dos, y por tanto ni siquiera se plantea
+la comparación de límites que el corolario necesita. Con el teorema de
+Bolzano–Weierstrass y su corolario disponibles, la sección está en
+condiciones de abordar el criterio que permitirá, finalmente, decidir la
+convergencia de una sucesión examinando únicamente cómo se comparan sus
+propios términos entre sí, sin necesidad de recurrir en cada caso a la
+construcción de subsucesiones.

@@ -1,0 +1,112 @@
+---
+title: "La integral de Riemann y el teorema fundamental del cálculo"
+description: "La integral de Riemann y el teorema fundamental del cálculo. Incluye Sumas de Riemann e integral, Linealidad de la integral y Teorema fundamental del cálculo."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas II, Cálculo diferencial e integral]
+---
+
+::: {#def-particion-integral-riemann}
+## Sumas de Riemann e integral
+
+Sea $f:[a,b]\to\mathbb{R}$ acotada. Una ***partición*** de
+$[a,b]$ es un conjunto finito de puntos
+$P=\{a=t_0<t_1<\cdots<t_n=b\}$. Las ***sumas superior e
+inferior*** de $f$ respecto de $P$ son
+
+$$
+U(f,P) := \sum_{i=1}^{n} M_i(t_i-t_{i-1}), \qquad
+  L(f,P) := \sum_{i=1}^{n} m_i(t_i-t_{i-1}),
+$$
+
+donde $M_i:=\sup_{x\in[t_{i-1},t_i]}f(x)$ y
+$m_i:=\inf_{x\in[t_{i-1},t_i]}f(x)$. La función $f$ es
+***integrable Riemann*** en $[a,b]$ si
+$\inf_P U(f,P)=\sup_P L(f,P)$, valor común que se denota
+$\int_a^b f(x)\,dx$.
+:::
+
+La definición formaliza la idea de aproximar el área bajo la gráfica de
+$f$ encerrándola, cada vez con más precisión, entre rectángulos que la
+sobrestiman y rectángulos que la subestiman; que ambas cotas converjan
+al mismo valor es lo que garantiza que el área quede determinada sin
+ambigüedad. Toda función continua en $[a,b]$ es integrable Riemann, un
+hecho que se acepta aquí sin demostrar porque su prueba depende de la
+continuidad uniforme, un refinamiento de la continuidad que no se usará
+en ningún otro resultado del curso.
+
+::: {#prp-linealidad-integral}
+## Linealidad de la integral
+
+Si $f,g$ son integrables en $[a,b]$ y $\alpha,\beta\in\mathbb{R}$,
+entonces $\alpha f+\beta g$ es integrable en $[a,b]$ y
+$\int_a^b\bigl(\alpha f(x)+\beta g(x)\bigr)dx=\alpha\int_a^b f(x)\,dx+
+\beta\int_a^b g(x)\,dx$.
+:::
+
+::: {.proof}
+Para $\alpha>0$, multiplicar $f$ por $\alpha$ multiplica cada supremo e
+ínfimo local, y por lo tanto cada suma superior e inferior, por el mismo
+$\alpha$, de modo que $\inf_P U(\alpha f,P)=\alpha\inf_P U(f,P)$ y
+análogamente para $L$; el caso $\alpha<0$ intercambia los papeles de
+suma superior e inferior, con el mismo resultado en valor absoluto. La
+aditividad, $\int(f+g)=\int f+\int g$, se sigue de que, en cualquier
+subintervalo, el supremo de $f+g$ no puede exceder la suma de los
+supremos de $f$ y de $g$ por separado, ni el ínfimo de $f+g$ puede ser
+menor que la suma de los ínfimos, de modo que $U(f+g,P)\leq U(f,P)+
+U(g,P)$ y $L(f+g,P)\geq L(f,P)+L(g,P)$ para toda partición $P$; tomando
+ínfimo y supremo respectivamente, y usando que $f$ y $g$ son integrables
+por separado, ambas desigualdades colapsan en la igualdad enunciada.
+:::
+
+El vínculo entre la integral, definida mediante sumas de rectángulos, y
+la derivada, definida mediante un cociente incremental, no es evidente a
+partir de sus definiciones; que ambas operaciones sean, en un sentido
+preciso, inversas la una de la otra es el contenido del resultado más
+importante de esta subsección.
+
+::: {#thm-fundamental-calculo}
+## Teorema fundamental del cálculo
+
+Sea $f:[a,b]\to\mathbb{R}$ continua y sea
+$F(x):=\int_a^x f(t)\,dt$ para $x\in[a,b]$. Entonces $F$ es derivable
+en $(a,b)$ y $F'(x)=f(x)$ para todo $x\in(a,b)$.
+:::
+
+::: {.proof}
+Fíjese $x\in(a,b)$ y $h\neq 0$ suficientemente pequeño para que $x+h\in
+(a,b)$. Por la aditividad de la integral sobre intervalos adyacentes,
+
+$$
+F(x+h)-F(x) = \int_x^{x+h} f(t)\,dt,
+$$ {#eq-ftc-diferencia}
+
+de modo que el cociente incremental de $F$ es el promedio de $f$ en el
+intervalo entre $x$ y $x+h$. La estrategia consiste en comparar ese
+promedio con $f(x)$ usando la continuidad de $f$. Dado $\varepsilon>0$,
+la continuidad de $f$ en $x$ da $\delta>0$ tal que
+$|t-x|<\delta\Rightarrow|f(t)-f(x)|<\varepsilon$; para $0<|h|<\delta$,
+acotando el integrando en @eq-ftc-diferencia,
+
+$$
+\left|\frac{F(x+h)-F(x)}{h} - f(x)\right|
+  = \left|\frac{1}{h}\int_x^{x+h}\bigl(f(t)-f(x)\bigr)dt\right|
+  \leq \varepsilon,
+$$ {#eq-ftc-cota}
+
+donde la desigualdad usa que $|f(t)-f(x)|<\varepsilon$ para todo $t$
+entre $x$ y $x+h$, y que el valor absoluto de un promedio está acotado
+por el máximo del valor absoluto del integrando. Como
+@eq-ftc-cota vale para todo $\varepsilon>0$ eligiendo $h$
+suficientemente pequeño, se concluye
+$\lim_{h\to 0}[F(x+h)-F(x)]/h=f(x)$, que es exactamente $F'(x)=f(x)$.
+:::
+
+El teorema fundamental del cálculo es lo que, en la práctica, permite
+evaluar integrales sin recurrir jamás a la definición mediante sumas
+superiores e inferiores: basta con encontrar una función cuya derivada
+sea el integrando, evaluarla en los extremos del intervalo y restar. La
+última subsección invierte una vez más el orden de las operaciones,
+preguntando qué ocurre cuando la función que se integra depende, además
+de la variable de integración, de un parámetro adicional respecto del
+cual también interesa derivar.

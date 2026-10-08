@@ -1,0 +1,91 @@
+---
+title: "El teorema de descomposición de Wold"
+description: "El teorema de descomposición de Wold. Incluye Descomposición de Wold."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, La representación de Wold]
+---
+
+Las dos secciones anteriores construyeron, para dos familias
+particulares de procesos, una representación como combinación lineal
+infinita de ruido blanco: el AR(p) estacionario admitía una
+representación MA($\infty$) por el [Corolario “Representación MA(∞) del AR(p) estacionario”](26-representacion-ma-y-forma-companera.qmd#cor-ma-infinito-arp) de la
+[Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd), y el ARMA(p,q) invertible la admitía de igual manera por
+construcción directa de la [Sección “El proceso MA(1)”](27-el-proceso-ma-1.qmd). El teorema de
+descomposición de Wold generaliza radicalmente esa observación: muestra
+que *cualquier* proceso débilmente estacionario, sin importar su
+origen ni su estructura interna, admite una representación de la misma
+forma, siempre que se excluya un componente puramente determinístico que
+esta sección precisa. El resultado no es solo una curiosidad teórica de
+cierre: es el que justifica que, en la práctica, casi toda la
+econometría de series de tiempo estacionarias se concentre en estudiar
+procesos MA($\infty$) con coeficientes que decaen adecuadamente, porque
+el teorema de Wold garantiza que ningún proceso estacionario de interés
+queda fuera de ese marco.
+
+::: {#thm-wold}
+## Descomposición de Wold
+
+Todo proceso $\{Y_t\}$ débilmente estacionario y puramente no
+determinístico, es decir, tal que ninguna combinación lineal de
+$Y_t$ se puede predecir sin error a partir de su propio pasado infinito,
+admite la representación
+
+$$
+Y_t = \sum_{k=0}^{\infty}\psi_k\rblanco_{t-k}, \qquad \psi_0=1,
+  \qquad \sum_{k=0}^{\infty}\psi_k^2<\infty,
+$$
+
+donde $\rblanco_t:=Y_t-\Proj{Y_t}{Y_{t-1},Y_{t-2},\ldots}$ es la
+***innovación*** del proceso en el instante $t$, la
+diferencia entre $Y_t$ y su mejor predicción lineal a partir de todo su
+pasado, en el sentido de la proyección de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), y $\{\rblanco_t\}$ es ruido blanco.
+:::
+
+::: {.proof}
+La construcción de la sucesión $\{\rblanco_t\}$ es directa: en cada
+instante $t$, $\rblanco_t$ se define como el error de la proyección
+lineal de $Y_t$ sobre el subespacio generado por todo su pasado,
+$\{Y_{t-1},Y_{t-2},\ldots\}$, en el sentido exacto de la
+[Proposición “Existencia y unicidad de la proyección ortogonal”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#prp-proyeccion-existencia) de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), extendida de un subespacio de dimensión finita a
+uno generado por una sucesión infinita mediante un argumento de límite
+que aquí se acepta sin reproducir. El [Corolario “Principio de ortogonalidad”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#cor-principio-ortogonalidad)
+de esa misma sección garantiza que $\rblanco_t$ es ortogonal a todo el
+pasado de $Y_t$, en particular a $\rblanco_s$ para $s<t$ por ser cada
+$\rblanco_s$ una combinación lineal de $Y_s$ y su propio pasado, lo que
+establece que $\{\rblanco_t\}$ es ruido blanco. La parte sustantiva del
+teorema, que los coeficientes $\psi_k$ de la proyección de $Y_t$ sobre
+$\{\rblanco_t,\rblanco_{t-1},\ldots\}$ son cuadráticamente sumables y
+que la suma resultante reconstruye exactamente $Y_t$ sin ningún residuo
+adicional, depende de la hipótesis de que el proceso sea puramente no
+determinístico y de un argumento de completitud del espacio de
+variables aleatorias con varianza finita; ese argumento pertenece a la
+teoría de espacios de Hilbert y se sale del alcance algebraico de estas
+notas, de modo que se acepta aquí como resultado citado.
+:::
+
+::: {#idea-wold-garantias .callout-tip appearance=“simple” title=“Idea central: Qué garantiza el teorema de Wold y qué no garantiza”}
+El teorema garantiza la existencia de *alguna* representación
+MA($\infty$) con innovaciones incorrelacionadas, pero no garantiza que
+esas innovaciones sean independientes entre sí, una condición más fuerte
+que la mera incorrelación en el mismo sentido que ya distinguió la
+[Definición “Ruido blanco”](12-procesos-sin-dinamica-constante-ruido-blanco-y-m.qmd#def-ruido-blanco) de la [Sección “Procesos sin dinámica: constante, ruido blanco y media”](12-procesos-sin-dinamica-constante-ruido-blanco-y-m.qmd) entre
+ruido blanco débil e independiente; dos procesos con la misma función de
+autocovarianza pueden tener innovaciones de Wold incorrelacionadas pero
+no independientes, con dependencia de orden superior sin capturar. El
+teorema tampoco garantiza que los coeficientes $\psi_k$ tengan ninguna
+interpretación estructural o causal: son, por construcción, los
+coeficientes de la mejor predicción lineal, y coincidir con los
+parámetros de un modelo económico estructural, si acaso existe alguno
+detrás de los datos, es una cuestión adicional que la representación de
+Wold, por sí sola, no resuelve. Por último, el teorema exige
+explícitamente que el proceso sea puramente no determinístico: un
+proceso con un componente perfectamente predecible a partir del pasado
+infinito, como una función determinística del tiempo, requiere separar
+ese componente antes de aplicar la descomposición, en una versión
+extendida del teorema que añade un segundo sumando determinístico a la
+representación y que no se detalla en el curso por no ser necesaria
+para los modelos ARMA de las secciones anteriores.
+:::

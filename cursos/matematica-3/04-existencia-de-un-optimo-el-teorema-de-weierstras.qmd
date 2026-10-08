@@ -1,0 +1,134 @@
+---
+title: "Existencia de un óptimo: el teorema de Weierstrass"
+description: "Existencia de un óptimo: el teorema de Weierstrass. Incluye Óptimo local y global, La imagen continua de un compacto es compacta y Teorema de Weierstrass."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas III, Optimización]
+---
+
+Todo lo construido hasta aquí, el espacio vectorial y la norma de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), el álgebra de matrices simétricas y definidas
+positivas de la [Sección “Operaciones matriciales y sus propiedades algebraicas”](../matematica-2/06-operaciones-matriciales-y-sus-propiedades-algebr.qmd), y el gradiente, la
+hessiana y la fórmula de Taylor de la [Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd), converge en
+esta sección hacia una sola pregunta: dado un conjunto de valores
+posibles y una función que mide qué tan deseable es cada uno, ¿cuál es
+el mejor? Esa pregunta es, en el fondo, la que resuelve el método de
+mínimos cuadrados al minimizar una suma de residuos al cuadrado, la que
+resuelve la estimación por máxima verosimilitud al maximizar una función
+de verosimilitud, y la que resuelven el filtro de Kalman y sus
+variantes al minimizar el error cuadrático medio de una predicción. El
+recorrido tiene cinco etapas. Primero, se establece cuándo un óptimo
+existe siquiera, apoyándose en la compacidad de la
+[Sección “Espacios métricos”](../matematica-1/23-espacios-metricos.qmd). Segundo, se caracteriza un óptimo sin restricciones
+mediante condiciones de primer y de segundo orden, estas últimas
+expresadas en términos de la definición positiva de la hessiana.
+Tercero y cuarto, se incorporan restricciones, primero de igualdad
+mediante multiplicadores de Lagrange y después de desigualdad mediante
+las condiciones de Karush–Kuhn–Tucker. Quinto, se presentan los
+métodos numéricos que en la práctica calculan estos óptimos cuando no
+existe una fórmula cerrada, y que reaparecerán, con sus mismos nombres,
+al estimar por máxima verosimilitud los modelos de la
+[sección sobre la estimación por máxima verosimilitud de modelos ARMA](../econometria-2/index.qmd).
+
+::: {#def-optimo}
+## Óptimo local y global
+
+Sea $D\subseteq\mathbb{R}^n$ y $f:D\to\mathbb{R}$. Un punto
+$\vect{x}^*\in D$ es un ***mínimo global*** de $f$ en $D$ si
+$f(\vect{x}^*)\leq f(\vect{x})$ para todo $\vect{x}\in D$, y es un
+***mínimo local*** si existe $\delta>0$ tal que
+$f(\vect{x}^*)\leq f(\vect{x})$ para todo $\vect{x}\in D$ con
+$\|\vect{x}-\vect{x}^*\|<\delta$. Las definiciones de
+***máximo global*** y ***máximo local*** son
+análogas, invirtiendo la desigualdad. Todo mínimo global es, en
+particular, un mínimo local, pero el recíproco no vale en general.
+:::
+
+Esta distinción entre lo local y lo global reaparecerá constantemente:
+un algoritmo numérico solo puede garantizar, en general, que converge a
+un óptimo local, y distinguirlo de un óptimo global exigirá, más
+adelante en esta sección, apoyarse en la convexidad de la función
+objetivo. Antes de caracterizar los óptimos conviene resolver una pregunta
+lógicamente anterior: ¿bajo qué condiciones puede garantizarse que un
+óptimo global existe siquiera? La respuesta depende crucialmente de la
+compacidad del dominio, y para probarla hace falta primero un resultado
+auxiliar sobre cómo la continuidad transporta la compacidad de un
+conjunto a otro.
+
+::: {#lem-imagen-continua-compacta}
+## La imagen continua de un compacto es compacta
+
+Sea $K\subseteq\mathbb{R}^n$ compacto y $f:K\to\mathbb{R}^m$ continua.
+Entonces $f(K)$ es compacto.
+:::
+
+::: {.proof}
+Se aplica directamente la definición de compacidad mediante cubrimientos
+abiertos de la [Definición “Cubrimiento abierto y compacidad”](../matematica-1/26-conjuntos-compactos-y-el-teorema-de-heine-borel.qmd#def-compacto). Sea $\{G_\alpha\}$ un cubrimiento
+abierto de $f(K)$; hace falta construir un subcubrimiento finito. Para
+cada $\vect{y}\in f(K)$ existe algún $\alpha$ con $\vect{y}\in G_\alpha$,
+y para cada $\vect{x}\in K$ con $f(\vect{x})=\vect{y}$, la continuidad de
+$f$ en $\vect{x}$ da un abierto $U_{\vect{x}}$ que contiene a
+$\vect{x}$ y tal que $f(U_{\vect{x}}\cap K)\subseteq G_\alpha$. La
+colección $\{U_{\vect{x}}\}_{\vect{x}\in K}$ es entonces un cubrimiento
+abierto de $K$, y como $K$ es compacto, admite un subcubrimiento finito
+$U_{\vect{x}_1},\ldots,U_{\vect{x}_r}$. Sea $G_{\alpha_1},\ldots,
+G_{\alpha_r}$ la colección correspondiente de abiertos de $\{G_\alpha\}$,
+uno por cada $U_{\vect{x}_i}$ según la construcción anterior. Para
+cualquier $\vect{y}\in f(K)$, existe $\vect{x}\in K$ con
+$f(\vect{x})=\vect{y}$, y $\vect{x}$ pertenece a algún $U_{\vect{x}_i}$
+del subcubrimiento finito de $K$, de modo que
+$\vect{y}=f(\vect{x})\in f(U_{\vect{x}_i}\cap K)\subseteq G_{\alpha_i}$;
+en consecuencia, $G_{\alpha_1},\ldots,G_{\alpha_r}$ cubre $f(K)$, y es un
+subcubrimiento finito extraído de $\{G_\alpha\}$.
+:::
+
+Con este lema disponible, la existencia de un óptimo global se reduce a
+un argumento corto que combina la compacidad con la caracterización de
+Heine–Borel de la [Sección “Espacios métricos”](../matematica-1/23-espacios-metricos.qmd).
+
+::: {#thm-weierstrass}
+## Teorema de Weierstrass
+
+Sea $K\subseteq\mathbb{R}^n$ compacto y no vacío, y sea $f:K\to
+\mathbb{R}$ continua. Entonces $f$ alcanza su máximo y su mínimo
+globales en $K$: existen $\vect{x}^*,\vect{x}_*\in K$ tales que
+$f(\vect{x}_*)\leq f(\vect{x})\leq f(\vect{x}^*)$ para todo
+$\vect{x}\in K$.
+:::
+
+::: {.proof}
+Por el @lem-imagen-continua-compacta, $f(K)\subseteq\mathbb{R}$ es
+compacto, y por el [Teorema “Teorema de Heine–Borel”](../matematica-1/26-conjuntos-compactos-y-el-teorema-de-heine-borel.qmd#thm-heine-borel) de la
+[Sección “Espacios métricos”](../matematica-1/23-espacios-metricos.qmd), $f(K)$ es cerrado y acotado. Como $f(K)$ es no
+vacío y acotado, el axioma de completitud de la [Sección “Los naturales y el principio de inducción”](../matematica-1/11-los-naturales-y-el-principio-de-induccion.qmd)
+garantiza que $M:=\sup f(K)$ y $m:=\inf f(K)$ existen como números
+reales. Falta ver que $M$ y $m$ pertenecen a $f(K)$, y no son solo cotas
+externas. Por la caracterización del supremo, para cada $k\in\mathbb{N}$
+existe $y_k\in f(K)$ con $M-1/k<y_k\leq M$, de modo que $y_k\to M$; como
+$f(K)$ es cerrado, contiene a todos sus puntos límite por la
+[Definición “Conjunto abierto y cerrado”](../matematica-1/25-conjuntos-abiertos-cerrados-y-la-clausura.qmd#def-abierto-cerrado), y $M$ es punto límite de $f(K)$ salvo que
+$M=y_k$ para algún $k$, en cuyo caso $M\in f(K)$ directamente; en
+cualquier caso, $M\in f(K)$. El mismo argumento aplicado a $m$ da
+$m\in f(K)$. Como $M,m\in f(K)$, existen $\vect{x}^*,\vect{x}_*\in K$
+con $f(\vect{x}^*)=M$ y $f(\vect{x}_*)=m$, y por ser $M$ y $m$ el
+supremo y el ínfimo de $f(K)$, se cumple
+$f(\vect{x}_*)\leq f(\vect{x})\leq f(\vect{x}^*)$ para todo
+$\vect{x}\in K$.
+:::
+
+::: {#idea-compacidad-indispensable .callout-tip appearance=“simple” title=“Idea central: Por qué la compacidad es indispensable”}
+Ninguna de las dos hipótesis del @thm-weierstrass, ni la
+acotación ni la clausura, puede omitirse. La función $f(x)=x$ en el
+conjunto acotado pero no cerrado $(0,1)$ no alcanza ni máximo ni mínimo,
+porque cualquier candidato a óptimo tiene siempre un punto todavía más
+cercano al extremo excluido; y la función $f(x)=x$ en el conjunto
+cerrado pero no acotado $[0,\infty)$ no alcanza máximo, porque $f$ crece
+sin cota. En el contexto de la [sección sobre la estimación por máxima verosimilitud de modelos ARMA](../econometria-2/index.qmd), esta observación
+tiene una consecuencia práctica directa: si el espacio de parámetros de
+un modelo no está acotado, o si se excluye alguna frontera relevante,
+como ocurre al forzar que una varianza sea estrictamente positiva, el
+teorema de Weierstrass no garantiza por sí solo que el estimador máximo
+verosímil exista, y hace falta un argumento adicional para descartar que
+la verosimilitud se dispare hacia esa frontera excluida.
+:::

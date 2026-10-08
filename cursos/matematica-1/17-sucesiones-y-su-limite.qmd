@@ -1,0 +1,190 @@
+---
+title: "Sucesiones y su límite"
+description: "Antes de hablar de límites conviene fijar qué es, formalmente, el objeto que va a converger."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Sucesiones y series]
+---
+
+Con $\mathbb{R}$ ya construido y su axioma de completitud disponible, esta
+sección formaliza una idea que se ha usado de manera informal desde la
+introducción del documento: la de una cantidad que se aproxima a un valor a
+medida que un índice crece sin límite. Precisar esa idea con el rigor
+$\varepsilon$-$N$ es indispensable para justificar, más adelante, por qué la
+suma infinita de la representación de Wold tiene sentido, por qué
+$\phi^h\to 0$ cuando $|\phi|<1$, y por qué el filtro de Kalman converge a un
+régimen estacionario. El orden de exposición que sigue no es arbitrario:
+primero se fija qué significa que una sucesión tenga un límite y qué
+propiedades básicas se siguen de esa definición; después se buscan criterios
+que permitan reconocer la convergencia sin necesidad de adivinar el límite de
+antemano; y finalmente se extiende todo el aparato a las series, que no son
+más que sucesiones de un tipo particular. Conviene anticipar, además, que
+esta sección cumple una doble función dentro del documento: por un lado
+resuelve, con la generalidad y el rigor que solo el análisis real ofrece,
+todas las preguntas sobre convergencia que aparecerán en el resto de las
+notas; por otro, sirve de modelo conceptual para la
+[Sección “Espacios métricos”](23-espacios-metricos.qmd), donde exactamente la misma estructura
+$\varepsilon$-$N$ se generalizará sustituyendo el valor absoluto
+$|x_n-x|$ por una distancia abstracta, sin que ninguna de las ideas
+centrales cambie de naturaleza.
+
+Antes de hablar de límites conviene fijar qué es, formalmente, el objeto que
+va a converger. La intuición de una sucesión como una lista ordenada e
+infinita de números es correcta, pero para razonar sobre ella con precisión
+resulta más útil describirla como una función, porque eso permite aplicarle
+de inmediato todo el vocabulario ya disponible sobre funciones y sus
+imágenes.
+
+::: {#def-sucesion}
+## Sucesión
+
+Una ***sucesión*** de números reales es una función
+$x:\mathbb{N}\to\mathbb{R}$. Se escribe $x_n$ en lugar de $x(n)$, y la
+sucesión completa se denota $(x_n)_{n=1}^{\infty}$ o simplemente $(x_n)$.
+:::
+
+Definir la sucesión como una función deja abierta, deliberadamente, la
+pregunta central: qué significa que sus valores se acerquen a algo cuando el
+índice $n$ crece. Esa pregunta no tiene una respuesta única en la historia de
+las matemáticas; la respuesta moderna, debida al desarrollo del análisis en
+el siglo diecinueve, es la que sigue, y su forma particular con dos
+cuantificadores es la que hace posible todo el cálculo riguroso que viene
+después.
+
+::: {#def-limite-sucesion}
+## Límite de una sucesión
+
+Se dice que la sucesión $(x_n)$ ***converge*** a $x\in\mathbb{R}$,
+lo que se escribe $\lim_{n\to\infty}x_n=x$ o $x_n\to x$, si para todo
+$\varepsilon>0$ existe $N\in\mathbb{N}$ tal que, para todo $n\geq N$, se
+cumple $|x_n-x|<\varepsilon$. Si tal $x$ existe, se dice que $(x_n)$ es
+***convergente***; en caso contrario, es
+***divergente***.
+:::
+
+La definición merece leerse con atención a la interacción entre sus dos
+cuantificadores: $\varepsilon$ se fija primero, arbitrariamente pequeño, y
+solo después se permite elegir $N$, que puede depender de $\varepsilon$ y
+crecer sin cota cuando $\varepsilon$ se hace más exigente. Esto encaja
+exactamente con el orden de cuantificadores discutido en el
+[Ejemplo “El orden de los cuantificadores cambia el significado”](03-cuantificadores-y-su-negacion.qmd#exm-orden-cuantificadores): no es lo mismo “para todo $\varepsilon$
+existe $N$” que “existe un $N$ que sirve para todo $\varepsilon$”, y la
+definición exige la primera lectura, la más débil de las dos y la correcta.
+Conviene además notar la interpretación geométrica: la condición
+$|x_n-x|<\varepsilon$ dice que, a partir de cierto punto, todos los términos
+de la sucesión caen dentro del intervalo $(x-\varepsilon,x+\varepsilon)$, sin
+excepción; la sucesión puede salir de intervalos más angostos solo un número
+finito de veces, y ese número finito de excepciones, uno para cada
+$\varepsilon$, es exactamente lo que $N$ registra.
+
+Antes de extraer propiedades generales de la definición, conviene ver un
+caso concreto en el que la elección de $N$ en función de $\varepsilon$ se
+hace explícita, porque el mecanismo de esa elección es el que se repetirá,
+con variantes, en el resto de la sección.
+
+::: {#exm-limite-directo}
+## Un límite verificado directamente
+
+Se prueba que $\lim_{n\to\infty} 1/n = 0$. Dado $\varepsilon>0$, por la
+[Teorema “Propiedad arquimediana”](15-los-reales-el-axioma-de-completitud.qmd#thm-arquimediana)(ii) existe $N\in\mathbb{N}$ con $1/N<\varepsilon$.
+Para todo $n\geq N$, se tiene $1/n\leq 1/N<\varepsilon$, y como $1/n>0$,
+$|1/n-0|=1/n<\varepsilon$. Así, la definición se satisface con ese $N$.
+:::
+
+Obsérvese que la propiedad arquimediana de $\mathbb{R}$, ya establecida en la
+sección anterior, es precisamente lo que permite encontrar el $N$ requerido:
+sin ella no habría garantía de que $1/N$ pudiera hacerse arbitrariamente
+pequeño, y el límite ni siquiera estaría bien planteado como afirmación
+verificable. Antes de seguir adelante con propiedades más finas de los
+límites conviene resolver una pregunta que la propia definición deja
+abierta: si una sucesión converge, ¿puede converger a dos valores distintos
+a la vez? La respuesta negativa es lo que hace que hablar de “el” límite,
+en singular y con artículo definido, tenga sentido.
+
+::: {#prp-unicidad-limite}
+## Unicidad del límite
+
+Si $(x_n)$ converge, su límite es único.
+:::
+
+::: {.proof}
+Supóngase, por contradicción, que $x_n\to x$ y $x_n\to y$ con $x\neq y$. Sea
+$\varepsilon=|x-y|/2>0$. Por convergencia a $x$, existe $N_1$ tal que
+$|x_n-x|<\varepsilon$ para todo $n\geq N_1$; por convergencia a $y$, existe
+$N_2$ tal que $|x_n-y|<\varepsilon$ para todo $n\geq N_2$. Tomando
+$n=\max\{N_1,N_2\}$ y aplicando la desigualdad triangular,
+
+$$
+|x-y| \leq |x-x_n|+|x_n-y| < \varepsilon+\varepsilon = |x-y|,
+$$
+
+lo cual es una contradicción, ya que ningún número es estrictamente menor
+que sí mismo. Por lo tanto $x=y$.
+:::
+
+El argumento es el patrón que reaparecerá una y otra vez en la sección: se
+elige la tolerancia $\varepsilon$ en función de la cantidad que se quiere
+acotar, en este caso la mitad de la distancia entre los dos supuestos
+límites, de modo que las dos vecindades de radio $\varepsilon$ alrededor de
+$x$ y de $y$ resultan disjuntas, y ningún término de la sucesión puede estar
+simultáneamente en ambas. Con la unicidad establecida, la notación
+$\lim_{n\to\infty}x_n$ queda justificada como referencia a un único número, y
+puede preguntarse ahora qué otras propiedades se siguen, de manera
+necesaria, del solo hecho de converger. La primera de ellas es que la
+sucesión no puede escaparse hacia el infinito.
+
+::: {#def-sucesion-acotada}
+## Sucesión acotada
+
+Una sucesión $(x_n)$ está ***acotada*** si existe $M>0$ tal que
+$|x_n|\leq M$ para todo $n\in\mathbb{N}$.
+:::
+
+La definición de acotación no menciona convergencia en absoluto: una
+sucesión puede oscilar de manera irregular y seguir siendo acotada, siempre
+que sus valores no crezcan sin límite. Lo que sí es cierto, y conviene
+probarlo antes de avanzar, es que la acotación es una consecuencia
+obligatoria de la convergencia, aunque no baste por sí sola para
+garantizarla.
+
+::: {#prp-convergente-acotada}
+## Toda sucesión convergente está acotada
+
+Si $(x_n)$ converge, entonces $(x_n)$ está acotada.
+:::
+
+::: {.proof}
+Sea $x_n\to x$. Tomando $\varepsilon=1$ en la @def-limite-sucesion,
+existe $N$ tal que $|x_n-x|<1$ para todo $n\geq N$, y por la desigualdad
+triangular, $|x_n|\leq|x_n-x|+|x|<1+|x|$ para esos mismos $n$. Fuera de ese
+rango, los términos $x_1,\ldots,x_{N-1}$ son finitos en cantidad, así que
+$M:=\max\{|x_1|,\ldots,|x_{N-1}|,\,1+|x|\}$ acota a la sucesión completa.
+:::
+
+La demostración ilustra una técnica que se repetirá en la sección: separar
+la sucesión en una cola, donde la convergencia impone una cota uniforme, y
+un número finito de términos iniciales, que siempre pueden acotarse por
+tratarse de una lista finita. Cabe ahora preguntarse si el recíproco de esta
+proposición también es cierto, es decir, si toda sucesión acotada converge;
+la respuesta es negativa, y conviene dejar constancia explícita del
+contraejemplo antes de continuar, porque el error de suponer el recíproco
+aparecerá con facilidad más adelante si no se corrige aquí.
+
+::: {#nota-acotada-no-converge .callout-note appearance=“simple” title=“Nota: el recíproco es falso”}
+Estar acotada no basta para converger: la sucesión $x_n=(-1)^n$ está acotada
+por $M=1$, pero oscila entre $-1$ y $1$ sin acercarse a ningún valor único,
+y no es difícil verificar mediante la @def-limite-sucesion que ningún
+número real satisface la condición de límite para esta sucesión. La
+@prp-convergente-acotada es, por tanto, una condición necesaria para
+la convergencia, no suficiente; la subsección 4.4 dará una condición
+adicional, la monotonía, que junto con la acotación sí garantiza
+convergencia.
+:::
+
+Queda así completado el primer bloque de resultados: la definición de
+convergencia, la unicidad de su límite y la acotación necesaria que impone.
+El siguiente paso natural es preguntarse cómo se comporta el límite frente a
+las operaciones aritméticas y frente al orden de los números reales, porque
+sin esa aritmética del límite cada convergencia tendría que verificarse
+desde cero con la definición $\varepsilon$-$N$, lo cual sería insostenible
+en la práctica.

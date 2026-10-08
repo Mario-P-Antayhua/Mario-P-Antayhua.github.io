@@ -1,0 +1,140 @@
+---
+title: "Por qué ℚ no basta"
+description: "Por qué ℚ no basta. Incluye Monotonía del cuadrado en los racionales positivos y El conjunto S=rinmathbbQ:r>0, r^2<2 no tiene supremo en mathbbQ."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Los sistemas numéricos y la recta real]
+---
+
+La limitación de $\mathbb{Q}$ no es algebraica, como lo fueron las de
+$\mathbb{N}$ y $\mathbb{Z}$, sino de un tipo distinto y más sutil: hay
+subconjuntos acotados de $\mathbb{Q}$ que no tienen menor cota superior
+dentro de $\mathbb{Q}$, aunque intuitivamente deberían tenerla. El ejemplo
+canónico involucra al conjunto de los racionales positivos cuyo cuadrado es
+menor que $2$, y su comportamiento está gobernado por un hecho ya establecido
+en la [Sección “Proposiciones y conectores lógicos”](01-proposiciones-y-conectores-logicos.qmd): no existe ningún racional cuyo cuadrado sea
+exactamente $2$, según el [Teorema “Irracionalidad de sqrt2”](04-metodos-de-demostracion.qmd#thm-raiz-2-irracional). Antes de explotar ese
+hecho, conviene fijar una propiedad de monotonía sobre el orden de
+$\mathbb{Q}$ que se usará repetidamente en el argumento que sigue.
+
+::: {#lem-monotonia-cuadrado-q}
+## Monotonía del cuadrado en los racionales positivos
+
+Si $p,q\in\mathbb{Q}$ satisfacen $0<p<q$, entonces $p^2<q^2$. Recíprocamente,
+si $p,q>0$ y $p^2<q^2$, entonces $p<q$.
+:::
+
+::: {.proof}
+Para la primera parte, de $p<q$ se sigue $q-p>0$, y multiplicando esta
+desigualdad por $q+p>0$, que es lícito porque el producto de dos racionales
+positivos es positivo, se obtiene
+
+$$
+(q-p)(q+p) > 0 ,
+$$ {#eq-monotonia-cuadrado-paso1}
+
+y expandiendo el producto del lado izquierdo de
+@eq-monotonia-cuadrado-paso1 mediante la distributividad,
+
+$$
+q^2 - p^2 > 0 ,
+$$ {#eq-monotonia-cuadrado-paso2}
+
+de donde $p^2<q^2$, que es la primera afirmación.
+
+Para el recíproco, se razona por contrarrecíproco: si no fuera $p<q$,
+entonces, por la tricotomía del orden en $\mathbb{Q}$, se tendría $p\geq q$.
+Si $p=q$, entonces $p^2=q^2$, contradiciendo $p^2<q^2$. Si $p>q$, la primera
+parte ya demostrada, aplicada ahora con los papeles de $p$ y $q$
+intercambiados, da $q^2<p^2$, que también contradice $p^2<q^2$. En ambos
+casos se llega a una contradicción, así que debe ser $p<q$.
+:::
+
+::: {#prp-no-sup-en-q}
+## El conjunto $S=\{r\in\mathbb{Q}:r>0,\ r^2<2\}$ no tiene supremo en $\mathbb{Q}$
+
+$S$ está acotado superiormente en $\mathbb{Q}$, pero ningún racional es su
+menor cota superior.
+:::
+
+::: {.proof}
+Se prueba primero que $S$ está acotado superiormente, y $2$ sirve como cota:
+si $r>2$, entonces por el @lem-monotonia-cuadrado-q $r^2>4$, y como
+$4>2$, se sigue $r^2>2$, así que ningún elemento de $S$ puede superar a $2$.
+
+Falta ahora descartar que algún racional positivo $b$ sea la menor cota
+superior de $S$, y para ello se examinan los tres casos posibles según la
+tricotomía del orden: $b^2<2$, $b^2>2$ y $b^2=2$. El último caso se elimina
+de inmediato, porque $b^2=2$ contradice directamente el
+[Teorema “Irracionalidad de sqrt2”](04-metodos-de-demostracion.qmd#thm-raiz-2-irracional), que garantiza que ningún racional tiene
+cuadrado igual a $2$.
+
+Se examina el caso $b^2<2$. La estrategia es exhibir, a partir de $b$, un
+racional estrictamente mayor que siga perteneciendo a $S$, lo cual
+demostraría que $b$ no puede ser cota superior. Para $\varepsilon\in
+\mathbb{Q}$ con $0<\varepsilon<1$, se define $b'=b+\varepsilon$ y se calcula
+
+$$
+(b')^2 = b^2 + 2b\varepsilon + \varepsilon^2
+  < b^2 + 2b\varepsilon + \varepsilon
+  = b^2 + \varepsilon(2b+1) ,
+$$ {#eq-no-sup-caso1-paso1}
+
+donde la desigualdad usa $\varepsilon^2<\varepsilon$, válida porque
+$0<\varepsilon<1$. Eligiendo ahora
+$\varepsilon<\min\bigl\{1,\ (2-b^2)/(2b+1)\bigr\}$, un racional positivo que
+existe porque $\mathbb{Q}$ no tiene mínimo estrictamente positivo, la
+desigualdad @eq-no-sup-caso1-paso1 da
+
+$$
+(b')^2 < b^2 + (2-b^2) = 2 ,
+$$ {#eq-no-sup-caso1-paso2}
+
+de modo que $b'\in S$; y como $b'=b+\varepsilon>b$, el racional $b$ no puede
+ser cota superior de $S$.
+
+Se examina, por último, el caso $b^2>2$, en el que la estrategia simétrica
+es exhibir una cota superior estrictamente menor que $b$. Para
+$\varepsilon\in\mathbb{Q}$ con $0<\varepsilon<b$, se define $b''=b-\varepsilon$
+y se calcula
+
+$$
+(b'')^2 = b^2 - 2b\varepsilon + \varepsilon^2 > b^2 - 2b\varepsilon ,
+$$ {#eq-no-sup-caso2-paso1}
+
+donde la desigualdad usa $\varepsilon^2>0$. Eligiendo ahora
+$\varepsilon<(b^2-2)/(2b)$, un racional positivo que existe por el mismo
+motivo que antes, la desigualdad @eq-no-sup-caso2-paso1 da
+
+$$
+(b'')^2 > b^2 - (b^2-2) = 2 ,
+$$ {#eq-no-sup-caso2-paso2}
+
+así que, por el @lem-monotonia-cuadrado-q, $b''$ sigue siendo cota
+superior de $S$ (todo elemento de $S$ tiene cuadrado menor que $2<(b'')^2$, y
+por tanto, comparando raíces positivas mediante el mismo lema, es menor que
+$b''$); y como $b''=b-\varepsilon<b$, tampoco en este caso puede $b$ ser la
+menor cota superior.
+
+Descartados los tres casos, ningún racional positivo puede ser el supremo de
+$S$ dentro de $\mathbb{Q}$.
+:::
+
+::: {#exm-no-sup-numerico}
+## La perturbación de la demostración con un racional concreto
+
+Tómese $b=3/2=1.5$, que satisface $b^2=2.25>2$, así que corresponde al
+tercer caso de la demostración. El margen permitido para $\varepsilon$ es
+$(b^2-2)/(2b)=0.25/3=1/12\approx0.0833$. Eligiendo
+$\varepsilon=1/20=0.05<1/12$, un racional dentro del margen, se obtiene
+$b''=1.5-0.05=1.45$. Se verifica que $(1.45)^2=2.1025>2$, de modo que $b''$
+sigue siendo cota superior de $S$, y que $b''=1.45<1.5=b$: se ha encontrado
+una cota superior estrictamente menor que $b$, exactamente lo que la
+demostración predice, con un número concreto de principio a fin.
+:::
+
+El resultado anterior muestra que $\mathbb{Q}$ tiene, literalmente, huecos:
+conjuntos acotados que no alcanzan una menor cota superior dentro del propio
+sistema numérico. Rellenar esos huecos, sin perder ninguna de las
+propiedades algebraicas ya obtenidas, es precisamente lo que hace
+$\mathbb{R}$.

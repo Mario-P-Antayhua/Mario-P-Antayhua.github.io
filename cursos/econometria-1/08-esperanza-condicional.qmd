@@ -1,0 +1,171 @@
+---
+title: "Esperanza condicional"
+description: "Esperanza condicional. Incluye Esperanza condicional, Propiedades de la esperanza condicional y La esperanza condicional es la proyección ortogonal óptima."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría I, Convergencia de variables aleatorias y esperanza condicional]
+---
+
+Toda la teoría desarrollada hasta aquí describe cómo se comporta una
+variable aleatoria sin condicionar en ninguna información adicional; en
+la práctica econométrica, sin embargo, casi siempre interesa predecir
+una variable a partir de otra, o de un conjunto de información
+disponible, lo que exige generalizar la esperanza a un contexto
+condicional. La construcción general de la esperanza condicional
+respecto de una $\sigma$-álgebra arbitraria requiere teoría de la medida
+y se sale del alcance del curso; en su lugar, esta subsección
+presenta la esperanza condicional respecto de otra variable aleatoria,
+suficiente para todo lo que sigue, y la caracteriza mediante la
+proyección ortogonal de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), la construcción más
+importante de toda esta sección.
+
+::: {#def-esperanza-condicional-variable}
+## Esperanza condicional
+
+Sean $X,Y$ variables aleatorias con densidad conjunta $f_{X,Y}$. La
+***densidad condicional*** de $Y$ dado $X=x$ es
+$f_{Y\mid X}(y\mid x):=f_{X,Y}(x,y)/f_X(x)$ cuando $f_X(x)>0$, y la
+***esperanza condicional*** de $Y$ dado $X=x$ es
+$\Esp[X=x]{Y}:=\int y\,f_{Y\mid X}(y\mid x)\,dy$. La función
+$x\mapsto\Esp[X=x]{Y}$, evaluada en la variable aleatoria $X$, define la
+variable aleatoria $\Esp[X]{Y}$, que es, en sí misma, una función de
+$X$.
+:::
+
+Antes de llegar a su caracterización geométrica, conviene reunir las
+propiedades algebraicas de la esperanza condicional que se usan a diario
+en cualquier manipulación de modelos con información condicionante,
+porque la demostración del resultado geométrico se apoyará en dos de
+ellas de manera esencial.
+
+::: {#prp-propiedades-esperanza-condicional}
+## Propiedades de la esperanza condicional
+
+Para variables aleatorias $X,Y$ con esperanza finita y una función
+medible $h$: (i) $\Esp{\Esp[X]{Y}}=\Esp{Y}$ (ley de esperanzas
+iteradas); (ii) $\Esp[X]{h(X)Y}=h(X)\Esp[X]{Y}$ (sacar lo conocido fuera
+de la esperanza); (iii) si $X$ y $Y$ son independientes,
+$\Esp[X]{Y}=\Esp{Y}$.
+:::
+
+::: {.proof}
+Para (i), integrando la @def-esperanza-condicional-variable contra
+la densidad marginal de $X$,
+
+$$
+\Esp{\Esp[X]{Y}}
+  = \int\Bigl(\int y\,f_{Y\mid X}(y\mid x)\,dy\Bigr)f_X(x)\,dx
+  = \int\!\!\int y\,f_{X,Y}(x,y)\,dy\,dx = \Esp{Y},
+$$
+
+donde el paso intermedio sustituye
+$f_{Y\mid X}(y\mid x)f_X(x)=f_{X,Y}(x,y)$ por la propia definición de
+densidad condicional, y el último paso reconoce la definición de
+$\Esp{Y}$ integrando la densidad conjunta. Para (ii), en cada valor
+fijo $x$ de $X$, $h(X)$ se comporta como la constante $h(x)$ dentro de
+la integral que define $\Esp[X=x]{Y}$, y una constante sale fuera de la
+integral por la linealidad de la [Proposición “Linealidad de la integral”](../matematica-2/11-la-integral-de-riemann-y-el-teorema-fundamental.qmd#prp-linealidad-integral), lo que
+da $\Esp[X=x]{h(X)Y}=h(x)\Esp[X=x]{Y}$ para cada $x$, es decir,
+$\Esp[X]{h(X)Y}=h(X)\Esp[X]{Y}$ como igualdad entre variables
+aleatorias. Para (iii), la independencia da
+$f_{X,Y}(x,y)=f_X(x)f_Y(y)$ por definición, de modo que
+$f_{Y\mid X}(y\mid x)=f_Y(y)$ no depende de $x$, y la
+@def-esperanza-condicional-variable se reduce a
+$\Esp[X=x]{Y}=\int y f_Y(y)\,dy=\Esp{Y}$ para todo $x$.
+:::
+
+Estas tres propiedades bastan para calcular con la esperanza condicional
+en la práctica, pero ninguna explica todavía por qué $\Esp[X]{Y}$ es, en
+un sentido preciso, la mejor predicción posible de $Y$ a partir de $X$,
+y no solamente una manera razonable de resumir información. Esa
+justificación es exactamente el contenido del teorema de la mejor
+aproximación de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), aplicado al espacio de
+variables aleatorias con varianza finita dotado del producto interno
+$\langle Y,Z\rangle:=\Esp{YZ}$.
+
+::: {#thm-esperanza-condicional-proyeccion}
+## La esperanza condicional es la proyección ortogonal óptima
+
+Sea $V$ el espacio de variables aleatorias con $\Esp{Y^2}<\infty$,
+dotado del producto interno $\langle Y,Z\rangle:=\Esp{YZ}$, y sea
+$S\subseteq V$ el subespacio de las funciones medibles de $X$ con
+varianza finita. Entonces $\Esp[X]{Y}$ es el elemento de $S$ que
+minimiza $\Esp{(Y-g(X))^2}$ sobre todas las funciones $g$, y satisface
+$\Esp{(Y-\Esp[X]{Y})h(X)}=0$ para toda función medible acotada $h$.
+:::
+
+::: {.proof}
+Que $V$, con la suma y el escalamiento habituales de variables
+aleatorias, es un espacio vectorial en el sentido de la
+[Definición “Espacio vectorial”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd#def-espacio-vectorial), y que $\langle Y,Z\rangle:=\Esp{YZ}$
+satisface los tres axiomas de un producto interno en el sentido de la
+[Definición “Producto interno”](../matematica-2/04-espacios-con-producto-interno.qmd#def-producto-interno), se verifica directamente a partir de la
+linealidad de la esperanza de la [Proposición “Linealidad de la esperanza”](04-esperanza-matematica-y-momentos.qmd#prp-linealidad-esperanza) y no
+se detalla aquí, por ser una repetición mecánica de esa linealidad.
+Basta entonces verificar que $\Esp[X]{Y}$ satisface la propiedad que
+caracteriza a la proyección ortogonal de la
+[Proposición “Existencia y unicidad de la proyección ortogonal”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#prp-proyeccion-existencia), es decir, que $Y-\Esp[X]{Y}$ es
+ortogonal a todo $S$ en el sentido de este producto interno, para que el
+[Teorema “Teorema de la mejor aproximación”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#thm-mejor-aproximacion-general) de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), aplicado sin ninguna modificación, garantice
+directamente que $\Esp[X]{Y}$ minimiza $\Esp{(Y-g(X))^2}$ entre todas
+las $g(X)\in S$.
+
+Para verificar esa ortogonalidad, sea $h(X)\in S$ cualquiera. Usando la
+@prp-propiedades-esperanza-condicional,
+
+$$
+\begin{aligned}
+\Esp{(Y-\Esp[X]{Y})h(X)}
+  &= \Esp{Yh(X)} - \Esp{\Esp[X]{Y}h(X)},
+   \\
+  \Esp{(Y-\Esp[X]{Y})h(X)}
+  &= \Esp{\Esp[X]{Yh(X)}} - \Esp{h(X)\Esp[X]{Y}},
+\end{aligned}
+$$ {#eq-ortogonalidad-esp-cond-1}
+
+donde @eq-ortogonalidad-esp-cond-1 aplica la ley de esperanzas
+iteradas (i) al primer término de @eq-ortogonalidad-esp-cond-1, y
+reescribe el segundo usando la propiedad de sacar lo conocido (ii). Por
+esa misma propiedad (ii), aplicada ahora dentro del primer término de
+@eq-ortogonalidad-esp-cond-1, $\Esp[X]{Yh(X)}=h(X)\Esp[X]{Y}$, de
+modo que ambos términos de @eq-ortogonalidad-esp-cond-1 son
+idénticos y su diferencia es cero. Como $h(X)$ era un elemento
+arbitrario de $S$, esto establece
+$\langle Y-\Esp[X]{Y},h(X)\rangle=0$ para todo $h(X)\in S$, que es
+exactamente la propiedad de ortogonalidad requerida por la
+[Proposición “Existencia y unicidad de la proyección ortogonal”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#prp-proyeccion-existencia).
+:::
+
+::: {#cor-principio-ortogonalidad-esperanza}
+## Principio de ortogonalidad para la esperanza condicional
+
+La esperanza condicional $\Esp[X]{Y}$ es el único elemento de $S$ que
+satisface $\Esp{(Y-g(X))h(X)}=0$ para toda función medible acotada $h$.
+:::
+
+::: {.proof}
+Es la aplicación directa del [Corolario “Principio de ortogonalidad”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#cor-principio-ortogonalidad) de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) al producto interno $\langle Y,Z\rangle=\Esp{YZ}$
+y al subespacio $S$ de esta subsección, usando la caracterización de
+ortogonalidad ya demostrada en el
+@thm-esperanza-condicional-proyeccion para identificar
+$\Esp[X]{Y}$ como el punto de $S$ cuyo residuo es ortogonal a todo $S$.
+:::
+
+Este corolario es, literalmente, el principio de ortogonalidad que la
+[Idea central “Anticipación: de la proyección abstracta a la esperanza condicional”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#idea-anticipacion-prediccion-optima) de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) anticipó sin poder demostrarlo todavía: el error
+de la mejor predicción de $Y$ a partir de $X$ no está correlacionado con
+ninguna función acotada de $X$, sin excepción. Nada de la demostración
+de esta subsección tuvo que repetir el argumento de descomposición del
+error en dos partes ortogonales que protagonizó la demostración del
+[Teorema “Teorema de la mejor aproximación”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#thm-mejor-aproximacion-general); bastó con verificar que el
+espacio de variables aleatorias con varianza finita, dotado del producto
+interno $\Esp{YZ}$, es un caso particular de espacio con producto
+interno, y todo lo demás se heredó automáticamente, sin ningún trabajo
+adicional. Esta es exactamente la ganancia que la construcción abstracta
+de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) prometió obtener a cambio de su
+generalidad, y la [sección sobre la predicción óptima](../econometria-3/index.qmd) explotará el mismo principio de
+ortogonalidad, sin volver a demostrarlo, para caracterizar la predicción
+óptima de un proceso estocástico a partir de su historia pasada.

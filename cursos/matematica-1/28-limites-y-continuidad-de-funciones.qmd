@@ -1,0 +1,160 @@
+---
+title: "Límites y continuidad de funciones"
+description: "Límites y continuidad de funciones. Incluye Límite de una función, Continuidad y Propiedades algebraicas del límite."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Cálculo diferencial e integral]
+---
+
+Las dos secciones anteriores dotaron a $\mathbb{R}^n$ de estructura
+algebraica, geométrica y matricial; esta sección le añade la maquinaria
+del cálculo, que es la que permite estudiar cómo cambia una función
+cuando su argumento cambia. El recorrido tiene cuatro etapas. Primero,
+los límites y la continuidad extienden a funciones de varias variables la
+noción de cercanía que la [Sección “Espacios métricos”](23-espacios-metricos.qmd) ya había generalizado más
+allá de $\mathbb{R}$, apoyándose ahora en la norma de la
+[Definición “Norma”](../matematica-2/03-espacios-normados.qmd#def-norma) para medir distancias en $\mathbb{R}^n$. Segundo, la
+derivada de una función de una variable y, después, el gradiente y la
+matriz jacobiana de una función de varias variables, formalizan la idea
+de aproximar una función complicada por una función lineal cerca de un
+punto, un uso directo del espacio vectorial de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd). Tercero, la aproximación de Taylor de segundo
+orden introduce la matriz hessiana, que resulta simétrica por un teorema
+que se demuestra aquí y que permite aplicarle sin comentario adicional
+toda la teoría espectral de la [Sección “Operaciones matriciales y sus propiedades algebraicas”](../matematica-2/06-operaciones-matriciales-y-sus-propiedades-algebr.qmd). Cuarto, la
+integral de Riemann y la regla de Leibniz para diferenciar bajo el signo
+de la integral cierran la sección, porque esta última será la que
+justifique, en la [Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd), que la esperanza del score de
+una función de verosimilitud sea cero. Deliberadamente, esta sección no
+toca la optimización: encontrar máximos y mínimos, con o sin
+restricciones, es tarea de la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd), que se apoyará en
+cada uno de los resultados que siguen sin necesidad de repetirlos.
+
+::: {#def-limite-funcion}
+## Límite de una función
+
+Sea $D\subseteq\mathbb{R}^n$, sea $f:D\to\mathbb{R}^m$ y sea $\vect{p}$
+un punto de acumulación de $D$ en el sentido de la
+[Sección “Espacios métricos”](23-espacios-metricos.qmd). Se dice que $f$ tiene ***límite***
+$\vect{L}\in\mathbb{R}^m$ cuando $\vect{x}$ tiende a $\vect{p}$, lo que
+se escribe $\lim_{\vect{x}\to\vect{p}}f(\vect{x})=\vect{L}$, si para todo
+$\varepsilon>0$ existe $\delta>0$ tal que, para todo
+$\vect{x}\in D$ con $0<\|\vect{x}-\vect{p}\|<\delta$, se cumple
+$\|f(\vect{x})-\vect{L}\|<\varepsilon$, donde $\|\cdot\|$ es la norma
+euclidiana de la [Definición “Norma”](../matematica-2/03-espacios-normados.qmd#def-norma).
+:::
+
+La definición reutiliza literalmente la estructura $\varepsilon$-$\delta$
+que la [Sección “Sucesiones y su límite”](17-sucesiones-y-su-limite.qmd) introdujo para sucesiones de números reales,
+sustituyendo el valor absoluto por la norma; nada en el argumento que
+sigue depende de que $n$ o $m$ valgan uno, de modo que los resultados de
+esta subsección se aplican indistintamente a funciones escalares y a
+funciones de varias variables con valores vectoriales, como el gradiente
+que se introducirá más adelante.
+
+::: {#def-continuidad}
+## Continuidad
+
+Sea $D\subseteq\mathbb{R}^n$ y $f:D\to\mathbb{R}^m$. Se dice que $f$ es
+***continua*** en $\vect{p}\in D$ si, para todo
+$\varepsilon>0$, existe $\delta>0$ tal que para todo $\vect{x}\in D$ con
+$\|\vect{x}-\vect{p}\|<\delta$ se cumple
+$\|f(\vect{x})-f(\vect{p})\|<\varepsilon$; equivalentemente, si
+$\vect{p}$ es punto de acumulación de $D$, $f$ es continua en $\vect{p}$
+si y solo si $\lim_{\vect{x}\to\vect{p}}f(\vect{x})=f(\vect{p})$. Se dice
+que $f$ es continua en $D$ si lo es en cada punto de $D$.
+:::
+
+Verificar la continuidad de funciones complicadas a partir de la definición sería impracticable; las propiedades algebraicas del límite permiten construirlas a partir de piezas simples.
+
+::: {#prp-propiedades-limite}
+## Propiedades algebraicas del límite
+
+Si $\lim_{\vect{x}\to\vect{p}}f(\vect{x})=L$ y
+$\lim_{\vect{x}\to\vect{p}}g(\vect{x})=M$, con $f,g:D\to\mathbb{R}$,
+entonces $\lim_{\vect{x}\to\vect{p}}\bigl(f(\vect{x})+g(\vect{x})\bigr)=
+L+M$ y $\lim_{\vect{x}\to\vect{p}}\bigl(f(\vect{x})g(\vect{x})\bigr)=LM$;
+si además $M\neq 0$,
+$\lim_{\vect{x}\to\vect{p}}\bigl(f(\vect{x})/g(\vect{x})\bigr)=L/M$.
+:::
+
+::: {.proof}
+La estrategia consiste en trasladar el resultado análogo ya establecido
+para sucesiones, en lugar de repetir el argumento $\varepsilon$-$\delta$
+desde cero. Sea $\{\vect{x}_k\}$ cualquier sucesión en $D\setminus\{
+\vect{p}\}$ con $\vect{x}_k\to\vect{p}$; por el
+@thm-continuidad-sucesiones, que se demuestra a continuación,
+$f(\vect{x}_k)\to L$ y $g(\vect{x}_k)\to M$ como sucesiones de números
+reales. Aplicando a estas dos sucesiones los teoremas algebraicos del
+límite de la [Sección “Sucesiones y su límite”](17-sucesiones-y-su-limite.qmd), se obtiene
+$f(\vect{x}_k)+g(\vect{x}_k)\to L+M$,
+$f(\vect{x}_k)g(\vect{x}_k)\to LM$ y, cuando $M\neq 0$,
+$f(\vect{x}_k)/g(\vect{x}_k)\to L/M$. Como esto vale para toda sucesión
+$\vect{x}_k\to\vect{p}$, el mismo @thm-continuidad-sucesiones
+aplicado en sentido inverso da las tres igualdades de límites
+enunciadas.
+:::
+
+La demostración anterior citó un resultado que todavía no se ha
+enunciado, porque resultó más natural presentarlo primero en uso y
+después en detalle: la caracterización de la continuidad, y del límite,
+en términos de sucesiones. Ese resultado es el que permite, en la
+práctica, evitar casi por completo el argumento $\varepsilon$-$\delta$ y
+trabajar en su lugar con las herramientas ya conocidas de la
+[Sección “Sucesiones y su límite”](17-sucesiones-y-su-limite.qmd).
+
+::: {#thm-continuidad-sucesiones}
+## Caracterización de la continuidad por sucesiones
+
+Sea $D\subseteq\mathbb{R}^n$, $f:D\to\mathbb{R}^m$ y $\vect{p}\in D$.
+Entonces $f$ es continua en $\vect{p}$ si y solo si para toda sucesión
+$\{\vect{x}_k\}$ en $D$ con $\vect{x}_k\to\vect{p}$ se cumple
+$f(\vect{x}_k)\to f(\vect{p})$.
+:::
+
+::: {.proof}
+Se supone primero que $f$ es continua en $\vect{p}$ y se toma cualquier
+sucesión $\vect{x}_k\to\vect{p}$ en $D$. Dado $\varepsilon>0$, la
+continuidad da $\delta>0$ tal que
+$\|\vect{x}-\vect{p}\|<\delta\Rightarrow\|f(\vect{x})-f(\vect{p})\|<
+\varepsilon$; y como $\vect{x}_k\to\vect{p}$, existe $K$ tal que
+$\|\vect{x}_k-\vect{p}\|<\delta$ para todo $k\geq K$, de modo que
+$\|f(\vect{x}_k)-f(\vect{p})\|<\varepsilon$ para todo $k\geq K$, que es
+exactamente $f(\vect{x}_k)\to f(\vect{p})$.
+
+Para la dirección recíproca conviene razonar por contrarrecíproco, en el
+sentido de la [Subsección “Métodos de demostración”](04-metodos-de-demostracion.qmd): se supone que $f$ no es continua en
+$\vect{p}$ y se construye una sucesión que contradice la hipótesis. Si
+$f$ no es continua en $\vect{p}$, existe algún $\varepsilon_0>0$ tal que
+para todo $\delta>0$ hay algún $\vect{x}\in D$ con
+$\|\vect{x}-\vect{p}\|<\delta$ pero
+$\|f(\vect{x})-f(\vect{p})\|\geq\varepsilon_0$. Tomando
+$\delta=1/k$ para cada $k\in\mathbb{N}$ se obtiene una sucesión
+$\vect{x}_k\in D$ con $\|\vect{x}_k-\vect{p}\|<1/k$, de modo que
+$\vect{x}_k\to\vect{p}$, pero $\|f(\vect{x}_k)-f(\vect{p})\|\geq
+\varepsilon_0$ para todo $k$, de modo que $f(\vect{x}_k)$ no converge a
+$f(\vect{p})$. Esta sucesión contradice la hipótesis del enunciado, con
+lo cual la equivalencia queda establecida en ambas direcciones.
+:::
+
+::: {#idea-continuidad-plim .callout-tip appearance=“simple” title=“Idea central: Por qué importa la continuidad para la estimación”}
+La caracterización por sucesiones es la que conecta la continuidad con
+la convergencia en probabilidad que la [Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd)
+desarrollará: si un estimador $\hat\theta_n$ converge en probabilidad a
+$\theta_0$ y $g$ es una función continua en $\theta_0$, entonces
+$g(\hat\theta_n)$ converge en probabilidad a $g(\theta_0)$, un resultado
+conocido como teorema de la aplicación continua o teorema de Mann y
+Wald. La demostración de ese teorema, cuando se presente, reproducirá
+exactamente el argumento del @thm-continuidad-sucesiones,
+sustituyendo la convergencia de sucesiones deterministas por la
+convergencia en probabilidad de sucesiones de variables aleatorias, sin
+alterar la estructura lógica del razonamiento.
+:::
+
+Con la continuidad ya disponible, el siguiente paso es medir no solo si
+una función cambia poco cuando su argumento cambia poco, sino cuánto y
+en qué dirección cambia, lo que exige una noción más fina que la
+continuidad: la derivada. Conviene empezar por el caso de una sola
+variable, porque ahí la intuición geométrica de la pendiente es directa,
+antes de generalizar el argumento a $\mathbb{R}^n$ en la
+[Subsección “Diferenciación en varias variables”](../matematica-3/01-diferenciacion-en-varias-variables.qmd).

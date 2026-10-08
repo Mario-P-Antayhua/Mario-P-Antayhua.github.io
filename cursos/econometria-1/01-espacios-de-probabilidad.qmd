@@ -1,0 +1,171 @@
+---
+title: "Espacios de probabilidad"
+description: "Espacios de probabilidad. Incluye sigma-álgebra, Espacio de probabilidad y Propiedades básicas de la probabilidad."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría I, Fundamentos de probabilidad]
+---
+
+Las nueve secciones anteriores construyeron las herramientas
+matemáticas, análisis real, álgebra lineal y cálculo, que la
+econometría necesita; a partir de aquí esas herramientas se ponen al
+servicio de un objeto nuevo: la incertidumbre. Esta sección construye la
+probabilidad axiomáticamente, a la manera de Kolmogorov, y no como un
+límite de frecuencias relativas ni como un grado subjetivo de creencia,
+porque la construcción axiomática es la que permite demostrar teoremas
+con el mismo rigor que en las secciones anteriores, dejando cualquier
+interpretación filosófica de la probabilidad fuera del alcance de estas
+notas. La construcción se apoya de manera directa en la teoría de
+conjuntos de la [Sección “Conjuntos, pertenencia y operaciones básicas”](../matematica-1/06-conjuntos-pertenencia-y-operaciones-basicas.qmd), porque un evento no es más que un
+subconjunto del espacio de resultados posibles, y en la estructura de
+sucesiones de la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd), porque los argumentos
+asintóticos de esta y las siguientes secciones dependen constantemente
+de tomar límites de sucesiones de probabilidades. El recorrido tiene
+cuatro etapas. Primero, el espacio de
+probabilidad formaliza qué eventos pueden medirse y con qué reglas.
+Segundo, la probabilidad condicional y la independencia describen cómo
+la información sobre un evento modifica, o no, la probabilidad de otro.
+Tercero, la variable aleatoria traduce eventos abstractos a números
+reales, sobre los que ya se puede aplicar directamente el cálculo de la
+[Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd). Cuarto, la esperanza y los momentos resumen
+numéricamente una distribución completa, apoyándose en la integral de
+Riemann de la misma sección para el caso continuo.
+
+::: {#def-sigma-algebra}
+## $\sigma$-álgebra
+
+Sea $\Omega$ un conjunto. Una colección $\mathcal{F}$ de subconjuntos de
+$\Omega$ es una ***$\sigma$-álgebra*** si: (i)
+$\Omega\in\mathcal{F}$; (ii) si $A\in\mathcal{F}$, entonces
+$A^c\in\mathcal{F}$; (iii) si $A_1,A_2,\ldots\in\mathcal{F}$, entonces
+$\bigcup_{i=1}^{\infty}A_i\in\mathcal{F}$. A los elementos de
+$\mathcal{F}$ se les llama ***eventos***.
+:::
+
+La tercera condición exige cerradura bajo uniones *numerables*, no
+solo finitas, y esa diferencia es la que permite, más adelante, tomar
+límites de sucesiones de eventos sin salirse de $\mathcal{F}$; de la
+cerradura bajo complementos y uniones se sigue, por las leyes de De
+Morgan de la [Sección “Conjuntos, pertenencia y operaciones básicas”](../matematica-1/06-conjuntos-pertenencia-y-operaciones-basicas.qmd), que $\mathcal{F}$ también es cerrada
+bajo intersecciones numerables. Cuando $\Omega$ es numerable, se
+acostumbra tomar $\mathcal{F}$ como el conjunto de partes de $\Omega$
+completo, de modo que todo subconjunto es un evento; cuando $\Omega$ no
+es numerable, como $\mathbb{R}$, tomar todos los subconjuntos como
+eventos genera contradicciones lógicas conocidas, y hace falta
+restringirse a una $\sigma$-álgebra más pequeña, típicamente la
+generada por los intervalos, un detalle técnico que no se profundizará
+aquí porque no afecta a ningún resultado de interés econométrico. Con la
+colección de eventos medibles fijada, la probabilidad es la función que
+les asigna un número entre cero y uno.
+
+::: {#def-espacio-probabilidad}
+## Espacio de probabilidad
+
+Un ***espacio de probabilidad*** es una terna
+$(\Omega,\mathcal{F},\Prob{\cdot})$, donde $\Omega$ es el espacio
+muestral, $\mathcal{F}$ es una $\sigma$-álgebra sobre $\Omega$ en el
+sentido de la @def-sigma-algebra, y $\Prob{\cdot}:\mathcal{F}\to
+[0,1]$ es una ***medida de probabilidad*** que satisface los
+***axiomas de Kolmogorov***: (i) $\Prob{\Omega}=1$; (ii)
+para toda sucesión $A_1,A_2,\ldots\in\mathcal{F}$ disjunta dos a dos,
+$\Prob{\bigcup_{i=1}^{\infty}A_i}=\sum_{i=1}^{\infty}\Prob{A_i}$
+(aditividad numerable).
+:::
+
+Nótese que la definición no dice nada sobre cómo se construye
+$\Prob{\cdot}$ para un problema concreto: eso es tarea de quien modela,
+no de la teoría axiomática, que solo exige que, sea cual sea la
+asignación de probabilidades elegida, respete estos dos axiomas. Esa
+separación entre axiomas y modelado es deliberada, y es la que permite
+que la misma teoría sirva tanto para un experimento con un espacio
+muestral finito, como el lanzamiento de una moneda, como para un
+experimento con espacio muestral no numerable, como el rendimiento de
+un activo financiero. De estos dos axiomas, aparentemente escuetos, se
+deriva toda la aritmética usual de la probabilidad; conviene reunir las
+consecuencias más inmediatas antes de avanzar, porque se usarán
+libremente y sin cita explícita en el resto del curso.
+
+::: {#prp-propiedades-probabilidad}
+## Propiedades básicas de la probabilidad
+
+Para todo espacio de probabilidad $(\Omega,\mathcal{F},\Prob{\cdot})$ y
+todos $A,B\in\mathcal{F}$: (i) $\Prob{\varnothing}=0$; (ii)
+$\Prob{A^c}=1-\Prob{A}$; (iii) si $A\subseteq B$, $\Prob{A}\leq\Prob{B}$
+(monotonía); (iv) $\Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B}$.
+:::
+
+Estas cuatro propiedades son las que, en la práctica, se usan para
+calcular probabilidades de eventos compuestos a partir de las de
+eventos más simples, sin necesidad de volver cada vez a los dos axiomas
+originales. La demostración de las cuatro es un ejercicio de
+descomposición: escribir el evento de interés como una unión disjunta
+de piezas más simples y aplicar la aditividad a esa descomposición.
+
+::: {.proof}
+Para (i), la sucesión $\varnothing,\varnothing,\ldots$ es disjunta dos a
+dos y su unión es $\varnothing$, de modo que la aditividad numerable da
+$\Prob{\varnothing}=\sum_{i=1}^{\infty}\Prob{\varnothing}$; como
+$\Prob{\varnothing}\in[0,1]$ es un número finito, la única forma de que
+una suma infinita de copias de él sea finita es que
+$\Prob{\varnothing}=0$. Para (ii), $\Omega=A\cup A^c$ es una unión
+disjunta, de modo que la aditividad, aplicada a la sucesión finita
+$A,A^c,\varnothing,\varnothing,\ldots$, da
+$1=\Prob{\Omega}=\Prob{A}+\Prob{A^c}$. Para (iii), como $A\subseteq B$,
+$B=A\cup(B\setminus A)$ es unión disjunta, y la aditividad da
+$\Prob{B}=\Prob{A}+\Prob{B\setminus A}\geq\Prob{A}$, porque
+$\Prob{B\setminus A}\geq 0$. Para (iv), conviene descomponer
+$A\cup B$ en tres piezas disjuntas,
+$A\cup B=(A\setminus B)\cup(A\cap B)\cup(B\setminus A)$, de modo que la
+aditividad da $\Prob{A\cup B}=\Prob{A\setminus B}+\Prob{A\cap B}+
+\Prob{B\setminus A}$; sumando y restando $\Prob{A\cap B}$ y agrupando
+$\Prob{A\setminus B}+\Prob{A\cap B}=\Prob{A}$ y
+$\Prob{B\setminus A}+\Prob{A\cap B}=\Prob{B}$, se obtiene
+$\Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B}$.
+:::
+
+La aditividad numerable del @def-espacio-probabilidad tiene una
+consecuencia menos inmediata, pero indispensable para todo argumento
+asintótico posterior: la probabilidad se comporta bien frente a límites
+de sucesiones monótonas de eventos, en un sentido que reproduce
+exactamente la convergencia de sucesiones reales de la
+[Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd).
+
+::: {#thm-continuidad-probabilidad}
+## Continuidad de la probabilidad
+
+Sea $A_1\subseteq A_2\subseteq\cdots$ una sucesión creciente de eventos
+en $\mathcal{F}$, y sea $A:=\bigcup_{i=1}^{\infty}A_i$. Entonces
+$\Prob{A_i}\to\Prob{A}$.
+:::
+
+::: {.proof}
+La estrategia consiste en reescribir $A$ como una unión disjunta de los
+incrementos sucesivos de la sucesión, para poder aplicar directamente la
+aditividad numerable. Defínase $B_1:=A_1$ y $B_i:=A_i\setminus A_{i-1}$
+para $i\geq 2$; estos conjuntos son disjuntos dos a dos por
+construcción, y $\bigcup_{i=1}^{n}B_i=A_n$ para todo $n$, porque cada
+$B_i$ añade exactamente lo nuevo que $A_i$ tiene respecto de $A_{i-1}$.
+En particular, $\bigcup_{i=1}^{\infty}B_i=\bigcup_{i=1}^{\infty}A_i=A$.
+Aplicando la aditividad numerable a $\{B_i\}$,
+
+$$
+\Prob{A} = \Prob{\bigcup_{i=1}^{\infty}B_i}
+  = \sum_{i=1}^{\infty}\Prob{B_i}
+  = \lim_{n\to\infty}\sum_{i=1}^{n}\Prob{B_i},
+$$ {#eq-continuidad-probabilidad}
+
+donde el último paso es, por definición, el límite de las sumas
+parciales de una serie convergente, en el sentido de la
+[Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd). Como $\{B_i\}$ es disjunta, la aditividad finita,
+consecuencia de la numerable con todos los conjuntos posteriores a $B_n$
+vacíos, da $\sum_{i=1}^{n}\Prob{B_i}=\Prob{\bigcup_{i=1}^{n}B_i}=
+\Prob{A_n}$, de modo que @eq-continuidad-probabilidad se reduce
+exactamente a $\Prob{A}=\lim_{n\to\infty}\Prob{A_n}$.
+:::
+
+Con el espacio de probabilidad y sus propiedades básicas ya
+establecidos, la siguiente pregunta natural es cómo la ocurrencia de un
+evento modifica la probabilidad asignada a otro. Esa pregunta lleva
+directamente a la probabilidad condicional, que no es un axioma
+adicional sino una construcción derivada de los dos axiomas de
+Kolmogorov ya enunciados.

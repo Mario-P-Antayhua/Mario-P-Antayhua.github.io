@@ -1,0 +1,82 @@
+---
+title: "El proceso ARMA(p,q)"
+description: "Las dos partes del modelo, la autorregresiva y la de medias móviles, imponen condiciones distintas, y cada una se verifica por separado."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos de medias móviles y procesos ARMA]
+---
+
+::: {#def-arma}
+## Proceso ARMA(p,q)
+
+Un proceso $\{Y_t\}$ sigue un ***ARMA(p,q)*** si
+$\phi(\Lag)Y_t=\theta(\Lag)\rblanco_t$, con
+$\phi(\Lag)=1-\phi_1\Lag-\cdots-\phi_p\Lag^p$,
+$\theta(\Lag)=1+\theta_1\Lag+\cdots+\theta_q\Lag^q$, y
+$\{\rblanco_t\}$ ruido blanco.
+:::
+
+Las dos partes del modelo, la autorregresiva y la de medias móviles, imponen condiciones distintas, y cada una se verifica por separado.
+
+::: {#cor-condiciones-arma}
+## Condiciones conjuntas de estacionariedad e invertibilidad
+
+El ARMA(p,q) de la @def-arma es débilmente estacionario si y solo
+si todas las raíces de $\phi(z)$ están fuera del círculo unitario, y es
+invertible si y solo si todas las raíces de $\theta(z)$ están fuera del
+círculo unitario; ambas condiciones son independientes entre sí y se
+verifican por separado, cada una sobre su propio polinomio.
+:::
+
+::: {.proof}
+La estacionariedad depende únicamente de poder invertir $\phi(\Lag)$
+para despejar $Y_t=\phi(\Lag)^{-1}\theta(\Lag)\rblanco_t$ como una
+combinación lineal estacionaria de ruido blanco, lo cual, por el
+[Teorema “Condición de estacionariedad de un proceso autorregresivo”](21-la-condicion-de-estacionariedad-en-terminos-de-r.qmd#thm-condicion-estacionariedad-raices) de la
+[Sección “El operador de rezago”](16-el-operador-de-rezago.qmd), exige exactamente que las raíces de
+$\phi(z)$ estén fuera del círculo unitario, sin ninguna referencia a
+$\theta(\Lag)$. La invertibilidad depende únicamente de poder invertir
+$\theta(\Lag)$ para despejar $\rblanco_t=\theta(\Lag)^{-1}\phi(\Lag)Y_t$
+en términos del pasado observado de $Y_t$, lo cual, por el mismo
+argumento aplicado a $\theta(\Lag)$, exige que las raíces de
+$\theta(z)$ estén fuera del círculo unitario, sin ninguna referencia a
+$\phi(\Lag)$. Como cada condición involucra un polinomio distinto, son
+verificables y pueden fallar de manera independiente.
+:::
+
+::: {#exm-momentos-arma11}
+## Momentos del ARMA(1,1)
+
+Sea $Y_t=\phi Y_{t-1}+\rblanco_t+\theta\rblanco_{t-1}$, con
+$|\phi|<1$. Multiplicando la ecuación por $Y_{t-j}$ y tomando esperanza,
+para $j\geq 2$ se obtiene $\autocov{j}=\phi\autocov{j-1}$, porque
+$\rblanco_t$ y $\rblanco_{t-1}$ son incorrelacionados con
+$Y_{t-j}$ cuando $j\geq 2$, ya que $Y_{t-j}$ solo depende, por su
+solución hacia atrás, de choques con índice menor o igual a $t-j\leq
+t-2$. Para $j=1$ y $j=0$ hace falta un cálculo separado, porque
+$\rblanco_t$ y $\rblanco_{t-1}$ sí están correlacionados con $Y_t$ y con
+$Y_{t-1}$: usando $\Cov(Y_t,\rblanco_t)=\sigma^2$ y
+$\Cov(Y_t,\rblanco_{t-1})=(\phi+\theta)\sigma^2$, ambas obtenidas
+sustituyendo la solución hacia atrás de $Y_t$ y reteniendo solo los
+términos con índice de ruido blanco compartido, se llega al sistema
+
+$$
+\autocov{0} = \phi\autocov{1} + \sigma^2 + \theta(\phi+\theta)\sigma^2,
+  \qquad
+  \autocov{1} = \phi\autocov{0} + \theta\sigma^2,
+$$
+
+que se resuelve simultáneamente para $\autocov{0}$ y $\autocov{1}$
+sustituyendo la segunda ecuación en la primera,
+$\autocov{0}=\phi^2\autocov{0}+\phi\theta\sigma^2+\sigma^2+
+\theta(\phi+\theta)\sigma^2$, de donde
+$\autocov{0}=\dfrac{(1+2\phi\theta+\theta^2)\sigma^2}{1-\phi^2}$, y
+sustituyendo de vuelta,
+$\autocov{1}=\dfrac{(1+\phi\theta)(\phi+\theta)\sigma^2}{1-\phi^2}$. A
+partir de $j=1$, todas las autocovarianzas posteriores decaen
+geométricamente a la tasa $\phi$, exactamente como en el AR(1) puro, un
+patrón que se generaliza a cualquier ARMA(p,q): la parte autorregresiva
+gobierna el comportamiento de cola de la función de autocorrelación,
+mientras que la parte de medias móviles solo contamina los primeros $q$
+rezagos.
+:::

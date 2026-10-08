@@ -1,0 +1,42 @@
+---
+title: "La función de impulso-respuesta"
+description: "Esta definición responde una pregunta que los economistas formulan con frecuencia, y su lectura económica merece una explicación aparte."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, La representación de Wold]
+---
+
+::: {#def-impulso-respuesta}
+## Función de impulso-respuesta
+
+Para el proceso de la [Teorema “Descomposición de Wold”](32-el-teorema-de-descomposicion-de-wold.qmd#thm-wold), la
+***función de impulso-respuesta*** es la sucesión de
+coeficientes $\{\psi_k\}_{k\geq 0}$ misma, interpretada como el efecto
+sobre $Y_{t+k}$ de un choque unitario en la innovación
+$\rblanco_t$, manteniendo todas las demás innovaciones sin cambio:
+$\psi_k=\partial Y_{t+k}/\partial\rblanco_t$.
+:::
+
+Esta definición responde una pregunta que los economistas formulan con frecuencia, y su lectura económica merece una explicación aparte.
+
+::: {#idea-lectura-impulso-respuesta .callout-tip appearance=“simple” title=“Idea central: Lectura económica de la función de impulso-respuesta”}
+La función de impulso-respuesta traduce los coeficientes puramente
+algebraicos de la representación de Wold en una pregunta que cualquier
+economista reconoce de inmediato: si hoy ocurre un choque inesperado de
+una unidad, ¿cuánto y durante cuánto tiempo afecta ese choque a los
+valores futuros de la serie? Para un AR(1) con $|\phi|<1$, el
+[Corolario “El AR(p) y el ARMA(p,q) como casos particulares de Wold”](33-relacion-con-las-representaciones-ar-y-ma.qmd#cor-wold-casos-particulares) identifica $\psi_k=\phi^k$, de modo
+que la respuesta a un choque decae geométricamente a la misma tasa
+$\phi$ que gobierna la función de autocorrelación del
+[Proposición “Momentos del AR(1)”](22-el-proceso-ar-1.qmd#prp-momentos-ar1) de la [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd), una coincidencia que no es
+accidental: ambas cantidades describen, desde ángulos distintos, la
+misma persistencia temporal del proceso. Para un MA(q), en cambio, la
+función de impulso-respuesta se anula idénticamente después de $k=q$
+periodos, reflejando exactamente el mismo corte de memoria finita que
+ya mostró la [Proposición “Momentos del MA(q) y corte de la FAC en el rezago q”](28-el-proceso-ma-q.qmd#prp-momentos-maq) de la
+[Sección “El proceso MA(1)”](27-el-proceso-ma-1.qmd) para su función de autocorrelación. La función de
+impulso-respuesta reaparecerá, sin ninguna modificación conceptual, como
+la herramienta central para interpretar los sistemas dinámicos
+multivariantes que la representación espacio-estado de la
+[sección sobre la representación espacio-estado](../econometria-3/index.qmd) introducirá más adelante.
+:::

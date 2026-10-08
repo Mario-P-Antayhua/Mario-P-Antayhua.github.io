@@ -1,0 +1,177 @@
+---
+title: "Modos de convergencia"
+description: "Modos de convergencia. Incluye Convergencia en probabilidad, Convergencia casi segura y Convergencia en media cuadrática."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría I, Convergencia de variables aleatorias y esperanza condicional]
+---
+
+Casi ningún resultado de interés en econometría se cumple exactamente
+para una muestra finita: la insesgadez exacta es la excepción, no la
+regla, y la mayoría de las propiedades deseables de un estimador,
+consistencia, normalidad asintótica, eficiencia, se formulan como
+límites cuando el tamaño de muestra crece sin cota. Formular esos
+límites con precisión exige, antes que nada, decidir qué significa que
+una *sucesión de variables aleatorias* converja, porque la
+convergencia de sucesiones reales de la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd) no se
+traslada de una sola manera obvia a un contexto donde cada término de la
+sucesión es, a su vez, incierto. Esta sección tiene dos partes bien
+diferenciadas. La primera define cuatro nociones distintas de
+convergencia, examina cómo se relacionan entre sí, y demuestra la ley
+débil de los grandes números y el teorema central del límite, los dos
+resultados sobre los que descansa toda la inferencia asintótica de la
+[Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd). La segunda desarrolla la esperanza condicional, y
+en particular demuestra que es exactamente la proyección ortogonal de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd): el [Teorema “Teorema de la mejor aproximación”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#thm-mejor-aproximacion-general),
+demostrado ahí en abstracto sin mencionar ninguna variable aleatoria, se
+invoca aquí sin ninguna modificación para obtener, de manera casi
+inmediata, todas las propiedades de la esperanza condicional que la
+econometría de series de tiempo usará a partir de la
+[sección sobre la predicción óptima](../econometria-3/index.qmd).
+
+Antes de definir cada modo de convergencia conviene anticipar por qué
+hacen falta varios y no uno solo: la convergencia de una sucesión de
+variables aleatorias puede evaluarse comparando trayectorias completas,
+comparando la probabilidad de un error pequeño en cada instante, o
+comparando únicamente las distribuciones sin ninguna referencia a cómo
+se relacionan las variables entre sí, y estas tres perspectivas, en
+general, no producen la misma noción de límite.
+
+::: {#def-convergencia-probabilidad}
+## Convergencia en probabilidad
+
+Una sucesión de variables aleatorias $\{X_n\}$ ***converge
+en probabilidad*** a una variable aleatoria $X$, lo que se escribe
+$X_n\xrightarrow{p}X$ o $\plim X_n=X$, si para todo $\varepsilon>0$,
+
+$$
+\lim_{n\to\infty}\Prob{|X_n-X|\geq\varepsilon} = 0.
+$$
+:::
+
+Esta definición reproduce, en el nivel de las probabilidades, la
+estructura $\varepsilon$-$N$ de la convergencia de sucesiones reales de
+la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd): no exige que $X_n(\omega)$ se acerque a
+$X(\omega)$ para cada resultado $\omega$ individual, sino únicamente que
+la probabilidad de un error mayor que $\varepsilon$ se desvanezca a
+medida que $n$ crece. Esa distinción entre converger en cada trayectoria
+y converger con probabilidad creciente hacia uno es precisamente lo que
+separa a la convergencia en probabilidad de la siguiente noción, más
+exigente y más cercana, en espíritu, a la convergencia ordinaria de
+sucesiones reales.
+
+::: {#def-convergencia-casi-segura}
+## Convergencia casi segura
+
+Una sucesión $\{X_n\}$ ***converge casi seguramente*** a
+$X$, lo que se escribe $X_n\xrightarrow{\text{c.s.}}X$, si
+
+$$
+\Prob{\lim_{n\to\infty}X_n=X} = 1,
+$$
+
+es decir, si el conjunto de resultados $\omega\in\Omega$ para los que la
+sucesión numérica $\{X_n(\omega)\}$ converge a $X(\omega)$ en el sentido
+ordinario de la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd) tiene probabilidad uno. A
+diferencia de la convergencia en probabilidad, que solo controla el
+error en cada instante $n$ por separado, la convergencia casi segura
+exige que la trayectoria completa converja, para casi todo resultado
+posible del experimento aleatorio.
+
+Existe todavía una tercera manera de medir la cercanía de $X_n$ a $X$,
+que en lugar de trabajar con probabilidades de eventos trabaja
+directamente con el tamaño esperado del error, en el sentido de la
+norma euclidiana de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) aplicada al espacio de
+variables aleatorias con varianza finita.
+:::
+
+La tercera manera de medir la cercanía mide directamente el tamaño esperado del error.
+
+::: {#def-convergencia-l2}
+## Convergencia en media cuadrática
+
+Una sucesión $\{X_n\}$ con $\Esp{X_n^2}<\infty$
+***converge en media cuadrática*** a $X$, lo que se escribe
+$X_n\xrightarrow{\text{m.c.}}X$, si
+$\lim_{n\to\infty}\Esp{(X_n-X)^2}=0$. Esta cantidad,
+$\Esp{(X_n-X)^2}$, es precisamente el cuadrado de la distancia entre
+$X_n$ y $X$ en el espacio con producto interno que la
+[Subsección “Esperanza condicional”](08-esperanza-condicional.qmd) de esta misma sección volverá a usar
+para caracterizar la esperanza condicional.
+:::
+
+La última de las cuatro nociones prescinde por completo de comparar
+$X_n$ con $X$ directamente, y en su lugar compara únicamente sus
+funciones de distribución acumulada de la [Definición “Función de distribución acumulada”](03-variables-aleatorias-y-funciones-de-distribucion.qmd#def-fda), sin ninguna
+referencia a cómo covarían entre sí.
+
+::: {#def-convergencia-distribucion}
+## Convergencia en distribución
+
+Una sucesión $\{X_n\}$ con funciones de distribución $F_n$
+***converge en distribución*** a una variable aleatoria $X$
+con función de distribución $F$, lo que se escribe
+$X_n\xrightarrow{d}X$, si $F_n(x)\to F(x)$ para todo punto $x$ en el que
+$F$ es continua.
+:::
+
+La convergencia en distribución es, de las cuatro, la más débil: a
+diferencia de las tres anteriores, ni siquiera exige que las variables
+$X_n$ y $X$ estén definidas sobre el mismo espacio de probabilidad,
+porque solo compara las funciones de distribución, números que no hacen
+ninguna referencia conjunta a $X_n$ y $X$ simultáneamente. Restringir la
+comparación a los puntos de continuidad de $F$ tampoco es un
+tecnicismo prescindible: en un punto de discontinuidad de $F$, una
+sucesión que se aproxima por la izquierda puede producir un límite
+distinto del valor de $F$ en ese punto, sin que eso refleje ninguna
+falla genuina de convergencia. Esta debilidad relativa es,
+paradójicamente, lo que vuelve indispensable a la convergencia en
+distribución: es la única de las cuatro nociones con la que tiene
+sentido afirmar que un estimador, tras reescalarlo, se aproxima a una
+distribución normal, porque esa distribución normal límite no es, en
+ningún sentido literal, el valor exacto de ninguna trayectoria
+particular de la sucesión de estimadores, sino solo una descripción de
+cómo se distribuyen sus valores.
+
+::: {#prp-relaciones-convergencia}
+## Relaciones entre los modos de convergencia
+
+Para cualquier sucesión $\{X_n\}$: (i) $X_n\xrightarrow{\text{c.s.}}X$
+implica $X_n\xrightarrow{p}X$; (ii) $X_n\xrightarrow{\text{m.c.}}X$
+implica $X_n\xrightarrow{p}X$; (iii) $X_n\xrightarrow{p}X$ implica
+$X_n\xrightarrow{d}X$. Ninguna de las tres implicaciones se invierte en
+general.
+:::
+
+::: {.proof}
+Para (ii), la desigualdad de Markov de la
+[Proposición “Desigualdades de Markov y de Chebyshev”](04-esperanza-matematica-y-momentos.qmd#prp-markov-chebyshev), aplicada a la variable no negativa
+$(X_n-X)^2$ con $a=\varepsilon^2$, da directamente
+$\Prob{|X_n-X|\geq\varepsilon}=\Prob{(X_n-X)^2\geq\varepsilon^2}\leq
+\Esp{(X_n-X)^2}/\varepsilon^2$; si el lado derecho tiende a cero por
+convergencia en media cuadrática, el lado izquierdo también, lo que es
+exactamente la @def-convergencia-probabilidad. Para (iii), fíjese
+$x$ un punto de continuidad de $F$ y $\varepsilon>0$; el evento
+$\{X_n\leq x\}$ se descompone como
+$\{X_n\leq x,|X_n-X|<\varepsilon\}\cup\{X_n\leq x,|X_n-X|\geq
+\varepsilon\}$, y el primer subevento implica $X\leq x+\varepsilon$, de
+modo que $\Prob{X_n\leq x}\leq\Prob{X\leq x+\varepsilon}+
+\Prob{|X_n-X|\geq\varepsilon}$; tomando $\limsup_n$ en ambos lados y
+usando $X_n\xrightarrow{p}X$ para anular el segundo término, se obtiene
+$\limsup_n F_n(x)\leq F(x+\varepsilon)$, y un argumento simétrico con el
+evento $\{X\leq x-\varepsilon\}$ da $\liminf_n F_n(x)\geq
+F(x-\varepsilon)$; haciendo $\varepsilon\to 0$ y usando la continuidad
+de $F$ en $x$, ambas cotas colapsan en $F_n(x)\to F(x)$. Para (i), sea $\varepsilon>0$ y $A_n(\varepsilon):=\bigcup_{m\geq n}\{|X_m-X|\geq\varepsilon\}$. Los eventos $A_n(\varepsilon)$ decrecen con $n$, y su intersección es el evento de que $|X_m-X|\geq\varepsilon$ para infinitos $m$, contenido en el evento de que $X_m$ no converge a $X$, que tiene probabilidad cero por la convergencia casi segura. La continuidad de la probabilidad sobre sucesiones decrecientes de eventos da entonces $\Prob{A_n(\varepsilon)}\to 0$, y como $\{|X_n-X|\geq\varepsilon\}\subseteq A_n(\varepsilon)$, resulta $\Prob{|X_n-X|\geq\varepsilon}\leq\Prob{A_n(\varepsilon)}\to 0$, que es la convergencia en probabilidad.
+
+Las tres implicaciones no se invierten, como muestran tres sucesiones. En las dos primeras, $U$ es uniforme en $[0,1]$. La primera es $X_n:=n\,\mathbb{1}\{U<1/n\}$: para cada $U>0$, la condición $U<1/n$ se cumple solo para finitos $n$, de modo que $X_n$ converge casi seguramente, y por tanto en probabilidad, a cero; pero $\Esp{X_n^2}=n^2\cdot\frac{1}{n}=n\to\infty$, así que no converge en media cuadrática. La segunda recorre los intervalos $[0,\tfrac12]$, $[\tfrac12,1]$, $[0,\tfrac13]$, $[\tfrac13,\tfrac23]$, $[\tfrac23,1]$, y así sucesivamente, y define $Y_n$ como el indicador del $n$-ésimo intervalo evaluado en $U$: $\Prob{Y_n=1}$ es la longitud de ese intervalo, que tiende a cero, de modo que $Y_n\xrightarrow{p}0$, pero para cada valor de $U$ la sucesión $Y_n(U)$ toma el valor uno infinitas veces y no converge casi seguramente. La tercera usa $Z\sim N(0,1)$ y $Z_n:=-Z$ para todo $n$: por simetría $Z_n$ tiene la misma distribución que $Z$, de modo que $Z_n\xrightarrow{d}Z$, pero $|Z_n-Z|=2|Z|$ no tiende a cero en probabilidad.
+:::
+
+De estas cuatro nociones, la convergencia en probabilidad y la
+convergencia en distribución son, con enorme diferencia, las dos que
+más se usan en la práctica econométrica: la primera define la
+consistencia de un estimador, y la segunda describe su comportamiento
+asintótico reescalado. La subsección siguiente demuestra los dos
+teoremas clásicos que garantizan una y otra para el caso más simple, el
+del promedio de variables independientes e idénticamente distribuidas,
+antes de que la [Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd) los generalice al estimador
+máximo verosímil.

@@ -1,0 +1,66 @@
+---
+title: "La función de autocorrelación parcial"
+description: "En un AR(p) la autocorrelación parcial tiene una forma característica que permite identificar el orden del proceso."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos autorregresivos]
+---
+
+La función de autocorrelación por sí sola no distingue con claridad el
+orden de un proceso autorregresivo, porque $\autocorr{j}=\phi^j$ en el
+AR(1) nunca se anula exactamente para ningún $j$ finito; hace falta una
+segunda función diagnóstica que sí lo haga, y esa es la función de
+autocorrelación parcial.
+
+::: {#def-facp}
+## Función de autocorrelación parcial
+
+La ***autocorrelación parcial*** de orden $k$,
+$\phi_{kk}$, es el coeficiente de $Y_{t-k}$ en la proyección lineal de
+$Y_t$ sobre $\{Y_{t-1},\ldots,Y_{t-k}\}$ en el sentido de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), es decir, el último coeficiente en la
+regresión poblacional
+$Y_t=\phi_{k1}Y_{t-1}+\cdots+\phi_{kk}Y_{t-k}+\text{error}$, con el
+error ortogonal a $Y_{t-1},\ldots,Y_{t-k}$ en el sentido del
+[Corolario “Principio de ortogonalidad”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#cor-principio-ortogonalidad) de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd). La
+***función de autocorrelación parcial*** (FACP) es la
+sucesión $\{\phi_{kk}\}_{k\geq 1}$.
+:::
+
+En un AR(p) la autocorrelación parcial tiene una forma característica que permite identificar el orden del proceso.
+
+::: {#prp-facp-corte-arp}
+## La FACP de un AR(p) se corta en el rezago $p$
+
+Para un AR(p) estacionario, $\phi_{pp}=\phi_p\neq 0$, y
+$\phi_{kk}=0$ para todo $k>p$.
+:::
+
+::: {.proof}
+Para $k=p$, la ecuación de definición del AR(p) es, en sí misma, la
+proyección lineal de $Y_t$ sobre $\{Y_{t-1},\ldots,Y_{t-p}\}$, porque el
+residuo de esa regresión, $\rblanco_t$, es ruido blanco y por lo tanto
+incorrelacionado con $Y_{t-1},\ldots,Y_{t-p}$, que dependen únicamente
+de choques con índice estrictamente menor a $t$ por la solución hacia
+atrás; el [Corolario “Principio de ortogonalidad”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#cor-principio-ortogonalidad) de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) identifica entonces esta regresión como la
+proyección poblacional buscada, con coeficientes exactamente
+$\phi_1,\ldots,\phi_p$, de modo que $\phi_{pp}=\phi_p$. Para $k>p$, la
+proyección de $Y_t$ sobre $\{Y_{t-1},\ldots,Y_{t-k}\}$ no puede reducir
+más el error de predicción incorporando las variables adicionales
+$Y_{t-p-1},\ldots,Y_{t-k}$, porque, condicional en
+$Y_{t-1},\ldots,Y_{t-p}$, el valor de $Y_t$ ya está determinado por la
+ecuación del AR(p) salvo por el ruido blanco $\rblanco_t$, que es
+incorrelacionado con cualquier variable fechada antes de $t$, incluidas
+$Y_{t-p-1},\ldots,Y_{t-k}$; en consecuencia, el coeficiente de la última
+variable incorporada, $Y_{t-k}$, es cero, es decir, $\phi_{kk}=0$ para
+todo $k>p$.
+:::
+
+Este corte abrupto en el rezago $p$, en contraste con el decaimiento
+geométrico sin corte de la función de autocorrelación ordinaria de la
+[Subsección “El proceso AR(1)”](22-el-proceso-ar-1.qmd), es la base del procedimiento práctico de identificación
+del orden de un AR(p): se calcula la FACP muestral y se busca el último
+rezago en el que resulta significativamente distinta de cero, un
+procedimiento que la [Sección “El proceso MA(1)”](27-el-proceso-ma-1.qmd) completará mostrando el patrón
+exactamente inverso para los procesos de medias móviles.

@@ -1,0 +1,77 @@
+---
+title: "Diferenciación bajo el signo de la integral"
+description: "Diferenciación bajo el signo de la integral. Incluye Regla de Leibniz."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas III, Cálculo diferencial e integral]
+---
+
+La última herramienta de esta sección combina, en una sola operación,
+la derivada respecto de un parámetro y la integral respecto de otra
+variable, y su uso es casi invisible en la práctica: aparece cada vez
+que se deriva una esperanza respecto de un parámetro del modelo, como
+ocurrirá al construir el score de la función de verosimilitud en la
+[Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd).
+
+::: {#thm-leibniz}
+## Regla de Leibniz
+
+Sea $f:[a,b]\times\Theta\to\mathbb{R}$, con $\Theta\subseteq\mathbb{R}$
+abierto, tal que $f(x,\cdot)$ es derivable en $\theta$ para cada $x$, la
+derivada parcial $\partial f/\partial\theta(x,\theta)$ es continua en
+$(x,\theta)$, y existe una función integrable $g:[a,b]\to\mathbb{R}$
+con $|\partial f/\partial\theta(x,\theta)|\leq g(x)$ para todo
+$(x,\theta)$. Entonces
+
+$$
+\frac{d}{d\theta}\int_a^b f(x,\theta)\,dx
+  = \int_a^b \frac{\partial f}{\partial\theta}(x,\theta)\,dx.
+$$ {#eq-leibniz}
+:::
+
+::: {.proof}
+Sea $F(\theta):=\int_a^b f(x,\theta)\,dx$. Por la
+[Definición “Derivada”](../matematica-1/29-la-derivada-de-una-funcion-de-una-variable.qmd#def-derivada), hace falta estudiar el límite del cociente
+$[F(\theta+h)-F(\theta)]/h$ cuando $h\to 0$. Por la linealidad de la
+integral de la [Proposición “Linealidad de la integral”](../matematica-2/11-la-integral-de-riemann-y-el-teorema-fundamental.qmd#prp-linealidad-integral), ese cociente se
+reescribe como una sola integral,
+
+$$
+\frac{F(\theta+h)-F(\theta)}{h}
+  = \int_a^b \frac{f(x,\theta+h)-f(x,\theta)}{h}\,dx,
+$$
+
+y el [Teorema “Teorema del valor medio”](../matematica-1/29-la-derivada-de-una-funcion-de-una-variable.qmd#thm-valor-medio) aplicado a $f(x,\cdot)$ en el intervalo
+entre $\theta$ y $\theta+h$ da, para cada $x$, un punto $\xi(x)$ entre
+$\theta$ y $\theta+h$ con
+$[f(x,\theta+h)-f(x,\theta)]/h=\partial f/\partial\theta(x,\xi(x))$, que
+por hipótesis está acotado en valor absoluto por $g(x)$,
+independientemente de $x$ y de $h$. Esta cota uniforme es lo que permite
+intercambiar el límite en $h\to 0$ con la integral en $x$: la
+continuidad de $\partial f/\partial\theta$ garantiza que
+$\partial f/\partial\theta(x,\xi(x))\to\partial f/\partial\theta(x,
+\theta)$ punto a punto cuando $h\to 0$, y la cota uniforme por $g(x)$
+evita que la integral “escape” hacia masa de
+probabilidad o área concentrada donde el integrando no converge de forma
+pareja, de modo que
+$\lim_{h\to 0}\int_a^b\partial f/\partial\theta(x,\xi(x))\,dx=
+\int_a^b\partial f/\partial\theta(x,\theta)\,dx$, que es
+@eq-leibniz.
+:::
+
+::: {#idea-anticipacion-leibniz-fisher .callout-tip appearance=“simple” title=“Idea central: Anticipación: la regla de Leibniz y el score de la verosimilitud”}
+La [Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd) definirá el score de una función de
+verosimilitud como la derivada, respecto del parámetro $\theta$, del
+logaritmo de la densidad, y demostrará que su esperanza es cero
+derivando bajo el signo de la integral la identidad
+$\int f(x,\theta)\,dx=1$, válida para toda densidad y todo $\theta$. Esa
+derivación es una aplicación directa del @thm-leibniz: como la
+integral es constante en $\theta$, su derivada es cero, y por la regla
+de Leibniz esa derivada coincide con la integral de
+$\partial f/\partial\theta(x,\theta)$, lo que, dividiendo y
+multiplicando por $f(x,\theta)$ dentro del integrando, se convierte en
+la esperanza del score. Ninguna parte de ese argumento futuro necesitará
+volver a justificar el intercambio de la derivada y la integral: bastará
+con citar las condiciones de regularidad del
+@thm-leibniz.
+:::

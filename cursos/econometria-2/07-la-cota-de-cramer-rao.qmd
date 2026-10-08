@@ -1,0 +1,97 @@
+---
+title: "La cota de Cramér–Rao"
+description: "La cota de Cramér–Rao. Incluye Cota de Cramér–Rao y Eficiencia asintótica del estimador máximo verosímil."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Inferencia asintótica]
+---
+
+La matriz de información de Fisher no solo aparece en la varianza
+asintótica del EMV: resulta ser, además, una cota universal sobre la
+varianza de *cualquier* estimador insesgado, no solamente del EMV,
+lo que convierte al resultado siguiente en el estándar contra el que se
+mide la eficiencia de un estimador.
+
+::: {#thm-cramer-rao}
+## Cota de Cramér–Rao
+
+Sea $\tilde{\vect{\theta}}_n$ cualquier estimador insesgado de
+$\vect{\theta}$ basado en una muestra de tamaño $n$ independiente e
+idénticamente distribuida, bajo las condiciones de regularidad
+necesarias para derivar bajo el signo de la integral. Entonces, para
+todo $\vect{a}\in\mathbb{R}^p$,
+
+$$
+\vect{a}^{\top}\Var(\tilde{\vect{\theta}}_n)\vect{a}
+  \geq \frac{1}{n}\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}.
+$$
+:::
+
+::: {.proof}
+La estrategia consiste en aplicar la desigualdad de Cauchy–Schwarz de
+la [Lema “Desigualdad de Cauchy–Schwarz”](../matematica-2/04-espacios-con-producto-interno.qmd#lem-cauchy-schwarz) de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), en el
+espacio de variables aleatorias con producto interno
+$\langle U,V\rangle:=\Esp{UV}$ ya usado repetidamente en la
+[Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd), a las variables escalares
+$U:=\vect{a}^{\top}(\tilde{\vect{\theta}}_n-\vect{\theta})$ y
+$V:=\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{s}_n
+(\vect{\theta})$. Por insesgadez, derivando bajo el signo de la
+integral la identidad
+$\Esp[\vect{\theta}]{\tilde{\vect{\theta}}_n}=\vect{\theta}$ respecto de
+$\vect{\theta}$, en un argumento análogo al de la
+[Proposición “La esperanza del score es cero”](02-la-funcion-score.qmd#prp-esperanza-score-cero) pero aplicado a
+$\tilde{\vect{\theta}}_n$ en lugar de a la constante uno, se obtiene
+$\Esp[\vect{\theta}]{(\tilde{\vect{\theta}}_n-\vect{\theta})
+\vect{s}_n(\vect{\theta})^{\top}}=\Imat$, la matriz identidad; en
+particular,
+
+$$
+\langle U,V\rangle
+  = \vect{a}^{\top}\Esp{(\tilde{\vect{\theta}}_n-\vect{\theta})
+  \vect{s}_n(\vect{\theta})^{\top}}\mathcal{I}(\vect{\theta})^{-1}
+  \vect{a}
+  = \vect{a}^{\top}\Imat\,\mathcal{I}(\vect{\theta})^{-1}\vect{a}
+  = \vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}.
+$$
+
+La desigualdad de Cauchy–Schwarz da $\langle U,V\rangle^2\leq
+\Var(U)\Var(V)$, porque ambas variables tienen media cero, la primera
+por insesgadez y la segunda por la
+[Proposición “La esperanza del score es cero”](02-la-funcion-score.qmd#prp-esperanza-score-cero). Como
+$\vect{s}_n(\vect{\theta})=\sum_i\vect{s}_i(\vect{\theta})$ es una suma
+de $n$ contribuciones independientes, cada una con varianza
+$\mathcal{I}(\vect{\theta})$ por la [Definición “Matriz de información de Fisher”](06-la-matriz-de-informacion-de-fisher.qmd#def-informacion-fisher),
+$\Var(\vect{s}_n(\vect{\theta}))=n\mathcal{I}(\vect{\theta})$ por el
+argumento de aditividad de covarianzas ya usado en la demostración de
+la ley de los grandes números del [Teorema “Ley débil de los grandes números”](../econometria-1/06-leyes-de-los-grandes-numeros-y-el-teorema-centra.qmd#thm-llgn); en consecuencia,
+$\Var(V)=n\,\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}
+\mathcal{I}(\vect{\theta})\mathcal{I}(\vect{\theta})^{-1}\vect{a}=
+n\,\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}$. Sustituyendo
+en la desigualdad de Cauchy–Schwarz,
+$\bigl[\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}\bigr]^2\leq
+\vect{a}^{\top}\Var(\tilde{\vect{\theta}}_n)\vect{a}\cdot
+n\,\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}$, y dividiendo
+ambos lados entre $\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}
+>0$, que es positivo por ser $\mathcal{I}(\vect{\theta})^{-1}$ definida
+positiva, se obtiene exactamente la cota enunciada.
+:::
+
+::: {#cor-eficiencia-asintotica}
+## Eficiencia asintótica del estimador máximo verosímil
+
+El EMV alcanza asintóticamente la cota de Cramér–Rao: su varianza
+asintótica, $n^{-1}\mathcal{I}(\vect{\theta}_0)^{-1}$ por el
+[Teorema “Normalidad asintótica del estimador máximo verosímil”](05-normalidad-asintotica.qmd#thm-normalidad-asintotica), coincide exactamente con la cota del
+@thm-cramer-rao evaluada en $n$ observaciones.
+:::
+
+::: {.proof}
+Es la comparación directa entre la varianza asintótica
+$n^{-1}\mathcal{I}(\vect{\theta}_0)^{-1}$ del
+[Teorema “Normalidad asintótica del estimador máximo verosímil”](05-normalidad-asintotica.qmd#thm-normalidad-asintotica) y la cota inferior
+$n^{-1}\mathcal{I}(\vect{\theta})^{-1}$ del
+@thm-cramer-rao, que son la misma matriz evaluada en el mismo
+punto: ningún estimador insesgado, ni siquiera en el límite asintótico,
+puede tener menor varianza que el EMV, lo que en la práctica se resume
+diciendo que el EMV es asintóticamente eficiente.
+:::

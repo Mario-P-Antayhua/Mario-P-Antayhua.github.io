@@ -1,0 +1,65 @@
+---
+title: "Contraste final"
+description: "Contraste final: definiciones, resultados y demostraciones."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos elementales y sus momentos]
+---
+
+La @tbl-contraste-procesos reúne los seis pasos aplicados a cada
+uno de los procesos de esta sección, y la comparación revela un patrón
+que conviene subrayar antes de cerrar la sección. Los tres primeros
+procesos, agrupados en la [Subsección “Procesos sin dinámica: constante, ruido blanco y media”](12-procesos-sin-dinamica-constante-ruido-blanco-y-m.qmd), comparten
+media, varianza y autocovarianza constantes en $t$, y son, sin
+excepción, estacionarios; los tres últimos, agrupados en las dos
+subsecciones siguientes, tienen todos una media que depende
+explícitamente de $t$, y ninguno es estacionario. Esa división en dos
+bloques no es casual: es exactamente la línea que separa, en la
+práctica econométrica, a las series que se pueden modelar directamente
+de las que requieren, primero, algún tratamiento para remover su
+componente no estacionario, tema que retomará con detalle la
+[Sección “El operador de rezago”](16-el-operador-de-rezago.qmd).
+
+| Proceso | $\Esp{Y_t}$ | $\Var(Y_t)$ | $\gamma(j)$, $j\neq 0$ | ¿Estacionario? |
+|---|---|---|---|---|
+| Constante | $c$ | $0$ | $0$ | Sí |
+| Ruido blanco | $0$ | $\sigma^2$ | $0$ | Sí |
+| Con media | $\mu$ | $\sigma^2$ | $0$ | Sí |
+| Tendencia lineal | $c+\delta t$ | $\sigma^2$ | $0$ | No (si $\delta\neq 0$) |
+| Paseo aleatorio | $Y_0$ | $t\sigma^2$ | @eq-autocov-pa | No |
+| Paseo con deriva | $Y_0+\delta t$ | $t\sigma^2$ | @eq-autocov-pa | No |
+
+:  {#tbl-contraste-procesos}
+
+$$
+\gamma(t,t-j) = \min(t,t-j)\,\sigma^2, \qquad j\geq 0,
+$$ {#eq-autocov-pa}
+
+fórmula que se obtiene del mismo cálculo del
+[Teorema “Varianza del paseo aleatorio y no estacionariedad”](14-el-paseo-aleatorio.qmd#thm-varianza-paseo-aleatorio) aplicado a
+$\Cov(Y_t,Y_{t-j})=\Cov\bigl(\sum_{i=1}^{t}\rblanco_i,
+\sum_{i=1}^{t-j}\rblanco_i\bigr)$, que se reduce a la suma de las
+varianzas de los términos comunes a ambas sumas, en número
+$\min(t,t-j)=t-j$.
+
+::: {#idea-confusion-tendencia-paseo .callout-tip appearance=“simple” title=“Idea central: Por qué la tendencia y el paseo aleatorio con deriva se confunden visualmente”}
+La tabla de contraste deja ver que la tendencia determinística lineal y
+el paseo aleatorio con deriva comparten la misma media,
+$c+\delta t$ frente a $Y_0+\delta t$, ambas crecientes en línea recta;
+esa coincidencia es la razón por la que, en un gráfico de una sola
+trayectoria simulada como el de la @fig-tendencia-vs-paseo, ambos
+procesos pueden parecer indistinguibles a simple vista, oscilando
+alrededor de una recta ascendente. Sin embargo, difieren radicalmente en
+cómo se comporta esa oscilación: en la tendencia determinística la
+varianza permanece fija en $\sigma^2$ para siempre, de modo que la
+trayectoria vuelve a acercarse a su recta de tendencia tras cualquier
+choque, mientras que en el paseo aleatorio con deriva la varianza crece
+sin cota, $t\sigma^2$, y cada choque desplaza permanentemente el nivel
+del proceso sin que exista ninguna fuerza que lo devuelva a su recta
+original. Esta distinción, invisible en un solo vistazo pero decisiva
+para la inferencia estadística, es exactamente la que motiva las
+pruebas de raíz unitaria que la [Sección “El operador de rezago”](16-el-operador-de-rezago.qmd) introducirá
+al estudiar las raíces del polinomio de rezagos.
+:::
+
+![Trayectorias simuladas de una tendencia determinística ([Definición “Tendencia determinística lineal”](13-tendencias-deterministicas.qmd#def-tendencia-lineal)) y de un paseo aleatorio con deriva ([Definición “Paseo aleatorio con deriva”](14-el-paseo-aleatorio.qmd#def-paseo-aleatorio-deriva)), con la misma pendiente promedio $\delta$. Ambas crecen en la misma dirección, pero solo la segunda acumula desviaciones permanentes respecto de su recta de origen.](../../assets/img/fig/econometria-2-15-contraste-final-1.svg){#fig-tendencia-vs-paseo fig-alt="Trayectorias simuladas de una tendencia determinística ([Definición “Tendencia determinística lineal”](13-tendencias-deterministicas.qmd#def-tendencia-lineal)) y de un paseo aleatorio con deriva ([Definición “Paseo aleatorio con deriva”](14-el-paseo-aleatorio.qmd#def-paseo-aleatorio-deriva)), con la misma pendiente promedio $\delta$. Ambas crecen en la misma dirección, pero solo la segunda acumula desviaciones permanentes respecto de su recta de origen."}

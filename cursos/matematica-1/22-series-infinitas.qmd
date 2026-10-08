@@ -1,0 +1,240 @@
+---
+title: "Series infinitas"
+description: "Series infinitas. Incluye Serie y suma parcial, Criterio de Cauchy para series y r^Nto 0 cuando |r|<1."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Sucesiones y series]
+---
+
+::: {#def-serie}
+## Serie y suma parcial
+
+Dada una sucesión $(a_n)_{n=1}^{\infty}$, la ***sucesión de
+sumas parciales*** es $s_N:=\sum_{n=1}^{N}a_n$. La ***serie***
+$\sum_{n=1}^{\infty}a_n$ ***converge*** a $S$ si $s_N\to S$
+según la [Definición “Límite de una sucesión”](17-sucesiones-y-su-limite.qmd#def-limite-sucesion), y en ese caso se escribe
+$\sum_{n=1}^{\infty}a_n=S$.
+:::
+
+Una serie no es, entonces, más que una sucesión particular, la de sus sumas
+parciales, y todos los resultados de las subsecciones anteriores se aplican
+a ella sin modificación; en particular, tiene sentido preguntar de
+inmediato si la serie satisface una versión propia del criterio de Cauchy,
+formulada directamente en términos de las sumas de sus términos en lugar de
+en términos de la sucesión $(s_N)$, porque esa forma alternativa será más
+cómoda de aplicar en la práctica.
+
+::: {#prp-cauchy-series}
+## Criterio de Cauchy para series
+
+La serie $\sum a_n$ converge si y solo si para todo $\varepsilon>0$ existe
+$N$ tal que, para todos $m>n\geq N$, se cumple
+$\bigl|\sum_{k=n+1}^{m}a_k\bigr|<\varepsilon$.
+:::
+
+::: {.proof}
+Aplíquese el [Teorema “Criterio de Cauchy”](21-el-criterio-de-cauchy.qmd#thm-criterio-cauchy) a la sucesión de sumas parciales
+$(s_N)$, observando que $s_m-s_n=\sum_{k=n+1}^{m}a_k$.
+:::
+
+Esta reformulación tiene una consecuencia inmediata y útil como prueba de
+divergencia: si la serie converge, en particular con $m=n+1$ la condición
+exige $|a_{n+1}|<\varepsilon$ para $n$ suficientemente grande, es decir,
+$a_n\to 0$ es una condición necesaria, aunque no suficiente, para la
+convergencia de la serie. La serie más importante del documento, con
+diferencia, es la que sigue, y antes de enunciar su teorema conviene aislar
+como resultado auxiliar independiente el hecho puramente aritmético que
+sostiene la demostración, porque ese mismo hecho volverá a usarse, fuera de
+este contexto, cada vez que se necesite controlar la velocidad con la que
+una potencia se acerca a cero.
+
+::: {#lem-potencia-a-cero}
+## $r^{N}\to 0$ cuando $|r|<1$
+
+Si $r\in\mathbb{R}$ con $|r|<1$, entonces $r^{N}\to 0$ cuando
+$N\to\infty$.
+:::
+
+::: {.proof}
+Si $r=0$ el resultado es inmediato, así que supóngase $0<|r|<1$. Escríbase
+$|r|=1/(1+h)$ con $h>0$, lo cual es posible porque $0<|r|<1$ implica
+$1/|r|>1$. Por la desigualdad de Bernoulli, $(1+h)^{N}\geq 1+Nh$, de donde
+
+$$
+|r|^{N} = \frac{1}{(1+h)^{N}} \leq \frac{1}{1+Nh}.
+$$ {#eq-cota-bernoulli}
+
+Dado $\varepsilon>0$, por la [Teorema “Propiedad arquimediana”](15-los-reales-el-axioma-de-completitud.qmd#thm-arquimediana)(ii) existe $N_0$ tal
+que $1/N_0<\varepsilon h$. Entonces, para todo $N\geq N_0$, la
+desigualdad @eq-cota-bernoulli da
+
+$$
+|r|^{N} \leq \frac{1}{1+Nh} < \frac{1}{Nh} \leq \frac{1}{N_0h} < \varepsilon,
+$$
+
+así que $|r^{N}-0|<\varepsilon$ para todo $N\geq N_0$, lo que establece
+$r^{N}\to 0$.
+:::
+
+Con este lema disponible, la demostración de la convergencia de la serie
+geométrica puede concentrarse en el argumento algebraico propio, sin
+mezclarlo con el control de la potencia $r^N$, que ya queda resuelto por
+separado.
+
+::: {#thm-serie-geometrica}
+## Convergencia de la serie geométrica
+
+Para $r\in\mathbb{R}$ con $|r|<1$,
+
+$$
+\sum_{n=0}^{\infty} r^{n} = \frac{1}{1-r}.
+$$ {#eq-serie-geometrica}
+
+Si $|r|\geq 1$, la serie diverge.
+:::
+
+::: {.proof}
+La suma parcial $s_N=\sum_{n=0}^{N-1}r^n$ satisface la identidad algebraica
+
+$$
+(1-r)\,s_N = (1-r)(1+r+r^2+\cdots+r^{N-1}) = 1-r^{N},
+$$
+
+que se verifica multiplicando y observando que todos los términos
+intermedios se cancelan por pares. Como $r\neq 1$ cuando $|r|<1$, puede
+despejarse $s_N=(1-r^{N})/(1-r)$.
+
+Por el @lem-potencia-a-cero, $r^{N}\to 0$ cuando $|r|<1$. Aplicando
+el [Teorema “Teorema algebraico del límite”](18-los-teoremas-algebraicos-y-de-orden-del-limite.qmd#thm-algebraico-limite) a $s_N=(1-r^N)/(1-r)$, con $r^N\to 0$, se
+obtiene $s_N\to (1-0)/(1-r)=1/(1-r)$, que es la
+igualdad @eq-serie-geometrica.
+
+Si $|r|\geq 1$, los términos $r^n$ no tienden a cero: si $|r|>1$, crecen sin
+cota, y si $|r|=1$, o bien $r^n$ es constantemente $1$ sin que la suma se
+estabilice, o bien oscila sin límite. En cualquiera de los dos casos, la
+condición necesaria $a_n\to 0$ señalada tras la
+@prp-cauchy-series falla, así que la serie diverge.
+:::
+
+Conviene detenerse un momento en el alcance de este resultado antes de
+seguir con la teoría general de las series, porque su presencia en el resto
+del documento va mucho más allá de un ejemplo entre otros.
+
+::: {#idea-geometrica-uso .callout-tip appearance=“simple” title=“Idea central”}
+Esta es, con diferencia, la serie que más se usará en el resto del
+documento. La condición de estabilidad de un proceso AR(1), $|\phi|<1$, es
+exactamente la condición que este teorema exige para que
+$\sum_{j=0}^{\infty}\phi^{2j}$ converja, y el valor límite,
+$1/(1-\phi^2)$, es precisamente la varianza no condicional del proceso.
+:::
+
+La serie geométrica converge de una manera particularmente fuerte, en el
+sentido de que también converge si se sustituyen sus términos por sus
+valores absolutos, ya que $|r^n|=|r|^n$ es a su vez una serie geométrica de
+razón $|r|<1$. No toda serie convergente comparte esta propiedad, y
+distinguir entre las que sí y las que no la comparten resulta relevante
+porque, como se verá enseguida, la convergencia de la serie de valores
+absolutos es una condición suficiente, aunque no necesaria, para la
+convergencia de la serie original.
+
+::: {#def-convergencia-absoluta}
+## Convergencia absoluta
+
+Una serie $\sum a_n$ ***converge absolutamente*** si la serie de
+valores absolutos $\sum|a_n|$ converge. Si $\sum a_n$ converge pero
+$\sum|a_n|$ no, se dice que converge
+***condicionalmente***.
+:::
+
+La terminología sugiere ya la relación entre ambas nociones, pero conviene
+demostrarla en lugar de darla por supuesta: que una serie converja
+absolutamente es, en principio, una condición más fuerte que la simple
+convergencia, y el siguiente teorema confirma que en efecto lo es, en el
+sentido de que la implica.
+
+::: {#thm-absoluta-implica-convergencia}
+## La convergencia absoluta implica convergencia
+
+Si $\sum a_n$ converge absolutamente, entonces converge.
+:::
+
+::: {.proof}
+Como $\sum|a_n|$ converge, por la @prp-cauchy-series aplicada a
+$\sum|a_n|$, dado $\varepsilon>0$ existe $N$ tal que, para todos
+$m>n\geq N$, $\sum_{k=n+1}^{m}|a_k|<\varepsilon$. Por la desigualdad
+triangular generalizada,
+
+$$
+\left|\sum_{k=n+1}^{m}a_k\right| \leq \sum_{k=n+1}^{m}|a_k| < \varepsilon,
+$$
+
+así que $\sum a_n$ satisface la misma condición de Cauchy, y por la
+@prp-cauchy-series converge.
+:::
+
+Este teorema tiene una consecuencia práctica de peso: para probar que una
+serie converge basta, a menudo, con probar que converge la serie más
+sencilla de sus valores absolutos, sin lidiar con las posibles
+cancelaciones de signo de la serie original. Eso desplaza el problema hacia
+uno de comparación entre series de términos no negativos, y el resultado
+que sigue es la herramienta estándar para resolverlo.
+
+::: {#prp-comparacion}
+## Criterio de comparación
+
+Sean $(a_n)$ y $(b_n)$ con $0\leq a_n\leq b_n$ para todo $n$. Si
+$\sum b_n$ converge, entonces $\sum a_n$ converge.
+:::
+
+::: {.proof}
+Las sumas parciales de $\sum a_n$ son crecientes, porque $a_n\geq 0$, y
+están acotadas superiormente por las sumas parciales de $\sum b_n$, que a
+su vez están acotadas porque $\sum b_n$ converge; por el
+[Teorema “Teorema de convergencia monótona”](19-sucesiones-monotonas-y-el-teorema-de-convergenci.qmd#thm-convergencia-monotona), la sucesión de sumas parciales de
+$\sum a_n$ converge.
+:::
+
+El criterio de comparación traslada así el problema de decidir la
+convergencia de una serie arbitraria de términos no negativos al problema,
+casi siempre más simple, de encontrar una serie geométrica u otra serie ya
+conocida que la domine término a término, y es exactamente en esa forma en
+la que se aplicará más adelante.
+
+::: {#idea-comparacion-uso .callout-tip appearance=“simple” title=“Idea central”}
+Este criterio, combinado con la serie geométrica, es exactamente el
+argumento que sostiene la sumabilidad cuadrática exigida a los coeficientes
+$\psi_k$ de la representación de Wold: si $|\psi_k|$ decae más rápido que
+alguna geometría de razón menor que uno, entonces
+$\sum_k\psi_k^2$ converge por comparación con
+$\sum_k r^{2k}$, y la representación de Wold queda garantizada como una
+suma bien definida en el sentido de la
+[Definición “Límite de una sucesión”](17-sucesiones-y-su-limite.qmd#def-limite-sucesion), no como una expresión formal sin respaldo.
+:::
+
+El criterio de comparación cierra el círculo de esta sección: nótese que su
+propia demostración no recurre a ningún argumento $\varepsilon$-$N$ directo,
+sino que reduce el problema al teorema de convergencia monótona, que a su
+vez descansaba en el axioma de completitud. Ese es, en definitiva, el
+edificio completo construido en esta sección: todo resultado sobre
+sucesiones y series, sin excepción, remonta en última instancia a la
+completitud de $\mathbb{R}$, ya sea de manera directa, como en el teorema de
+convergencia monótona, o indirecta, a través del teorema de
+Bolzano–Weierstrass y del criterio de Cauchy.
+
+Conviene cerrar con un balance de lo construido, porque cada pieza
+reaparecerá en un contexto muy distinto más adelante. La definición
+$\varepsilon$-$N$ de límite es la que se generaliza, sin cambiar de
+naturaleza, a la noción de límite en un espacio métrico. El criterio de
+Cauchy es la propiedad que distinguirá, en esa misma generalización, a los
+espacios métricos completos de los que no lo son, y $\mathbb{R}$ con el
+valor absoluto será el ejemplo canónico de espacio completo. El teorema de
+Bolzano–Weierstrass anticipa, en una dimensión, la noción de compacidad
+secuencial que la siguiente sección tratará con generalidad. Y la serie
+geométrica, junto con el criterio de comparación, será la herramienta
+aritmética concreta que sostenga, mucho más adelante, la convergencia de
+la representación de Wold y la existencia de la varianza no condicional de
+todo proceso autorregresivo estable. Ese mismo edificio es el que
+sostendrá, sin necesidad de reconstruirlo, la teoría de los espacios
+métricos que sigue, donde la noción de límite se generalizará más allá de
+$\mathbb{R}$ conservando exactamente la misma estructura lógica aquí
+desarrollada.

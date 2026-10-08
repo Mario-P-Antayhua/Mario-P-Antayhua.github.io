@@ -1,0 +1,275 @@
+---
+title: "Métodos de demostración"
+description: "Con el lenguaje ya construido, corresponde ocuparse de lo que ese lenguaje sirve para escribir."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
+---
+
+Con el lenguaje ya construido, corresponde ocuparse de lo que ese lenguaje
+sirve para escribir. Una ***demostración*** es un argumento
+deductivo que, partiendo de hipótesis aceptadas y de reglas de inferencia
+válidas, establece con certeza absoluta el valor de verdad de una
+proposición.
+
+La mayor parte de los resultados matemáticos tiene la forma de un
+condicional, $p\rightarrow q$, o de una afirmación cuantificada
+universalmente sobre condicionales. Esto no es casualidad ni convención
+estilística: es lo que hace que las equivalencias lógicas de las dos
+subsecciones anteriores dejen de ser un ejercicio aislado y se conviertan en
+las reglas que determinan qué estructura puede adoptar una demostración
+válida de cada tipo de enunciado. Se presentan a continuación los cinco
+métodos que se usarán en todo lo que sigue.
+
+## Demostración directa
+
+El método más elemental para probar $p\rightarrow q$ consiste en explotar
+directamente la tabla de verdad del condicional. Como $p\rightarrow q$ es
+automáticamente verdadera cuando $p$ es falsa, según se estableció en la
+[Tabla “Tablas de verdad y equivalencias lógicas”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#tbl-conectores), ese caso no requiere ninguna verificación; basta
+entonces considerar el caso en que $p$ es verdadera y, a partir de esa
+suposición, deducir mediante una cadena de pasos válidos que $q$ también lo
+es.
+
+::: {#prp-cuadrado-impar}
+## El cuadrado de un impar es impar
+
+Si $n\in\mathbb{Z}$ es impar, entonces $n^2$ es impar.
+:::
+
+::: {.proof}
+Supóngase que $n$ es impar. Por definición de número impar, existe un entero
+$k$ tal que $n=2k+1$, y esta representación algebraica explícita es todo lo
+que hace falta para avanzar.
+
+Elevando al cuadrado ambos lados y desarrollando el binomio,
+
+$$
+n^2 = (2k+1)^2 = 4k^2+4k+1 = 2\bigl(2k^2+2k\bigr)+1 .
+$$
+
+En la última igualdad se ha factorizado un $2$ de los dos primeros términos,
+dejando el $1$ aparte, que es precisamente la forma que se necesita.
+
+Ahora bien, la cantidad $2k^2+2k$ es un entero, por ser suma y producto de
+enteros. Escribiendo $m:=2k^2+2k$, se obtiene $n^2=2m+1$ con $m$ entero, que
+es exactamente la definición de número impar. Por lo tanto $n^2$ es impar,
+como se quería probar.
+:::
+
+## Demostración por contrarrecíproco
+
+No siempre la hipótesis original es la más cómoda para trabajar. Cuando
+resulta más manejable partir de la negación de la tesis, conviene apoyarse en
+la [Idea central “Tablas de verdad y equivalencias lógicas”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#idea-contrarreciproco): probar $\neg q\rightarrow\neg p$ es, por la
+[Proposición “Equivalencias lógicas fundamentales”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#prp-equivalencias), exactamente lo mismo que probar $p\rightarrow q$,
+de modo que ambas formulaciones son intercambiables y puede elegirse la que
+ofrezca mejor punto de partida.
+
+::: {#prp-cuadrado-par-implica-par}
+## La raíz cuadrada de un par es par
+
+Si $n^2\in\mathbb{Z}$ es par, entonces $n$ es par.
+:::
+
+::: {.proof}
+Se demuestra el contrarrecíproco de la afirmación, esto es, que si $n$ es
+impar, entonces $n^2$ es impar.
+
+Pero esa es exactamente la afirmación ya establecida en la
+@prp-cuadrado-impar, así que queda probada sin necesidad de repetir el
+argumento.
+
+Por la equivalencia entre una proposición y su contrarrecíproco, se concluye
+que si $n^2$ es par, entonces $n$ es par.
+:::
+
+Conviene detenerse en por qué el rodeo resultó ventajoso aquí. La afirmación
+original, “si $n^2$ es par entonces $n$ es par”, es incómoda de abordar de
+forma directa, porque de la paridad de $n^2$ no se sigue de manera inmediata
+ninguna expresión algebraica útil para $n$: de $n^2=2m$ no puede despejarse
+$n$ sin introducir una raíz cuadrada, que no tiene por qué ser entera. La
+versión contrarrecíproca, en cambio, parte de una hipótesis sobre $n$ mismo,
+que sí admite la representación explícita $n=2k+1$, y por eso el argumento
+fluye con naturalidad. Reconocer de antemano cuál de las dos direcciones
+ofrece una hipótesis más manejable es la habilidad central para elegir bien
+entre demostración directa y por contrarrecíproco.
+
+## Demostración por contradicción
+
+Los dos métodos anteriores construyen la conclusión hacia adelante. El
+tercero opera de manera muy distinta, y su fundamento merece explicarse antes
+de verlo en acción.
+
+Una proposición $p$ es verdadera si y solo si su negación conduce a una
+contradicción lógica, es decir, a una proposición de la forma
+$r\wedge\neg r$, que es falsa sin importar el valor de verdad de $r$. El
+procedimiento consiste, entonces, en suponer $\neg p$ como hipótesis de
+trabajo y deducir de ella una contradicción; puesto que ninguna cadena válida
+de inferencias puede partir de una hipótesis verdadera y terminar en una
+falsedad, la existencia de la contradicción obliga a concluir que la
+hipótesis de partida, $\neg p$, era falsa, y por lo tanto $p$ es verdadera.
+
+El ejemplo canónico de este método es también uno de los resultados más
+antiguos de la matemática, y volverá a usarse varias veces en las secciones
+siguientes.
+
+::: {#thm-raiz-2-irracional}
+## Irracionalidad de $\sqrt{2}$
+
+No existe ningún número racional $q$ tal que $q^2=2$.
+:::
+
+::: {.proof}
+Supóngase, por contradicción, que $\sqrt{2}$ es racional. Entonces puede
+escribirse como una fracción $\sqrt{2}=a/b$ con $a,b\in\mathbb{Z}$ y
+$b\neq 0$; y, además, puede suponerse que $a$ y $b$ no tienen factores
+comunes distintos de uno, porque si los tuvieran bastaría simplificar la
+fracción hasta su forma irreducible. Esta última suposición es la que después
+producirá el choque, así que conviene retenerla.
+
+Elevando al cuadrado ambos lados de la igualdad y despejando se obtiene
+
+$$
+2 = \frac{a^2}{b^2}
+  \quad\Longrightarrow\quad
+  a^2 = 2b^2 .
+$$ {#eq-raiz2-paso1}
+
+La ecuación @eq-raiz2-paso1 muestra que $a^2$ es par, por ser el doble
+de un entero. Aplicando entonces la @prp-cuadrado-par-implica-par, según la cual
+si $a^2$ es par entonces $a$ también lo es, se concluye que existe un entero
+$k$ tal que $a=2k$.
+
+Sustituyendo esta expresión de $a$ en @eq-raiz2-paso1 y simplificando,
+
+$$
+(2k)^2 = 2b^2
+  \quad\Longrightarrow\quad
+  4k^2 = 2b^2
+  \quad\Longrightarrow\quad
+  b^2 = 2k^2 ,
+$$ {#eq-raiz2-paso2}
+
+de donde $b^2$ también resulta par y, por el mismo resultado invocado hace un
+momento, $b$ es par.
+
+Se ha llegado entonces a que tanto $a$ como $b$ son pares, es decir, que
+ambos comparten el factor común $2$. Pero esto contradice directamente la
+elección inicial de $a$ y $b$ sin factores comunes, y esa contradicción no
+puede provenir de ningún paso del razonamiento, que ha sido válido en todo
+momento. Debe provenir, necesariamente, de la suposición de partida. En
+consecuencia, $\sqrt{2}$ no es racional.
+:::
+
+Obsérvese la estructura del argumento anterior, porque es la que caracteriza
+al método. No se dedujo directamente que $\sqrt{2}$ fuera irracional, cosa
+que resultaría difícil de intentar: se supuso lo contrario y se avanzó por un
+camino perfectamente válido hasta chocar con algo que ya se sabía falso.
+
+::: {#idea-contradiccion-uso .callout-tip appearance=“simple” title=“Idea central”}
+Este patrón, el de avanzar con total normalidad a partir de una hipótesis y
+usar el choque final como prueba de que la hipótesis nunca pudo sostenerse,
+es el que distingue a la demostración por contradicción de las dos
+anteriores. Suele ser el recurso indicado cuando la tesis que se quiere
+probar afirma la inexistencia de algo, como ocurre aquí con la inexistencia
+de un racional cuyo cuadrado sea $2$: probar directamente que algo no existe
+obligaría a recorrer todos los candidatos, mientras que suponer que existe
+proporciona de inmediato un objeto concreto con el que trabajar.
+:::
+
+## Demostración por casos
+
+El cuarto método aprovecha una situación frecuente: que la hipótesis, aunque
+formulada de manera general, admita descomponerse en un número pequeño de
+situaciones excluyentes que agotan todas las posibilidades.
+
+Cuando la hipótesis de un condicional puede escribirse como una disyunción,
+$p\equiv p_1\vee p_2\vee\cdots\vee p_n$, basta demostrar el condicional por
+separado para cada una de esas posibilidades, es decir, probar
+$p_1\rightarrow q$, luego $p_2\rightarrow q$, y así sucesivamente hasta
+$p_n\rightarrow q$. La validez de este procedimiento descansa en que, sin
+importar cuál de las posibilidades $p_i$ resulte ser la verdadera, ya se
+cuenta con una demostración de que esa posibilidad concreta implica $q$.
+
+::: {#prp-producto-consecutivos}
+## El producto de dos enteros consecutivos es par
+
+Para todo $n\in\mathbb{Z}$, el número $n(n+1)$ es par.
+:::
+
+::: {.proof}
+Todo entero $n$ es par o impar, sin otra posibilidad, de manera que la
+demostración se organiza en esos dos casos, que agotan el universo de
+situaciones posibles.
+
+Supóngase primero que $n$ es par. Entonces existe $k\in\mathbb{Z}$ tal que
+$n=2k$, y sustituyendo,
+
+$$
+n(n+1) = 2k\,(n+1),
+$$
+
+que es par por tener al $2$ como factor explícito, cualquiera que sea el
+valor de $n+1$.
+
+Supóngase ahora que $n$ es impar, de modo que $n=2k+1$ para algún entero $k$.
+En ese caso el factor que resulta par no es $n$ sino el siguiente, puesto que
+
+$$
+n+1 = 2k+2 = 2(k+1),
+$$
+
+y por lo tanto
+
+$$
+n(n+1) = n\cdot 2(k+1),
+$$
+
+que es de nuevo par, otra vez por tener al $2$ como factor explícito.
+
+Como los dos únicos casos posibles conducen a que $n(n+1)$ es par, la
+proposición queda establecida para todo entero $n$.
+:::
+
+## Demostración por contraejemplo
+
+El quinto método no sirve para establecer resultados sino para refutarlos, y
+se apoya directamente en el [Teorema “Negación de proposiciones cuantificadas”](03-cuantificadores-y-su-negacion.qmd#thm-negacion-cuantificadores).
+
+Para refutar una proposición de la forma $\forall x\in U,\ P(x)$ basta, según
+esa ley de negación, exhibir un único elemento $x_0\in U$ tal que $P(x_0)$ sea
+falsa. Ese elemento se llama un ***contraejemplo***, y su sola
+existencia certifica que la afirmación universal es falsa, sin necesidad de
+examinar ningún otro elemento de $U$.
+
+::: {#exm-contraejemplo}
+## Refutación mediante contraejemplo
+
+Considérese la afirmación “para todo $n\in\mathbb{N}$, el número
+$n^2-n+41$ es primo”.
+:::
+
+Esta afirmación resulta especialmente instructiva porque se cumple, de hecho,
+para $n=1,2,\ldots,40$, un patrón lo bastante largo como para inducir a
+conjeturar que se cumple siempre. Quien verificara los primeros cuarenta
+casos, uno por uno, quedaría razonablemente convencido. Sin embargo, para
+$n=41$,
+
+$$
+n^2-n+41 = 41^2-41+41 = 41^2 = 41\times 41,
+$$
+
+que no es primo por tener a $41$ como factor propio. El valor $n=41$ es un
+contraejemplo, y basta él solo para refutar la afirmación universal, sin
+importar cuántos casos anteriores la hayan confirmado.
+
+::: {#idea-contraejemplo-metodo .callout-tip appearance=“simple” title=“Idea central”}
+Este ejemplo deja una lección que trasciende la aritmética particular:
+comprobar una afirmación universal en muchos casos concretos, incluso en
+cuarenta casos consecutivos, nunca constituye una demostración, porque
+siempre queda abierta la posibilidad de que el contraejemplo aparezca después
+del último caso examinado. La única manera de establecer con certeza una
+afirmación universal sobre un dominio infinito es un argumento que cubra
+todos los casos a la vez.
+:::

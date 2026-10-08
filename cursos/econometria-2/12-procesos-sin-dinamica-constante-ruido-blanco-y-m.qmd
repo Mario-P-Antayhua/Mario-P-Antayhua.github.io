@@ -1,0 +1,129 @@
+---
+title: "Procesos sin dinámica: constante, ruido blanco y media"
+description: "Los procesos más sencillos son aquellos sin dinámica: su valor no depende de los valores pasados, y sirven de punto de partida para aplicar sistemáticamente el procedimiento de seis pasos."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos elementales y sus momentos]
+---
+
+La [Sección “Procesos estocásticos y sus funciones de momentos”](09-procesos-estocasticos-y-sus-funciones-de-momento.qmd) definió qué significa que un proceso sea
+estacionario y ergódico, pero un lector que solo hubiera visto esas
+definiciones abstractas todavía no tendría ninguna intuición sobre qué
+aspecto tiene, en la práctica, un proceso que cumple esas propiedades y
+uno que no. Esta sección cierra esa brecha examinando siete procesos
+elementales, cada uno lo bastante simple para calcular sus momentos con
+álgebra directa, y que en conjunto cubren el repertorio básico de
+comportamientos que una serie de tiempo económica puede exhibir: nivel
+constante, ruido puro, una media distinta de cero, una tendencia
+determinística, y dos variantes del paseo aleatorio. El objetivo no es
+solo catalogar estos procesos, sino entrenar un procedimiento que se
+repetirá, con más parámetros y más álgebra, en cada modelo de las
+secciones siguientes: el proceso autorregresivo de la
+[Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) y el proceso de medias móviles de la
+[Sección “El proceso MA(1)”](27-el-proceso-ma-1.qmd) no son, en el fondo, más que combinaciones más
+elaboradas del mismo ingrediente básico que aparece aquí, el ruido
+blanco, organizado de maneras cada vez más ricas.
+
+::: {#idea-seis-pasos .callout-tip appearance=“simple” title=“Idea central: El procedimiento de derivación de momentos”}
+Cada proceso de esta sección se analiza siguiendo el mismo
+procedimiento de seis pasos: calcular la media $\mu_t$; calcular la
+varianza $\Var(Y_t)$; calcular la autocovarianza $\gamma(t,t-j)$ para un
+rezago $j$ genérico; calcular, cuando tiene sentido, la autocorrelación
+$\rho_j$; determinar si el resultado de los tres pasos anteriores
+depende de $t$, lo que decide si el proceso es débilmente estacionario
+en el sentido de la [Definición “Estacionariedad débil”](10-estacionariedad.qmd#def-estacionariedad-debil); e interpretar el
+resultado en términos del comportamiento observable de una trayectoria
+simulada. Aplicar sistemáticamente estos seis pasos, en lugar de
+calcular ad hoc lo que parezca relevante en cada caso, es lo que permite
+comparar los siete procesos entre sí en la tabla de contraste que cierra
+la sección.
+:::
+
+Los procesos más sencillos son aquellos sin dinámica: su valor no depende de los valores pasados, y sirven de punto de partida para aplicar sistemáticamente el procedimiento de seis pasos.
+
+::: {#def-proceso-constante}
+## Proceso constante
+
+El ***proceso constante*** es $Y_t:=c$ para todo $t$, con
+$c\in\mathbb{R}$ fijo y sin ningún componente aleatorio.
+:::
+
+Aplicando el procedimiento de la [Idea central](#idea-seis-pasos): la media es
+$\mu_t=\Esp{c}=c$, constante en $t$; la varianza es
+$\Var(Y_t)=\Var(c)=0$, porque una constante no tiene dispersión
+alrededor de su propio valor; la autocovarianza es
+$\gamma(t,t-j)=\Cov(c,c)=0$ para todo $j$, incluyendo $j=0$, que
+reproduce la varianza nula ya calculada; y como ninguna de estas tres
+cantidades depende de $t$, el proceso es trivialmente débilmente
+estacionario. Su trayectoria es, por supuesto, una línea horizontal sin
+ninguna fluctuación, el caso límite en el que toda la incertidumbre ha
+desaparecido.
+
+::: {#def-ruido-blanco}
+## Ruido blanco
+
+Un proceso $\{\rblanco_t\}$ es ***ruido blanco*** si
+$\Esp{\rblanco_t}=0$ para todo $t$, $\Var(\rblanco_t)=\sigma^2$ para
+todo $t$, y $\Cov(\rblanco_t,\rblanco_s)=0$ para todo $t\neq s$. Se
+distinguen tres variantes según qué tan fuerte sea la condición de falta
+de relación entre observaciones distintas: es ***ruido
+blanco débil*** si solo se exige la incorrelación recién descrita; es
+***ruido blanco independiente*** si además
+$\rblanco_t$ y $\rblanco_s$ son independientes, en el sentido de la
+[Definición “Independencia de eventos”](../econometria-1/02-probabilidad-condicional-e-independencia.qmd#def-independencia-eventos), para todo $t\neq s$, y no solo
+incorrelacionadas; y es ***ruido blanco gaussiano*** si,
+adicionalmente, cada $\rblanco_t\sim N(0,\sigma^2)$.
+:::
+
+Aplicando el procedimiento de la [Idea central](#idea-seis-pasos) a cualquiera de
+las tres variantes: $\mu_t=0$ y $\Var(\rblanco_t)=\sigma^2$, ambas
+constantes en $t$ por definición; la autocovarianza es
+$\gamma(0)=\sigma^2$ y $\gamma(j)=0$ para todo $j\neq 0$, de nuevo sin
+depender de $t$; y el proceso es, en consecuencia, débilmente
+estacionario. La distinción entre las tres variantes no afecta a
+ninguno de estos cálculos, porque los tres primeros pasos del
+procedimiento solo involucran momentos de primer y segundo orden, en
+los que las tres definiciones coinciden por construcción.
+
+::: {#nota-variantes-ruido-blanco .callout-note appearance=“simple” title=“Nota: Por qué la distinción entre las tres variantes de ruido blanco importa”}
+Aunque los dos primeros momentos no distinguen a las tres variantes, sus
+propiedades de orden superior sí difieren, y esa diferencia resulta
+decisiva más adelante. La incorrelación del ruido blanco débil no
+descarta relaciones no lineales entre $\rblanco_t$ y $\rblanco_s$, del
+mismo modo en que la [Idea central “Incorrelación no implica independencia”](../econometria-1/10-covarianza-y-correlacion-entre-dos-variables.qmd#idea-incorrelacion-independencia) de la
+[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd) ya mostró que incorrelación no implica
+independencia en general; el ruido blanco independiente sí descarta esa
+posibilidad. La normalidad del ruido blanco gaussiano, por su parte, es
+la que la [Sección “La función de verosimilitud y el estimador máximo verosímil”](01-la-funcion-de-verosimilitud-y-el-estimador-maxim.qmd) y la
+[sección sobre la estimación por máxima verosimilitud de modelos ARMA](../econometria-2/index.qmd) necesitarán para escribir explícitamente la
+función de verosimilitud de un modelo ARMA, porque sin un supuesto
+distribucional no hay densidad que maximizar, solamente momentos que
+igualar.
+:::
+
+El siguiente proceso añade una media constante al ruido blanco, de modo que su nivel deja de ser cero.
+
+::: {#def-proceso-con-media}
+## Proceso con media
+
+El ***proceso con media*** es $Y_t:=\mu+\rblanco_t$, con
+$\mu\in\mathbb{R}$ constante y $\{\rblanco_t\}$ ruido blanco en el
+sentido de la @def-ruido-blanco.
+:::
+
+Este proceso difiere del ruido blanco únicamente en su nivel: la
+[Proposición “Linealidad de la esperanza”](../econometria-1/04-esperanza-matematica-y-momentos.qmd#prp-linealidad-esperanza) de la [Sección “Espacios de probabilidad”](../econometria-1/01-espacios-de-probabilidad.qmd) da de
+inmediato $\Esp{Y_t}=\mu+\Esp{\rblanco_t}=\mu$, mientras que sumar la
+constante $\mu$ no altera ni la varianza ni ninguna autocovarianza, de
+modo que $\Var(Y_t)=\sigma^2$ y $\gamma(j)=0$ para $j\neq 0$, exactamente
+como en el ruido blanco. El proceso es, en consecuencia, débilmente
+estacionario, y sirve como el ejemplo más simple posible de un proceso
+cuya media no es cero, un caso que en la práctica describe cualquier
+serie que fluctúa aleatoriamente alrededor de un nivel promedio fijo,
+como podría ser la tasa de crecimiento trimestral de una economía madura
+sin ninguna tendencia de largo plazo. Nótese que, hasta este punto, los
+tres procesos examinados, constante, ruido blanco y con media, son
+débilmente estacionarios sin excepción, y que ninguno de los tres
+exhibe ninguna dinámica genuina: el valor de $Y_t$ no depende en
+absoluto de $Y_{t-1}$, a diferencia de lo que ocurrirá con el paseo
+aleatorio de la [Subsección “El paseo aleatorio”](14-el-paseo-aleatorio.qmd).

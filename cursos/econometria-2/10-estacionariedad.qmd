@@ -1,0 +1,105 @@
+---
+title: "Estacionariedad"
+description: "Estacionariedad. Incluye Estacionariedad estricta, Estacionariedad débil y La estacionariedad estricta con momentos finitos implica estacionariedad débil."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos estocásticos, estacionariedad y ergodicidad]
+---
+
+::: {#def-estacionariedad-estricta}
+## Estacionariedad estricta
+
+Un proceso $\{Y_t\}$ es ***estrictamente estacionario*** si,
+para todo $k\in\mathbb{N}$, todo conjunto de índices
+$t_1,\ldots,t_k\in T$ y todo desplazamiento $h$ tal que
+$t_1+h,\ldots,t_k+h\in T$, la distribución conjunta de
+$(Y_{t_1},\ldots,Y_{t_k})$ coincide exactamente con la de
+$(Y_{t_1+h},\ldots,Y_{t_k+h})$.
+:::
+
+La estacionariedad estricta es una condición sobre la distribución
+conjunta completa del proceso, y verificarla directamente a partir de
+datos observados es, en la práctica, inviable: exigiría conocer
+distribuciones conjuntas de cualquier orden. La condición que sí se
+puede verificar, y la que en la práctica econométrica se entiende casi
+siempre cuando se dice simplemente “estacionario”
+sin más calificativo, involucra únicamente los dos primeros momentos.
+
+::: {#def-estacionariedad-debil}
+## Estacionariedad débil
+
+Un proceso $\{Y_t\}$ con segundo momento finito es
+***débilmente estacionario***, o
+***estacionario en covarianza***, si: (i) $\mu_t=\mu$ para
+todo $t$, una constante que no depende de $t$; (ii)
+$\gamma(t,s)$ depende de $t$ y $s$ únicamente a través de la diferencia
+$t-s$, de modo que se puede escribir $\gamma(t,s)=\gamma(t-s)$ como
+función de un solo argumento.
+:::
+
+Bajo estacionariedad débil se escribe $\autocov{j}:=\gamma(j)$ para la
+***autocovarianza de orden $j$***, la covarianza entre
+cualquier par de observaciones separadas exactamente $j$ periodos, y
+$\autocorr{j}:=\autocov{j}/\autocov{0}$ para la
+***autocorrelación de orden $j$***, ambas ya sin dependencia
+de $t$: esta es la propiedad que permite, finalmente, estimar
+$\autocov{j}$ promediando sobre todos los pares de observaciones de la
+trayectoria separados $j$ periodos, en lugar de necesitar múltiples
+realizaciones del proceso.
+
+::: {#prp-estricta-implica-debil}
+## La estacionariedad estricta con momentos finitos implica estacionariedad débil
+
+Si $\{Y_t\}$ es estrictamente estacionario y $\Esp{Y_t^2}<\infty$ para
+todo $t$, entonces $\{Y_t\}$ es débilmente estacionario.
+:::
+
+::: {.proof}
+Por la @def-estacionariedad-estricta aplicada a $k=1$, la
+distribución de $Y_t$ coincide con la de $Y_{t+h}$ para todo $h$, en
+particular con la de $Y_0$; como la esperanza es una función de la
+distribución únicamente, $\mu_t=\Esp{Y_t}=\Esp{Y_0}=\mu_0$ para todo
+$t$, una constante que no depende de $t$. Aplicando la definición a
+$k=2$ con índices $t,s$ y desplazamiento $h=-s$, la distribución
+conjunta de $(Y_t,Y_s)$ coincide con la de $(Y_{t-s},Y_0)$, y como la
+covarianza es también una función de la distribución conjunta
+únicamente,
+$\gamma(t,s)=\Cov(Y_t,Y_s)=\Cov(Y_{t-s},Y_0)=\gamma(t-s,0)$, que depende
+de $t$ y $s$ solo a través de $t-s$. Ambas condiciones de la
+@def-estacionariedad-debil quedan verificadas.
+:::
+
+El recíproco de esta proposición es falso: existen procesos débilmente
+estacionarios que no son estrictamente estacionarios, porque la
+estacionariedad débil solo restringe los dos primeros momentos y nada
+impide que momentos de orden superior, como la asimetría, cambien con
+$t$. Cuando el proceso es conjuntamente normal, sin embargo, la
+distribución completa queda determinada por sus dos primeros momentos
+por la [Definición “Distribución normal multivariante”](../econometria-1/11-la-distribucion-normal-multivariante.qmd#def-normal-multivariante) de la
+[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd), y en ese caso particular estacionariedad
+débil y estricta coinciden.
+
+::: {#prp-propiedades-autocovarianza}
+## Propiedades de la función de autocovarianza
+
+Para un proceso débilmente estacionario, la función de autocovarianza
+satisface: (i) $\autocov{0}\geq 0$; (ii) $|\autocov{j}|\leq\autocov{0}$
+para todo $j$; (iii) $\autocov{j}=\autocov{-j}$ (simetría).
+:::
+
+::: {.proof}
+La propiedad (i) es inmediata, porque $\autocov{0}=\Var(Y_t)\geq 0$ por
+la [Definición “Momentos y varianza”](../econometria-1/04-esperanza-matematica-y-momentos.qmd#def-momentos-varianza) de la [Sección “Espacios de probabilidad”](../econometria-1/01-espacios-de-probabilidad.qmd). La
+propiedad (ii) es la desigualdad de Cauchy–Schwarz de la
+[Lema “Desigualdad de Cauchy–Schwarz”](../matematica-2/04-espacios-con-producto-interno.qmd#lem-cauchy-schwarz), aplicada en el espacio de variables
+aleatorias con producto interno $\langle U,V\rangle=\Cov(U,V)$ ya usado
+en la [Proposición “La correlación está acotada entre -1 y 1”](../econometria-1/10-covarianza-y-correlacion-entre-dos-variables.qmd#prp-correlacion-acotada) de la
+[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd), a $Y_t-\mu$ y $Y_{t-j}-\mu$:
+$|\autocov{j}|=|\Cov(Y_t,Y_{t-j})|\leq
+\sqrt{\Var(Y_t)}\sqrt{\Var(Y_{t-j})}=\autocov{0}$, usando la
+estacionariedad para igualar ambas varianzas a $\autocov{0}$. La
+propiedad (iii) se sigue directamente de la simetría de la covarianza,
+$\Cov(Y_t,Y_{t-j})=\Cov(Y_{t-j},Y_t)$, y de reescribir el lado derecho
+como autocovarianza de orden $-j$ tomando $t-j$ como el nuevo punto de
+referencia.
+:::

@@ -1,0 +1,39 @@
+---
+title: "Sumabilidad cuadrática de los coeficientes"
+description: "Sumabilidad cuadrática de los coeficientes. Incluye Varianza de un proceso de Wold."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, La representación de Wold]
+---
+
+::: {#prp-varianza-wold}
+## Varianza de un proceso de Wold
+
+Para el proceso de la [Teorema “Descomposición de Wold”](32-el-teorema-de-descomposicion-de-wold.qmd#thm-wold), $\Var(Y_t)=\sigma^2
+\sum_{k=0}^{\infty}\psi_k^2$, finita precisamente por la condición de
+sumabilidad cuadrática del teorema.
+:::
+
+::: {.proof}
+Como los términos $\rblanco_{t-k}$ son incorrelacionados entre sí por
+ser ruido blanco, el mismo argumento que en la
+[Proposición “Momentos del AR(1)”](22-el-proceso-ar-1.qmd#prp-momentos-ar1) de la [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) da
+$\Var(Y_t)=\sum_{k=0}^{\infty}\psi_k^2\Var(\rblanco_{t-k})=
+\sigma^2\sum_{k=0}^{\infty}\psi_k^2$, y esta suma es finita exactamente
+cuando $\sum_k\psi_k^2<\infty$, la condición de convergencia de una
+serie de términos no negativos ya estudiada en la
+[Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd).
+:::
+
+La condición $\sum_k\psi_k^2<\infty$, más débil que la sumabilidad
+absoluta $\sum_k|\psi_k|<\infty$ que garantizaba la
+[Subsección “Factorización de polinomios de rezagos”](20-factorizacion-de-polinomios-de-rezagos.qmd) de la
+[Sección “El operador de rezago”](16-el-operador-de-rezago.qmd) para procesos AR y ARMA con raíces
+estrictamente fuera del círculo unitario, es la condición mínima
+compatible con varianza finita: una sucesión $\{\psi_k\}$ que decae
+demasiado lento para ser absolutamente sumable, pero lo bastante rápido
+para ser cuadráticamente sumable, en el sentido preciso que la
+[Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd) ya distinguió al comparar la convergencia de
+$\sum 1/k$ con la de $\sum 1/k^2$, sigue produciendo un proceso de Wold
+válido con varianza finita, aunque quede fuera del alcance de la
+representación ARMA de razón finita de las dos secciones anteriores.

@@ -1,0 +1,123 @@
+---
+title: "Variables aleatorias y funciones de distribución"
+description: "Variables aleatorias y funciones de distribución. Incluye Variable aleatoria, Función de distribución acumulada y Propiedades de la función de distribución."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría I, Fundamentos de probabilidad]
+---
+
+Los eventos de $\mathcal{F}$ pueden ser conjuntos de naturaleza
+arbitraria, sin ninguna estructura numérica; la variable aleatoria es la
+que traduce esos eventos a números reales, permitiendo aplicarles
+directamente todo el aparato de las secciones anteriores. La ganancia es
+considerable: en lugar de razonar sobre subconjuntos abstractos de
+$\Omega$, basta con razonar sobre una función real, para la cual ya se
+dispone del cálculo diferencial e integral de la
+[Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd), de la estructura de espacio vectorial de la
+[Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) y de la noción de límite de la
+[Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd). Esta traducción es la que permite, por ejemplo,
+hablar del límite de una sucesión de variables aleatorias, tema de la
+[Sección “Modos de convergencia”](05-modos-de-convergencia.qmd), sin necesidad de especificar en cada caso el
+espacio de probabilidad subyacente.
+
+::: {#def-variable-aleatoria}
+## Variable aleatoria
+
+Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad. Una
+***variable aleatoria*** es una función $X:\Omega\to
+\mathbb{R}$ tal que, para todo $x\in\mathbb{R}$, el conjunto
+$\{\omega\in\Omega:X(\omega)\leq x\}$ pertenece a $\mathcal{F}$; a esta
+condición se le llama ***medibilidad***.
+:::
+
+La condición de medibilidad es, precisamente, la que garantiza que
+expresiones como $\Prob{X\leq x}$ tengan sentido: sin ella, el conjunto
+$\{\omega:X(\omega)\leq x\}$ podría no ser un evento, y $\Prob{\cdot}$
+no estaría definida sobre él. En la práctica, toda función razonable de
+interés económico, ingresos, precios, tasas de interés, resulta medible
+respecto de cualquier $\sigma$-álgebra suficientemente rica, de modo que
+la medibilidad rara vez es una restricción activa y se dará por
+descontada de aquí en adelante. Una vez fijada $X$, se induce sobre
+$\mathbb{R}$ una nueva probabilidad, $\Prob{X\in\cdot}$, que asigna a
+cada subconjunto razonable de $\mathbb{R}$ la probabilidad del evento
+correspondiente en $\Omega$; esta probabilidad inducida es la que en la
+práctica interesa manipular, porque permite olvidarse por completo del
+espacio muestral original y trabajar exclusivamente sobre la recta
+real, con todo el aparato de las secciones anteriores. Lo que sí
+interesa, y mucho, es resumir el comportamiento probabilístico completo
+de $X$ en una sola función.
+
+::: {#def-fda}
+## Función de distribución acumulada
+
+La ***función de distribución acumulada*** (FDA) de una
+variable aleatoria $X$ es $F_X(x):=\Prob{X\leq x}$ para $x\in
+\mathbb{R}$.
+:::
+
+La FDA describe por completo el comportamiento probabilístico de $X$,
+en el sentido de que $\Prob{a<X\leq b}=F_X(b)-F_X(a)$ para
+cualesquiera $a<b$, y expresiones análogas permiten recuperar la
+probabilidad de cualquier evento de interés sobre $X$ a partir
+únicamente de $F_X$. No toda función, sin embargo, puede ser la FDA de
+alguna variable aleatoria: hace falta que satisfaga ciertas condiciones
+estructurales, que se derivan directamente de los axiomas de Kolmogorov
+de la [Definición “Espacio de probabilidad”](01-espacios-de-probabilidad.qmd#def-espacio-probabilidad) y que conviene dejar establecidas
+de una vez por todas.
+
+::: {#prp-propiedades-fda}
+## Propiedades de la función de distribución
+
+La FDA de cualquier variable aleatoria $X$ satisface: (i) $F_X$ es no
+decreciente; (ii) $\lim_{x\to-\infty}F_X(x)=0$ y
+$\lim_{x\to\infty}F_X(x)=1$; (iii) $F_X$ es continua por la derecha.
+:::
+
+::: {.proof}
+Para (i), si $x_1<x_2$, el evento $\{X\leq x_1\}$ está contenido en
+$\{X\leq x_2\}$, y la monotonía de la
+[Proposición “Propiedades básicas de la probabilidad”](01-espacios-de-probabilidad.qmd#prp-propiedades-probabilidad) da
+$F_X(x_1)=\Prob{X\leq x_1}\leq\Prob{X\leq x_2}=F_X(x_2)$. Para (ii),
+basta aplicar el [Teorema “Continuidad de la probabilidad”](01-espacios-de-probabilidad.qmd#thm-continuidad-probabilidad) a la sucesión
+creciente de eventos $\{X\leq n\}$ cuando $n\to\infty$, cuya unión es
+todo $\Omega$, y a la sucesión creciente $\{X\leq -n\}^c=\{X>-n\}$
+cuando $n\to\infty$, cuya unión también es $\Omega$; el primer límite da
+$F_X(n)\to 1$ y el segundo, tras pasar al complemento, da
+$F_X(-n)\to 0$. Para (iii), fíjese $x$ y aplíquese el
+[Teorema “Continuidad de la probabilidad”](01-espacios-de-probabilidad.qmd#thm-continuidad-probabilidad) a la sucesión decreciente
+$\{X\leq x+1/n\}$, cuya intersección es $\{X\leq x\}$; el argumento del
+teorema se adapta directamente al caso decreciente pasando al
+complemento, y da $F_X(x+1/n)\to F_X(x)$, que es exactamente la
+continuidad por la derecha en $x$.
+:::
+
+Estas tres propiedades caracterizan por completo qué funciones pueden
+ser una FDA: puede demostrarse, aunque no se hará aquí por no
+necesitarse en lo que sigue, que toda función que las satisface es
+efectivamente la FDA de alguna variable aleatoria construida sobre un
+espacio de probabilidad adecuado. En la práctica econométrica, casi
+todas las variables de interés caen en una de dos categorías según
+la forma que adopta su FDA, y distinguirlas resulta indispensable
+porque determina si la esperanza, que se define en la siguiente
+subsección, se calcula mediante una suma o mediante una integral.
+
+::: {#def-discreta-continua}
+## Variables discretas y continuas
+
+Una variable aleatoria $X$ es ***discreta*** si toma valores
+en un conjunto numerable $\{x_1,x_2,\ldots\}$, en cuyo caso su
+comportamiento queda descrito por la ***función de masa de
+probabilidad*** $p_X(x_i):=\Prob{X=x_i}$. Es
+***continua*** si su FDA admite una
+***función de densidad*** $f_X\geq 0$ tal que
+$F_X(x)=\int_{-\infty}^{x}f_X(t)\,dt$ para todo $x$, integral en el
+sentido de Riemann de la [Definición “Sumas de Riemann e integral”](../matematica-2/11-la-integral-de-riemann-y-el-teorema-fundamental.qmd#def-particion-integral-riemann).
+:::
+
+Con la distribución de una variable aleatoria completamente
+caracterizada, ya sea por su función de masa o por su densidad, la
+pregunta natural es cómo resumir esa distribución en unos pocos números
+que capturen sus rasgos más informativos: dónde se centra, qué tan
+dispersa está, y cómo se comporta en sus colas. Esa tarea de resumen es
+la que emprende la esperanza matemática y los momentos que se
+construyen a partir de ella.

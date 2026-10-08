@@ -1,0 +1,124 @@
+---
+title: "El producto cartesiano y las relaciones"
+description: "Para eso hace falta una noción nueva, y lo interesante es que puede construirse con las herramientas ya disponibles, sin introducir ningún objeto primitivo adicional."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Teoría de conjuntos]
+---
+
+Hasta aquí las operaciones entre conjuntos han ignorado por completo el
+orden: la definición de unión no distingue $A\cup B$ de $B\cup A$, y lo mismo
+ocurre con la intersección. Sin embargo, buena parte de la matemática exige
+hablar de pares de objetos en los que el orden sí importa, como el par
+formado por un punto y su segunda coordenada, o el par formado por una fila y
+una columna de una matriz.
+
+Para eso hace falta una noción nueva, y lo interesante es que puede
+construirse con las herramientas ya disponibles, sin introducir ningún objeto
+primitivo adicional.
+
+::: {#def-par-ordenado}
+## Par ordenado
+
+Dados dos objetos $a$ y $b$, el ***par ordenado*** $(a,b)$ se
+define como el conjunto $\bigl\{\{a\},\{a,b\}\bigr\}$.
+:::
+
+Esta definición tiene todo el aspecto de un artificio, y en cierto sentido lo
+es. Su justificación no está en que resulte natural, sino en que cumple
+exactamente la única propiedad que se le exige a un par ordenado, y esa
+propiedad es la que justifica llamarlo así y no de otra manera.
+
+::: {#prp-igualdad-pares}
+## Caracterización de la igualdad de pares ordenados
+
+$(a,b)=(c,d)$ si y solo si $a=c$ y $b=d$.
+:::
+
+::: {.proof}
+La implicación de derecha a izquierda es inmediata: si $a=c$ y $b=d$,
+entonces $\{a\}=\{c\}$ y $\{a,b\}=\{c,d\}$, de modo que los dos conjuntos que
+forman cada par coinciden y, por la [Definición “Igualdad de conjuntos y subconjunto”](06-conjuntos-pertenencia-y-operaciones-basicas.qmd#def-igualdad-conjuntos),
+$(a,b)=(c,d)$.
+
+La implicación recíproca requiere más cuidado, y conviene separarla en dos
+casos según si $a=b$ o no. Supóngase entonces $(a,b)=(c,d)$, es decir,
+$\bigl\{\{a\},\{a,b\}\bigr\}=\bigl\{\{c\},\{c,d\}\bigr\}$.
+
+En el primer caso, si $a=b$, el conjunto de la izquierda se reduce a
+$\bigl\{\{a\},\{a\}\bigr\}=\bigl\{\{a\}\bigr\}$, que tiene un único elemento.
+Para que el conjunto de la derecha sea igual a este, también debe reducirse a
+un único elemento, lo que fuerza $c=d$; y entonces $\{c\}=\{a\}$, de donde
+$c=a$ y, por transitividad con $a=b$ y $c=d$, también $d=b$.
+
+En el segundo caso, si $a\neq b$, el conjunto de la izquierda tiene
+exactamente dos elementos distintos, a saber $\{a\}$ y $\{a,b\}$, de los
+cuales el primero tiene un solo miembro y el segundo tiene dos. El conjunto
+de la derecha debe tener entonces también un elemento de un solo miembro y
+otro de dos miembros; el de un solo miembro solo puede ser $\{c\}$, y como
+$\{c\}=\{a\}$, se obtiene $c=a$.
+
+Queda por identificar $d$. El elemento de dos miembros del lado derecho es
+$\{c,d\}=\{a,d\}$, usando lo recién obtenido, y este conjunto debe coincidir
+con $\{a,b\}$ del lado izquierdo. Como ambos contienen a $a$ y tienen dos
+elementos, el segundo elemento debe coincidir, de donde $d=b$.
+
+En ambos casos se concluye $a=c$ y $b=d$, que es lo que se quería probar.
+:::
+
+Con el par ordenado disponible, la construcción que sigue produce el conjunto
+de todos los pares posibles entre dos conjuntos dados.
+
+::: {#def-producto-cartesiano}
+## Producto cartesiano
+
+Dados dos conjuntos $A$ y $B$, el ***producto cartesiano***
+$A\times B$ es el conjunto de todos los pares ordenados con primera
+componente en $A$ y segunda componente en $B$, esto es,
+
+$$
+A\times B := \bigl\{(a,b) : a\in A \wedge b\in B\bigr\}.
+$$ {#eq-producto-cartesiano}
+:::
+
+La construcción se extiende de manera natural a más de dos conjuntos,
+formando $n$-tuplas ordenadas $(a_1,\ldots,a_n)$ dentro de
+$A_1\times A_2\times\cdots\times A_n$. Este caso general es más relevante de
+lo que parece: el espacio $\mathbb{R}^n$, que se usará constantemente desde
+las secciones sobre espacios métricos en adelante, no es otra cosa que el
+producto cartesiano de $\mathbb{R}$ consigo mismo $n$ veces.
+
+El producto cartesiano permite, además, dar contenido preciso a la idea
+intuitiva de que dos objetos están relacionados entre sí.
+
+::: {#def-relacion}
+## Relación binaria
+
+Una ***relación binaria*** $R$ de $A$ en $B$ es un subconjunto
+$R\subseteq A\times B$. Si $(a,b)\in R$, se escribe $aRb$ y se dice que $a$
+está relacionado con $b$. Cuando $A=B$, se dice simplemente que $R$ es una
+relación en $A$.
+:::
+
+Definir una relación como un conjunto de pares puede parecer una manera
+indirecta de decir algo simple, pero tiene la ventaja de que hace de la
+relación un objeto matemático manipulable, sobre el cual pueden aplicarse
+todas las operaciones ya definidas.
+
+Dos relaciones enteramente familiares ilustran esta manera de verlas. La
+primera es el orden usual $\leq$ en $\mathbb{R}$, que formalmente no es otra
+cosa que el subconjunto
+
+$$
+R_{\leq} = \bigl\{(x,y)\in\mathbb{R}\times\mathbb{R} : y-x\geq 0\bigr\}
+$$
+
+del plano $\mathbb{R}\times\mathbb{R}$; geométricamente corresponde a la
+región situada por encima de la recta $y=x$, incluida la recta misma, de
+manera que decir “$3\leq 7$” equivale a decir que el punto $(3,7)$ cae en esa
+región. La segunda es la divisibilidad en $\mathbb{Z}$, donde $a$ está
+relacionado con $b$ si $a$ divide a $b$, y que corresponde al subconjunto de
+$\mathbb{Z}\times\mathbb{Z}$ formado por los pares $(a,b)$ para los cuales
+existe $k\in\mathbb{Z}$ con $b=ak$; el par $(3,12)$ pertenece a esa relación
+porque $12=3\times 4$, mientras que $(3,13)$ no, porque ningún entero
+multiplicado por $3$ da $13$.

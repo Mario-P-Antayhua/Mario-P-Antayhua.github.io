@@ -3,8 +3,18 @@ title: "Econometría II"
 description: "Mis apuntes de Econometría II."
 number-sections: false
 toc: false
+listing:
+  contents: "*-*.qmd"
+  type: table
+  sort: "filename"
+  fields: [title, description]
 ---
 
 <p class="estado">En proceso</p>
 
-Los temas se publican como notas independientes, a medida que los termino.
+Aquí desarrollo la teoría de la verosimilitud y la inferencia asintótica, y después los procesos estocásticos, el operador de rezago y los modelos autorregresivos, de medias móviles y ARMA, hasta la representación de Wold.
+
+## Notas {.unnumbered}
+
+::: {#listado}
+:::

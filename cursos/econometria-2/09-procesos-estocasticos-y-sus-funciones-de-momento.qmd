@@ -1,0 +1,83 @@
+---
+title: "Procesos estocásticos y sus funciones de momentos"
+description: "Procesos estocásticos y sus funciones de momentos. Incluye Proceso estocástico y Media, varianza y función de autocovarianza."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos estocásticos, estacionariedad y ergodicidad]
+---
+
+Hasta aquí, cada variable aleatoria del curso ha vivido aislada, o
+a lo sumo acompañada de un número finito de otras variables dentro de un
+vector aleatorio. Los datos económicos que se observan a lo largo del
+tiempo, un producto interno bruto trimestral, una tasa de interés
+diaria, exigen algo distinto: una colección de variables aleatorias
+indexada no por un conjunto finito sino por el tiempo mismo, en la que
+cada observación puede depender de las anteriores. Esta sección
+introduce esa colección, el proceso estocástico, y las dos propiedades
+que hacen posible estimar sus características a partir de una única
+trayectoria observada: la estacionariedad, que exige que el proceso se
+comporte de la misma manera en cualquier punto del tiempo, y la
+ergodicidad, que exige que una sola trayectoria suficientemente larga
+contenga, en un sentido preciso, toda la información que contendría
+observar muchas realizaciones independientes del mismo proceso. Sin
+estas dos propiedades, ningún promedio muestral calculado sobre una
+serie de tiempo tendría derecho a llamarse un estimador consistente de
+nada, porque la ley de los grandes números de la
+[Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd) se demostró para muestras independientes e
+idénticamente distribuidas, hipótesis que un proceso estocástico
+genérico no satisface.
+
+::: {#def-proceso-estocastico}
+## Proceso estocástico
+
+Un ***proceso estocástico*** es una colección de variables
+aleatorias $\{Y_t\}_{t\in T}$, definidas sobre un mismo espacio de
+probabilidad, indexadas por un conjunto $T$ que en el curso será
+siempre $T=\mathbb{Z}$ o $T=\mathbb{N}$. Para cada resultado
+$\omega\in\Omega$ fijo, la función $t\mapsto Y_t(\omega)$ es una
+***trayectoria*** o ***realización*** del
+proceso; para cada instante $t$ fijo, $Y_t$ es una variable aleatoria
+ordinaria en el sentido de la [Definición “Variable aleatoria”](../econometria-1/03-variables-aleatorias-y-funciones-de-distribucion.qmd#def-variable-aleatoria).
+:::
+
+Esta doble lectura, un proceso estocástico como una familia de
+variables aleatorias indexadas por $t$, o como una distribución de
+probabilidad sobre trayectorias completas, es la fuente de una
+dificultad práctica ineludible: en la econometría de series de tiempo
+casi nunca se dispone de varias realizaciones independientes del mismo
+proceso, un lujo habitual en los datos de corte transversal, sino de una
+sola trayectoria observada, $y_1,\ldots,y_n$. Toda la teoría que sigue
+está diseñada para que, bajo condiciones razonables, esa única
+trayectoria baste para inferir las propiedades del proceso completo, de
+la misma manera en que un solo país observado durante varias décadas
+permite estimar la relación entre su inflación y su tasa de interés,
+sin necesidad de observar simultáneamente otros países que hayan vivido
+exactamente la misma historia económica.
+
+::: {#def-momentos-proceso}
+## Media, varianza y función de autocovarianza
+
+Para un proceso estocástico $\{Y_t\}$ con segundo momento finito en
+cada $t$, la ***función de media*** es
+$\mu_t:=\Esp{Y_t}$, y la ***función de autocovarianza*** es
+
+$$
+\gamma(t,s) := \Cov(Y_t,Y_s) = \Esp{(Y_t-\mu_t)(Y_s-\mu_s)},
+$$
+
+definida para cada par $(t,s)\in T\times T$; en particular,
+$\gamma(t,t)=\Var(Y_t)$.
+:::
+
+Estas dos funciones, $\mu_t$ y $\gamma(t,s)$, generalizan
+directamente a la media y la varianza de una sola variable aleatoria,
+con la salvedad de que ahora hace falta un valor por cada instante $t$,
+y una covarianza por cada par de instantes $(t,s)$, en lugar de un
+único número. En general, $\mu_t$ y $\gamma(t,s)$ dependen de $t$ y de
+$s$ de manera
+arbitraria, lo que haría inútil cualquier intento de estimarlas a partir
+de una sola trayectoria: no hay forma de estimar $\Var(Y_{2024})$ con
+una sola observación de $Y_{2024}$, del mismo modo en que no hay forma
+de estimar la varianza de una variable aleatoria con una sola
+realización suya. La estacionariedad es la restricción que rescata esta
+situación, exigiendo que esas funciones no cambien con $t$.

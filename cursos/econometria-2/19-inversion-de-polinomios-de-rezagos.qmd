@@ -1,0 +1,74 @@
+---
+title: "Inversión de polinomios de rezagos"
+description: "Inversión de polinomios de rezagos. Incluye Inversión de un polinomio de rezagos de primer orden."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, El operador de rezago y los polinomios de rezagos]
+---
+
+La utilidad última de los polinomios de rezagos es escribir de forma
+compacta procesos definidos implícitamente, como
+$\phi(\Lag)Y_t=\rblanco_t$, y despejar $Y_t$ en términos únicamente del
+ruido blanco, lo que exige invertir el polinomio $\phi(\Lag)$. Esa
+inversión no siempre existe, y cuando existe, se calcula mediante una
+herramienta ya construida en el curso: la serie geométrica.
+
+::: {#thm-inversion-polinomio-primer-orden}
+## Inversión de un polinomio de rezagos de primer orden
+
+Sea $\phi(\Lag)=1-\phi\Lag$ con $|\phi|<1$. Entonces
+$\phi(\Lag)^{-1}=\sum_{j=0}^{\infty}\phi^j\Lag^j$, en el sentido de que
+$\phi(\Lag)^{-1}Y_t=\sum_{j=0}^{\infty}\phi^jY_{t-j}$ converge en media
+cuadrática para todo proceso $\{Y_t\}$ débilmente estacionario, y
+satisface $\phi(\Lag)\bigl[\phi(\Lag)^{-1}Y_t\bigr]=Y_t$.
+:::
+
+::: {.proof}
+La estrategia consiste en reconocer que la sucesión de sumas parciales
+$\sum_{j=0}^{n}\phi^j\Lag^j$ es, formalmente, la misma serie geométrica
+de razón $\phi$ estudiada en la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd), ahora aplicada a
+operadores en lugar de a números. La convergencia en media cuadrática de
+$\sum_{j=0}^{n}\phi^jY_{t-j}$ cuando $n\to\infty$ se sigue de que, para
+$\{Y_t\}$ estacionario con varianza $\sigma_Y^2$, la cola de la serie
+satisface
+$\Esp{\bigl(\sum_{j=n+1}^{\infty}\phi^jY_{t-j}\bigr)^2}\leq
+\sigma_Y^2\bigl(\sum_{j=n+1}^{\infty}|\phi|^j\bigr)^2$, una desigualdad
+que se sigue de acotar la varianza de una suma por el cuadrado de la
+suma de las desviaciones estándar individuales, y el término de la
+derecha tiende a cero cuando $n\to\infty$ precisamente porque
+$\sum_{j=0}^{\infty}|\phi|^j$ converge por ser $|\phi|<1$, la condición
+de convergencia de la serie geométrica de la
+[Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd). Para verificar que el límite así construido
+efectivamente invierte a $\phi(\Lag)$, aplíquese $\phi(\Lag)=1-\phi\Lag$
+a la suma parcial $\sum_{j=0}^{n}\phi^j\Lag^j$,
+
+$$
+(1-\phi\Lag)\sum_{j=0}^{n}\phi^j\Lag^j
+  = \sum_{j=0}^{n}\phi^j\Lag^j - \sum_{j=0}^{n}\phi^{j+1}\Lag^{j+1}
+  = 1 - \phi^{n+1}\Lag^{n+1},
+$$
+
+una suma telescópica en la que todos los términos intermedios se
+cancelan. Aplicado a $Y_t$, el término $\phi^{n+1}\Lag^{n+1}Y_t=
+\phi^{n+1}Y_{t-n-1}$ tiende a cero en media cuadrática cuando
+$n\to\infty$, porque $\Esp{(\phi^{n+1}Y_{t-n-1})^2}=\phi^{2(n+1)}
+\sigma_Y^2\to 0$ al ser $|\phi|<1$, de modo que, pasando al límite,
+$\phi(\Lag)\bigl[\sum_{j=0}^{\infty}\phi^j\Lag^j\bigr]Y_t=Y_t$.
+:::
+
+::: {#idea-anticipacion-ar1-inversion .callout-tip appearance=“simple” title=“Idea central: Anticipación: la representación MA($\infty$) de un AR(1)”}
+Este teorema es, en esencia, todo el trabajo algebraico que
+la [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) necesitará para escribir la solución de un proceso
+autorregresivo de primer orden $Y_t=\phi Y_{t-1}+\rblanco_t$, que en
+notación de rezagos es $(1-\phi\Lag)Y_t=\rblanco_t$: aplicando
+$\phi(\Lag)^{-1}=\sum_{j=0}^{\infty}\phi^j\Lag^j$ a ambos lados,
+$Y_t=\sum_{j=0}^{\infty}\phi^j\rblanco_{t-j}$, una suma infinita de
+ruido blanco pasado con pesos geométricamente decrecientes. La condición
+$|\phi|<1$ de este teorema es, expresada en el lenguaje de la
+[Idea central “Qué significa geométricamente una raíz dentro o fuera del círculo unitario”](18-raices-del-polinomio-caracteristico-y-el-circulo.qmd#idea-raices-circulo-unitario), exactamente la condición de que la
+raíz de $\phi(z)=1-\phi z$, situada en $z=1/\phi$, quede fuera del
+círculo unitario, porque $|1/\phi|>1$ equivale a $|\phi|<1$; esta
+equivalencia entre una condición sobre un coeficiente y una condición
+sobre una raíz es la que la subsección final generaliza a polinomios de
+cualquier orden.
+:::

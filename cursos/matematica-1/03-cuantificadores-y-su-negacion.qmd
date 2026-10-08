@@ -1,0 +1,166 @@
+---
+title: "Cuantificadores y su negación"
+description: "Cuantificadores y su negación. Incluye Cuantificadores universal y existencial y Negación de proposiciones cuantificadas."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
+---
+
+Queda pendiente un asunto que la primera subsección dejó abierto. Se dijo
+allí que un enunciado con una variable libre, como “$x$ es primo”, no es una
+proposición porque su valor de verdad depende de qué se sustituya en lugar de
+$x$; y se anticipó que hay dos maneras de convertirlo en una proposición
+genuina. La primera, fijar la variable en un valor concreto, es trivial. La
+segunda, mucho más útil, consiste en especificar sobre cuántos elementos de
+un conjunto de referencia se afirma la propiedad, y es la que introducen los
+cuantificadores.
+
+::: {#def-cuantificadores}
+## Cuantificadores universal y existencial
+
+Sea $U$ un conjunto y $P(x)$ una función proposicional definida para los
+elementos de $U$, llamado ***dominio de discurso***. El
+***cuantificador universal*** afirma que $P(x)$ se cumple para
+todo elemento de $U$, y se escribe $\forall x\in U,\ P(x)$; esta proposición
+es verdadera si y solo si no existe ningún elemento de $U$ para el cual
+$P(x)$ sea falsa. El ***cuantificador existencial*** afirma que
+$P(x)$ se cumple para al menos un elemento de $U$, y se escribe
+$\exists x\in U,\ P(x)$; esta proposición es verdadera si y solo si $U$
+contiene al menos un elemento que satisface $P$.
+:::
+
+Nótese la asimetría entre ambos: refutar una afirmación universal requiere un
+solo contraejemplo, mientras que establecerla exige un argumento que cubra
+todos los casos; y con la existencial ocurre exactamente lo contrario, pues
+basta exhibir un caso para establecerla, pero refutarla obliga a descartar
+todos. Esta asimetría es la que hace que ciertos resultados se demuestren con
+facilidad y otros con dificultad, aunque su enunciado parezca simétrico.
+
+Tomando como dominio de discurso $U=\mathbb{N}$, estas dos cláusulas de la
+@def-cuantificadores se distinguen con nitidez en tres afirmaciones
+concretas. La proposición $\forall n\in\mathbb{N},\ n+1>n$ es verdadera,
+porque ningún natural incumple la desigualdad y por tanto no hay ningún
+elemento que la refute. En cambio, la proposición
+$\forall n\in\mathbb{N},\ n \text{ es primo}$ es falsa, y para establecerlo
+basta exhibir $n=4$, que pertenece a $\mathbb{N}$ y no es primo. Por su
+parte, la proposición $\exists n\in\mathbb{N},\ n^2=n$ es verdadera, porque
+$n=1$ la satisface, sin que haga falta que la satisfagan todos los naturales;
+esta última ilustra precisamente que la existencial, a diferencia de la
+universal, se resuelve con un solo testigo favorable.
+
+El caso del cuantificador universal aplicado a un dominio vacío merece
+mención aparte, porque su tratamiento suele resultar contraintuitivo y sin
+embargo es una consecuencia directa de la definición que acaba de darse.
+
+::: {#nota-vacua .callout-note appearance=“simple” title=“Nota: verdad vacua”}
+Si $U=\varnothing$, entonces $\forall x\in U,\ P(x)$ es verdadera para
+cualquier función proposicional $P$, sin importar cuál sea, porque la
+definición exige que no exista ningún elemento de $U$ que incumpla $P$, y en
+un conjunto vacío no existe absolutamente ningún elemento, cumpla o no la
+propiedad.
+:::
+
+Este fenómeno, llamado verdad vacua, no es una anomalía del lenguaje sino una
+consecuencia obligada de tomar en serio la definición del cuantificador
+universal. Reaparecerá de forma natural más adelante en cualquier argumento
+que empiece por descartar, mediante una hipótesis previa, la posibilidad de
+que el conjunto sobre el que se cuantifica sea vacío; y será, en particular,
+la razón por la cual el conjunto vacío resulta ser subconjunto de todos los
+conjuntos.
+
+Con frecuencia una afirmación involucra dos variables ligadas por
+cuantificadores distintos, y en ese caso el orden en que se escriben no es en
+absoluto indiferente.
+
+::: {#exm-orden-cuantificadores}
+## El orden de los cuantificadores cambia el significado
+
+Tómese como dominio de discurso los números reales. La proposición
+$\forall x\in\mathbb{R},\ \exists y\in\mathbb{R},\ y>x$ afirma que, para cada
+número real, existe alguno mayor que él, lo cual es verdadero: basta tomar
+$y=x+1$, y esa elección de $y$ puede depender de qué $x$ se haya fijado
+primero. En cambio, la proposición
+$\exists y\in\mathbb{R},\ \forall x\in\mathbb{R},\ y>x$ afirma que existe un
+único número real mayor que todos los demás, lo cual es falso, porque
+cualquier candidato a ese número $y$ queda superado por $y+1$.
+:::
+
+La diferencia entre ambas proposiciones es exactamente el orden de los
+cuantificadores: en la primera, $y$ puede elegirse después de conocer $x$ y en
+función de él; en la segunda, $y$ debe fijarse antes y servir para todos los
+$x$ a la vez. Esta distinción, que aquí puede parecer un juego, será la que
+separe la continuidad de la continuidad uniforme cuando se estudien
+funciones, y la que haga que la definición de límite exija leerse con cuidado.
+
+Corresponde ahora el resultado que más se usará de esta subsección, y que
+indica cómo se niega una afirmación cuantificada.
+
+::: {#thm-negacion-cuantificadores}
+## Negación de proposiciones cuantificadas
+
+Sea $U$ un conjunto y $P(x)$ una función proposicional. Entonces
+
+$$
+\neg\bigl(\forall x\in U,\ P(x)\bigr) \equiv \exists x\in U,\ \neg P(x),
+$$ {#eq-negacion-universal}
+
+y, simétricamente,
+
+$$
+\neg\bigl(\exists x\in U,\ P(x)\bigr) \equiv \forall x\in U,\ \neg P(x).
+$$ {#eq-negacion-existencial}
+:::
+
+::: {.proof}
+Se prueban las dos equivalencias por separado, porque la segunda se deduce de la primera aplicada a la negación de la función proposicional.
+
+Afirmar $\neg(\forall x\in U, P(x))$ es afirmar que no ocurre que $P(x)$ se
+cumpla para todo elemento de $U$, es decir, que la afirmación universal
+falla. Ahora bien, por la @def-cuantificadores, una afirmación
+universal es verdadera precisamente cuando ningún elemento la incumple, de
+modo que falla exactamente cuando existe al menos un elemento de $U$ que
+constituye un contraejemplo, esto es, un elemento para el cual $P$ no se
+cumple.
+
+Pero eso es literalmente lo que dice $\exists x\in U,\ \neg P(x)$: que existe
+al menos un elemento de $U$ que satisface la propiedad negada. Ambas
+proposiciones describen la misma situación, y por lo tanto son equivalentes
+en el sentido de la [Definición “Proposiciones equivalentes”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#def-equivalencia).
+
+Para @eq-negacion-existencial, basta aplicar lo ya probado a la función proposicional $Q(x):=\neg P(x)$. Como $\neg Q(x)$ equivale a $P(x)$, la equivalencia @eq-negacion-universal escrita para $Q$ dice
+
+$$
+\neg\bigl(\forall x\in U,\ \neg P(x)\bigr) \equiv \exists x\in U,\ P(x).
+$$
+
+Negar ambos miembros preserva la equivalencia, y la doble negación del primero lo deja como $\forall x\in U,\ \neg P(x)$, de modo que
+
+$$
+\forall x\in U,\ \neg P(x) \equiv \neg\bigl(\exists x\in U,\ P(x)\bigr),
+$$
+
+que es @eq-negacion-existencial leída de derecha a izquierda.
+:::
+
+Esta ley de negación es, en esencia, la versión cuantificada de las leyes de
+De Morgan de la [Proposición “Equivalencias lógicas fundamentales”](02-tablas-de-verdad-y-equivalencias-logicas.qmd#prp-equivalencias): negar un “para todo” produce un
+“existe” con la propiedad negada, exactamente como negar una conjunción
+produce una disyunción de negaciones. La analogía no es casual, puesto que un
+cuantificador universal sobre un dominio finito puede pensarse como una gran
+conjunción de todos los casos, y uno existencial como una gran disyunción.
+
+::: {#nota-regla-practica-negacion .callout-note appearance=“simple” title=“Nota: una regla práctica que se usará sin excepción”}
+Para negar una proposición con varios cuantificadores anidados, el
+@thm-negacion-cuantificadores se aplica de afuera hacia adentro, uno a
+la vez, intercambiando cada $\forall$ por $\exists$ y viceversa, hasta que la
+negación llega a la función proposicional más interna. Por ejemplo, la
+negación de $\forall x\in U,\ \exists y\in V,\ P(x,y)$ es
+$\exists x\in U,\ \forall y\in V,\ \neg P(x,y)$.
+:::
+
+Aplicar la regla de un solo salto, en vez de intercambiar los cuantificadores
+uno por uno, es el error más frecuente al negar afirmaciones matemáticas, y
+conviene evitarlo sistemáticamente escribiendo el intercambio paso a paso las
+primeras veces que se practique. La negación de la definición de límite, que
+aparecerá más adelante y que involucra tres cuantificadores anidados, es el
+caso donde este cuidado más rinde.

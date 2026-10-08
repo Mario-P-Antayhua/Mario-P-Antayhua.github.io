@@ -1,0 +1,201 @@
+---
+title: "Diferenciación en varias variables"
+description: "Diferenciación en varias variables. Incluye Derivada parcial, Diferenciabilidad y gradiente y Diferenciabilidad y derivadas parciales."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas III, Cálculo diferencial e integral]
+---
+
+La derivada de una función de una variable mide una pendiente, pero esa
+lectura deja de tener sentido directo cuando el dominio es
+$\mathbb{R}^n$ con $n>1$, porque ya no hay una única dirección a lo
+largo de la cual medir el cambio de $f$. La solución consiste en medir
+el cambio por separado a lo largo de cada eje coordenado, y luego reunir
+esas mediciones parciales en un solo objeto lineal.
+
+::: {#def-derivada-parcial}
+## Derivada parcial
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$. La
+***derivada parcial*** de $f$ respecto de la $i$-ésima
+coordenada en $\vect{p}\in D$ es
+
+$$
+\frac{\partial f}{\partial x_i}(\vect{p})
+  := \lim_{h\to 0}\frac{f(\vect{p}+h\vect{e}_i)-f(\vect{p})}{h},
+$$
+
+donde $\vect{e}_i$ es el $i$-ésimo vector de la base canónica, cuando
+ese límite existe.
+:::
+
+Que existan las $n$ derivadas parciales en un punto no basta, por sí
+solo, para garantizar que $f$ admita una buena aproximación lineal cerca
+de ese punto: una función puede tener todas sus derivadas parciales bien
+definidas y aun así no comportarse linealmente en ninguna dirección que
+no sea uno de los ejes coordenados. La noción correcta, más exigente que
+la mera existencia de derivadas parciales, es la diferenciabilidad.
+
+::: {#def-diferenciabilidad-gradiente}
+## Diferenciabilidad y gradiente
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}$. Se dice que
+$f$ es ***diferenciable*** en $\vect{p}\in D$ si existe un
+vector $\nabla f(\vect{p})\in\mathbb{R}^n$, llamado el
+***gradiente*** de $f$ en $\vect{p}$, tal que
+
+$$
+\lim_{\vect{h}\to\vect{0}}
+  \frac{f(\vect{p}+\vect{h})-f(\vect{p})-\langle\nabla f(\vect{p}),
+  \vect{h}\rangle}{\|\vect{h}\|} = 0,
+$$
+
+donde $\langle\cdot,\cdot\rangle$ y $\|\cdot\|$ son el producto interno y
+la norma euclidianos de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd).
+:::
+
+La definición de diferenciabilidad no indica cómo calcular el gradiente; la relación con las derivadas parciales lo resuelve y delimita hasta dónde llega la implicación inversa.
+
+::: {#prp-diferenciabilidad-parciales}
+## Diferenciabilidad y derivadas parciales
+
+Si $f$ es diferenciable en $\vect{p}$, entonces todas sus derivadas
+parciales existen en $\vect{p}$ y el gradiente es exactamente el vector
+de esas derivadas parciales,
+$\nabla f(\vect{p})=\bigl(\partial f/\partial x_1(\vect{p}),\ldots,
+\partial f/\partial x_n(\vect{p})\bigr)$. Recíprocamente, si las $n$
+derivadas parciales de $f$ existen en una vecindad de $\vect{p}$ y son
+continuas en $\vect{p}$, entonces $f$ es diferenciable en $\vect{p}$.
+:::
+
+::: {.proof}
+La primera afirmación se obtiene evaluando la definición de
+diferenciabilidad en la dirección particular $\vect{h}=h\vect{e}_i$, con
+$h\to 0$: el límite de la @def-diferenciabilidad-gradiente se
+reduce entonces a
+$\lim_{h\to 0}\bigl[f(\vect{p}+h\vect{e}_i)-f(\vect{p})-h\,
+(\nabla f(\vect{p}))_i\bigr]/|h|=0$, lo cual, dividiendo por el signo de
+$h$, obliga a que
+$\lim_{h\to 0}[f(\vect{p}+h\vect{e}_i)-f(\vect{p})]/h$ exista y sea
+igual a $(\nabla f(\vect{p}))_i$, que es precisamente
+$\partial f/\partial x_i(\vect{p})$ por la
+@def-derivada-parcial. Para la segunda afirmación, el recíproco bajo continuidad de las derivadas parciales, se descompone el incremento de $f$ en $n$ incrementos, cada uno a lo largo de un solo eje coordenado. Sea $\vect{h}=(h_1,\ldots,h_n)$, y sean $\vect{h}^{(0)}:=\vect{0}$ y $\vect{h}^{(i)}:=(h_1,\ldots,h_i,0,\ldots,0)$ para $i=1,\ldots,n$, de modo que $\vect{h}^{(n)}=\vect{h}$ y
+
+$$
+f(\vect{p}+\vect{h})-f(\vect{p})=\sum_{i=1}^{n}\bigl[f(\vect{p}+\vect{h}^{(i)})-f(\vect{p}+\vect{h}^{(i-1)})\bigr].
+$$
+
+Los dos puntos de cada corchete difieren solo en la $i$-ésima coordenada, así que el teorema del valor medio de una variable, aplicado a $s\mapsto f(\vect{p}+\vect{h}^{(i-1)}+s\vect{e}_i)$ en el intervalo de extremos $0$ y $h_i$, da un $\theta_i\in(0,1)$ con
+
+$$
+f(\vect{p}+\vect{h}^{(i)})-f(\vect{p}+\vect{h}^{(i-1)})=\frac{\partial f}{\partial x_i}(\vect{\xi}_i)\,h_i,
+  \qquad \vect{\xi}_i:=\vect{p}+\vect{h}^{(i-1)}+\theta_i h_i\vect{e}_i,
+$$
+
+siempre que $\|\vect{h}\|$ sea lo bastante pequeño para que los puntos intermedios permanezcan en la vecindad donde existen las derivadas parciales. Restando $\langle\nabla f(\vect{p}),\vect{h}\rangle=\sum_i \frac{\partial f}{\partial x_i}(\vect{p})\,h_i$ queda
+
+$$
+f(\vect{p}+\vect{h})-f(\vect{p})-\langle\nabla f(\vect{p}),\vect{h}\rangle=\sum_{i=1}^{n}\Bigl[\frac{\partial f}{\partial x_i}(\vect{\xi}_i)-\frac{\partial f}{\partial x_i}(\vect{p})\Bigr]h_i.
+$$
+
+Como $\|\vect{\xi}_i-\vect{p}\|\leq\|\vect{h}\|$ y cada derivada parcial es continua en $\vect{p}$, para cada $\varepsilon>0$ existe $\delta>0$ tal que cada corchete es menor que $\varepsilon/n$ en valor absoluto cuando $\|\vect{h}\|<\delta$. Puesto que además $|h_i|\leq\|\vect{h}\|$, el valor absoluto del lado izquierdo no supera $\varepsilon\|\vect{h}\|$, y dividir por $\|\vect{h}\|$ es exactamente la definición de diferenciabilidad con gradiente $\nabla f(\vect{p})$.
+:::
+
+Cuando $f$ tiene valores vectoriales en lugar de escalares, cada
+coordenada de $f$ aporta su propio gradiente, y esos gradientes se
+reúnen en una sola matriz que generaliza, de manera directa, tanto al
+gradiente como a la derivada ordinaria.
+
+::: {#def-jacobiana}
+## Matriz jacobiana
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y $f:D\to\mathbb{R}^m$, con
+componentes $f=(f_1,\ldots,f_m)$. Si cada $f_j$ es diferenciable en
+$\vect{p}$, la ***matriz jacobiana*** de $f$ en $\vect{p}$
+es la matriz $\mat{J}_f(\vect{p})\in\mathbb{R}^{m\times n}$ cuya
+$j$-ésima fila es $\nabla f_j(\vect{p})^{\top}$, es decir,
+$(\mat{J}_f(\vect{p}))_{ji}=\partial f_j/\partial x_i(\vect{p})$.
+:::
+
+Con la matriz jacobiana como objeto que resume la derivada de una función vectorial, la derivada de una composición se obtiene multiplicando matrices.
+
+::: {#thm-regla-cadena-multivariable}
+## Regla de la cadena en varias variables
+
+Sean $g:D\to\mathbb{R}^n$ diferenciable en $\vect{p}\in D\subseteq
+\mathbb{R}^k$ y $f:E\to\mathbb{R}^m$ diferenciable en $g(\vect{p})\in
+E\subseteq\mathbb{R}^n$, con $g(D)\subseteq E$. Entonces $f\circ g$ es
+diferenciable en $\vect{p}$ y
+
+$$
+\mat{J}_{f\circ g}(\vect{p}) = \mat{J}_f\bigl(g(\vect{p})\bigr)\,
+  \mat{J}_g(\vect{p}).
+$$ {#eq-regla-cadena-jacobiana}
+:::
+
+::: {.proof}
+La estrategia consiste en verificar directamente la definición de
+diferenciabilidad para $f\circ g$, usando las aproximaciones lineales de
+$f$ en $g(\vect{p})$ y de $g$ en $\vect{p}$ por separado, y componerlas.
+Escribiendo $\vect{q}=g(\vect{p})$, la diferenciabilidad de $g$ en
+$\vect{p}$ da
+
+$$
+g(\vect{p}+\vect{h}) = \vect{q} + \mat{J}_g(\vect{p})\vect{h}
+  + \vect{r}_1(\vect{h}), \qquad
+  \frac{\|\vect{r}_1(\vect{h})\|}{\|\vect{h}\|}\xrightarrow[\vect{h}\to
+  \vect{0}]{} 0,
+$$
+
+y la diferenciabilidad de $f$ en $\vect{q}$ da, para cualquier
+incremento $\vect{k}$,
+
+$$
+f(\vect{q}+\vect{k}) = f(\vect{q}) + \mat{J}_f(\vect{q})\vect{k}
+  + \vect{r}_2(\vect{k}), \qquad
+  \frac{\|\vect{r}_2(\vect{k})\|}{\|\vect{k}\|}\xrightarrow[\vect{k}\to
+  \vect{0}]{} 0.
+$$
+
+Sustituyendo $\vect{k}=\mat{J}_g(\vect{p})\vect{h}+\vect{r}_1(\vect{h})$
+en la segunda expansión y usando la linealidad de $\mat{J}_f(\vect{q})$,
+
+$$
+(f\circ g)(\vect{p}+\vect{h})
+  = f(\vect{q}) + \mat{J}_f(\vect{q})\mat{J}_g(\vect{p})\vect{h}
+  + \underbrace{\mat{J}_f(\vect{q})\vect{r}_1(\vect{h})
+  + \vect{r}_2\bigl(\mat{J}_g(\vect{p})\vect{h}+\vect{r}_1(\vect{h})
+  \bigr)}_{\text{resto}},
+$$ {#eq-regla-cadena-expansion}
+
+y falta verificar que el resto de @eq-regla-cadena-expansion,
+dividido por $\|\vect{h}\|$, tiende a cero cuando $\vect{h}\to\vect{0}$.
+El primer sumando del resto lo hace porque
+$\|\vect{r}_1(\vect{h})\|/\|\vect{h}\|\to 0$ y $\mat{J}_f(\vect{q})$ es
+una transformación lineal fija, y el segundo lo hace porque
+$\vect{k}=\mat{J}_g(\vect{p})\vect{h}+\vect{r}_1(\vect{h})\to\vect{0}$
+cuando $\vect{h}\to\vect{0}$, y para $\vect{h}$ suficientemente
+pequeño $\|\vect{k}\|$ está acotado por un múltiplo de $\|\vect{h}\|$,
+de modo que $\|\vect{r}_2(\vect{k})\|/\|\vect{h}\|$ hereda el límite
+cero de $\|\vect{r}_2(\vect{k})\|/\|\vect{k}\|$. Con el resto controlado,
+@eq-regla-cadena-expansion es exactamente la afirmación de que
+$f\circ g$ es diferenciable en $\vect{p}$ con matriz jacobiana
+$\mat{J}_f(\vect{q})\mat{J}_g(\vect{p})$, que es
+@eq-regla-cadena-jacobiana.
+:::
+
+::: {#idea-gradiente-direccion-maxima .callout-tip appearance=“simple” title=“Idea central: El gradiente apunta en la dirección de máximo crecimiento”}
+Para un vector unitario $\vect{u}$, la derivada direccional de $f$ en
+$\vect{p}$ a lo largo de $\vect{u}$ es
+$\langle\nabla f(\vect{p}),\vect{u}\rangle$, un caso particular de la
+@def-diferenciabilidad-gradiente con $\vect{h}=t\vect{u}$ y
+$t\to 0$. Por la desigualdad de Cauchy–Schwarz de la
+[Lema “Desigualdad de Cauchy–Schwarz”](../matematica-2/04-espacios-con-producto-interno.qmd#lem-cauchy-schwarz), ese producto interno está acotado por
+$\|\nabla f(\vect{p})\|$ y alcanza ese máximo exactamente cuando
+$\vect{u}$ apunta en la misma dirección que $\nabla f(\vect{p})$. Esta
+lectura, puramente geométrica, es la que justificará el nombre y el
+sentido del método de ascenso más pronunciado en la
+[Sección “Existencia de un óptimo: el teorema de Weierstrass”](04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd): moverse en la dirección del gradiente es, entre
+todas las direcciones posibles de longitud fija, la que produce el mayor
+incremento posible de $f$ en primer orden.
+:::

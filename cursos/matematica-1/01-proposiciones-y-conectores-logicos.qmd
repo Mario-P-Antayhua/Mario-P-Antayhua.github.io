@@ -1,0 +1,148 @@
+---
+title: "Proposiciones y conectores lógicos"
+description: "Todo el conocimiento matemático se organiza en enunciados que se afirman verdaderos a partir de otros enunciados ya aceptados, mediante una cadena de razonamiento que cualquier lector pueda verificar paso a paso."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
+---
+
+Todo el conocimiento matemático se organiza en enunciados que se afirman
+verdaderos a partir de otros enunciados ya aceptados, mediante una cadena de
+razonamiento que cualquier lector pueda verificar paso a paso. Esa cadena es
+lo que se llama una demostración, y antes de poder construir una con solidez
+hace falta precisar el lenguaje en el que se escribe.
+
+Ese lenguaje tiene tres componentes que conviene distinguir desde el
+principio. El primero es el vocabulario: qué cuenta como un enunciado con
+sentido matemático y qué no. El segundo es la sintaxis: cómo se combinan
+varios enunciados para formar otros más complejos, y qué valor de verdad
+resulta de esas combinaciones. El tercero, y el más importante para lo que
+sigue, es la estructura argumentativa: qué forma debe tener una cadena de
+razonamiento para que efectivamente establezca lo que pretende establecer, y
+no algo distinto o nada en absoluto.
+
+Esta sección construye los tres componentes en ese orden, y termina con el
+principio de inducción matemática, que es la primera herramienta de
+demostración genuinamente nueva respecto de la lógica elemental. La
+inducción reaparecerá una y otra vez a lo largo de todo lo que viene, cada
+vez que una fórmula dependa de un índice entero y haya que probarla para
+todos sus valores a la vez, así que conviene entenderla bien desde ahora.
+
+El punto de partida es delimitar qué tipo de enunciados admite tratamiento
+lógico. No todo lo que puede escribirse en español cumple los requisitos, y
+la exigencia que los separa es más estricta de lo que sugiere la intuición.
+
+::: {#def-proposicion}
+## Proposición
+
+Una ***proposición*** es un enunciado declarativo al que se le
+puede asignar exactamente uno de dos valores de verdad, verdadero o falso,
+nunca ambos ni ninguno.
+:::
+
+La exigencia de que el valor de verdad sea único y esté bien definido es lo
+que separa a una proposición de cualquier otro tipo de oración, y conviene
+ver la frontera con ejemplos. El enunciado “el número $17$ es primo” es una
+proposición, porque tiene un valor de verdad determinado, aunque el lector no
+lo conozca de memoria en el momento de leerlo; basta con que exista un
+procedimiento que decida la cuestión. En cambio, la pregunta “¿es primo el
+número $17$?” no lo es, porque una pregunta no afirma nada y por tanto no
+puede ser verdadera ni falsa.
+
+Un caso intermedio merece atención especial. El enunciado “$x$ es un número
+primo”, donde $x$ es una variable sin valor asignado, tampoco es una
+proposición, puesto que su valor de verdad cambia según qué número se
+sustituya en lugar de $x$: es verdadero para $x=17$ y falso para $x=18$. Este
+tipo de enunciado, con una variable libre, recibe el nombre de
+***función proposicional***, y se convierte en una proposición
+genuina solo cuando la variable se fija en un valor concreto o se liga
+mediante un cuantificador, tema que ocupará la [Subsección “Cuantificadores y su negación”](03-cuantificadores-y-su-negacion.qmd).
+
+Existe, por último, una clase de enunciados que parecen proposiciones pero no
+lo son, y su estudio marca el límite exacto de lo que la lógica proposicional
+puede tratar.
+
+::: {#nota-paradoja .callout-note appearance=“simple” title=“Nota: la proposición autorreferencial no es un descuido”}
+Considérese el enunciado ”esta afirmación es falsa”. Si se supone verdadero,
+entonces lo que afirma debe cumplirse, es decir, debe ser falso; y si se
+supone falso, entonces lo que niega no se cumple, de modo que debe ser
+verdadero. Ninguna de las dos asignaciones es consistente consigo misma, y
+por eso este enunciado no es una proposición en el sentido de la
+@def-proposicion: viola la exigencia de tener exactamente un valor de
+verdad.
+:::
+
+Este ejemplo, lejos de ser un juego de palabras vacío, es la razón por la
+cual la definición exige un valor de verdad único desde el principio, en vez
+de darlo por sentado. La autorreferencia volverá a aparecer, con
+consecuencias mucho más productivas, en el teorema de Cantor de la sección
+siguiente.
+
+Fijado qué es una proposición, corresponde ver cómo se combinan. Las
+proposiciones simples se unen mediante ***conectores lógicos***
+para formar ***proposiciones compuestas***, y el valor de verdad
+de la compuesta queda determinado, sin ambigüedad, por los valores de verdad
+de sus componentes y por el conector empleado. Se introducen a continuación
+los cinco conectores que se usarán en todo lo que sigue, empezando por el
+más simple.
+
+::: {#def-negacion}
+## Negación
+
+Dada una proposición $p$, su ***negación***, denotada $\neg p$, es
+la proposición que resulta verdadera exactamente cuando $p$ es falsa, y falsa
+exactamente cuando $p$ es verdadera.
+:::
+
+La negación opera sobre una sola proposición; los dos conectores que siguen
+combinan dos, y corresponden a las dos maneras más elementales de unir
+afirmaciones en el lenguaje corriente.
+
+::: {#def-conjuncion-disyuncion}
+## Conjunción y disyunción
+
+Dadas dos proposiciones $p$ y $q$, su ***conjunción***, denotada
+$p\wedge q$ y leída “$p$ y $q$”, es verdadera únicamente cuando ambas
+proposiciones son verdaderas a la vez. Su ***disyunción***,
+denotada $p\vee q$ y leída “$p$ o $q$”, es verdadera cuando al menos una de
+las dos lo es, y falsa únicamente cuando ambas son falsas.
+:::
+
+Conviene subrayar que la disyunción matemática es siempre inclusiva, en el
+sentido de que “$p$ o $q$” no excluye que ambas se cumplan simultáneamente.
+Esto difiere del uso cotidiano, donde “o” suele entenderse como una elección
+excluyente entre dos alternativas: cuando alguien dice “iré en autobús o en
+taxi”, normalmente descarta hacer ambas cosas. En matemáticas, en cambio, la
+afirmación “$x>0$ o $x<5$” es verdadera para $x=3$, que cumple las dos
+condiciones a la vez.
+
+Los dos conectores restantes son los que estructuran la mayor parte de los
+resultados matemáticos, y el primero de ellos concentra toda la sutileza.
+
+::: {#def-condicional}
+## Condicional y bicondicional
+
+Dadas dos proposiciones $p$ y $q$, el ***condicional*** de $p$ a
+$q$, denotado $p\rightarrow q$ y leído “si $p$ entonces $q$”, es falso
+únicamente cuando $p$ es verdadera y $q$ es falsa, y verdadero en cualquier
+otro caso. En esta proposición, $p$ recibe el nombre de
+***hipótesis*** o ***antecedente***, y $q$ el de
+***tesis*** o ***consecuente***. El
+***bicondicional***, denotado $p\leftrightarrow q$ y leído “$p$ si
+y solo si $q$”, es verdadero exactamente cuando $p$ y $q$ tienen el mismo
+valor de verdad.
+:::
+
+La cláusula del condicional que suele resultar menos intuitiva a primera
+vista es que $p\rightarrow q$ se declara verdadero cuando $p$ es falsa,
+independientemente del valor de $q$. Vale la pena detenerse en por qué esta
+convención es la correcta y no una elección arbitraria.
+
+Considérese el enunciado “si llueve, entonces el suelo se moja”, y supóngase
+que en un día determinado no llueve. Ese día, el enunciado no ha sido puesto
+a prueba en absoluto, y no hay ningún hecho observado que lo contradiga, de
+modo que declararlo verdadero es simplemente registrar que no ha sido
+refutado. Lo único que haría falso al condicional es precisamente el caso en
+que la hipótesis se cumple y, a pesar de ello, la tesis falla: llueve y el
+suelo permanece seco. Esa es la única situación que un condicional promete
+excluir, y es exactamente la que su tabla de verdad marca como falsa.

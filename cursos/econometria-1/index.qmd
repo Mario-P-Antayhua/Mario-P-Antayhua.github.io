@@ -3,8 +3,18 @@ title: "Econometría I"
 description: "Mis apuntes de Econometría I."
 number-sections: false
 toc: false
+listing:
+  contents: "*-*.qmd"
+  type: table
+  sort: "filename"
+  fields: [title, description]
 ---
 
 <p class="estado">En proceso</p>
 
-Los temas se publican como notas independientes, a medida que los termino.
+Por ahora reúno los fundamentos de probabilidad, la convergencia de variables aleatorias, la esperanza condicional y los vectores aleatorios con la distribución normal multivariante, que sostienen la econometría de corte transversal.
+
+## Notas {.unnumbered}
+
+::: {#listado}
+:::

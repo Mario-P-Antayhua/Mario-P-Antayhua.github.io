@@ -1,0 +1,65 @@
+---
+title: "Las ecuaciones de Yule–Walker"
+description: "Las ecuaciones de Yule–Walker. Incluye Ecuaciones de Yule–Walker."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos autorregresivos]
+---
+
+::: {#thm-yule-walker}
+## Ecuaciones de Yule–Walker
+
+Para un AR(p) estacionario, las autocorrelaciones satisfacen, para
+$j\geq 1$,
+
+$$
+\autocorr{j} = \phi_1\autocorr{j-1} + \phi_2\autocorr{j-2}
+  + \cdots + \phi_p\autocorr{j-p},
+$$
+
+con la convención $\autocorr{-k}=\autocorr{k}$. En particular, para
+$j=1,\ldots,p$, este sistema se escribe en forma matricial como
+$\vect{\rho}=\mat{R}\vect{\phi}$, con
+$\vect{\rho}=(\autocorr{1},\ldots,\autocorr{p})^{\top}$,
+$\vect{\phi}=(\phi_1,\ldots,\phi_p)^{\top}$, y $\mat{R}$ la matriz
+$p\times p$ con entrada $(i,k)$ igual a $\autocorr{|i-k|}$.
+:::
+
+::: {.proof}
+Multiplicando ambos lados de la ecuación del AR(p) por $Y_{t-j}$, con
+$j\geq 1$, y tomando esperanza,
+
+$$
+\Esp{Y_tY_{t-j}} = \phi_1\Esp{Y_{t-1}Y_{t-j}} + \cdots
+  + \phi_p\Esp{Y_{t-p}Y_{t-j}} + \Esp{\rblanco_tY_{t-j}}.
+$$
+
+El último término se anula: $Y_{t-j}$, por la solución hacia atrás del
+AR(p) análoga a la del [Teorema “Solución hacia atrás del AR(1) y condición de convergencia”](22-el-proceso-ar-1.qmd#thm-solucion-ar1), se expresa como una
+combinación lineal de $\rblanco_{t-j},\rblanco_{t-j-1},\ldots$, todos
+ellos con índice estrictamente menor que $t$ cuando $j\geq 1$, y por lo
+tanto incorrelacionados con $\rblanco_t$ al ser ruido blanco. Los
+términos restantes son, por la [Definición “Media, varianza y función de autocovarianza”](09-procesos-estocasticos-y-sus-funciones-de-momento.qmd#def-momentos-proceso) de la
+[Sección “Procesos estocásticos y sus funciones de momentos”](09-procesos-estocasticos-y-sus-funciones-de-momento.qmd) aplicada bajo estacionariedad,
+$\Esp{Y_{t-i}Y_{t-j}}=\autocov{|i-j|}$ para cada $i=1,\ldots,p$, de modo
+que la ecuación completa es
+$\autocov{j}=\phi_1\autocov{j-1}+\cdots+\phi_p\autocov{j-p}$. Dividiendo
+ambos lados entre $\autocov{0}$ se obtiene la ecuación en
+autocorrelaciones enunciada. Escribiendo esta relación para
+$j=1,\ldots,p$ simultáneamente y usando la simetría
+$\autocorr{-k}=\autocorr{k}$ de la
+[Proposición “Propiedades de la función de autocovarianza”](10-estacionariedad.qmd#prp-propiedades-autocovarianza) de la [Sección “Procesos estocásticos y sus funciones de momentos”](09-procesos-estocasticos-y-sus-funciones-de-momento.qmd) para
+completar la matriz $\mat{R}$, el sistema de $p$ ecuaciones se reescribe
+exactamente como $\vect{\rho}=\mat{R}\vect{\phi}$.
+:::
+
+Las ecuaciones de Yule–Walker resuelven, en las dos direcciones, un
+problema práctico distinto: dado el vector de coeficientes
+$\vect{\phi}$, permiten calcular todas las autocorrelaciones
+poblacionales resolviendo el sistema recursivamente hacia adelante a
+partir de $j=1,\ldots,p$; y, en la dirección inversa, dado un conjunto
+de autocorrelaciones muestrales estimadas de los datos, permiten
+despejar $\vect{\phi}=\mat{R}^{-1}\vect{\rho}$, siempre que $\mat{R}$
+sea invertible, lo que en la práctica proporciona un método de
+estimación de los coeficientes autorregresivos alternativo a la máxima
+verosimilitud de la [Sección “La función de verosimilitud y el estimador máximo verosímil”](01-la-funcion-de-verosimilitud-y-el-estimador-maxim.qmd).

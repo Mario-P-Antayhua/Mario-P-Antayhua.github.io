@@ -1,0 +1,110 @@
+---
+title: "La matriz de información de Fisher"
+description: "La matriz de información de Fisher. Incluye Matriz de información de Fisher y Igualdad de la información."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Inferencia asintótica]
+---
+
+La demostración anterior usó, sin haberla definido todavía con
+precisión, una matriz $\mathcal{I}(\vect{\theta}_0)$ calculada de dos
+maneras aparentemente distintas: como el negativo del límite de la
+hessiana promedio, y como la varianza del score. Esta subsección define
+formalmente esa matriz y demuestra que ambas maneras de calcularla
+coinciden.
+
+::: {#def-informacion-fisher}
+## Matriz de información de Fisher
+
+La ***matriz de información de Fisher*** de una observación,
+evaluada en $\vect{\theta}$, es
+
+$$
+\mathcal{I}(\vect{\theta})
+  := \Var[\vect{\theta}]{\vect{s}_i(\vect{\theta})}
+  = \Esp[\vect{\theta}]{\vect{s}_i(\vect{\theta})
+  \vect{s}_i(\vect{\theta})^{\top}},
+$$
+
+donde la segunda igualdad usa que $\Esp[\vect{\theta}]{\vect{s}_i
+(\vect{\theta})}=\vect{0}$ por la [Proposición “La esperanza del score es cero”](02-la-funcion-score.qmd#prp-esperanza-score-cero) de la
+[Sección “La función de verosimilitud y el estimador máximo verosímil”](01-la-funcion-de-verosimilitud-y-el-estimador-maxim.qmd), de modo que la varianza y el segundo momento
+del score coinciden.
+:::
+
+Bajo condiciones de regularidad las dos expresiones de la información coinciden, lo que ofrece dos maneras de calcularla.
+
+::: {#thm-igualdad-informacion}
+## Igualdad de la información
+
+Bajo condiciones de regularidad que permiten derivar dos veces bajo el
+signo de la integral,
+
+$$
+\mathcal{I}(\vect{\theta})
+  = \Esp[\vect{\theta}]{\vect{s}_i(\vect{\theta})
+  \vect{s}_i(\vect{\theta})^{\top}}
+  = -\Esp[\vect{\theta}]{\nabla_{\vect{\theta}}
+  \vect{s}_i(\vect{\theta})^{\top}}.
+$$
+:::
+
+::: {.proof}
+La primera igualdad es la @def-informacion-fisher. Para la
+segunda, se parte de la identidad
+$\Esp[\vect{\theta}]{\vect{s}_i(\vect{\theta})}=\vect{0}$ demostrada en
+la [Proposición “La esperanza del score es cero”](02-la-funcion-score.qmd#prp-esperanza-score-cero), válida para todo $\vect{\theta}$, y
+se deriva una vez más respecto de $\vect{\theta}$, exactamente como en
+esa demostración. Escrita como integral,
+$\int\nabla_{\vect{\theta}}\log f(\vect{x};\vect{\theta})\,
+f(\vect{x};\vect{\theta})\,d\vect{x}=\vect{0}$ para todo
+$\vect{\theta}$; derivando ambos lados respecto de $\vect{\theta}$ y
+aplicando la regla de Leibniz de la [Teorema “Regla de Leibniz”](../matematica-3/03-diferenciacion-bajo-el-signo-de-la-integral.qmd#thm-leibniz) para
+intercambiar la derivada con la integral,
+
+$$
+\vect{0} = \int\Bigl[\nabla_{\vect{\theta}}\bigl(
+  \nabla_{\vect{\theta}}\log f(\vect{x};\vect{\theta})\bigr)^{\top}
+  f(\vect{x};\vect{\theta})
+  + \nabla_{\vect{\theta}}\log f(\vect{x};\vect{\theta})\,
+  \bigl(\nabla_{\vect{\theta}}f(\vect{x};\vect{\theta})\bigr)^{\top}
+  \Bigr]d\vect{x},
+$$ {#eq-igualdad-informacion-1}
+
+donde la derivada del producto sigue la regla usual de la
+[Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd). El primer sumando de
+@eq-igualdad-informacion-1 es, reconociendo
+$\nabla_{\vect{\theta}}(\nabla_{\vect{\theta}}\log
+f)^{\top}=\nabla_{\vect{\theta}}\vect{s}_i(\vect{\theta})^{\top}$, la
+esperanza $\Esp[\vect{\theta}]{\nabla_{\vect{\theta}}
+\vect{s}_i(\vect{\theta})^{\top}}$. En el segundo sumando, sustituyendo
+$\nabla_{\vect{\theta}}f=f\cdot\vect{s}_i(\vect{\theta})^{\top}$, la
+misma identidad usada en la demostración de la
+[Proposición “La esperanza del score es cero”](02-la-funcion-score.qmd#prp-esperanza-score-cero), se obtiene
+$\int\vect{s}_i(\vect{\theta})\vect{s}_i(\vect{\theta})^{\top}
+f(\vect{x};\vect{\theta})\,d\vect{x}=
+\Esp[\vect{\theta}]{\vect{s}_i(\vect{\theta})
+\vect{s}_i(\vect{\theta})^{\top}}$. Sustituyendo ambos sumandos en
+@eq-igualdad-informacion-1,
+$\vect{0}=\Esp[\vect{\theta}]{\nabla_{\vect{\theta}}
+\vect{s}_i(\vect{\theta})^{\top}}+\Esp[\vect{\theta}]{\vect{s}_i
+(\vect{\theta})\vect{s}_i(\vect{\theta})^{\top}}$, de donde
+$\Esp[\vect{\theta}]{\vect{s}_i(\vect{\theta})
+\vect{s}_i(\vect{\theta})^{\top}}=-\Esp[\vect{\theta}]{
+\nabla_{\vect{\theta}}\vect{s}_i(\vect{\theta})^{\top}}$, que es la
+igualdad enunciada.
+:::
+
+::: {#idea-informacion-bhhh .callout-tip appearance=“simple” title=“Idea central: La igualdad de la información y el método BHHH”}
+Este teorema es, precisamente, el que justifica el
+[Definición “Método BHHH”](../matematica-3/08-metodos-numericos-de-optimizacion.qmd#def-bhhh) de la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd): como
+$n^{-1}\sum_i\vect{s}_i(\vect{\theta})\vect{s}_i(\vect{\theta})^{\top}$
+converge, por la ley de los grandes números, al mismo límite que
+$-n^{-1}\sum_i\nabla_{\vect{\theta}}\vect{s}_i(\vect{\theta})^{\top}$, la
+aproximación BHHH de la hessiana mediante el producto exterior de los
+gradientes individuales no es un atajo computacional arbitrario, sino
+un estimador consistente de la misma cantidad poblacional,
+$\mathcal{I}(\vect{\theta})$, que estima la hessiana verdadera, con la
+ventaja adicional, señalada entonces, de ser automáticamente
+semidefinida positiva.
+:::

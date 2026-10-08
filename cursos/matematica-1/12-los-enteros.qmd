@@ -1,0 +1,306 @@
+---
+title: "Los enteros"
+description: "Los enteros. Incluye Relación de equivalencia en mathbbNtimesmathbbN, Ley de cancelación aditiva en mathbbN y sim es una relación de equivalencia."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Los sistemas numéricos y la recta real]
+---
+
+La estrategia para construir $\mathbb{Z}$ a partir de $\mathbb{N}$ consiste
+en representar cada entero, incluidos los que todavía no existen como
+objetos formales, mediante un par ordenado de naturales que codifica una
+diferencia. La idea es que el par $(a,b)$ representa lo que informalmente se
+escribiría $a-b$, una operación que $\mathbb{N}$ no admite; pero distintos
+pares pueden representar la misma diferencia, de modo que hace falta primero
+una relación que identifique cuándo dos pares corresponden al mismo entero,
+y solo después declarar que los enteros son, por definición, las clases que
+esa relación produce.
+
+::: {#def-relacion-enteros}
+## Relación de equivalencia en $\mathbb{N}\times\mathbb{N}$
+
+En $\mathbb{N}\times\mathbb{N}$ se define $(a,b)\sim(c,d)$ si y solo si
+$a+d=b+c$.
+:::
+
+La condición $a+d=b+c$ es, deliberadamente, la reformulación de
+$a-b=c-d$ que evita la resta: sumando $b+d$ a ambos miembros de
+$a-b=c-d$ se obtiene exactamente $a+d=b+c$, y esta última expresión sí
+tiene sentido dentro de $\mathbb{N}$, porque solo usa la suma. Antes de dar
+por buena esta relación como candidata a definir $\mathbb{Z}$, hace falta
+verificar que en efecto es una relación de equivalencia en el sentido de la
+[Definición “Relación de equivalencia y clase de equivalencia”](08-relaciones-de-equivalencia-y-de-orden.qmd#def-relacion-equivalencia), y esa verificación requiere, en el paso de
+la transitividad, cancelar un término común a ambos miembros de una
+igualdad entre naturales. Esa cancelación no es un hecho evidente por sí
+mismo dentro de $\mathbb{N}$: se apoya en el orden y debe probarse por
+inducción, así que conviene aislarla como resultado auxiliar antes de
+seguir.
+
+::: {#lem-cancelacion-n}
+## Ley de cancelación aditiva en $\mathbb{N}$
+
+Para todos $a,b,c\in\mathbb{N}$, si $a+c=b+c$, entonces $a=b$.
+:::
+
+::: {.proof}
+Se procede por inducción sobre $c$, usando el [Teorema “Principio de inducción matemática”](05-el-principio-de-induccion-matematica.qmd#thm-induccion) de la
+[Sección “Proposiciones y conectores lógicos”](01-proposiciones-y-conectores-logicos.qmd), y fijando $a,b\in\mathbb{N}$ arbitrarios.
+
+Para la base, con $c=1$, la hipótesis es $a+1=b+1$, es decir,
+
+$$
+s(a) = s(b) ,
+$$
+
+donde se ha usado que sumar $1$ coincide, por la construcción recursiva de la
+suma mencionada en la [Nota “Suma y producto en ℕ se dan por conocidos”](11-los-naturales-y-el-principio-de-induccion.qmd#nota-aritmetica-n-conocida), con aplicar la
+función sucesor. Por el axioma (P2) de la [Axioma “Axiomas de Peano”](11-los-naturales-y-el-principio-de-induccion.qmd#ax-peano), $s$ es inyectiva,
+así que de $s(a)=s(b)$ se sigue de inmediato $a=b$, y la base queda
+establecida.
+
+Para el paso inductivo, se supone la afirmación cierta para un $c$ fijo, es
+decir, que $a+c=b+c$ implica $a=b$ para esos $a,b$ particulares, y se prueba
+para $s(c)$. Partiendo de la hipótesis $a+s(c)=b+s(c)$ y usando de nuevo que
+sumar el sucesor de $c$ equivale a aplicar $s$ después de sumar $c$, se
+obtiene
+
+$$
+s(a+c) = s(b+c) ,
+$$ {#eq-cancelacion-paso}
+
+y aplicando la inyectividad de $s$ a @eq-cancelacion-paso se llega a
+$a+c=b+c$, que es precisamente la hipótesis inductiva para $c$; por ella,
+$a=b$. Queda así probado el paso inductivo, y por el [Teorema “Principio de inducción matemática”](05-el-principio-de-induccion-matematica.qmd#thm-induccion) la
+afirmación vale para todo $c\in\mathbb{N}$.
+:::
+
+Con la cancelación disponible, puede completarse la verificación de que
+$\sim$ define, en efecto, una relación de equivalencia sobre
+$\mathbb{N}\times\mathbb{N}$.
+
+::: {#prp-sim-enteros-equivalencia}
+## $\sim$ es una relación de equivalencia
+
+La relación de la @def-relacion-enteros es reflexiva, simétrica y
+transitiva en el sentido de la [Definición “Relación de equivalencia y clase de equivalencia”](08-relaciones-de-equivalencia-y-de-orden.qmd#def-relacion-equivalencia).
+:::
+
+::: {.proof}
+Se prueba primero la reflexividad. Para cualquier $(a,b)\in
+\mathbb{N}\times\mathbb{N}$, la conmutatividad de la suma en $\mathbb{N}$ da
+directamente
+
+$$
+a+b = b+a ,
+$$
+
+que es exactamente la condición $(a,b)\sim(a,b)$; la reflexividad queda
+establecida sin más.
+
+Para la simetría, se parte de $(a,b)\sim(c,d)$, es decir, de $a+d=b+c$.
+Reescribiendo ambos miembros con la conmutatividad de la suma se obtiene
+
+$$
+c+b = d+a ,
+$$
+
+que es precisamente la condición $(c,d)\sim(a,b)$; de modo que la relación es
+simétrica.
+
+Resta verificar la transitividad, que es el paso donde se necesita la
+cancelación probada en el @lem-cancelacion-n. Supóngase
+$(a,b)\sim(c,d)$ y $(c,d)\sim(e,f)$, es decir,
+
+$$
+a+d = b+c
+  \qquad\text{y}\qquad
+  c+f = d+e .
+$$ {#eq-transitividad-hipotesis}
+
+Sumando miembro a miembro las dos igualdades de
+@eq-transitividad-hipotesis se obtiene
+
+$$
+(a+d) + (c+f) = (b+c) + (d+e) ,
+$$ {#eq-transitividad-suma}
+
+y reordenando los sumandos del lado izquierdo y del lado derecho de
+@eq-transitividad-suma mediante la conmutatividad y la asociatividad
+de la suma, de modo que $c+d$ quede aislado en ambos miembros, se llega a
+
+$$
+(a+f) + (c+d) = (b+e) + (c+d) .
+$$ {#eq-transitividad-reordenada}
+
+Aplicando ahora el @lem-cancelacion-n a
+@eq-transitividad-reordenada, con $c+d$ en el papel del término común
+que se cancela, se concluye $a+f=b+e$, que es exactamente la condición
+$(a,b)\sim(e,f)$. Queda así probada la transitividad, y con ella, la
+proposición completa.
+:::
+
+La proposición garantiza que las clases de equivalencia de $\sim$ están bien
+definidas y particionan $\mathbb{N}\times\mathbb{N}$, tal como se estableció
+de manera general en la [Sección “Conjuntos, pertenencia y operaciones básicas”](06-conjuntos-pertenencia-y-operaciones-basicas.qmd); cada clase reúne a todos los
+pares que representan una misma diferencia informal, y son precisamente esas
+clases las que se declararán, en breve, los enteros. Antes de dar ese paso
+conviene fijar la intuición con números concretos.
+
+Para fijar esa intuición antes de continuar: los pares $(7,4)$ y $(10,7)$
+satisfacen $(7,4)\sim(10,7)$, porque $7+7=14=4+10$, y ambos representan en
+efecto al entero $3$, ya que $7-4=3$ y $10-7=3$. En cambio,
+$(7,4)\not\sim(5,1)$, porque $7+1=8$ mientras que $4+5=9$, en concordancia
+con que $7-4=3$ pero $5-1=4$ son enteros distintos. La transitividad recién
+demostrada se comprueba igual de directo con una terna: de
+$(9,2)\sim(7,0)$ (pues $9+0=9=2+7$) y $(7,0)\sim(12,5)$ (pues
+$7+5=12=0+12$) se sigue, por la @prp-sim-enteros-equivalencia,
+$(9,2)\sim(12,5)$, y en efecto $9+5=14=2+12$: los tres pares representan al
+mismo entero $7$.
+
+Fijada la relación y verificado que reparte $\mathbb{N}\times\mathbb{N}$ en
+clases coherentes con la intuición de diferencia, puede darse ya la
+definición formal de los enteros como el conjunto cociente correspondiente,
+junto con las operaciones que los convertirán en una estructura algebraica
+útil.
+
+::: {#def-enteros}
+## Los enteros y sus operaciones
+
+El conjunto de los enteros se define como
+$\mathbb{Z}:=(\mathbb{N}\times\mathbb{N})/\!\sim$, el conjunto cociente de la
+@def-relacion-enteros. Sobre él se definen la suma y el producto por
+
+$$
+[(a,b)]+[(c,d)] := [(a+c,\,b+d)],
+  \qquad
+  [(a,b)]\cdot[(c,d)] := [(ac+bd,\,ad+bc)].
+$$ {#eq-operaciones-enteros}
+:::
+
+Las fórmulas de @eq-operaciones-enteros son la traducción directa de
+la aritmética de diferencias que se pretende capturar: si $(a,b)$ representa
+$a-b$ y $(c,d)$ representa $c-d$, entonces su suma debería representar
+$(a-b)+(c-d)=(a+c)-(b+d)$, que es justamente $[(a+c,b+d)]$; y su producto,
+$(a-b)(c-d)=(ac+bd)-(ad+bc)$, que es $[(ac+bd,\,ad+bc)]$. Pero hay un punto
+delicado que la fórmula por sí sola no resuelve: cada entero admite muchos
+representantes distintos, de modo que antes de aceptar estas operaciones
+como bien definidas hace falta comprobar que el resultado no depende de cuál
+representante se use para calcularlo.
+
+::: {#lem-buena-def-z}
+## Buena definición de las operaciones en $\mathbb{Z}$
+
+Si $(a,b)\sim(a',b')$ y $(c,d)\sim(c',d')$, entonces
+$(a+c,\,b+d)\sim(a'+c',\,b'+d')$ y $(ac+bd,\,ad+bc)\sim(a'c'+b'd',\,a'd'+b'c')$.
+:::
+
+::: {.proof}
+Se prueba primero la compatibilidad con la suma. Las hipótesis son
+
+$$
+a+b' = b+a'
+  \qquad\text{y}\qquad
+  c+d' = d+c' ,
+$$ {#eq-buena-def-suma-hipotesis}
+
+y sumando miembro a miembro ambas igualdades de
+@eq-buena-def-suma-hipotesis se obtiene
+
+$$
+(a+c) + (b'+d') = (b+d) + (a'+c') ,
+$$ {#eq-buena-def-suma-conclusion}
+
+que, reordenada, es exactamente $(a+c,b+d)\sim(a'+c',b'+d')$; con esto queda
+probada la primera parte.
+
+Para el producto, conviene descomponer el argumento en dos sustituciones
+sucesivas, cambiando primero el representante de $(a,b)$ y dejando fijo el
+de $(c,d)$, y después al revés. Multiplicando la primera igualdad de
+@eq-buena-def-suma-hipotesis por $c$ y por $d$ se obtiene
+
+$$
+ac+b'c = bc+a'c
+  \qquad\text{y}\qquad
+  ad+b'd = bd+a'd ,
+$$ {#eq-buena-def-producto-paso1}
+
+y sumando la primera igualdad de @eq-buena-def-producto-paso1 con la
+segunda leída en el orden $bd+a'd=ad+b'd$ tras reordenar, se llega, después
+de agrupar los términos que involucran $a$, $b$, $a'$ y $b'$ multiplicados
+por $c$ y $d$, a
+
+$$
+(ac+bd) + (a'd+b'c) = (ad+bc) + (a'c+b'd) ,
+$$ {#eq-buena-def-producto-paso2}
+
+que equivale a $(ac+bd,\,ad+bc)\sim(a'c+b'd,\,a'd+b'c)$: cambiar el
+representante de $(a,b)$ no altera la clase del producto. Un argumento
+simétrico, sustituyendo ahora $(c,d)$ por $(c',d')$ mediante la segunda
+igualdad de @eq-buena-def-suma-hipotesis y repitiendo el mismo
+reordenamiento, muestra que $(a'c+b'd,\,a'd+b'c)\sim(a'c'+b'd',\,a'd'+b'c')$.
+Encadenando ambas equivalencias por la transitividad, ya establecida en la
+@prp-sim-enteros-equivalencia para $\sim$ en $\mathbb{N}\times
+\mathbb{N}$, se concluye $(ac+bd,\,ad+bc)\sim(a'c'+b'd',\,a'd'+b'c')$, que es
+la segunda afirmación del lema.
+:::
+
+El lema anterior es lo que legitima escribir $[(a,b)]+[(c,d)]$ sin
+especificar qué representantes concretos se usaron: el resultado, como
+clase, es siempre el mismo. Con las operaciones ya aseguradas, se pueden
+identificar dentro de $\mathbb{Z}$ los elementos que corresponden a los
+naturales originales, el neutro aditivo y los inversos de cada entero,
+todos ellos consecuencias inmediatas de la definición que no requieren un
+argumento nuevo.
+
+::: {#cor-elementos-z}
+## Elementos distinguidos de $\mathbb{Z}$
+
+La clase $[(n+1,1)]$ se identifica con el natural $n$ para cada
+$n\in\mathbb{N}$; la clase $[(1,1)]$ es el neutro aditivo, denotado $0$; y
+todo $[(a,b)]\in\mathbb{Z}$ tiene inverso aditivo $[(b,a)]$.
+:::
+
+::: {.proof}
+Que $[(1,1)]$ es neutro se sigue de aplicar @eq-operaciones-enteros:
+$[(a,b)]+[(1,1)]=[(a+1,\,b+1)]$, y este último par es equivalente a $(a,b)$,
+porque $(a+1)+b=(b+1)+a$ por la conmutatividad de la suma en $\mathbb{N}$; de
+modo que $[(a+1,b+1)]=[(a,b)]$. Que $[(b,a)]$ es el inverso aditivo de
+$[(a,b)]$ se sigue de la misma fórmula: $[(a,b)]+[(b,a)]=[(a+b,\,a+b)]$, y
+$(a+b,a+b)\sim(1,1)$ porque $(a+b)+1=1+(a+b)$, así que
+$[(a,b)]+[(b,a)]=[(1,1)]=0$. La identificación de $[(n+1,1)]$ con $n$ es la
+convención que hace de $\mathbb{N}$ un subconjunto de $\mathbb{Z}$ bajo la
+suma recién definida, y se conserva sin más verificación porque las
+operaciones sobre estos representantes reproducen exactamente la aritmética
+de $\mathbb{N}$.
+:::
+
+Como ilustración, se suman los enteros representados por $(7,4)$, que es
+$3$, y por $(2,6)$, que es $-4$. Por @eq-operaciones-enteros,
+
+$$
+[(7,4)]+[(2,6)] = [(7+2,\,4+6)] = [(9,10)] ,
+$$
+
+y $(9,10)$ representa a $9-10=-1$, coherente con $3+(-4)=-1$. El
+@lem-buena-def-z garantiza que el resultado no puede depender de los
+representantes elegidos, y en efecto, usando en su lugar $(10,7)\sim(7,4)$
+y $(5,9)\sim(2,6)$ (porque $5+6=11=9+2$), se obtiene
+$[(10,7)]+[(5,9)]=[(15,16)]$, que también representa a $15-16=-1$: el mismo
+entero, alcanzado por dos caminos distintos. Para el producto, se
+multiplican los enteros representados por $(3,0)$, que es $3$, y por
+$(0,4)$, que es $-4$; por @eq-operaciones-enteros,
+
+$$
+[(3,0)]\cdot[(0,4)]
+  = \bigl[(3\cdot0+0\cdot4,\ 3\cdot4+0\cdot0)\bigr]
+  = [(0,12)] ,
+$$
+
+y $(0,12)$ representa a $0-12=-12$, coherente con $3\times(-4)=-12$.
+
+Con $\mathbb{Z}$ construido, dotado de suma, producto, neutro aditivo e
+inversos aditivos para todo elemento, aparece de inmediato la limitación
+que motiva el siguiente paso: dentro de $\mathbb{Z}$, la ecuación $2x=3$ no
+tiene solución, porque ningún entero multiplicado por $2$ produce un número
+impar. Reparar esa carencia introduciendo inversos multiplicativos es el
+problema que resuelve la construcción de los racionales.

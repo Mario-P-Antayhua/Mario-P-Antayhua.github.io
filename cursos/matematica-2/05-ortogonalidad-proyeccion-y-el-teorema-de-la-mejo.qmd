@@ -1,0 +1,264 @@
+---
+title: "Ortogonalidad, proyección y el teorema de la mejor aproximación"
+description: "Antes de tratar al complemento ortogonal como un espacio por derecho propio hay que comprobar que, en efecto, es un subespacio."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas II, Espacios vectoriales, normados y con producto interno]
+---
+
+Todas las piezas necesarias ya están disponibles: subespacio, norma y
+ortogonalidad. Con ellas se puede plantear y resolver el problema
+geométrico central de la sección, que es también el problema estadístico
+central de buena parte de la econometría, aunque todavía en un lenguaje
+que no menciona variables aleatorias: dado un vector $\vect{v}\in V$ y un
+subespacio $S\subseteq V$, ¿cuál es el punto de $S$ más cercano a
+$\vect{v}$? La respuesta pasa primero por identificar, para cada
+subespacio, el conjunto de vectores que son ortogonales a todos sus
+elementos.
+
+::: {#def-complemento-ortogonal}
+## Complemento ortogonal
+
+Sea $S\subseteq V$. El ***complemento ortogonal*** de $S$ es
+
+$$
+S^{\perp} := \{\vect{v}\in V : \langle\vect{v},\vect{s}\rangle=0
+  \ \text{para todo}\ \vect{s}\in S\}.
+$$
+:::
+
+Antes de tratar al complemento ortogonal como un espacio por derecho propio hay que comprobar que, en efecto, es un subespacio.
+
+::: {#prp-complemento-subespacio}
+## $S^{\perp}$ es un subespacio
+
+Para cualquier $S\subseteq V$, el conjunto $S^{\perp}$ es un subespacio
+de $V$.
+:::
+
+::: {.proof}
+Se aplica el [Proposición “Criterio de subespacio”](01-espacios-vectoriales-y-subespacios.qmd#prp-criterio-subespacio). El conjunto $S^{\perp}$ no
+es vacío porque $\vect{0}\in S^{\perp}$, ya que
+$\langle\vect{0},\vect{s}\rangle=0$ para todo $\vect{s}$ por la
+bilinealidad del producto interno. Si $\vect{u},\vect{v}\in S^{\perp}$ y
+$\alpha,\beta\in\mathbb{R}$, entonces para todo $\vect{s}\in S$ la
+bilinealidad da
+$\langle\alpha\vect{u}+\beta\vect{v},\vect{s}\rangle=\alpha\langle
+\vect{u},\vect{s}\rangle+\beta\langle\vect{v},\vect{s}\rangle=\alpha(0)+
+\beta(0)=0$, de modo que $\alpha\vect{u}+\beta\vect{v}\in S^{\perp}$ y el
+criterio queda verificado.
+:::
+
+La construcción explícita del punto de $S$ más cercano a $\vect{v}$
+requiere, cuando $S$ tiene dimensión finita, disponer de una base
+ortonormal, es decir, una base $\{\vect{e}_1,\ldots,\vect{e}_k\}$ de $S$
+cuyos elementos satisfacen $\langle\vect{e}_i,\vect{e}_j\rangle=1$ si
+$i=j$ y $0$ si $i\neq j$; toda base puede convertirse en una base
+ortonormal mediante el proceso de Gram–Schmidt, cuya existencia se da
+aquí por conocida sin desarrollar el algoritmo, porque lo que interesa no
+es el procedimiento de ortogonalización sino la proyección que produce.
+
+::: {#prp-proyeccion-existencia}
+## Existencia y unicidad de la proyección ortogonal
+
+Sea $S\subseteq V$ un subespacio de dimensión finita $k$, con base
+ortonormal $\{\vect{e}_1,\ldots,\vect{e}_k\}$, y sea $\vect{v}\in V$.
+Defínase
+
+$$
+\hat{\vect{v}} := \sum_{i=1}^{k}\langle\vect{v},\vect{e}_i\rangle\,
+  \vect{e}_i.
+$$ {#eq-proyeccion-formula}
+
+Entonces $\hat{\vect{v}}\in S$, $\vect{v}-\hat{\vect{v}}\in S^{\perp}$, y
+$\hat{\vect{v}}$ es el único elemento de $S$ con esta segunda propiedad.
+:::
+
+::: {.proof}
+Que $\hat{\vect{v}}\in S$ es inmediato de @eq-proyeccion-formula,
+por ser una combinación lineal de los elementos de la base de $S$. Para
+ver que $\vect{v}-\hat{\vect{v}}\in S^{\perp}$ basta comprobar la
+ortogonalidad frente a cada vector de la base, porque la ortogonalidad
+frente a una base se extiende por bilinealidad a todo $S$. Para cada
+$j\in\{1,\ldots,k\}$,
+
+$$
+\begin{aligned}
+\langle\vect{v}-\hat{\vect{v}},\,\vect{e}_j\rangle
+  &= \langle\vect{v},\vect{e}_j\rangle
+  - \sum_{i=1}^{k}\langle\vect{v},\vect{e}_i\rangle
+    \langle\vect{e}_i,\vect{e}_j\rangle,
+   \\
+  \langle\vect{v}-\hat{\vect{v}},\,\vect{e}_j\rangle
+  &= \langle\vect{v},\vect{e}_j\rangle
+  - \langle\vect{v},\vect{e}_j\rangle
+  = 0,
+\end{aligned}
+$$ {#eq-ortogonalidad-residuo-1}
+
+donde el paso de @eq-ortogonalidad-residuo-1 a
+@eq-ortogonalidad-residuo-1 usa que, por ortonormalidad,
+$\langle\vect{e}_i,\vect{e}_j\rangle$ vale $1$ cuando $i=j$ y $0$ en
+cualquier otro caso, de modo que la suma se reduce a su único término no
+nulo.
+
+Resta verificar la unicidad. Supóngase que $\vect{w}\in S$ también
+satisface $\vect{v}-\vect{w}\in S^{\perp}$. Entonces
+$\hat{\vect{v}}-\vect{w}$ pertenece a $S$, por ser diferencia de dos
+elementos de $S$, y al mismo tiempo pertenece a $S^{\perp}$, por ser
+diferencia de $(\vect{v}-\vect{w})$ y $(\vect{v}-\hat{\vect{v}})$, ambos
+en $S^{\perp}$. Un vector que pertenece simultáneamente a $S$ y a
+$S^{\perp}$ es ortogonal a sí mismo, de modo que
+$\langle\hat{\vect{v}}-\vect{w},\hat{\vect{v}}-\vect{w}\rangle=0$, y el
+axioma de definición positiva del producto interno obliga a
+$\hat{\vect{v}}-\vect{w}=\vect{0}$, es decir, $\vect{w}=\hat{\vect{v}}$.
+:::
+
+Al vector $\hat{\vect{v}}$ de la proposición anterior se le llama la
+***proyección ortogonal*** de $\vect{v}$ sobre $S$. Lo que
+todavía no se ha demostrado es que $\hat{\vect{v}}$ resuelva el problema
+de distancia mínima planteado al comienzo de esta subsección; que lo
+resuelve, y que lo hace de forma única, es el contenido del resultado
+siguiente, que es el que la [sección sobre la predicción óptima](../econometria-3/index.qmd) invocará para
+justificar la optimalidad de la esperanza condicional como predictor.
+
+::: {#thm-mejor-aproximacion-general}
+## Teorema de la mejor aproximación
+
+Sea $S\subseteq V$ un subespacio de dimensión finita y $\vect{v}\in V$.
+Entre todos los $\vect{s}\in S$, la distancia $\|\vect{v}-\vect{s}\|$
+alcanza su valor mínimo exactamente cuando $\vect{s}=\hat{\vect{v}}$, la
+proyección ortogonal de $\vect{v}$ sobre $S$ definida en
+@eq-proyeccion-formula, y ningún otro elemento de $S$ alcanza ese
+mínimo.
+:::
+
+::: {.proof}
+La estrategia consiste en descomponer el error $\vect{v}-\vect{s}$,
+para un $\vect{s}\in S$ arbitrario, en dos partes ortogonales entre sí,
+lo que permite después aplicar directamente el
+[Teorema “Teorema de Pitágoras generalizado”](04-espacios-con-producto-interno.qmd#thm-pitagoras). Sumando y restando $\hat{\vect{v}}$,
+
+$$
+\vect{v}-\vect{s}
+  = \underbrace{(\vect{v}-\hat{\vect{v}})}_{\text{en } S^{\perp}}
+  + \underbrace{(\hat{\vect{v}}-\vect{s})}_{\text{en } S}.
+$$ {#eq-descomposicion-error}
+
+El primer sumando está en $S^{\perp}$ por la
+@prp-proyeccion-existencia, y el segundo está en $S$ porque tanto
+$\hat{\vect{v}}$ como $\vect{s}$ pertenecen a $S$ y $S$ es un subespacio;
+en consecuencia, los dos sumandos de @eq-descomposicion-error son
+ortogonales entre sí, y el [Teorema “Teorema de Pitágoras generalizado”](04-espacios-con-producto-interno.qmd#thm-pitagoras) aplicado a esa
+descomposición da
+
+$$
+\|\vect{v}-\vect{s}\|^{2}
+  = \|\vect{v}-\hat{\vect{v}}\|^{2} + \|\hat{\vect{v}}-\vect{s}\|^{2}.
+$$ {#eq-pitagoras-error}
+
+Como $\|\hat{\vect{v}}-\vect{s}\|^{2}\geq 0$, la identidad
+@eq-pitagoras-error deja ver de inmediato que
+$\|\vect{v}-\vect{s}\|^{2}\geq\|\vect{v}-\hat{\vect{v}}\|^{2}$ para todo
+$\vect{s}\in S$, con igualdad si y solo si
+$\|\hat{\vect{v}}-\vect{s}\|^{2}=0$, lo cual, por definición positiva del
+producto interno, ocurre si y solo si $\vect{s}=\hat{\vect{v}}$. Queda
+así probado que $\hat{\vect{v}}$ minimiza la distancia a $\vect{v}$
+dentro de $S$, y que lo hace de forma estricta frente a cualquier otro
+elemento de $S$.
+:::
+
+::: {#cor-principio-ortogonalidad}
+## Principio de ortogonalidad
+
+Un elemento $\vect{s}^{*}\in S$ minimiza $\|\vect{v}-\vect{s}\|$ sobre
+$\vect{s}\in S$ si y solo si $\vect{v}-\vect{s}^{*}\in S^{\perp}$.
+:::
+
+::: {.proof}
+Si $\vect{v}-\vect{s}^{*}\in S^{\perp}$, la unicidad establecida en la
+@prp-proyeccion-existencia obliga a $\vect{s}^{*}=\hat{\vect{v}}$,
+que es minimizador por el @thm-mejor-aproximacion-general.
+Recíprocamente, si $\vect{s}^{*}$ minimiza la distancia, la parte de
+unicidad del mismo teorema fuerza $\vect{s}^{*}=\hat{\vect{v}}$, y
+$\vect{v}-\hat{\vect{v}}\in S^{\perp}$ por construcción.
+:::
+
+El principio de ortogonalidad reformula, en una sola equivalencia, todo
+lo obtenido en esta subsección: buscar el elemento de $S$ más cercano a
+$\vect{v}$ y buscar el elemento de $S$ cuyo error residual sea ortogonal
+a todo $S$ son, en realidad, el mismo problema descrito con dos
+vocabularios distintos. Esa doble lectura, geométrica y de ortogonalidad,
+es la que hace que el resultado sea tan portable de un contexto a otro:
+basta con reconocer un producto interno y un subespacio de dimensión
+finita para heredar, sin ningún trabajo adicional, tanto la existencia y
+unicidad de un óptimo como su caracterización mediante ortogonalidad.
+
+::: {#idea-anticipacion-prediccion-optima .callout-tip appearance=“simple” title=“Idea central: Anticipación: de la proyección abstracta a la esperanza condicional”}
+El @thm-mejor-aproximacion-general se demostró sin mencionar
+variables aleatorias, precisamente para poder reutilizarlo sin
+modificación alguna. La [sección sobre la predicción óptima](../econometria-3/index.qmd) tomará como $V$ el
+espacio de variables aleatorias con varianza finita definidas sobre un
+mismo espacio de probabilidad, con producto interno
+$\langle X,Y\rangle:=\Esp{XY}$, y como $S$ el subespacio de las funciones
+del conjunto de información disponible en el momento $t$. En ese
+contexto particular, la proyección ortogonal $\hat{\vect{v}}$ de esta
+subsección se convierte exactamente en la esperanza condicional, y la
+propiedad $\vect{v}-\hat{\vect{v}}\in S^{\perp}$ del
+@cor-principio-ortogonalidad se convierte en el hecho de que el
+error de predicción óptimo no está correlacionado con ninguna función de
+la información disponible. Nada de esa demostración se rehará entonces:
+bastará con invocar el @thm-mejor-aproximacion-general, exactamente
+igual como el @cor-principio-ortogonalidad se invocará para
+justificar, sin nueva demostración, que el error de un pronóstico óptimo
+resulta no correlacionado con cualquier variable perteneciente al
+conjunto de información sobre el que se condiciona.
+:::
+
+Para fijar la intuición geométrica antes de seguir con el caso abstracto, conviene calcular una proyección concreta en el espacio tridimensional.
+
+::: {#exm-proyeccion-r3}
+## Proyección ortogonal sobre un plano en $\mathbb{R}^3$
+
+Sea $S=\operatorname{gen}\{\vect{e}_1,\vect{e}_2\}\subseteq\mathbb{R}^3$
+el plano generado por la base ortonormal
+$\vect{e}_1=(1,0,0)$ y $\vect{e}_2=(0,1,0)$, con el producto interno
+euclidiano usual, y sea $\vect{v}=(2,3,4)$. Por la
+@eq-proyeccion-formula, la proyección ortogonal de $\vect{v}$ sobre
+$S$ es
+
+$$
+\hat{\vect{v}} = \langle\vect{v},\vect{e}_1\rangle\vect{e}_1
+  + \langle\vect{v},\vect{e}_2\rangle\vect{e}_2
+  = 2(1,0,0) + 3(0,1,0) = (2,3,0),
+$$
+
+de modo que la proyección se limita a conservar las dos primeras
+coordenadas de $\vect{v}$ y a anular la tercera, que es exactamente la
+componente en la dirección normal al plano $S$. El residuo
+$\vect{v}-\hat{\vect{v}}=(0,0,4)$ satisface, como exige la
+@prp-proyeccion-existencia, $\langle
+\vect{v}-\hat{\vect{v}},\vect{e}_1\rangle=0$ y $\langle
+\vect{v}-\hat{\vect{v}},\vect{e}_2\rangle=0$; y por el
+@thm-mejor-aproximacion-general, ningún otro punto del plano $S$
+está a menor distancia euclidiana de $\vect{v}=(2,3,4)$ que el punto
+$(2,3,0)$, lo cual es geométricamente evidente en la
+@fig-proyeccion-r3, ya que cualquier desplazamiento dentro del
+plano solo puede alejar al punto de la componente vertical de
+$\vect{v}$, nunca acercarlo. Conviene notar que este mismo cálculo, escrito
+en notación matricial con $\mat{X}$ como la matriz cuyas columnas son
+$\vect{e}_1$ y $\vect{e}_2$, adopta la forma
+$\hat{\vect{v}}=\mat{X}(\mat{X}^{\top}\mat{X})^{-1}\mat{X}^{\top}\vect{v}$,
+que se simplifica a
+$\hat{\vect{v}}=\mat{X}\mat{X}^{\top}\vect{v}$ precisamente porque las
+columnas de $\mat{X}$ son ortonormales y $\mat{X}^{\top}\mat{X}=\Imat$;
+esa fórmula es, salvo por el nombre de las letras, la ecuación normal de
+mínimos cuadrados, y su aparición aquí, en un contexto puramente
+geométrico y sin ninguna variable aleatoria de por medio, confirma que el
+estimador de mínimos cuadrados ordinarios no es más que la proyección
+ortogonal del vector de observaciones sobre el espacio columna de los
+regresores, en el sentido exacto de la
+@prp-proyeccion-existencia.
+:::
+
+![La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.](../../assets/img/fig/matematica-2-05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo-1.svg){#fig-proyeccion-r3 fig-alt=“La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.”}

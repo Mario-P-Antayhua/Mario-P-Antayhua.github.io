@@ -1,0 +1,65 @@
+---
+title: "El proceso MA(q)"
+description: "Los momentos del MA(q) se calculan directamente de la definición y muestran su rasgo distintivo."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, Procesos de medias móviles y procesos ARMA]
+---
+
+::: {#def-maq}
+## Proceso de medias móviles de orden $q$
+
+Un proceso $\{Y_t\}$ sigue un ***MA(q)*** si
+$Y_t=\rblanco_t+\theta_1\rblanco_{t-1}+\cdots+\theta_q\rblanco_{t-q}$,
+con $\theta_1,\ldots,\theta_q\in\mathbb{R}$. En notación de rezagos,
+$Y_t=\theta(\Lag)\rblanco_t$ con
+$\theta(\Lag)=1+\theta_1\Lag+\cdots+\theta_q\Lag^q$.
+:::
+
+Los momentos del MA(q) se calculan directamente de la definición y muestran su rasgo distintivo.
+
+::: {#prp-momentos-maq}
+## Momentos del MA(q) y corte de la FAC en el rezago $q$
+
+Para el MA(q) de la @def-maq, con la convención
+$\theta_0:=1$, $\Esp{Y_t}=0$,
+$\Var(Y_t)=\sigma^2\sum_{i=0}^{q}\theta_i^2$, y para $1\leq j\leq q$,
+
+$$
+\autocov{j} = \sigma^2\sum_{i=0}^{q-j}\theta_i\theta_{i+j},
+$$
+
+mientras que $\autocov{j}=0$ para $j>q$.
+:::
+
+::: {.proof}
+La media se sigue, como en el [Proposición “Momentos del MA(1)”](27-el-proceso-ma-1.qmd#prp-momentos-ma1), de la
+linealidad de la esperanza aplicada a una suma finita de términos con
+esperanza cero. Para la varianza y la autocovarianza, el mismo argumento
+de emparejamiento de índices del [Proposición “Momentos del MA(1)”](27-el-proceso-ma-1.qmd#prp-momentos-ma1) se generaliza
+directamente: $Y_t=\sum_{i=0}^{q}\theta_i\rblanco_{t-i}$ e
+$Y_{t-j}=\sum_{k=0}^{q}\theta_k\rblanco_{t-j-k}$ comparten el índice de
+ruido blanco $t-i=t-j-k$, es decir $i=j+k$, exactamente cuando
+$0\leq i\leq q$ y $0\leq i-j\leq q$ simultáneamente, lo que para
+$0\leq j\leq q$ restringe $i$ al rango $j\leq i\leq q$; sumando las
+covarianzas de esos pares emparejados,
+
+$$
+\autocov{j} = \Cov(Y_t,Y_{t-j})
+  = \sum_{i=j}^{q}\theta_i\theta_{i-j}\,\Var(\rblanco_{t-i})
+  = \sigma^2\sum_{i=j}^{q}\theta_i\theta_{i-j}
+  = \sigma^2\sum_{i=0}^{q-j}\theta_i\theta_{i+j},
+$$
+
+donde la última igualdad reindexa la suma con $i\to i-j$, y el caso
+$j=0$ reproduce la varianza enunciada. Cuando $j>q$, el rango
+$j\leq i\leq q$ que definía los pares emparejados queda vacío, porque
+$j>q$ implica que no existe ningún $i$ con $j\leq i\leq q$, de modo que
+no sobrevive ningún término y $\autocov{j}=0$.
+:::
+
+El corte en el rezago $q$ generaliza exactamente el corte en el rezago
+uno del MA(1), y confirma el patrón anticipado: un proceso de medias
+móviles de orden $q$ tiene memoria finita de exactamente $q$ periodos, y
+su función de autocorrelación lo delata de forma inequívoca al anularse
+por completo más allá de ese rezago.

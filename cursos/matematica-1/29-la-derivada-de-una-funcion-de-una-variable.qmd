@@ -1,0 +1,156 @@
+---
+title: "La derivada de una función de una variable"
+description: "La derivada de una función de una variable. Incluye Derivada, Reglas de derivación y Teorema del valor medio."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Cálculo diferencial e integral]
+---
+
+::: {#def-derivada}
+## Derivada
+
+Sea $D\subseteq\mathbb{R}$ un intervalo abierto y $f:D\to\mathbb{R}$. La
+función $f$ es ***derivable*** en $p\in D$ si el límite
+
+$$
+f'(p) := \lim_{h\to 0}\frac{f(p+h)-f(p)}{h}
+$$
+
+existe, en cuyo caso $f'(p)$ se llama la ***derivada*** de
+$f$ en $p$.
+:::
+
+El cociente que define a $f'(p)$ mide la pendiente promedio de $f$ entre
+$p$ y $p+h$, de modo que su límite cuando $h\to 0$ es la pendiente
+instantánea, es decir, la mejor aproximación lineal de $f$ cerca de $p$;
+esta lectura, la de la derivada como aproximación lineal, es la que se
+generalizará sin cambios cuando $f$ dependa de varias variables. Antes
+de llegar ahí, conviene reunir las reglas algebraicas que permiten
+calcular derivadas sin recurrir al límite cada vez.
+
+::: {#prp-reglas-derivacion}
+## Reglas de derivación
+
+Si $f,g:D\to\mathbb{R}$ son derivables en $p$, entonces
+$(f+g)'(p)=f'(p)+g'(p)$, $(fg)'(p)=f'(p)g(p)+f(p)g'(p)$, y, si
+$h:D'\to\mathbb{R}$ es derivable en $f(p)$ con $f(D)\subseteq D'$, la
+composición $h\circ f$ es derivable en $p$ con
+$(h\circ f)'(p)=h'(f(p))\,f'(p)$ (regla de la cadena).
+:::
+
+::: {.proof}
+La regla de la suma se sigue directamente de la
+[Proposición “Propiedades algebraicas del límite”](28-limites-y-continuidad-de-funciones.qmd#prp-propiedades-limite) aplicada al cociente
+$\bigl[(f+g)(p+h)-(f+g)(p)\bigr]/h$, que se descompone como la suma de
+los dos cocientes de $f$ y de $g$. Para la regla del producto, conviene
+sumar y restar un término intermedio en el numerador,
+
+$$
+\begin{aligned}
+\frac{(fg)(p+h)-(fg)(p)}{h}
+  &= \frac{f(p+h)g(p+h)-f(p)g(p+h)+f(p)g(p+h)-f(p)g(p)}{h},
+   \\
+  \frac{(fg)(p+h)-(fg)(p)}{h}
+  &= \frac{f(p+h)-f(p)}{h}\,g(p+h) + f(p)\,\frac{g(p+h)-g(p)}{h},
+\end{aligned}
+$$ {#eq-regla-producto-1}
+
+y tomando el límite cuando $h\to 0$ en @eq-regla-producto-1, el
+primer sumando tiende a $f'(p)g(p)$ porque $g$ es continua en $p$ por
+ser derivable ahí, y el segundo tiende a $f(p)g'(p)$, lo que da la regla
+del producto. Para la regla de la cadena, el cociente que define a $h'(f(p))$ no sirve directamente, porque $f(p+t)$ puede coincidir con $f(p)$ para valores de $t$ arbitrariamente pequeños. Por eso se introduce la función auxiliar
+
+$$
+\varphi(y) := \begin{cases}
+    \dfrac{h(y)-h(f(p))}{y-f(p)}, & y\neq f(p),\\[6pt]
+    h'(f(p)), & y=f(p),
+  \end{cases}
+$$
+
+que es continua en $f(p)$ porque $h$ es derivable allí. Con ella, para todo $y$ en el dominio de $h$ se cumple $h(y)-h(f(p))=\varphi(y)\,(y-f(p))$, incluido el caso $y=f(p)$, en el que ambos lados valen cero. Evaluando en $y=f(p+t)$ y dividiendo por $t\neq 0$,
+
+$$
+\frac{h(f(p+t))-h(f(p))}{t}=\varphi\bigl(f(p+t)\bigr)\,\frac{f(p+t)-f(p)}{t}.
+$$
+
+Cuando $t\to 0$, $f(p+t)\to f(p)$ porque $f$ es continua en $p$, de modo que $\varphi(f(p+t))\to\varphi(f(p))=h'(f(p))$ por la continuidad de $\varphi$, mientras que el último cociente tiende a $f'(p)$. El producto de los límites es $h'(f(p))\,f'(p)$, lo que establece la regla de la cadena.
+:::
+
+Con las reglas de derivación disponibles, el resultado que conecta el
+signo de la derivada con el crecimiento de la función, y que será la
+base de la condición necesaria de primer orden de la
+[Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd), es el teorema del valor medio.
+
+::: {#thm-valor-medio}
+## Teorema del valor medio
+
+Si $f:[a,b]\to\mathbb{R}$ es continua en $[a,b]$ y derivable en
+$(a,b)$, existe $c\in(a,b)$ tal que
+$f'(c)=\dfrac{f(b)-f(a)}{b-a}$.
+:::
+
+::: {.proof}
+Se prueba primero el caso particular $f(a)=f(b)$, conocido como teorema
+de Rolle. Como $f$ es continua en el compacto $[a,b]$, alcanza su
+máximo y su mínimo en $[a,b]$ por el teorema de Weierstrass que la
+[Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd) demostrará a partir de la compacidad de la
+[Sección “Espacios métricos”](23-espacios-metricos.qmd); si ambos se alcanzan en los extremos, $f$ es
+constante, porque $f(a)=f(b)$, y entonces $f'(c)=0$ para cualquier
+$c\in(a,b)$. Si en cambio alguno de los dos extremos se alcanza en un
+punto $c\in(a,b)$, ese punto es un óptimo local interior, y en un óptimo
+local interior de una función derivable la derivada se anula, porque
+los cocientes incrementales por la izquierda y por la derecha de $c$
+deben tener signos opuestos y su límite común, $f'(c)$, solo puede ser
+cero.
+
+Para el caso general, conviene construir una función auxiliar que
+absorba la diferencia entre $f(a)$ y $f(b)$ y quede en las condiciones
+del caso de Rolle. Sea
+
+$$
+g(x) := f(x) - f(a) - \frac{f(b)-f(a)}{b-a}(x-a),
+$$
+
+que es continua en $[a,b]$ y derivable en $(a,b)$ por serlo $f$, y
+satisface $g(a)=0$ y $g(b)=f(b)-f(a)-(f(b)-f(a))=0$, de modo que
+$g(a)=g(b)$. El caso de Rolle aplicado a $g$ da un punto $c\in(a,b)$ con
+$g'(c)=0$, es decir,
+$f'(c)-\dfrac{f(b)-f(a)}{b-a}=0$, que es exactamente la igualdad
+enunciada.
+:::
+
+El teorema del valor medio relaciona una propiedad global de $f$, la
+pendiente promedio entre dos puntos, con una propiedad local, la
+pendiente instantánea en algún punto intermedio; esa conexión entre lo
+global y lo local es la que se explotará repetidamente en lo que sigue,
+tanto para acotar el resto de la fórmula de Taylor como para justificar
+la regla de Leibniz. Una primera consecuencia inmediata, que se usará
+sin mayor comentario en la caracterización de funciones monótonas, es
+que una derivada nula en todo un intervalo deja a la función sin ningún
+margen para moverse.
+
+::: {#cor-derivada-nula-constante}
+## Derivada nula implica función constante
+
+Si $f:[a,b]\to\mathbb{R}$ es continua en $[a,b]$, derivable en $(a,b)$ y
+$f'(x)=0$ para todo $x\in(a,b)$, entonces $f$ es constante en $[a,b]$.
+:::
+
+::: {.proof}
+Para cualesquiera $x,y\in[a,b]$ con $x<y$, el
+@thm-valor-medio aplicado al intervalo $[x,y]$ da un punto
+$c\in(x,y)$ con $f(y)-f(x)=f'(c)(y-x)=0$, de modo que $f(x)=f(y)$; como
+$x,y$ eran arbitrarios, $f$ toma el mismo valor en todo punto de
+$[a,b]$.
+:::
+
+Este corolario, aunque sencillo, es el que garantiza que una función
+cuya derivada se anula en todo un intervalo no pueda tener ningún otro
+comportamiento oculto: no basta con que la derivada se anule en un punto
+aislado para concluir nada sobre el valor de la función, pero si se
+anula en todo el intervalo, la función queda completamente determinada
+como constante. La subsección siguiente extiende esta maquinaria
+completa, derivada, regla de la cadena y teorema del valor medio, del
+caso de una variable al caso de varias, que es el que en la práctica
+importa para funciones de verosimilitud y funciones objetivo que
+dependen de varios parámetros a la vez.

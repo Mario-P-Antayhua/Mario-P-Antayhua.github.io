@@ -1,0 +1,43 @@
+---
+title: "Raíces del polinomio característico y el círculo unitario"
+description: "La posición de las raíces respecto del círculo unitario admite una lectura geométrica que ayuda a retenerla."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría II, El operador de rezago y los polinomios de rezagos]
+---
+
+::: {#def-polinomio-caracteristico}
+## Polinomio característico y sus raíces
+
+El ***polinomio característico*** asociado a
+$\phi(\Lag)=1-\phi_1\Lag-\cdots-\phi_p\Lag^p$ es el polinomio ordinario
+$\phi(z)=1-\phi_1z-\cdots-\phi_pz^p$, con $z\in\mathbb{C}$. Sus
+***raíces*** son los valores $z_1,\ldots,z_p\in\mathbb{C}$,
+contados con multiplicidad, tales que $\phi(z_i)=0$; su existencia y su
+número, igual al grado $p$, están garantizados por el teorema
+fundamental del álgebra, que aquí se acepta sin demostrar por tratarse
+de un resultado de análisis complejo ajeno al desarrollo algebraico de
+esta sección.
+:::
+
+La posición de las raíces respecto del círculo unitario admite una lectura geométrica que ayuda a retenerla.
+
+::: {#idea-raices-circulo-unitario .callout-tip appearance=“simple” title=“Idea central: Qué significa geométricamente una raíz dentro o fuera del círculo unitario”}
+Cada raíz $z_i$ es un número complejo, y su distancia al origen,
+$|z_i|$, se compara con el ***círculo unitario***, el
+conjunto $\{z\in\mathbb{C}:|z|=1\}$ del plano complejo. Una raíz con
+$|z_i|>1$ está “fuera” del círculo unitario,
+más lejos del origen que el radio uno; una raíz con $|z_i|<1$ está
+“dentro”. Esta distinción geométrica, que a
+primera vista parece un tecnicismo del análisis complejo ajeno a la
+econometría, es exactamente la que decide si un proceso autorregresivo
+construido a partir de $\phi(\Lag)$ es estacionario: la
+[Subsección “La condición de estacionariedad en términos de raíces”](21-la-condicion-de-estacionariedad-en-terminos-de-r.qmd) de esta misma sección
+demostrará que la condición es que *todas* las raíces de
+$\phi(z)$ estén fuera del círculo unitario, y el paseo aleatorio de la
+[Sección “Procesos sin dinámica: constante, ruido blanco y media”](12-procesos-sin-dinamica-constante-ruido-blanco-y-m.qmd), escrito como
+$(1-\Lag)Y_t=\rblanco_t$, tiene exactamente una raíz en $z=1$, situada
+sobre el círculo unitario mismo, ni dentro ni fuera, el caso límite que
+separa la estacionariedad de la no estacionariedad y que da nombre a la
+prueba de raíz unitaria de la econometría aplicada.
+:::

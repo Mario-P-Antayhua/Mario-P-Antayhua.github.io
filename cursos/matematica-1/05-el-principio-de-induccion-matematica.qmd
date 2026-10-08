@@ -1,0 +1,167 @@
+---
+title: "El principio de inducción matemática"
+description: "Los cuatro métodos constructivos anteriores demuestran una afirmación cuantificada universalmente considerando un elemento arbitrario del dominio y razonando sobre él sin usar ninguna propiedad particular suya."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
+---
+
+Los cuatro métodos constructivos anteriores demuestran una afirmación
+cuantificada universalmente considerando un elemento arbitrario del dominio y
+razonando sobre él sin usar ninguna propiedad particular suya. Esa estrategia
+funciona bien cuando el argumento no depende de la posición que el elemento
+ocupa dentro de una secuencia.
+
+Existe, sin embargo, un tipo de afirmación en el que esa independencia se
+pierde: aquella en la que el caso correspondiente a $n$ se apoya de manera
+natural en el caso correspondiente a $n-1$. Para esa situación hace falta un
+método distinto, cuya idea conviene presentar primero de forma intuitiva.
+
+::: {#nota-domino .callout-note appearance=“simple” title=“Nota: la intuición del dominó”}
+Imagínese una fila infinita de fichas de dominó, numeradas $1,2,3,\ldots$,
+colocadas de tal manera que si una ficha cualquiera cae, necesariamente
+empuja y hace caer a la siguiente. Si además se garantiza que la primera
+ficha cae, entonces es evidente que caerán todas, una tras otra, sin
+excepción: la primera cae por sí sola, esa caída provoca la segunda, la
+segunda provoca la tercera, y así sucesivamente sin que el proceso se detenga
+en ningún punto.
+:::
+
+El principio de inducción matemática formaliza exactamente esta idea,
+sustituyendo “la ficha $n$ cae” por “la proposición $P(n)$ es verdadera”, y
+“si una cae empuja a la siguiente” por un condicional que hay que demostrar.
+
+::: {#thm-induccion}
+## Principio de inducción matemática
+
+Sea $P(n)$ una función proposicional definida para $n\in\mathbb{N}$.
+Supóngase que se cumplen las dos condiciones siguientes:
+
+(i) ***Base de inducción:*** $P(1)$ es verdadera.
+
+(i) ***Paso inductivo:*** para todo $k\in\mathbb{N}$, si
+            $P(k)$ es verdadera, entonces $P(k+1)$ también lo es.
+
+Entonces $P(n)$ es verdadera para todo $n\in\mathbb{N}$.
+:::
+
+Antes de usarlo conviene aclarar su estatus lógico, que es distinto del de
+los resultados anteriores de esta sección.
+
+::: {#nota-induccion-axioma .callout-note appearance=“simple” title=“Nota: por qué este teorema no se demuestra con los métodos anteriores”}
+El @thm-induccion no es una consecuencia de la lógica proposicional
+estudiada hasta aquí, sino que refleja una propiedad estructural de los
+números naturales mismos, a saber, que todo natural se alcanza desde el $1$
+en una cantidad finita de pasos de suma de una unidad, sin quedar ningún
+natural aislado fuera de esa cadena.
+:::
+
+Cuando más adelante se construyan los naturales desde sus axiomas, este
+principio se presentará como uno de los axiomas de partida y no como un
+teorema derivado. Aquí se presenta como teorema porque, para los propósitos
+inmediatos, basta con saber usarlo con solidez, y su justificación última se
+pospone deliberadamente a ese momento posterior, sin que eso reste ningún
+rigor a las demostraciones que se hagan con él mientras tanto.
+
+La demostración por inducción de una afirmación $P(n)$ tiene, en
+consecuencia, una estructura fija de dos partes: probar $P(1)$ de forma
+directa, y luego probar el condicional $P(k)\rightarrow P(k+1)$ para un $k$
+arbitrario, lo cual se hace, casi siempre, mediante una demostración directa
+que toma $P(k)$ como hipótesis, la llamada ***hipótesis de
+inducción***, y deduce de ella $P(k+1)$.
+
+::: {#prp-suma-naturales}
+## Suma de los primeros $n$ naturales
+
+Para todo $n\in\mathbb{N}$,
+
+$$
+1+2+3+\cdots+n = \frac{n(n+1)}{2}.
+$$ {#eq-suma-naturales}
+:::
+
+::: {.proof}
+Se procede por inducción sobre $n$, verificando por separado las dos
+condiciones del @thm-induccion.
+
+Para la base de inducción hay que comprobar la fórmula en $n=1$. El lado
+izquierdo de @eq-suma-naturales es entonces simplemente $1$, mientras
+que el lado derecho vale
+
+$$
+\frac{1\cdot(1+1)}{2} = \frac{2}{2} = 1 .
+$$
+
+Ambos coinciden, de modo que la fórmula se cumple en el caso base.
+
+Para el paso inductivo, supóngase como hipótesis que la fórmula se cumple
+para un natural $k$ arbitrario pero fijo, esto es, que
+
+$$
+1+2+\cdots+k = \frac{k(k+1)}{2}.
+$$ {#eq-hipotesis-induccion}
+
+A partir de esta suposición hay que probar que la fórmula también se cumple
+para $k+1$.
+
+Sumando $k+1$ a ambos lados de @eq-hipotesis-induccion y operando
+algebraicamente, y abreviando $S:=1+2+\cdots+k+(k+1)$ para que el miembro
+izquierdo no deba reescribirse por completo en cada línea,
+
+$$
+\begin{aligned}
+S &= \frac{k(k+1)}{2}+(k+1) \\[4pt]
+  S &= (k+1)\left(\frac{k}{2}+1\right) \\[4pt]
+  S &= (k+1)\cdot\frac{k+2}{2} \\[4pt]
+  S &= \frac{(k+1)\bigl[(k+1)+1\bigr]}{2},
+\end{aligned}
+$$
+
+donde el primer paso usa directamente la hipótesis de inducción para
+reemplazar la suma de los primeros $k$ términos, el segundo factoriza el
+término común $(k+1)$, el tercero suma las fracciones dentro del paréntesis y
+el cuarto reescribe $k+2$ como $(k+1)+1$ para que la coincidencia con la
+fórmula sea manifiesta.
+
+El resultado obtenido es exactamente lo que @eq-suma-naturales predice
+al sustituir $n$ por $k+1$, con lo cual queda probado el paso inductivo. Por
+el @thm-induccion, al cumplirse tanto la base como el paso inductivo,
+la fórmula es verdadera para todo $n\in\mathbb{N}$.
+:::
+
+Vale la pena señalar con precisión qué se demuestra en cada parte, porque es
+una confusión frecuente y consecuente.
+
+::: {#idea-induccion-dos-partes .callout-tip appearance=“simple” title=“Idea central”}
+La base de inducción es una afirmación concreta, sobre el número $1$
+únicamente, y se prueba de manera directa sin ninguna suposición adicional.
+El paso inductivo, en cambio, no afirma que $P(k)$ sea verdadera; afirma el
+condicional $P(k)\rightarrow P(k+1)$, y ese condicional se demuestra
+suponiendo $P(k)$, exactamente como en cualquier demostración directa de un
+condicional. La inducción no incurre, por tanto, en el defecto de suponer
+aquello que se quiere probar: lo que se prueba en el paso inductivo es una
+implicación, y esa implicación, combinada con la base, arrastra la verdad de
+$P(n)$ eslabón por eslabón hasta cualquier natural.
+:::
+
+Existe una variante del principio, llamada ***inducción
+fuerte***, en la que el paso inductivo puede apoyarse no solo en el caso
+inmediatamente anterior, $P(k)$, sino en todos los casos anteriores a la vez,
+$P(1),P(2),\ldots,P(k)$. Ambas versiones son lógicamente equivalentes, y la
+elección de una u otra en una demostración concreta es una cuestión de cuál
+resulta más natural para el argumento, no una diferencia de fondo en lo que
+puede demostrarse con cada una.
+
+Para cerrar esta sección conviene anticipar dónde reaparecerá la herramienta
+que acaba de construirse. El principio de inducción se invocará cada vez que
+una afirmación dependa de un índice entero que avanza paso a paso: al
+establecer la fórmula cerrada de la varianza del error de predicción de un
+proceso autorregresivo, al justificar la recursión que resuelve la ecuación
+de Riccati iteración tras iteración, o al propagar el estado de un sistema
+dinámico $h$ periodos hacia adelante a partir de su valor en un periodo $t$.
+En cada uno de esos casos, reconocer que el argumento tiene la estructura de
+una base más un paso inductivo es lo que permitirá escribir la demostración
+con solidez, en vez de conformarse con verificar la fórmula para los primeros
+valores y confiar en que el patrón continúa, error que la
+[Idea central “Métodos de demostración”](04-metodos-de-demostracion.qmd#idea-contraejemplo-metodo) ya advirtió que nunca constituye una
+demostración.

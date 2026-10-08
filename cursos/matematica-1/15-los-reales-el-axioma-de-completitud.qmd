@@ -1,0 +1,363 @@
+---
+title: "Los reales: el axioma de completitud"
+description: "Los reales: el axioma de completitud. Incluye Cota superior, conjunto acotado y supremo, Caracterización del supremo mediante varepsilon y Propiedad de los intervalos encajados."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Los sistemas numéricos y la recta real]
+---
+
+A diferencia de $\mathbb{Z}$ y $\mathbb{Q}$, que se construyeron
+explícitamente como conjuntos cociente sobre pares de elementos del sistema
+anterior, $\mathbb{R}$ se introduce aquí de manera axiomática: se postula que
+existe un cuerpo ordenado que extiende a $\mathbb{Q}$ y que satisface,
+además, la propiedad que a $\mathbb{Q}$ le faltaba. Esta manera de proceder
+es la habitual en un curso aplicado, porque las construcciones explícitas de
+$\mathbb{R}$ (mediante cortaduras de Dedekind o mediante sucesiones de
+Cauchy) exigen un aparato considerablemente mayor sin aportar ninguna
+herramienta que se use más adelante en el documento. Antes de enunciar el
+axioma hace falta fijar el vocabulario de cotas y supremos sobre el que se
+apoya.
+
+::: {#def-supremo}
+## Cota superior, conjunto acotado y supremo
+
+Sea $A\subseteq\mathbb{R}$ no vacío. Un número $b\in\mathbb{R}$ es
+***cota superior*** de $A$ si $a\leq b$ para todo $a\in A$; en
+ese caso, $A$ se dice ***acotado superiormente***. Un número
+$s\in\mathbb{R}$ es el ***supremo*** de $A$, denotado
+$s=\sup A$, si $s$ es cota superior de $A$ y toda cota superior $b$ de $A$
+satisface $s\leq b$, es decir, si $s$ es la menor de las cotas superiores.
+:::
+
+La definición exige dos cosas de naturaleza distinta, y conviene separarlas
+para no confundirlas en las demostraciones que siguen: primero, que $s$
+efectivamente acote a $A$ por arriba; segundo, que ninguna cota superior más
+pequeña sea posible. Es exactamente esta segunda exigencia la que faltó
+verificar para el racional candidato en la [Proposición “El conjunto S=rinℚ:r>0, r2<2 no tiene supremo en ℚ”](14-por-que-no-basta.qmd#prp-no-sup-en-q), y la que
+el siguiente axioma garantiza, de manera incondicional, dentro de
+$\mathbb{R}$.
+
+::: {#ax-completitud .callout-important appearance=“simple” title=“Axioma: Axioma de completitud”}
+Todo subconjunto no vacío de $\mathbb{R}$ acotado superiormente tiene
+supremo en $\mathbb{R}$.
+:::
+
+Conviene precisar qué cambia el axioma respecto de lo que ya había en $\mathbb{Q}$, porque no agrega ninguna operación nueva sino una propiedad de naturaleza distinta.
+
+::: {#idea-completitud-resuelve .callout-tip appearance=“simple” title=“Idea central: Qué resuelve exactamente la completitud”}
+El axioma de completitud no añade ninguna operación algebraica nueva a las
+que ya tenía $\mathbb{Q}$: $\mathbb{R}$ sigue siendo un cuerpo ordenado, con
+las mismas reglas de suma, producto y orden. Lo que añade es una garantía de
+naturaleza puramente topológica, sobre la ausencia de huecos entre los
+elementos del conjunto. Es precisamente esa garantía, y no ninguna operación
+algebraica adicional, la que hará posible construir $\sqrt2$ como un número
+real más adelante en esta misma subsección, y la que sostendrá, mucho más
+adelante en el documento, la existencia de límites de sucesiones de Cauchy y
+la compacidad de los intervalos cerrados y acotados.
+:::
+
+Antes de aplicar el axioma a un caso concreto, conviene dar una
+caracterización alternativa del supremo, formulada en términos de márgenes
+arbitrariamente pequeños, que resultará más manejable en las demostraciones
+posteriores que la definición original.
+
+::: {#prp-sup-epsilon}
+## Caracterización del supremo mediante $\varepsilon$
+
+Sea $A\subseteq\mathbb{R}$ no vacío y acotado superiormente. Entonces
+$s=\sup A$ si y solo si $s$ es cota superior de $A$ y, para todo
+$\varepsilon>0$, existe $a\in A$ con $a>s-\varepsilon$.
+:::
+
+::: {.proof}
+Se prueba primero la implicación directa. Supóngase $s=\sup A$ y sea
+$\varepsilon>0$ arbitrario. Como $\varepsilon>0$, se tiene
+$s-\varepsilon<s$, y puesto que $s$ es, por hipótesis, la menor cota
+superior de $A$, ningún número estrictamente menor que $s$ puede ser también
+cota superior; en particular, $s-\varepsilon$ no lo es. Que
+$s-\varepsilon$ no sea cota superior significa, por definición, que existe
+algún $a\in A$ con $a>s-\varepsilon$, que es justamente lo que había que
+probar.
+
+Para el recíproco, supóngase que $s$ es cota superior de $A$ y que, para
+todo $\varepsilon>0$, existe $a\in A$ con $a>s-\varepsilon$; se prueba que
+$s$ es la menor cota superior. Supóngase, por contradicción, que existiera
+otra cota superior $b<s$. Tomando $\varepsilon=s-b>0$, la hipótesis
+garantiza un elemento $a\in A$ con
+
+$$
+a > s - \varepsilon = s - (s-b) = b .
+$$ {#eq-sup-epsilon-contradiccion}
+
+Pero @eq-sup-epsilon-contradiccion dice que $a>b$ con $a\in A$, lo
+cual contradice que $b$ sea cota superior de $A$. La contradicción obliga a
+descartar la existencia de una cota superior menor que $s$, así que $s$ es,
+en efecto, la menor de todas.
+:::
+
+La utilidad de esta caracterización se apreciará mejor tras acumular, en lo
+que resta de la subsección, varias consecuencias adicionales del axioma de
+completitud; el ejemplo que cierra la subsección reúne entonces la
+verificación numérica del supremo junto con la de esas consecuencias, para
+no fragmentar en varias cajas sucesivas lo que es, en el fondo, una misma
+familia de manifestaciones concretas de la completitud de $\mathbb{R}$.
+
+Con el supremo caracterizado de esta manera más flexible, puede probarse ya
+la primera consecuencia sustancial del axioma de completitud: que una
+sucesión de intervalos cerrados que se van encajando unos dentro de otros
+siempre comparte, al menos, un punto común.
+
+::: {#thm-intervalos-encajados}
+## Propiedad de los intervalos encajados
+
+Sea $\{I_n\}_{n\in\mathbb{N}}$ una sucesión de intervalos cerrados
+$I_n=[a_n,b_n]\subseteq\mathbb{R}$ tal que
+$I_1\supseteq I_2\supseteq I_3\supseteq\cdots$. Entonces
+$\bigcap_{n\in\mathbb{N}} I_n\neq\varnothing$.
+:::
+
+::: {.proof}
+Conviene empezar por identificar el candidato a punto común, y para ello se
+considera el conjunto de extremos izquierdos $A=\{a_n:n\in\mathbb{N}\}$. El
+anidamiento $I_1\supseteq I_2\supseteq\cdots$ implica, en particular, que
+para cualesquiera índices $m,n$ se tiene $a_n\leq b_m$: si $n\geq m$,
+$a_n\in I_n\subseteq I_m$, así que $a_n\leq b_m$; y si $n<m$, $a_m\in
+I_m\subseteq I_n$, de donde $a_n\leq a_m\leq b_m$. En cualquier caso, todo
+$b_m$ es cota superior de $A$, así que $A$ es un conjunto no vacío y
+acotado superiormente, y por el [Axioma](#ax-completitud) existe
+
+$$
+x := \sup A .
+$$ {#eq-intervalos-x-definido}
+
+Falta ahora comprobar que este $x$ pertenece a todos los intervalos, es
+decir, que $a_n\leq x\leq b_n$ para todo $n\in\mathbb{N}$. La primera
+desigualdad, $a_n\leq x$, es inmediata: $x$ es cota superior de $A$ por
+@eq-intervalos-x-definido, y $a_n\in A$. Para la segunda, ya se
+observó en el párrafo anterior que cada $b_n$ es cota superior de $A$; y
+como $x$ es, por definición de supremo, la menor de todas las cotas
+superiores, se sigue $x\leq b_n$. Así, $x\in I_n$ para todo $n$, y por lo
+tanto $x\in\bigcap_n I_n$, que queda establecido como no vacío.
+:::
+
+Una segunda consecuencia del axioma de completitud, de apariencia mucho más
+elemental pero de uso constante en el resto del documento, es que los
+naturales no están acotados dentro de $\mathbb{R}$: por grande que sea un
+número real, siempre hay un natural que lo supera. Esta afirmación puede
+parecer trivial, pero su demostración depende genuinamente de la
+completitud, y sin ella existirían cuerpos ordenados (como ciertas
+extensiones no arquimedianas de $\mathbb{Q}$) donde la propiedad falla.
+
+::: {#thm-arquimediana}
+## Propiedad arquimediana
+
+(i) Para todo $x\in\mathbb{R}$ existe $n\in\mathbb{N}$ con $n>x$.
+(ii) Para todo $y\in\mathbb{R}$ con $y>0$ existe $n\in\mathbb{N}$ con
+$1/n<y$.
+:::
+
+::: {.proof}
+Se prueba primero la parte (i), por contradicción. Si ningún natural
+superara a $x$, entonces $x$ sería cota superior de $\mathbb{N}$, y como
+$\mathbb{N}$ es no vacío, el [Axioma](#ax-completitud) garantizaría la
+existencia de
+
+$$
+\alpha := \sup \mathbb{N} .
+$$ {#eq-arquimediana-alpha}
+
+Aplicando la @prp-sup-epsilon a $\alpha$ con $\varepsilon=1$, existe
+un natural $n$ con
+
+$$
+n > \alpha - 1 ,
+$$ {#eq-arquimediana-n-mayor}
+
+y sumando $1$ a ambos miembros de @eq-arquimediana-n-mayor se obtiene
+$n+1>\alpha$. Pero $n+1$ es también un natural, así que $n+1>\alpha=\sup
+\mathbb{N}$ contradice que $\alpha$ sea cota superior de $\mathbb{N}$. Esta
+contradicción descarta la suposición inicial, y con ella queda probada la
+parte (i).
+
+Para la parte (ii), dado $y>0$, se aplica la parte (i) ya demostrada al
+número real $x=1/y$: existe $n\in\mathbb{N}$ con $n>1/y$, y multiplicando
+esta desigualdad por $y/n>0$ (lícito porque $y>0$ y $n>0$) se obtiene
+$y>1/n$, que reordenado es exactamente $1/n<y$.
+:::
+
+Con la propiedad arquimediana disponible, puede probarse ahora que entre dos
+reales distintos, por cercanos que estén, siempre hay un racional: los
+racionales, aunque no bastan para completar la recta, están repartidos por
+ella sin dejar ningún intervalo, por pequeño que sea, completamente vacío de
+racionales.
+
+::: {#thm-densidad-q}
+## Densidad de $\mathbb{Q}$ en $\mathbb{R}$
+
+Para cualesquiera $a,b\in\mathbb{R}$ con $a<b$, existe $r\in\mathbb{Q}$ con
+$a<r<b$.
+:::
+
+::: {.proof}
+El punto de partida es la diferencia $b-a>0$. Por la parte (ii) del
+@thm-arquimediana, existe $n\in\mathbb{N}$ con
+
+$$
+\frac{1}{n} < b-a ,
+$$ {#eq-densidad-paso1}
+
+y multiplicando @eq-densidad-paso1 por $n>0$ se obtiene
+$nb-na>1$: el intervalo $(na,nb)$ tiene longitud mayor que $1$.
+
+Todo intervalo real de longitud mayor que $1$ contiene al menos un entero,
+así que existe $m\in\mathbb{Z}$ con $na<m<nb$; de manera más precisa, tomando
+$m$ como el menor entero estrictamente mayor que $na$, se tiene, por esa
+misma minimalidad, que $m-1\leq na$, de donde
+
+$$
+m \leq na+1 < na + (nb-na) = nb ,
+$$ {#eq-densidad-paso2}
+
+donde se ha usado de nuevo $nb-na>1$ en la desigualdad estricta. Así,
+$na<m<nb$, tal como se buscaba.
+
+Dividiendo la desigualdad $na<m<nb$ entre $n>0$, que preserva el sentido de
+las desigualdades, se obtiene $a<m/n<b$, con $m/n\in\mathbb{Q}$; el
+racional $r=m/n$ satisface lo requerido.
+:::
+
+::: {#exm-reales-numerico-conjunto}
+## La completitud de $\mathbb{R}$ verificada con números concretos
+
+**El supremo y su caracterización con $\varepsilon$.** Sea
+$A=\{2-1/n:n\in\mathbb{N}\}=\{1,\,1.5,\,1.667,\,1.75,\ldots\}$. Se afirma
+$\sup A=2$: por un lado, $2-1/n<2$ para todo natural $n$, así que $2$ acota
+a $A$ por arriba; por otro, dado $\varepsilon=0.01$, la parte (ii) del
+@thm-arquimediana garantiza $n$ con $1/n<0.01$, y tomando $n=101$ se
+obtiene $2-1/101\approx1.99010>2-0.01$, un elemento de $A$ dentro del
+margen exigido por la @prp-sup-epsilon. Ningún candidato menor que
+$2$, por cercano que esté, sobrevive a este mismo argumento con $n$
+suficientemente grande, así que $\sup A=2$ queda confirmado con tolerancias
+explícitas.
+
+**Intervalos encajados.** Sea $I_n=\bigl[3-\tfrac1n,\ 3+\tfrac1{n^2}
+\bigr]$. Los primeros términos son $I_1=[2,\,4]$, $I_2=[2.5,\,3.25]$ y
+$I_3=[2.667,\,3.111]$, y en efecto $I_2\subset I_1$ (porque $2.5>2$ y
+$3.25<4$) e $I_3\subset I_2$ (porque $2.667>2.5$ y $3.111<3.25$). El punto
+común a todos los intervalos, según el @thm-intervalos-encajados, es
+$x=3$: para todo $n$, $3-1/n<3<3+1/n^2$, así que $3\in\bigcap_n I_n$, tal
+como predice el teorema.
+
+**Propiedad arquimediana.** Con $y=10^{-8}$, la parte (ii) del
+@thm-arquimediana garantiza un natural $n$ con $1/n<10^{-8}$, es
+decir, $n>10^8$; tomando $n=100\,000\,001$, se verifica
+$1/100\,000\,001\approx9.9999\times10^{-9}<10^{-8}$. Por pequeño que sea
+$y$, siempre existe tal $n$, aunque en ocasiones deba tomarse enorme.
+
+**Densidad de $\mathbb{Q}$.** Sean $a=\sqrt2\approx1.41421356$ y
+$b=\sqrt2+0.001\approx1.41521356$, dos reales separados por apenas una
+milésima. Se necesita $1/n<b-a=0.001$, es decir, $n>1000$; tomando
+$n=1001$, se calcula $na\approx1416.03$ y $nb\approx1417.03$. El menor
+entero mayor que $1416.03$ es $m=1417$, y el racional resultante es
+$r=1417/1001\approx1.415584$, que en efecto satisface $a<r<b$: separa
+exitosamente a $a$ de $b$ pese a lo estrecho del intervalo entre ellos.
+:::
+
+Con los tres resultados anteriores disponibles, puede abordarse por fin el
+problema que quedó pendiente desde la [Proposición “El conjunto S=rinℚ:r>0, r2<2 no tiene supremo en ℚ”](14-por-que-no-basta.qmd#prp-no-sup-en-q): construir,
+dentro de $\mathbb{R}$, un número cuyo cuadrado sea exactamente $2$. La
+demostración reutiliza casi literalmente la perturbación algebraica que
+falló dentro de $\mathbb{Q}$, con la diferencia decisiva de que ahora el
+axioma de completitud garantiza de antemano la existencia del supremo.
+
+::: {#thm-existe-raiz-2}
+## Existencia de $\sqrt2$ como supremo
+
+El número $\alpha:=\sup\{r\in\mathbb{R}: r>0,\ r^2<2\}$ está bien definido y
+satisface $\alpha^2=2$.
+:::
+
+::: {.proof}
+El punto de partida es garantizar que el supremo existe. El conjunto
+$T=\{r\in\mathbb{R}:r>0,r^2<2\}$ es no vacío, porque $1\in T$; y está
+acotado superiormente por $2$, con el mismo argumento que en la
+[Proposición “El conjunto S=rinℚ:r>0, r2<2 no tiene supremo en ℚ”](14-por-que-no-basta.qmd#prp-no-sup-en-q), ahora válido en $\mathbb{R}$. Por el
+[Axioma](#ax-completitud), $\alpha=\sup T$ existe como número real.
+
+Resta verificar que $\alpha^2=2$, y esto se hace descartando, mediante la
+misma tricotomía del orden usada en la [Proposición “El conjunto S=rinℚ:r>0, r2<2 no tiene supremo en ℚ”](14-por-que-no-basta.qmd#prp-no-sup-en-q), las dos
+alternativas $\alpha^2<2$ y $\alpha^2>2$.
+
+Si $\alpha^2<2$, se repite, ahora con $\varepsilon$ real en lugar de
+racional, la perturbación $\alpha'=\alpha+\varepsilon$ con
+$0<\varepsilon<1$, que da
+
+$$
+(\alpha')^2 = \alpha^2+2\alpha\varepsilon+\varepsilon^2
+  < \alpha^2+\varepsilon(2\alpha+1) ,
+$$ {#eq-raiz2-caso1}
+
+y eligiendo $\varepsilon<\min\{1,(2-\alpha^2)/(2\alpha+1)\}$, un real
+positivo que existe sin ninguna restricción sobre su racionalidad, la
+desigualdad @eq-raiz2-caso1 da $(\alpha')^2<2$, así que
+$\alpha'\in T$ con $\alpha'>\alpha$, contradiciendo que $\alpha$ sea cota
+superior de $T$.
+
+Si $\alpha^2>2$, la perturbación simétrica $\alpha''=\alpha-\varepsilon$
+con $0<\varepsilon<(\alpha^2-2)/(2\alpha)$ da, por el mismo cálculo que en
+la [Proposición “El conjunto S=rinℚ:r>0, r2<2 no tiene supremo en ℚ”](14-por-que-no-basta.qmd#prp-no-sup-en-q),
+
+$$
+(\alpha'')^2 > \alpha^2-(\alpha^2-2) = 2 ,
+$$ {#eq-raiz2-caso2}
+
+de modo que $\alpha''$ sigue siendo cota superior de $T$ y satisface
+$\alpha''<\alpha$, contradiciendo que $\alpha$ sea la *menor* cota
+superior.
+
+Ambas alternativas producen una contradicción, así que la tricotomía obliga
+a $\alpha^2=2$.
+:::
+
+El argumento de la demostración anterior no usó en ningún momento una
+propiedad específica del número $2$: funciona igual de bien para cualquier
+real no negativo, y por eso se extiende de manera inmediata a un resultado
+más general, que se enuncia ahora como consecuencia directa sin repetir el
+argumento.
+
+::: {#cor-raiz-no-negativo}
+## Existencia de raíz cuadrada de todo real no negativo
+
+Para todo $c\in\mathbb{R}$ con $c\geq0$, existe un único $\beta\geq0$ tal
+que $\beta^2=c$.
+:::
+
+::: {.proof}
+Si $c=0$, $\beta=0$ satisface $\beta^2=0=c$, y es el único no negativo con
+esa propiedad, porque cualquier real positivo tiene cuadrado positivo. Para
+$c>0$, el conjunto $\{r\in\mathbb{R}:r>0,\,r^2<c\}$ es no vacío (contiene,
+por ejemplo, a $\min\{1,c\}/2$, cuyo cuadrado es menor que $c$) y está
+acotado superiormente por $\max\{1,c\}$; su supremo $\beta$ satisface
+$\beta^2=c$ por exactamente el mismo argumento de perturbación de la
+@thm-existe-raiz-2, sin más cambio que sustituir $2$ por $c$ en cada
+paso. La unicidad se sigue del [Lema “Monotonía del cuadrado en los racionales positivos”](14-por-que-no-basta.qmd#lem-monotonia-cuadrado-q), cuyo
+argumento vale igual con reales en lugar de racionales: si $\beta_1\neq
+\beta_2$ fueran ambos no negativos con el mismo cuadrado $c$, la monotonía
+del cuadrado forzaría $\beta_1<\beta_2\Rightarrow\beta_1^2<\beta_2^2$ o al
+revés, contradiciendo $\beta_1^2=\beta_2^2$.
+:::
+
+::: {#exm-raiz-2-aproximaciones}
+## Aproximaciones sucesivas al supremo, con el error decreciente
+
+La sucesión de racionales $1,\ 1.4,\ 1.41,\ 1.414,\ 1.4142,\ldots$
+pertenece, salvo el primer término, al conjunto $T$ de la
+@thm-existe-raiz-2, lo cual se verifica elevando cada término al
+cuadrado: $1.4^2=1.96<2$; $1.41^2=1.9881<2$; $1.414^2=1.999396<2$;
+$1.4142^2=1.99996164<2$. El error respecto de $2$ en cada paso es
+$2-1.96=0.04$, luego $2-1.9881=0.0119$, luego $2-1.999396=0.000604$, y
+luego $2-1.99996164=0.00003836$: se reduce en más de un orden de magnitud en
+cada término, ilustrando numéricamente cómo la sucesión se aproxima al
+supremo $\alpha=\sqrt2$, cuyo cuadrado exacto, según el teorema recién
+demostrado, es $2$.
+:::

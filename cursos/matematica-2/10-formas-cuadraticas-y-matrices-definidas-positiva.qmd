@@ -1,0 +1,123 @@
+---
+title: "Formas cuadráticas y matrices definidas positivas"
+description: "Decidir si una matriz es definida positiva con la definición exigiría examinar todos los vectores; el siguiente resultado reduce la pregunta a una condición sobre los valores propios."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas II, Álgebra matricial]
+---
+
+La diagonalización ortogonal del corolario anterior tiene una
+consecuencia inmediata que resultará central en la
+[Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd): permite decidir, sin necesidad de evaluar la
+función en múltiples direcciones, si una forma cuadrática es siempre
+positiva, siempre negativa, o cambia de signo según la dirección que se
+elija.
+
+::: {#def-forma-cuadratica}
+## Forma cuadrática y matriz definida positiva
+
+Dada $\mat{A}\in\mathbb{R}^{n\times n}$ simétrica, la
+***forma cuadrática*** asociada es la función
+$q(\vect{x}):=\vect{x}^{\top}\mat{A}\vect{x}$. Se dice que $\mat{A}$ es
+***definida positiva*** si $q(\vect{x})>0$ para todo
+$\vect{x}\neq\vect{0}$, y ***semidefinida positiva*** si
+$q(\vect{x})\geq 0$ para todo $\vect{x}$.
+:::
+
+Decidir si una matriz es definida positiva con la definición exigiría examinar todos los vectores; el siguiente resultado reduce la pregunta a una condición sobre los valores propios.
+
+::: {#thm-definida-positiva-espectral}
+## Caracterización espectral de la definición positiva
+
+Una matriz simétrica $\mat{A}$ es definida positiva si y solo si todos
+sus valores propios son estrictamente positivos, y es semidefinida
+positiva si y solo si todos sus valores propios son no negativos.
+:::
+
+::: {.proof}
+Se prueba el caso definido positivo; el semidefinido es idéntico
+cambiando las desigualdades estrictas por no estrictas. Por el
+[Corolario “Diagonalización ortogonal”](09-valores-propios-vectores-propios-y-diagonalizaci.qmd#cor-diagonalizacion-ortogonal), $\mat{A}=\mat{Q}\mat{\Lambda}
+\mat{Q}^{\top}$ con $\mat{Q}$ ortogonal. Para cualquier $\vect{x}\neq
+\vect{0}$, sea $\vect{y}:=\mat{Q}^{\top}\vect{x}$, que también es no
+nulo porque $\mat{Q}^{\top}$ es invertible por el
+[Teorema “Caracterización de la invertibilidad”](08-el-determinante-y-la-invertibilidad.qmd#thm-caracterizacion-invertibilidad). La forma cuadrática se
+reescribe como
+
+$$
+q(\vect{x}) = \vect{x}^{\top}\mat{Q}\mat{\Lambda}\mat{Q}^{\top}\vect{x}
+  = \vect{y}^{\top}\mat{\Lambda}\vect{y}
+  = \sum_{i=1}^{n}\lambda_i y_i^{2}.
+$$ {#eq-forma-cuadratica-diagonal}
+
+Si todos los $\lambda_i>0$, la suma @eq-forma-cuadratica-diagonal
+es estrictamente positiva para todo $\vect{y}\neq\vect{0}$, y por lo
+tanto para todo $\vect{x}\neq\vect{0}$, de modo que $\mat{A}$ es definida
+positiva. Recíprocamente, si algún $\lambda_j\leq 0$, tomando
+$\vect{x}=\mat{Q}\vect{e}_j$, donde $\vect{e}_j$ es el $j$-ésimo vector
+de la base canónica, se obtiene $\vect{y}=\vect{e}_j$ y
+$q(\vect{x})=\lambda_j\leq 0$ pese a que $\vect{x}\neq\vect{0}$ por ser
+$\mat{Q}$ invertible, lo que contradice que $\mat{A}$ sea definida
+positiva.
+:::
+
+::: {#idea-aplicaciones-definida-positiva .callout-tip appearance=“simple” title=“Idea central: Dos apariciones recurrentes de las matrices definidas positivas”}
+Dos objetos que reaparecerán en secciones posteriores son, en esencia,
+matrices simétricas semidefinidas o definidas positivas. La primera es
+la matriz de varianza y covarianza de un vector aleatorio, que la
+[Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd) definirá como $\Var(\vect{X})=\Esp{(\vect{X}-
+\Esp{\vect{X}})(\vect{X}-\Esp{\vect{X}})^{\top}}$, y que resulta
+semidefinida positiva precisamente porque
+$\vect{a}^{\top}\Var(\vect{X})\vect{a}=\Var(\vect{a}^{\top}\vect{X})\geq
+0$ para cualquier combinación lineal $\vect{a}^{\top}\vect{X}$, ya que
+ninguna varianza puede ser negativa. La segunda es la matriz hessiana de
+segundas derivadas de una función objetivo, que la
+[Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd) exigirá que sea definida positiva en un punto
+crítico para garantizar, mediante el
+@thm-definida-positiva-espectral, que ese punto sea efectivamente
+un mínimo local y no un punto de silla.
+:::
+
+Un ejemplo de matriz semidefinida positiva aparece al proyectar sobre el espacio columna de una matriz de regresores, y permite ver estas propiedades en acción.
+
+::: {#exm-matriz-proyeccion}
+## La matriz de proyección es simétrica, idempotente y semidefinida positiva
+
+Sea $\mat{X}\in\mathbb{R}^{n\times k}$ con columnas linealmente
+independientes, como en el [Ejemplo “Proyección ortogonal sobre un plano en ℝ3”](05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#exm-proyeccion-r3) de la
+[Sección “Espacios vectoriales y subespacios”](01-espacios-vectoriales-y-subespacios.qmd), y sea
+$\mat{P}:=\mat{X}(\mat{X}^{\top}\mat{X})^{-1}\mat{X}^{\top}$ la matriz que
+representa, en coordenadas, a la proyección ortogonal sobre el espacio
+columna de $\mat{X}$. La matriz $\mat{P}$ es simétrica, porque
+$\mat{P}^{\top}=\mat{P}$ se sigue de aplicar la
+[Proposición “Propiedades de la transpuesta”](06-operaciones-matriciales-y-sus-propiedades-algebr.qmd#prp-propiedades-transpuesta) término a término y de que
+$(\mat{X}^{\top}\mat{X})^{-1}$ es simétrica por serlo
+$\mat{X}^{\top}\mat{X}$. También es ***idempotente***, es
+decir, $\mat{P}\mat{P}=\mat{P}$,
+
+$$
+\mat{P}\mat{P} = \mat{X}(\mat{X}^{\top}\mat{X})^{-1}
+  \underbrace{\mat{X}^{\top}\mat{X}(\mat{X}^{\top}\mat{X})^{-1}}_{=\,\Imat}
+  \mat{X}^{\top} = \mat{X}(\mat{X}^{\top}\mat{X})^{-1}\mat{X}^{\top} = \mat{P},
+$$
+
+lo cual tiene una lectura inmediata en términos del
+[Teorema “Teorema de la mejor aproximación”](05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#thm-mejor-aproximacion-general): proyectar dos veces seguidas
+produce el mismo resultado que proyectar una sola vez, porque un vector
+que ya pertenece al espacio columna de $\mat{X}$ es su propia proyección.
+De la idempotencia y la simetría se sigue que los valores propios de
+$\mat{P}$ solo pueden ser $0$ o $1$, porque si
+$\mat{P}\vect{v}=\lambda\vect{v}$ con $\vect{v}\neq\vect{0}$, aplicar
+$\mat{P}$ una vez más da $\lambda\vect{v}=\mat{P}\vect{v}=\mat{P}\mat{P}
+\vect{v}=\lambda^{2}\vect{v}$, de donde $\lambda=\lambda^{2}$ y por lo
+tanto $\lambda\in\{0,1\}$; en particular todos los valores propios son
+no negativos y, por el @thm-definida-positiva-espectral, $\mat{P}$
+es semidefinida positiva. El valor propio $1$ tiene multiplicidad
+$\rango(\mat{X})=k$ y el valor propio $0$ tiene multiplicidad $n-k$, de
+modo que $\tr(\mat{P})=k$ por la
+[Proposición “Valores propios de una matriz triangular”](09-valores-propios-vectores-propios-y-diagonalizaci.qmd#prp-valores-propios-triangular) aplicada a la forma diagonal del
+[Corolario “Diagonalización ortogonal”](09-valores-propios-vectores-propios-y-diagonalizaci.qmd#cor-diagonalizacion-ortogonal); esa traza es, precisamente, el
+número de parámetros estimados en una regresión con $k$ regresores, y
+reaparecerá bajo ese nombre al calcular los grados de libertad de la
+suma de cuadrados residual.
+:::

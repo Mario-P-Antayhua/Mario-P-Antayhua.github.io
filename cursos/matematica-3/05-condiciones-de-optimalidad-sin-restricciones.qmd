@@ -1,0 +1,195 @@
+---
+title: "Condiciones de optimalidad sin restricciones"
+description: "Condiciones de optimalidad sin restricciones. Incluye Condición necesaria de primer orden, Función convexa y cuasiconvexa y Caracterización de la convexidad mediante la hessiana."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas III, Optimización]
+---
+
+El teorema de Weierstrass garantiza que un óptimo existe bajo hipótesis
+razonables, pero no dice cómo encontrarlo. La respuesta clásica consiste
+en aprovechar que, en un óptimo interior donde $f$ es diferenciable, la
+aproximación lineal de la [Definición “Diferenciabilidad y gradiente”](01-diferenciacion-en-varias-variables.qmd#def-diferenciabilidad-gradiente) no deja
+ninguna dirección de mejora disponible.
+
+::: {#thm-fermat}
+## Condición necesaria de primer orden
+
+Sea $D\subseteq\mathbb{R}^n$ abierto, $f:D\to\mathbb{R}$ diferenciable
+en $\vect{x}^*\in D$. Si $\vect{x}^*$ es un óptimo local de $f$ en $D$,
+entonces $\nabla f(\vect{x}^*)=\vect{0}$.
+:::
+
+::: {.proof}
+Se prueba el caso de mínimo local; el de máximo es idéntico invirtiendo
+una desigualdad. Fíjese cualquier dirección unitaria $\vect{u}\in
+\mathbb{R}^n$ y defínase $\phi(t):=f(\vect{x}^*+t\vect{u})$ para $t$ en
+un intervalo abierto que contenga a $0$, lo cual es posible porque $D$
+es abierto. Como $\vect{x}^*$ es mínimo local de $f$, $t=0$ es mínimo
+local de $\phi$, y $\phi$ es derivable en $0$ por la regla de la cadena
+de la [Teorema “Regla de la cadena en varias variables”](01-diferenciacion-en-varias-variables.qmd#thm-regla-cadena-multivariable), con
+$\phi'(0)=\langle\nabla f(\vect{x}^*),\vect{u}\rangle$. Por el mismo
+argumento de signos usado en la demostración del
+[Teorema “Teorema del valor medio”](../matematica-1/29-la-derivada-de-una-funcion-de-una-variable.qmd#thm-valor-medio) para el caso de Rolle, un mínimo local interior
+de una función derivable de una variable tiene derivada nula, de modo
+que $\phi'(0)=0$, es decir, $\langle\nabla f(\vect{x}^*),\vect{u}\rangle
+=0$. Como $\vect{u}$ era una dirección unitaria arbitraria, tomando en
+particular $\vect{u}=\vect{e}_i$ para cada $i=1,\ldots,n$ se obtiene que
+la $i$-ésima coordenada de $\nabla f(\vect{x}^*)$ es cero, y como esto
+vale para todo $i$, $\nabla f(\vect{x}^*)=\vect{0}$.
+:::
+
+La condición $\nabla f(\vect{x}^*)=\vect{0}$ identifica candidatos a
+óptimo, llamados puntos críticos o puntos estacionarios, pero no
+distingue un mínimo de un máximo ni de un punto de silla: la función
+$f(x,y)=x^2-y^2$ tiene gradiente nulo en el origen sin que el origen sea
+ni máximo ni mínimo. Resolver esa ambigüedad exige mirar la curvatura de
+$f$, codificada en su hessiana, y antes de eso conviene introducir la
+clase de funciones para las que un punto crítico es automáticamente un
+óptimo global.
+
+::: {#def-convexidad}
+## Función convexa y cuasiconvexa
+
+Sea $D\subseteq\mathbb{R}^n$ convexo, es decir, tal que
+$\lambda\vect{x}+(1-\lambda)\vect{y}\in D$ para todos
+$\vect{x},\vect{y}\in D$ y $\lambda\in[0,1]$. Una función $f:D\to
+\mathbb{R}$ es ***convexa*** si
+
+$$
+f\bigl(\lambda\vect{x}+(1-\lambda)\vect{y}\bigr)
+  \leq \lambda f(\vect{x}) + (1-\lambda)f(\vect{y})
+$$
+
+para todos $\vect{x},\vect{y}\in D$ y $\lambda\in[0,1]$, y es
+***cuasiconvexa*** si, para todo $c\in\mathbb{R}$, el
+conjunto de subnivel $\{\vect{x}\in D:f(\vect{x})\leq c\}$ es convexo.
+Toda función convexa es cuasiconvexa, aunque el recíproco no vale.
+:::
+
+Comprobar la convexidad con la definición exige comparar valores de la función en pares de puntos; para funciones dos veces diferenciables existe un criterio local.
+
+::: {#prp-convexidad-hessiana}
+## Caracterización de la convexidad mediante la hessiana
+
+Sea $D\subseteq\mathbb{R}^n$ abierto y convexo, y $f:D\to\mathbb{R}$ dos
+veces diferenciable con continuidad. Entonces $f$ es convexa en $D$ si y
+solo si $\mat{H}_f(\vect{x})$ es semidefinida positiva, en el sentido de
+la [Definición “Forma cuadrática y matriz definida positiva”](../matematica-2/10-formas-cuadraticas-y-matrices-definidas-positiva.qmd#def-forma-cuadratica), para todo $\vect{x}\in D$.
+:::
+
+::: {.proof}
+Se prueban las dos direcciones por separado: la primera usa la fórmula de Taylor y la segunda, un argumento en una variable. Sean
+$\vect{x},\vect{y}\in D$ y $\vect{h}:=\vect{y}-\vect{x}$. La fórmula de
+Taylor de segundo orden de la [Teorema “Fórmula de Taylor de segundo orden”](02-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#thm-taylor-segundo-orden), evaluada
+en un punto intermedio del segmento entre $\vect{x}$ y $\vect{y}$ en
+lugar de con el resto asintótico, da
+
+$$
+f(\vect{y}) = f(\vect{x}) + \langle\nabla f(\vect{x}),\vect{h}\rangle
+  + \tfrac{1}{2}\vect{h}^{\top}\mat{H}_f(\vect{\xi})\vect{h}
+$$
+
+para algún $\vect{\xi}$ en el segmento entre $\vect{x}$ y $\vect{y}$,
+que pertenece a $D$ por ser $D$ convexo. Como
+$\mat{H}_f(\vect{\xi})$ es semidefinida positiva por hipótesis, el
+último término es no negativo, de modo que
+$f(\vect{y})\geq f(\vect{x})+\langle\nabla f(\vect{x}),\vect{h}\rangle$
+para todo $\vect{x},\vect{y}\in D$: la función queda siempre por encima
+de su aproximación lineal en cualquier punto. Esta propiedad, conocida
+como convexidad mediante el plano de apoyo, es equivalente a la
+definición de convexidad de la @def-convexidad, porque aplicarla
+en $\vect{x}=\lambda\vect{x}_0+(1-\lambda)\vect{y}_0$ evaluada hacia
+$\vect{x}_0$ y hacia $\vect{y}_0$, y combinando ambas desigualdades con
+pesos $\lambda$ y $1-\lambda$, reproduce exactamente la desigualdad de
+la @def-convexidad.
+
+Para la dirección recíproca se supone $f$ convexa y se fijan $\vect{x}\in D$ y $\vect{h}\in\mathbb{R}^n$. Como $D$ es abierto, existe $\tau>0$ tal que $\vect{x}+t\vect{h}\in D$ para $|t|<\tau$, y la función $g(t):=f(\vect{x}+t\vect{h})$ es convexa y dos veces derivable en $(-\tau,\tau)$, con $g''(0)=\vect{h}^{\top}\mat{H}_f(\vect{x})\vect{h}$. Hay que ver que $g''(0)\geq 0$.
+
+El primer paso es la desigualdad del plano de apoyo en una variable. Para $0<\lambda<1$, la convexidad da $g(\lambda t)\leq\lambda g(t)+(1-\lambda)g(0)$, que reordenada es
+
+$$
+\frac{g(\lambda t)-g(0)}{\lambda}\leq g(t)-g(0).
+$$
+
+Al hacer $\lambda\to 0^{+}$ el lado izquierdo tiende a $g'(0)\,t$, de modo que $g(t)\geq g(0)+g'(0)\,t$ en todo el intervalo. El mismo argumento vale con cualquier punto del intervalo en lugar de $0$, y aplicado en el punto $t$ da $g(0)\geq g(t)-g'(t)\,t$.
+
+Sumando ambas desigualdades,
+
+$$
+0 \geq \bigl(g'(0)-g'(t)\bigr)\,t,
+$$
+
+es decir, $\bigl(g'(t)-g'(0)\bigr)\,t\geq 0$ para todo $t\neq 0$ del intervalo. Dividiendo por $t^2>0$ resulta $\bigl(g'(t)-g'(0)\bigr)/t\geq 0$, y al tomar $t\to 0$ se obtiene $g''(0)\geq 0$, que es $\vect{h}^{\top}\mat{H}_f(\vect{x})\vect{h}\geq 0$. Como $\vect{x}$ y $\vect{h}$ eran arbitrarios, la hessiana es semidefinida positiva en todo $D$.
+:::
+
+::: {#thm-condiciones-segundo-orden}
+## Condiciones de segundo orden
+
+Sea $D\subseteq\mathbb{R}^n$ abierto, $f:D\to\mathbb{R}$ dos veces
+diferenciable con continuidad, y $\vect{x}^*\in D$ un punto crítico,
+$\nabla f(\vect{x}^*)=\vect{0}$. Si $\mat{H}_f(\vect{x}^*)$ es definida
+positiva, $\vect{x}^*$ es un mínimo local estricto de $f$. Si además $f$
+es convexa en $D$, todo punto crítico es un mínimo global.
+:::
+
+::: {.proof}
+Para la primera afirmación, la fórmula de Taylor de segundo orden de la
+[Teorema “Fórmula de Taylor de segundo orden”](02-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#thm-taylor-segundo-orden), junto con $\nabla f(\vect{x}^*)=
+\vect{0}$, da
+
+$$
+f(\vect{x}^*+\vect{h}) = f(\vect{x}^*)
+  + \tfrac{1}{2}\vect{h}^{\top}\mat{H}_f(\vect{x}^*)\vect{h}
+  + R(\vect{h}), \qquad \frac{R(\vect{h})}{\|\vect{h}\|^{2}}\to 0.
+$$
+
+Por el [Teorema “Caracterización espectral de la definición positiva”](../matematica-2/10-formas-cuadraticas-y-matrices-definidas-positiva.qmd#thm-definida-positiva-espectral) de la
+[Sección “Operaciones matriciales y sus propiedades algebraicas”](../matematica-2/06-operaciones-matriciales-y-sus-propiedades-algebr.qmd), existe $c>0$, el menor valor propio de
+$\mat{H}_f(\vect{x}^*)$, tal que
+$\vect{h}^{\top}\mat{H}_f(\vect{x}^*)\vect{h}\geq c\|\vect{h}\|^{2}$
+para todo $\vect{h}$. Como $R(\vect{h})/\|\vect{h}\|^{2}\to 0$, existe
+$\delta>0$ tal que $|R(\vect{h})|<\tfrac{c}{4}\|\vect{h}\|^{2}$ para
+todo $\vect{h}$ con $0<\|\vect{h}\|<\delta$, de modo que para esos
+$\vect{h}$,
+
+$$
+f(\vect{x}^*+\vect{h}) - f(\vect{x}^*)
+  \geq \tfrac{c}{2}\|\vect{h}\|^{2} - \tfrac{c}{4}\|\vect{h}\|^{2}
+  = \tfrac{c}{4}\|\vect{h}\|^{2} > 0,
+$$
+
+lo que prueba que $\vect{x}^*$ es un mínimo local estricto. Para la
+segunda afirmación, si $f$ es convexa, la
+@prp-convexidad-hessiana da, para todo $\vect{y}\in D$,
+$f(\vect{y})\geq f(\vect{x}^*)+\langle\nabla f(\vect{x}^*),\vect{y}-
+\vect{x}^*\rangle=f(\vect{x}^*)$, usando de nuevo que
+$\nabla f(\vect{x}^*)=\vect{0}$, de modo que $\vect{x}^*$ minimiza $f$
+en todo $D$, no solo localmente.
+:::
+
+::: {#cor-primer-orden-suficiente-convexa}
+## Primer orden es necesario y suficiente bajo convexidad
+
+Si $f:D\to\mathbb{R}$ es convexa y diferenciable en el abierto convexo
+$D$, entonces $\vect{x}^*\in D$ es un mínimo global de $f$ si y solo si
+$\nabla f(\vect{x}^*)=\vect{0}$.
+:::
+
+::: {.proof}
+La necesidad es el @thm-fermat aplicado al hecho de que todo
+mínimo global es, en particular, un mínimo local. La suficiencia es
+exactamente el argumento usado en la segunda parte de la demostración
+del @thm-condiciones-segundo-orden, que no requirió la hipótesis
+de definición positiva estricta, sino únicamente convexidad y
+$\nabla f(\vect{x}^*)=\vect{0}$.
+:::
+
+Este corolario es el que justificará, en la [sección sobre la estimación por máxima verosimilitud de modelos ARMA](../econometria-2/index.qmd), que
+resolver la condición de primer orden de la suma de cuadrados residual
+baste para encontrar el estimador de mínimos cuadrados, sin necesidad de
+verificar por separado ninguna condición de segundo orden: la función
+objetivo es, como mostró el [Ejemplo “Gradiente y hessiana de una forma cuadrática”](02-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#exm-gradiente-hessiana-cuadratica) de
+la [Sección “Límites y continuidad de funciones”](../matematica-1/28-limites-y-continuidad-de-funciones.qmd), una forma cuadrática con hessiana constante e
+igual al doble de una matriz semidefinida positiva, y por lo tanto
+convexa en todo su dominio.

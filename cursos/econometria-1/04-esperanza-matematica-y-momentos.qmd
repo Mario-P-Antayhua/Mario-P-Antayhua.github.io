@@ -1,0 +1,182 @@
+---
+title: "Esperanza matemática y momentos"
+description: "Esperanza matemática y momentos. Incluye Esperanza matemática, Linealidad de la esperanza y Momentos y varianza."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Econometría I, Fundamentos de probabilidad]
+---
+
+::: {#def-esperanza}
+## Esperanza matemática
+
+La ***esperanza*** de una variable aleatoria $X$ es
+$\Esp{X}:=\sum_i x_i\,p_X(x_i)$ si $X$ es discreta, o
+$\Esp{X}:=\int_{-\infty}^{\infty}x\,f_X(x)\,dx$ si $X$ es continua,
+siempre que la suma o la integral converjan absolutamente. Para una
+función $g:\mathbb{R}\to\mathbb{R}$, la esperanza de $g(X)$ se calcula
+de manera análoga, sin necesidad de hallar antes la distribución de
+$g(X)$: $\Esp{g(X)}=\sum_i g(x_i)p_X(x_i)$ o
+$\Esp{g(X)}=\int g(x)f_X(x)\,dx$, según el caso.
+:::
+
+La posibilidad de calcular $\Esp{g(X)}$ sin conocer explícitamente la
+distribución de $g(X)$, conocida a veces como el teorema del
+estadístico inconsciente, ahorra un trabajo considerable en la
+práctica: basta con conocer la distribución de $X$ para calcular la
+esperanza de cualquier función suya, sin necesidad de derivar primero,
+mediante un cambio de variable, la distribución de la variable
+transformada. Antes de usar esta maquinaria con funciones $g$
+arbitrarias, conviene fijar su comportamiento en el caso más simple, el
+de las combinaciones lineales.
+
+::: {#prp-linealidad-esperanza}
+## Linealidad de la esperanza
+
+Para variables aleatorias $X,Y$ con esperanza finita y
+$\alpha,\beta\in\mathbb{R}$, $\Esp{\alpha X+\beta Y}=\alpha\Esp{X}+
+\beta\Esp{Y}$.
+:::
+
+::: {.proof}
+En el caso continuo, si $(X,Y)$ tiene densidad conjunta $f_{X,Y}$, la
+@def-esperanza aplicada a $g(x,y)=\alpha x+\beta y$ da
+
+$$
+\Esp{\alpha X+\beta Y}
+  = \int\!\!\int(\alpha x+\beta y)f_{X,Y}(x,y)\,dx\,dy
+  = \alpha\int\!\!\int x f_{X,Y}(x,y)\,dx\,dy
+  + \beta\int\!\!\int y f_{X,Y}(x,y)\,dx\,dy,
+$$
+
+donde el segundo paso usa la linealidad de la integral de la
+[Proposición “Linealidad de la integral”](../matematica-2/11-la-integral-de-riemann-y-el-teorema-fundamental.qmd#prp-linealidad-integral); las dos integrales dobles restantes son,
+integrando primero respecto de la variable que no aparece en el
+integrando, exactamente $\Esp{X}$ y $\Esp{Y}$ por marginalización, lo
+que da la identidad enunciada. El caso discreto es idéntico,
+sustituyendo las integrales por sumas y usando la linealidad de series
+convergentes de la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd).
+:::
+
+La linealidad de la esperanza es, en la práctica, la propiedad más
+usada de toda esta subsección: permite calcular la esperanza de una
+suma de variables, como el ingreso total de un hogar proveniente de
+varias fuentes, sumando las esperanzas individuales, sin necesidad de
+conocer la distribución conjunta de esas variables ni si son
+independientes entre sí. Esa independencia de la distribución conjunta
+es notable y contrasta con lo que ocurrirá al calcular la varianza de
+una suma, tema de la [Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd), donde la dependencia
+entre las variables sí importa. Antes de llegar ahí, conviene definir
+formalmente los momentos de orden superior al primero, que capturan
+información sobre la forma de la distribución que la esperanza, por sí
+sola, no puede describir.
+
+::: {#def-momentos-varianza}
+## Momentos y varianza
+
+El ***momento de orden $k$*** de $X$ es $\Esp{X^k}$, cuando
+existe. La ***varianza*** de $X$ es
+$\Var(X):=\Esp{(X-\Esp{X})^2}$, y su raíz cuadrada, $\sqrt{\Var(X)}$, es
+la ***desviación estándar***. Desarrollando el cuadrado y
+aplicando la @prp-linealidad-esperanza,
+$\Var(X)=\Esp{X^2}-(\Esp{X})^2$.
+:::
+
+Los momentos de la variable más simple, la de Bernoulli, se calculan completos y sirven de verificación de la fórmula alternativa de la varianza.
+
+::: {#exm-bernoulli-momentos}
+## Esperanza y varianza de una variable de Bernoulli
+
+Sea $X$ una variable de Bernoulli con parámetro $\pi\in(0,1)$, es decir,
+$\Prob{X=1}=\pi$ y $\Prob{X=0}=1-\pi$. Por la
+@def-esperanza, $\Esp{X}=1\cdot\pi+0\cdot(1-\pi)=\pi$. Como $X$
+solo toma los valores $0$ y $1$, se cumple $X^2=X$ en cada realización,
+de modo que $\Esp{X^2}=\Esp{X}=\pi$, y la fórmula alternativa de la
+@def-momentos-varianza da
+$\Var(X)=\pi-\pi^2=\pi(1-\pi)$. Esta varianza se anula exactamente en
+los extremos $\pi=0$ y $\pi=1$, donde no hay incertidumbre alguna sobre
+el resultado, y alcanza su máximo en $\pi=1/2$, el caso de máxima
+incertidumbre entre dos resultados igualmente probables; este patrón,
+varianza nula en la certeza y máxima en la equiprobabilidad, reaparecerá
+sin cambios al estudiar el error estándar de una proporción muestral.
+:::
+
+Los momentos resumen aspectos parciales de una distribución, pero
+también permiten acotar, sin conocer la distribución completa, la
+probabilidad de que una variable se aleje de su media, lo cual será
+esencial para las leyes de los grandes números de la
+[Sección “Modos de convergencia”](05-modos-de-convergencia.qmd).
+
+::: {#prp-markov-chebyshev}
+## Desigualdades de Markov y de Chebyshev
+
+Si $X\geq 0$ y $a>0$, $\Prob{X\geq a}\leq\Esp{X}/a$ (desigualdad de
+Markov). Si $X$ tiene varianza finita y $\varepsilon>0$,
+$\Prob{|X-\Esp{X}|\geq\varepsilon}\leq\Var(X)/\varepsilon^2$
+(desigualdad de Chebyshev).
+:::
+
+::: {.proof}
+Para Markov, en el caso continuo,
+
+$$
+\Esp{X} = \int_0^{\infty}xf_X(x)\,dx
+  \geq \int_a^{\infty}xf_X(x)\,dx
+  \geq a\int_a^{\infty}f_X(x)\,dx = a\,\Prob{X\geq a},
+$$
+
+donde la primera desigualdad descarta la contribución no negativa de
+$[0,a)$ y la segunda usa que $x\geq a$ en el rango de integración
+restante; dividiendo entre $a>0$ se obtiene la desigualdad enunciada.
+Para Chebyshev, basta aplicar Markov a la variable no negativa
+$Y:=(X-\Esp{X})^2$ con $a=\varepsilon^2$: como
+$\{|X-\Esp{X}|\geq\varepsilon\}=\{Y\geq\varepsilon^2\}$, Markov da
+$\Prob{Y\geq\varepsilon^2}\leq\Esp{Y}/\varepsilon^2=
+\Var(X)/\varepsilon^2$, que es exactamente la desigualdad de Chebyshev.
+:::
+
+La desigualdad de Chebyshev tiene una lectura que se explotará
+repetidamente en la [Sección “Modos de convergencia”](05-modos-de-convergencia.qmd): si la varianza de una
+variable aleatoria es pequeña, la probabilidad de que se aleje de su
+media también lo es, sin necesidad de conocer nada más sobre su
+distribución. Los momentos de primer y segundo orden bastan, entonces,
+para controlar la dispersión de una variable; para caracterizarla por
+completo, en cambio, hace falta en principio la sucesión infinita de
+todos sus momentos, y la función generadora de momentos es la manera
+compacta de empaquetarlos a todos en un solo objeto.
+
+::: {#def-mgf}
+## Función generadora de momentos
+
+La ***función generadora de momentos*** (MGF) de $X$ es
+$M_X(t):=\Esp{e^{tX}}$, definida para los valores de $t\in\mathbb{R}$
+en los que esta esperanza existe y es finita en una vecindad de $t=0$.
+:::
+
+El nombre de la función anticipa su utilidad: como se detalla a
+continuación, sus derivadas sucesivas evaluadas en el origen reproducen,
+uno por uno, todos los momentos de $X$, y su comportamiento cerca de
+$t=0$ determina de forma única a toda la distribución subyacente, no
+solo a sus momentos por separado.
+
+::: {#idea-mgf-unicidad .callout-tip appearance=“simple” title=“Idea central: Por qué importa la función generadora de momentos”}
+Cuando $M_X$ existe en una vecindad de cero, sus derivadas sucesivas en
+$t=0$ reproducen los momentos de $X$, porque
+$M_X^{(k)}(0)=\Esp{X^k}$, un hecho que se obtiene derivando bajo el
+signo de la esperanza mediante la regla de Leibniz de la
+[Teorema “Regla de Leibniz”](../matematica-3/03-diferenciacion-bajo-el-signo-de-la-integral.qmd#thm-leibniz), en su versión adaptada a integrales impropias. Más
+importante todavía: dos variables aleatorias cuyas MGF coinciden en una
+vecindad de cero tienen la misma distribución, un resultado que se
+acepta aquí sin demostrar por depender de la teoría de funciones
+características y transformadas de Laplace, y que será la herramienta
+que permita, en la [Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd), verificar que una
+combinación lineal de variables normales es a su vez normal sin
+calcular explícitamente su densidad.
+:::
+
+Con el espacio de probabilidad, la variable aleatoria y sus momentos ya
+establecidos, el aparato descriptivo de esta sección queda completo.
+Todavía falta, sin embargo, precisar qué significa que una sucesión de
+variables aleatorias, como una sucesión de estimadores calculados con
+muestras cada vez más grandes, se aproxime a un valor límite; esa
+precisión, junto con la noción de esperanza condicional, es el objeto
+de la [Sección “Modos de convergencia”](05-modos-de-convergencia.qmd).

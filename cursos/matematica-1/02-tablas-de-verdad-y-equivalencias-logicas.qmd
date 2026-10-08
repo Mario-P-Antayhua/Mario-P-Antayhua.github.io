@@ -1,0 +1,145 @@
+---
+title: "Tablas de verdad y equivalencias lógicas"
+description: "Habiendo definido los cinco conectores por separado, conviene disponer de un instrumento que permita calcular el valor de verdad de cualquier combinación de ellos, por complicada que sea, de forma puramente mecánica."
+author: "Mario Peñaloza"
+date: 2026-10-07
+categories: [Matemática para Economistas I, Lógica proposicional y métodos de demostración]
+---
+
+Habiendo definido los cinco conectores por separado, conviene disponer de un
+instrumento que permita calcular el valor de verdad de cualquier combinación
+de ellos, por complicada que sea, de forma puramente mecánica.
+
+Una ***tabla de verdad*** enumera, de forma exhaustiva, todas las
+combinaciones posibles de valores de verdad de las proposiciones simples que
+intervienen en una proposición compuesta, junto con el valor que la compuesta
+toma en cada combinación. Puesto que cada proposición simple admite dos
+valores, una tabla con $n$ proposiciones simples distintas tiene exactamente
+$2^n$ filas, una por cada combinación posible; con dos proposiciones, cuatro
+filas, que es el caso que recoge la tabla siguiente.
+
+| $p$ | $q$ | $\neg p$ | $p\wedge q$ | $p\vee q$ | $p\rightarrow q$ | $p\leftrightarrow q$ |
+|---|---|---|---|---|---|---|
+| V | V | F | V | V | V | V |
+| V | F | F | F | V | F | F |
+| F | V | V | F | V | V | F |
+| F | F | V | F | F | V | V |
+
+: Tablas de verdad de los cinco conectores lógicos. {#tbl-conectores}
+
+Leyendo la tabla por columnas se aprecian de inmediato varias cosas que las
+definiciones enunciaban por separado. La columna de $p\wedge q$ tiene una
+sola V, la de $p\vee q$ tiene una sola F, y la de $p\rightarrow q$ tiene
+también una sola F, situada en la segunda fila, que es exactamente el caso
+“hipótesis verdadera, tesis falsa” del que se habló arriba.
+
+La utilidad principal de las tablas de verdad no es, sin embargo, calcular
+valores, sino decidir cuándo dos proposiciones de aspecto distinto dicen en
+realidad exactamente lo mismo.
+
+::: {#def-equivalencia}
+## Proposiciones equivalentes
+
+Dos proposiciones compuestas se llaman ***lógicamente
+equivalentes*** si tienen exactamente la misma tabla de verdad, es decir, si
+toman el mismo valor de verdad para cada combinación posible de valores de
+verdad de las proposiciones simples que las componen. Se denota
+$p\equiv q$.
+:::
+
+La utilidad de la equivalencia lógica es que permite sustituir una
+proposición por otra que dice exactamente lo mismo pero que resulta más
+manejable para demostrar. Esta idea, que ahora parece un tecnicismo, será en
+la [Subsección “Métodos de demostración”](04-metodos-de-demostracion.qmd) la que fundamente dos de los cinco métodos de
+demostración, así que conviene establecer con cuidado el catálogo de
+equivalencias que se usarán.
+
+::: {#prp-equivalencias}
+## Equivalencias lógicas fundamentales
+
+Para proposiciones cualesquiera $p$, $q$ y $r$ se cumplen las siguientes
+equivalencias:
+
+$$
+\begin{aligned}
+\neg(\neg p) &\equiv p, \tag{doble negación} \\
+  \neg(p\wedge q) &\equiv \neg p \vee \neg q, \tag{De Morgan, conjunción} \\
+  \neg(p\vee q) &\equiv \neg p \wedge \neg q, \tag{De Morgan, disyunción} \\
+  p\rightarrow q &\equiv \neg p \vee q, \tag{condicional como disyunción} \\
+  p\rightarrow q &\equiv \neg q \rightarrow \neg p, \tag{contrarrecíproco} \\
+  p\leftrightarrow q &\equiv (p\rightarrow q)\wedge(q\rightarrow p). \tag{doble condicional}
+\end{aligned}
+$$
+:::
+
+::: {.proof}
+Todas se verifican por el mismo procedimiento mecánico, que consiste en
+construir la tabla de verdad de ambos lados y comprobar que coinciden fila
+por fila. Se desarrolla en detalle la ley de De Morgan para la conjunción, y
+después se muestra cómo el resto puede obtenerse encadenando equivalencias
+ya probadas, sin necesidad de una tabla nueva cada vez.
+
+Para la ley de De Morgan hay que comparar $\neg(p\wedge q)$ con
+$\neg p\vee\neg q$ en las cuatro combinaciones posibles. Cuando $p$ y $q$ son
+ambas verdaderas, $p\wedge q$ es verdadera y su negación es falsa; por otro
+lado, $\neg p$ y $\neg q$ son ambas falsas, de modo que su disyunción también
+es falsa, y las dos expresiones coinciden.
+
+Cuando $p$ es verdadera y $q$ es falsa, en cambio, $p\wedge q$ resulta falsa
+y su negación verdadera; y mientras tanto $\neg p$ es falsa pero $\neg q$ es
+verdadera, de manera que la disyunción $\neg p\vee\neg q$ es verdadera. Otra
+vez coinciden. El caso en que $p$ es falsa y $q$ verdadera es enteramente
+simétrico al anterior, así que basta intercambiar los papeles.
+
+Queda la cuarta fila, donde ambas son falsas: entonces $p\wedge q$ es falsa y
+su negación verdadera, mientras que $\neg p$ y $\neg q$ son ambas verdaderas
+y su disyunción también lo es. Las cuatro filas coinciden, con lo cual la
+equivalencia queda establecida.
+
+Para la equivalencia entre el condicional y la disyunción conviene razonar
+por el caso que las distingue, en vez de recorrer la tabla completa. La
+expresión $p\rightarrow q$ es falsa únicamente cuando $p$ es verdadera y $q$
+es falsa; y en ese mismo caso, $\neg p$ es falsa y $q$ es falsa, de modo que
+$\neg p\vee q$ también es falsa. En cualquiera de los tres casos restantes,
+donde $p\rightarrow q$ es verdadera, o bien $p$ es falsa, lo que hace
+verdadera a $\neg p$ y por tanto a la disyunción completa, o bien $q$ es
+verdadera, lo que igualmente hace verdadera a la disyunción.
+
+La equivalencia con el contrarrecíproco se obtiene ahora sin ninguna tabla
+nueva, encadenando las dos equivalencias ya probadas. Por la equivalencia
+recién establecida, aplicada esta vez a las proposiciones $\neg q$ y
+$\neg p$,
+
+$$
+\neg q\rightarrow\neg p \;\equiv\; \neg(\neg q)\vee\neg p .
+$$
+
+Aplicando entonces la doble negación al primer término, $\neg(\neg q)\equiv
+q$, la expresión se reduce a $q\vee\neg p$; y como la disyunción no distingue
+el orden de sus componentes, esto es lo mismo que $\neg p\vee q$, que es
+precisamente la forma del condicional original. Encadenando las tres
+equivalencias se obtiene $p\rightarrow q\equiv\neg q\rightarrow\neg p$.
+
+Falta el bicondicional, que se sigue directamente de la
+[Definición “Condicional y bicondicional”](01-proposiciones-y-conectores-logicos.qmd#def-condicional). La expresión $p\leftrightarrow q$ es verdadera
+exactamente cuando $p$ y $q$ comparten valor de verdad, y esa condición se
+cumple exactamente cuando ocurren dos cosas a la vez: que $p\rightarrow q$
+sea verdadera, es decir, que no haya caso en que $p$ sea verdadera y $q$
+falsa; y que $q\rightarrow p$ también lo sea, es decir, que no haya caso en
+que $q$ sea verdadera y $p$ falsa. Ambas cosas a la vez son, por definición
+de conjunción, $(p\rightarrow q)\wedge(q\rightarrow p)$.
+:::
+
+De las seis equivalencias recién probadas, cinco son útiles como herramientas
+de cálculo, pero una de ellas tiene un peso muy superior al resto, porque
+sostendrá un método de demostración completo.
+
+::: {#idea-contrarreciproco .callout-tip appearance=“simple” title=“Idea central”}
+La equivalencia entre $p\rightarrow q$ y su contrarrecíproco
+$\neg q\rightarrow\neg p$ es, con diferencia, la más importante de la lista
+para lo que sigue. Probar que $p$ implica $q$ es exactamente lo mismo que
+probar que la negación de $q$ implica la negación de $p$, y en muchas
+ocasiones esta segunda formulación resulta bastante más manejable que la
+primera, sobre todo cuando la hipótesis original está planteada como una
+negación y la tesis original no lo está.
+:::
