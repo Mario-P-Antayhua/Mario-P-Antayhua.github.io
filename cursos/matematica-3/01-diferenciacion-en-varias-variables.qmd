@@ -27,6 +27,7 @@ $$
 
 donde $\vect{e}_i$ es el $i$-ésimo vector de la base canónica, cuando
 ese límite existe.
+
 :::
 
 Que existan las $n$ derivadas parciales en un punto no basta, por sí
@@ -52,6 +53,7 @@ $$
 
 donde $\langle\cdot,\cdot\rangle$ y $\|\cdot\|$ son el producto interno y
 la norma euclidianos de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd).
+
 :::
 
 La definición de diferenciabilidad no indica cómo calcular el gradiente; la relación con las derivadas parciales lo resuelve y delimita hasta dónde llega la implicación inversa.
@@ -66,6 +68,7 @@ $\nabla f(\vect{p})=\bigl(\partial f/\partial x_1(\vect{p}),\ldots,
 \partial f/\partial x_n(\vect{p})\bigr)$. Recíprocamente, si las $n$
 derivadas parciales de $f$ existen en una vecindad de $\vect{p}$ y son
 continuas en $\vect{p}$, entonces $f$ es diferenciable en $\vect{p}$.
+
 :::
 
 ::: {.proof}
@@ -99,6 +102,7 @@ f(\vect{p}+\vect{h})-f(\vect{p})-\langle\nabla f(\vect{p}),\vect{h}\rangle=\sum_
 $$
 
 Como $\|\vect{\xi}_i-\vect{p}\|\leq\|\vect{h}\|$ y cada derivada parcial es continua en $\vect{p}$, para cada $\varepsilon>0$ existe $\delta>0$ tal que cada corchete es menor que $\varepsilon/n$ en valor absoluto cuando $\|\vect{h}\|<\delta$. Puesto que además $|h_i|\leq\|\vect{h}\|$, el valor absoluto del lado izquierdo no supera $\varepsilon\|\vect{h}\|$, y dividir por $\|\vect{h}\|$ es exactamente la definición de diferenciabilidad con gradiente $\nabla f(\vect{p})$.
+
 :::
 
 Cuando $f$ tiene valores vectoriales en lugar de escalares, cada
@@ -115,6 +119,7 @@ $\vect{p}$, la ***matriz jacobiana*** de $f$ en $\vect{p}$
 es la matriz $\mat{J}_f(\vect{p})\in\mathbb{R}^{m\times n}$ cuya
 $j$-ésima fila es $\nabla f_j(\vect{p})^{\top}$, es decir,
 $(\mat{J}_f(\vect{p}))_{ji}=\partial f_j/\partial x_i(\vect{p})$.
+
 :::
 
 Con la matriz jacobiana como objeto que resume la derivada de una función vectorial, la derivada de una composición se obtiene multiplicando matrices.
@@ -131,6 +136,7 @@ $$
 \mat{J}_{f\circ g}(\vect{p}) = \mat{J}_f\bigl(g(\vect{p})\bigr)\,
   \mat{J}_g(\vect{p}).
 $$ {#eq-regla-cadena-jacobiana}
+
 :::
 
 ::: {.proof}
@@ -182,6 +188,7 @@ cero de $\|\vect{r}_2(\vect{k})\|/\|\vect{k}\|$. Con el resto controlado,
 $f\circ g$ es diferenciable en $\vect{p}$ con matriz jacobiana
 $\mat{J}_f(\vect{q})\mat{J}_g(\vect{p})$, que es
 @eq-regla-cadena-jacobiana.
+
 :::
 
 ::: {#idea-gradiente-direccion-maxima .callout-tip appearance=“simple” title=“Idea central: El gradiente apunta en la dirección de máximo crecimiento”}
@@ -198,4 +205,5 @@ sentido del método de ascenso más pronunciado en la
 [Sección “Existencia de un óptimo: el teorema de Weierstrass”](04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd): moverse en la dirección del gradiente es, entre
 todas las direcciones posibles de longitud fija, la que produce el mayor
 incremento posible de $f$ en primer orden.
+
 :::

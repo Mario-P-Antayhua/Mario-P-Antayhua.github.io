@@ -18,6 +18,7 @@ número, igual al grado $p$, están garantizados por el teorema
 fundamental del álgebra, que aquí se acepta sin demostrar por tratarse
 de un resultado de análisis complejo ajeno al desarrollo algebraico de
 esta sección.
+
 :::
 
 La posición de las raíces respecto del círculo unitario admite una lectura geométrica que ayuda a retenerla.
@@ -40,4 +41,5 @@ $(1-\Lag)Y_t=\rblanco_t$, tiene exactamente una raíz en $z=1$, situada
 sobre el círculo unitario mismo, ni dentro ni fuera, el caso límite que
 separa la estacionariedad de la no estacionariedad y que da nombre a la
 prueba de raíz unitaria de la econometría aplicada.
+
 :::

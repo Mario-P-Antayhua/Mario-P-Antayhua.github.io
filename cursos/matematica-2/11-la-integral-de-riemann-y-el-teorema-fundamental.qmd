@@ -24,6 +24,7 @@ $m_i:=\inf_{x\in[t_{i-1},t_i]}f(x)$. La función $f$ es
 ***integrable Riemann*** en $[a,b]$ si
 $\inf_P U(f,P)=\sup_P L(f,P)$, valor común que se denota
 $\int_a^b f(x)\,dx$.
+
 :::
 
 La definición formaliza la idea de aproximar el área bajo la gráfica de
@@ -42,6 +43,7 @@ Si $f,g$ son integrables en $[a,b]$ y $\alpha,\beta\in\mathbb{R}$,
 entonces $\alpha f+\beta g$ es integrable en $[a,b]$ y
 $\int_a^b\bigl(\alpha f(x)+\beta g(x)\bigr)dx=\alpha\int_a^b f(x)\,dx+
 \beta\int_a^b g(x)\,dx$.
+
 :::
 
 ::: {.proof}
@@ -57,6 +59,7 @@ menor que la suma de los ínfimos, de modo que $U(f+g,P)\leq U(f,P)+
 U(g,P)$ y $L(f+g,P)\geq L(f,P)+L(g,P)$ para toda partición $P$; tomando
 ínfimo y supremo respectivamente, y usando que $f$ y $g$ son integrables
 por separado, ambas desigualdades colapsan en la igualdad enunciada.
+
 :::
 
 El vínculo entre la integral, definida mediante sumas de rectángulos, y
@@ -71,6 +74,7 @@ importante de esta subsección.
 Sea $f:[a,b]\to\mathbb{R}$ continua y sea
 $F(x):=\int_a^x f(t)\,dt$ para $x\in[a,b]$. Entonces $F$ es derivable
 en $(a,b)$ y $F'(x)=f(x)$ para todo $x\in(a,b)$.
+
 :::
 
 ::: {.proof}
@@ -100,6 +104,7 @@ por el máximo del valor absoluto del integrando. Como
 @eq-ftc-cota vale para todo $\varepsilon>0$ eligiendo $h$
 suficientemente pequeño, se concluye
 $\lim_{h\to 0}[F(x+h)-F(x)]/h=f(x)$, que es exactamente $F'(x)=f(x)$.
+
 :::
 
 El teorema fundamental del cálculo es lo que, en la práctica, permite

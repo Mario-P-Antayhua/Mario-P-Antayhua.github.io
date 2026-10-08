@@ -76,6 +76,7 @@ se cumple:
 
 A los elementos de $V$ se les llama ***vectores***, sin que
 eso presuponga que tengan la forma de una columna de números.
+
 :::
 
 La generalidad de la definición es intencional: $\mathbb{R}^n$ con la
@@ -101,6 +102,7 @@ Sea $V$ un espacio vectorial. Un subconjunto no vacío $W\subseteq V$ es un
 ***subespacio vectorial*** de $V$ si $W$ es, por derecho
 propio, un espacio vectorial con las mismas operaciones de $V$
 restringidas a $W$.
+
 :::
 
 Verificar los cuatro axiomas de la @def-espacio-vectorial cada vez
@@ -118,6 +120,7 @@ manejable.
 Sea $V$ un espacio vectorial y $W\subseteq V$ no vacío. Entonces $W$ es un
 subespacio de $V$ si y solo si para todos $\vect{u},\vect{v}\in W$ y todos
 $\alpha,\beta\in\mathbb{R}$ se cumple $\alpha\vect{u}+\beta\vect{v}\in W$.
+
 :::
 
 ::: {.proof}
@@ -144,6 +147,7 @@ tomando $\beta=0$ y variando $\alpha$. Con estos cuatro hechos
 establecidos, $(W,+)$ es un grupo abeliano y las leyes de escalamiento se
 heredan de $V$, con lo cual $W$ satisface íntegramente la
 @def-espacio-vectorial y es, por lo tanto, un subespacio.
+
 :::
 
 El criterio anterior reduce la verificación de un subespacio a una sola
@@ -177,6 +181,7 @@ $\alpha_1,\ldots,\alpha_k\in\mathbb{R}$. La ***envoltura
 lineal*** de $S$, denotada $\operatorname{gen}(S)$, es el conjunto de
 todas las combinaciones lineales de elementos de $S$; por convención,
 $\operatorname{gen}(\varnothing)=\{\vect{0}\}$.
+
 :::
 
 La envoltura lineal aparece en la práctica cada vez que se describe el
@@ -191,6 +196,7 @@ dado que debe contener a $S$.
 Para todo $S\subseteq V$, el conjunto $\operatorname{gen}(S)$ es un
 subespacio de $V$, contiene a $S$, y está contenido en cualquier otro
 subespacio de $V$ que contenga a $S$.
+
 :::
 
 ::: {.proof}
@@ -203,4 +209,5 @@ como la combinación trivial $1\cdot\vect{v}$. Finalmente, si $W$ es
 cualquier subespacio con $S\subseteq W$, entonces $W$ contiene, por
 cerradura, toda combinación lineal de elementos de $S$, de modo que
 $\operatorname{gen}(S)\subseteq W$.
+
 :::

@@ -25,6 +25,7 @@ $$
 S^{\perp} := \{\vect{v}\in V : \langle\vect{v},\vect{s}\rangle=0
   \ \text{para todo}\ \vect{s}\in S\}.
 $$
+
 :::
 
 Antes de tratar al complemento ortogonal como un espacio por derecho propio hay que comprobar que, en efecto, es un subespacio.
@@ -34,6 +35,7 @@ Antes de tratar al complemento ortogonal como un espacio por derecho propio hay 
 
 Para cualquier $S\subseteq V$, el conjunto $S^{\perp}$ es un subespacio
 de $V$.
+
 :::
 
 ::: {.proof}
@@ -47,6 +49,7 @@ $\langle\alpha\vect{u}+\beta\vect{v},\vect{s}\rangle=\alpha\langle
 \vect{u},\vect{s}\rangle+\beta\langle\vect{v},\vect{s}\rangle=\alpha(0)+
 \beta(0)=0$, de modo que $\alpha\vect{u}+\beta\vect{v}\in S^{\perp}$ y el
 criterio queda verificado.
+
 :::
 
 La construcción explícita del punto de $S$ más cercano a $\vect{v}$
@@ -72,6 +75,7 @@ $$ {#eq-proyeccion-formula}
 
 Entonces $\hat{\vect{v}}\in S$, $\vect{v}-\hat{\vect{v}}\in S^{\perp}$, y
 $\hat{\vect{v}}$ es el único elemento de $S$ con esta segunda propiedad.
+
 :::
 
 ::: {.proof}
@@ -112,6 +116,7 @@ $S^{\perp}$ es ortogonal a sí mismo, de modo que
 $\langle\hat{\vect{v}}-\vect{w},\hat{\vect{v}}-\vect{w}\rangle=0$, y el
 axioma de definición positiva del producto interno obliga a
 $\hat{\vect{v}}-\vect{w}=\vect{0}$, es decir, $\vect{w}=\hat{\vect{v}}$.
+
 :::
 
 Al vector $\hat{\vect{v}}$ de la proposición anterior se le llama la
@@ -131,6 +136,7 @@ alcanza su valor mínimo exactamente cuando $\vect{s}=\hat{\vect{v}}$, la
 proyección ortogonal de $\vect{v}$ sobre $S$ definida en
 @eq-proyeccion-formula, y ningún otro elemento de $S$ alcanza ese
 mínimo.
+
 :::
 
 ::: {.proof}
@@ -166,6 +172,7 @@ producto interno, ocurre si y solo si $\vect{s}=\hat{\vect{v}}$. Queda
 así probado que $\hat{\vect{v}}$ minimiza la distancia a $\vect{v}$
 dentro de $S$, y que lo hace de forma estricta frente a cualquier otro
 elemento de $S$.
+
 :::
 
 ::: {#cor-principio-ortogonalidad}
@@ -173,6 +180,7 @@ elemento de $S$.
 
 Un elemento $\vect{s}^{*}\in S$ minimiza $\|\vect{v}-\vect{s}\|$ sobre
 $\vect{s}\in S$ si y solo si $\vect{v}-\vect{s}^{*}\in S^{\perp}$.
+
 :::
 
 ::: {.proof}
@@ -182,6 +190,7 @@ que es minimizador por el @thm-mejor-aproximacion-general.
 Recíprocamente, si $\vect{s}^{*}$ minimiza la distancia, la parte de
 unicidad del mismo teorema fuerza $\vect{s}^{*}=\hat{\vect{v}}$, y
 $\vect{v}-\hat{\vect{v}}\in S^{\perp}$ por construcción.
+
 :::
 
 El principio de ortogonalidad reformula, en una sola equivalencia, todo
@@ -213,6 +222,7 @@ igual como el @cor-principio-ortogonalidad se invocará para
 justificar, sin nueva demostración, que el error de un pronóstico óptimo
 resulta no correlacionado con cualquier variable perteneciente al
 conjunto de información sobre el que se condiciona.
+
 :::
 
 Para fijar la intuición geométrica antes de seguir con el caso abstracto, conviene calcular una proyección concreta en el espacio tridimensional.
@@ -259,6 +269,7 @@ estimador de mínimos cuadrados ordinarios no es más que la proyección
 ortogonal del vector de observaciones sobre el espacio columna de los
 regresores, en el sentido exacto de la
 @prp-proyeccion-existencia.
+
 :::
 
 ![La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.](../../assets/img/fig/matematica-2-05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo-1.svg){#fig-proyeccion-r3 fig-alt=“La proyección $\hat{\vect{v}}$ cae dentro del plano $S$, y el residuo $\vect{v}-\hat{\vect{v}}$, dibujado en línea discontinua, es perpendicular a $S$: la distancia de $\vect{v}$ a cualquier otro punto del plano es siempre mayor que la distancia a $\hat{\vect{v}}$.”}

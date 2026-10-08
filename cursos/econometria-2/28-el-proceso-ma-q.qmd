@@ -14,6 +14,7 @@ $Y_t=\rblanco_t+\theta_1\rblanco_{t-1}+\cdots+\theta_q\rblanco_{t-q}$,
 con $\theta_1,\ldots,\theta_q\in\mathbb{R}$. En notación de rezagos,
 $Y_t=\theta(\Lag)\rblanco_t$ con
 $\theta(\Lag)=1+\theta_1\Lag+\cdots+\theta_q\Lag^q$.
+
 :::
 
 Los momentos del MA(q) se calculan directamente de la definición y muestran su rasgo distintivo.
@@ -30,6 +31,7 @@ $$
 $$
 
 mientras que $\autocov{j}=0$ para $j>q$.
+
 :::
 
 ::: {.proof}
@@ -56,6 +58,7 @@ $j=0$ reproduce la varianza enunciada. Cuando $j>q$, el rango
 $j\leq i\leq q$ que definía los pares emparejados queda vacío, porque
 $j>q$ implica que no existe ningún $i$ con $j\leq i\leq q$, de modo que
 no sobrevive ningún término y $\autocov{j}=0$.
+
 :::
 
 El corte en el rezago $q$ generaliza exactamente el corte en el rezago

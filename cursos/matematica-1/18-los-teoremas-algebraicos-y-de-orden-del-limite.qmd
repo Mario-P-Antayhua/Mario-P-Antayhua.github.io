@@ -31,6 +31,7 @@ Sean $x_n\to x$ y $y_n\to y$, y sea $c\in\mathbb{R}$. Entonces:
 (i) $x_ny_n\to xy$;
 
 (i) si $y\neq 0$ y $y_n\neq 0$ para todo $n$, entonces $x_n/y_n\to x/y$.
+
 :::
 
 ::: {.proof}
@@ -86,6 +87,7 @@ $$
 $$
 
 lo que prueba que $1/y_n\to 1/y$ y, con ello, el apartado (iv).
+
 :::
 
 La técnica de la parte (iii), sumar y restar un término intermedio para
@@ -108,6 +110,7 @@ Sean $x_n\to x$ y $y_n\to y$.
 
 (i) Si existe $c\in\mathbb{R}$ tal que $x_n\leq c$ para todo $n$,
             entonces $x\leq c$.
+
 :::
 
 ::: {.proof}
@@ -121,6 +124,7 @@ Para (ii), aplíquese (i) a la sucesión $z_n:=y_n-x_n\geq 0$, que converge a
 $y-x$ por la @thm-algebraico-limite; (i) da $y-x\geq 0$, es decir,
 $x\leq y$. La parte (iii) es el caso particular de (ii) con la sucesión
 constante $y_n=c$.
+
 :::
 
 Conviene señalar de inmediato una advertencia que la demostración anterior
@@ -138,6 +142,7 @@ comparten límite.
 
 Si $x_n\leq y_n\leq z_n$ para todo $n$, y $x_n\to L$ y $z_n\to L$ con el
 mismo límite $L$, entonces $y_n\to L$.
+
 :::
 
 ::: {.proof}
@@ -146,6 +151,7 @@ $|x_n-L|<\varepsilon$ para $n\geq N_1$ y $|z_n-L|<\varepsilon$ para
 $n\geq N_2$; con $N=\max\{N_1,N_2\}$, para $n\geq N$,
 $L-\varepsilon<x_n\leq y_n\leq z_n<L+\varepsilon$, de donde
 $|y_n-L|<\varepsilon$.
+
 :::
 
 El valor práctico del teorema del sándwich está en que permite establecer la

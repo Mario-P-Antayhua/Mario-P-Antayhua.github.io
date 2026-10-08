@@ -41,6 +41,7 @@ imágenes.
 Una ***sucesión*** de números reales es una función
 $x:\mathbb{N}\to\mathbb{R}$. Se escribe $x_n$ en lugar de $x(n)$, y la
 sucesión completa se denota $(x_n)_{n=1}^{\infty}$ o simplemente $(x_n)$.
+
 :::
 
 Definir la sucesión como una función deja abierta, deliberadamente, la
@@ -60,6 +61,7 @@ $\varepsilon>0$ existe $N\in\mathbb{N}$ tal que, para todo $n\geq N$, se
 cumple $|x_n-x|<\varepsilon$. Si tal $x$ existe, se dice que $(x_n)$ es
 ***convergente***; en caso contrario, es
 ***divergente***.
+
 :::
 
 La definición merece leerse con atención a la interacción entre sus dos
@@ -89,6 +91,7 @@ Se prueba que $\lim_{n\to\infty} 1/n = 0$. Dado $\varepsilon>0$, por la
 [Teorema “Propiedad arquimediana”](15-los-reales-el-axioma-de-completitud.qmd#thm-arquimediana)(ii) existe $N\in\mathbb{N}$ con $1/N<\varepsilon$.
 Para todo $n\geq N$, se tiene $1/n\leq 1/N<\varepsilon$, y como $1/n>0$,
 $|1/n-0|=1/n<\varepsilon$. Así, la definición se satisface con ese $N$.
+
 :::
 
 Obsérvese que la propiedad arquimediana de $\mathbb{R}$, ya establecida en la
@@ -105,6 +108,7 @@ en singular y con artículo definido, tenga sentido.
 ## Unicidad del límite
 
 Si $(x_n)$ converge, su límite es único.
+
 :::
 
 ::: {.proof}
@@ -120,6 +124,7 @@ $$
 
 lo cual es una contradicción, ya que ningún número es estrictamente menor
 que sí mismo. Por lo tanto $x=y$.
+
 :::
 
 El argumento es el patrón que reaparecerá una y otra vez en la sección: se
@@ -138,6 +143,7 @@ sucesión no puede escaparse hacia el infinito.
 
 Una sucesión $(x_n)$ está ***acotada*** si existe $M>0$ tal que
 $|x_n|\leq M$ para todo $n\in\mathbb{N}$.
+
 :::
 
 La definición de acotación no menciona convergencia en absoluto: una
@@ -151,6 +157,7 @@ garantizarla.
 ## Toda sucesión convergente está acotada
 
 Si $(x_n)$ converge, entonces $(x_n)$ está acotada.
+
 :::
 
 ::: {.proof}
@@ -159,6 +166,7 @@ existe $N$ tal que $|x_n-x|<1$ para todo $n\geq N$, y por la desigualdad
 triangular, $|x_n|\leq|x_n-x|+|x|<1+|x|$ para esos mismos $n$. Fuera de ese
 rango, los términos $x_1,\ldots,x_{N-1}$ son finitos en cantidad, así que
 $M:=\max\{|x_1|,\ldots,|x_{N-1}|,\,1+|x|\}$ acota a la sucesión completa.
+
 :::
 
 La demostración ilustra una técnica que se repetirá en la sección: separar
@@ -179,6 +187,7 @@ número real satisface la condición de límite para esta sucesión. La
 la convergencia, no suficiente; la subsección 4.4 dará una condición
 adicional, la monotonía, que junto con la acotación sí garantiza
 convergencia.
+
 :::
 
 Queda así completado el primer bloque de resultados: la definición de

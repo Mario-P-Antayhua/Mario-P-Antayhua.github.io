@@ -21,6 +21,7 @@ esa relación produce.
 
 En $\mathbb{N}\times\mathbb{N}$ se define $(a,b)\sim(c,d)$ si y solo si
 $a+d=b+c$.
+
 :::
 
 La condición $a+d=b+c$ es, deliberadamente, la reformulación de
@@ -40,6 +41,7 @@ seguir.
 ## Ley de cancelación aditiva en $\mathbb{N}$
 
 Para todos $a,b,c\in\mathbb{N}$, si $a+c=b+c$, entonces $a=b$.
+
 :::
 
 ::: {.proof}
@@ -72,6 +74,7 @@ y aplicando la inyectividad de $s$ a @eq-cancelacion-paso se llega a
 $a+c=b+c$, que es precisamente la hipótesis inductiva para $c$; por ella,
 $a=b$. Queda así probado el paso inductivo, y por el [Teorema “Principio de inducción matemática”](05-el-principio-de-induccion-matematica.qmd#thm-induccion) la
 afirmación vale para todo $c\in\mathbb{N}$.
+
 :::
 
 Con la cancelación disponible, puede completarse la verificación de que
@@ -83,6 +86,7 @@ $\mathbb{N}\times\mathbb{N}$.
 
 La relación de la @def-relacion-enteros es reflexiva, simétrica y
 transitiva en el sentido de la [Definición “Relación de equivalencia y clase de equivalencia”](08-relaciones-de-equivalencia-y-de-orden.qmd#def-relacion-equivalencia).
+
 :::
 
 ::: {.proof}
@@ -137,6 +141,7 @@ Aplicando ahora el @lem-cancelacion-n a
 que se cancela, se concluye $a+f=b+e$, que es exactamente la condición
 $(a,b)\sim(e,f)$. Queda así probada la transitividad, y con ella, la
 proposición completa.
+
 :::
 
 La proposición garantiza que las clases de equivalencia de $\sim$ están bien
@@ -175,6 +180,7 @@ $$
   \qquad
   [(a,b)]\cdot[(c,d)] := [(ac+bd,\,ad+bc)].
 $$ {#eq-operaciones-enteros}
+
 :::
 
 Las fórmulas de @eq-operaciones-enteros son la traducción directa de
@@ -192,6 +198,7 @@ representante se use para calcularlo.
 
 Si $(a,b)\sim(a',b')$ y $(c,d)\sim(c',d')$, entonces
 $(a+c,\,b+d)\sim(a'+c',\,b'+d')$ y $(ac+bd,\,ad+bc)\sim(a'c'+b'd',\,a'd'+b'c')$.
+
 :::
 
 ::: {.proof}
@@ -242,6 +249,7 @@ Encadenando ambas equivalencias por la transitividad, ya establecida en la
 @prp-sim-enteros-equivalencia para $\sim$ en $\mathbb{N}\times
 \mathbb{N}$, se concluye $(ac+bd,\,ad+bc)\sim(a'c'+b'd',\,a'd'+b'c')$, que es
 la segunda afirmación del lema.
+
 :::
 
 El lema anterior es lo que legitima escribir $[(a,b)]+[(c,d)]$ sin
@@ -258,6 +266,7 @@ argumento nuevo.
 La clase $[(n+1,1)]$ se identifica con el natural $n$ para cada
 $n\in\mathbb{N}$; la clase $[(1,1)]$ es el neutro aditivo, denotado $0$; y
 todo $[(a,b)]\in\mathbb{Z}$ tiene inverso aditivo $[(b,a)]$.
+
 :::
 
 ::: {.proof}
@@ -272,6 +281,7 @@ convención que hace de $\mathbb{N}$ un subconjunto de $\mathbb{Z}$ bajo la
 suma recién definida, y se conserva sin más verificación porque las
 operaciones sobre estos representantes reproducen exactamente la aritmética
 de $\mathbb{N}$.
+
 :::
 
 Como ilustración, se suman los enteros representados por $(7,4)$, que es

@@ -15,6 +15,7 @@ $t_1,\ldots,t_k\in T$ y todo desplazamiento $h$ tal que
 $t_1+h,\ldots,t_k+h\in T$, la distribución conjunta de
 $(Y_{t_1},\ldots,Y_{t_k})$ coincide exactamente con la de
 $(Y_{t_1+h},\ldots,Y_{t_k+h})$.
+
 :::
 
 La estacionariedad estricta es una condición sobre la distribución
@@ -35,6 +36,7 @@ todo $t$, una constante que no depende de $t$; (ii)
 $\gamma(t,s)$ depende de $t$ y $s$ únicamente a través de la diferencia
 $t-s$, de modo que se puede escribir $\gamma(t,s)=\gamma(t-s)$ como
 función de un solo argumento.
+
 :::
 
 Bajo estacionariedad débil se escribe $\autocov{j}:=\gamma(j)$ para la
@@ -52,6 +54,7 @@ realizaciones del proceso.
 
 Si $\{Y_t\}$ es estrictamente estacionario y $\Esp{Y_t^2}<\infty$ para
 todo $t$, entonces $\{Y_t\}$ es débilmente estacionario.
+
 :::
 
 ::: {.proof}
@@ -67,6 +70,7 @@ covarianza es también una función de la distribución conjunta
 $\gamma(t,s)=\Cov(Y_t,Y_s)=\Cov(Y_{t-s},Y_0)=\gamma(t-s,0)$, que depende
 de $t$ y $s$ solo a través de $t-s$. Ambas condiciones de la
 @def-estacionariedad-debil quedan verificadas.
+
 :::
 
 El recíproco de esta proposición es falso: existen procesos débilmente
@@ -85,6 +89,7 @@ débil y estricta coinciden.
 Para un proceso débilmente estacionario, la función de autocovarianza
 satisface: (i) $\autocov{0}\geq 0$; (ii) $|\autocov{j}|\leq\autocov{0}$
 para todo $j$; (iii) $\autocov{j}=\autocov{-j}$ (simetría).
+
 :::
 
 ::: {.proof}
@@ -102,4 +107,5 @@ propiedad (iii) se sigue directamente de la simetría de la covarianza,
 $\Cov(Y_t,Y_{t-j})=\Cov(Y_{t-j},Y_t)$, y de reescribir el lado derecho
 como autocovarianza de orden $-j$ tomando $t-j$ como el nuevo punto de
 referencia.
+
 :::

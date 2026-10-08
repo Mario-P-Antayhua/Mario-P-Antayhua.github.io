@@ -17,6 +17,7 @@ $A,B\subseteq X$ están ***separados*** si
 $A\cap\overline{B}=\varnothing$ y $\overline{A}\cap B=\varnothing$. Un
 conjunto $E$ es ***conexo*** si no puede escribirse como
 $E=A\cup B$ con $A,B$ no vacíos y separados.
+
 :::
 
 Nótese que ”separados” es una condición más fuerte que “disjuntos”: dos
@@ -35,6 +36,7 @@ $\overline{A}\cap B=\varnothing$: $A$ y $B$ están separados según la
 @def-conexo, y como $E=A\cup B$, $E$ no es conexo. La brecha entre
 $1$ y $2$, de longitud $1$, es la que hace posible esta separación limpia
 entre las dos piezas.
+
 :::
 
 En $\mathbb{R}$, la conexidad tiene una caracterización particularmente
@@ -47,6 +49,7 @@ huecos”.
 $E\subseteq\mathbb{R}$ es conexo si y solo si para todos $x,y\in E$ con
 $x<y$, y todo $z$ con $x<z<y$, se cumple $z\in E$. En particular, los
 conexos de $\mathbb{R}$ son exactamente los intervalos.
+
 :::
 
 Esta caracterización es la razón por la cual, en $\mathbb{R}$, la
@@ -65,4 +68,5 @@ técnica distinta de las ya usadas en esta sección, así que se deja el
 teorema enunciado sin más desarrollo; la conexidad, además, no vuelve a
 emplearse en las secciones siguientes, a diferencia de la compacidad, que
 reaparecerá constantemente a partir de la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](../matematica-3/04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd).
+
 :::

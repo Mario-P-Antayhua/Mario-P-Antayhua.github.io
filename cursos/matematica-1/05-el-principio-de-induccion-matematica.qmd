@@ -25,6 +25,7 @@ ficha cae, entonces es evidente que caerán todas, una tras otra, sin
 excepción: la primera cae por sí sola, esa caída provoca la segunda, la
 segunda provoca la tercera, y así sucesivamente sin que el proceso se detenga
 en ningún punto.
+
 :::
 
 El principio de inducción matemática formaliza exactamente esta idea,
@@ -43,6 +44,7 @@ Supóngase que se cumplen las dos condiciones siguientes:
             $P(k)$ es verdadera, entonces $P(k+1)$ también lo es.
 
 Entonces $P(n)$ es verdadera para todo $n\in\mathbb{N}$.
+
 :::
 
 Antes de usarlo conviene aclarar su estatus lógico, que es distinto del de
@@ -54,6 +56,7 @@ estudiada hasta aquí, sino que refleja una propiedad estructural de los
 números naturales mismos, a saber, que todo natural se alcanza desde el $1$
 en una cantidad finita de pasos de suma de una unidad, sin quedar ningún
 natural aislado fuera de esa cadena.
+
 :::
 
 Cuando más adelante se construyan los naturales desde sus axiomas, este
@@ -78,6 +81,7 @@ Para todo $n\in\mathbb{N}$,
 $$
 1+2+3+\cdots+n = \frac{n(n+1)}{2}.
 $$ {#eq-suma-naturales}
+
 :::
 
 ::: {.proof}
@@ -127,6 +131,7 @@ El resultado obtenido es exactamente lo que @eq-suma-naturales predice
 al sustituir $n$ por $k+1$, con lo cual queda probado el paso inductivo. Por
 el @thm-induccion, al cumplirse tanto la base como el paso inductivo,
 la fórmula es verdadera para todo $n\in\mathbb{N}$.
+
 :::
 
 Vale la pena señalar con precisión qué se demuestra en cada parte, porque es
@@ -142,6 +147,7 @@ condicional. La inducción no incurre, por tanto, en el defecto de suponer
 aquello que se quiere probar: lo que se prueba en el paso inductivo es una
 implicación, y esa implicación, combinada con la base, arrastra la verdad de
 $P(n)$ eslabón por eslabón hasta cualquier natural.
+
 :::
 
 Existe una variante del principio, llamada ***inducción

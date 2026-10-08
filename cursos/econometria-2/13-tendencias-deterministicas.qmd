@@ -12,6 +12,7 @@ categories: [Econometría II, Procesos elementales y sus momentos]
 El proceso con ***tendencia determinística lineal*** es
 $Y_t:=c+\delta t+\rblanco_t$, con $c,\delta\in\mathbb{R}$ constantes y
 $\{\rblanco_t\}$ ruido blanco.
+
 :::
 
 Los momentos del proceso muestran de inmediato cómo una tendencia determinística afecta la estacionariedad.
@@ -23,6 +24,7 @@ Para el proceso de la @def-tendencia-lineal,
 $\Esp{Y_t}=c+\delta t$, $\Var(Y_t)=\sigma^2$ para todo $t$, y
 $\gamma(t,t-j)=0$ para todo $j\neq 0$. El proceso no es débilmente
 estacionario cuando $\delta\neq 0$.
+
 :::
 
 ::: {.proof}
@@ -36,6 +38,7 @@ sin depender de $t$. Sin embargo, $\Esp{Y_t}=c+\delta t$ depende de $t$
 explícitamente cuando $\delta\neq 0$, lo que viola directamente la
 primera condición de la [Definición “Estacionariedad débil”](10-estacionariedad.qmd#def-estacionariedad-debil), de modo que el
 proceso no es débilmente estacionario.
+
 :::
 
 La tendencia determinística lineal ilustra un punto conceptual que
@@ -59,4 +62,5 @@ $\Esp{Y_t}=\beta_0+\beta_1t+\cdots+\beta_pt^p$ depende de $t$ de forma
 todavía más pronunciada que en el caso lineal, de modo que el proceso
 tampoco es estacionario salvo que todos los coeficientes
 $\beta_1,\ldots,\beta_p$ sean cero.
+
 :::

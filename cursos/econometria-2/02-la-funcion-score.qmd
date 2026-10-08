@@ -17,6 +17,7 @@ distribuida, $\vect{s}_n(\vect{\theta})=\sum_{i=1}^{n}\vect{s}_i
 (\vect{\theta})$, donde $\vect{s}_i(\vect{\theta}):=\nabla_{\vect{\theta}}
 \log f(\vect{x}_i;\vect{\theta})$ es la contribución individual de la
 observación $i$-ésima al score.
+
 :::
 
 Si $\hat{\vect{\theta}}_n$ es un óptimo interior de $\ell_n$ en
@@ -39,6 +40,7 @@ respecto de $\vect{\theta}$ con la integral que define la esperanza,
 para el verdadero valor del parámetro $\vect{\theta}_0$,
 $\Esp[\vect{\theta}_0]{\vect{s}_i(\vect{\theta}_0)}=\vect{0}$, donde la
 esperanza se calcula bajo la densidad $f(\cdot;\vect{\theta}_0)$.
+
 :::
 
 ::: {.proof}
@@ -74,6 +76,7 @@ $$
 donde el penúltimo paso reconoce la integral como una esperanza bajo la
 densidad $f(\cdot;\vect{\theta}_0)$, en el sentido de la
 [Definición “Esperanza matemática”](../econometria-1/04-esperanza-matematica-y-momentos.qmd#def-esperanza) de la [Sección “Espacios de probabilidad”](../econometria-1/01-espacios-de-probabilidad.qmd).
+
 :::
 
 ::: {#idea-consecuencias-score-cero .callout-tip appearance=“simple” title=“Idea central: Consecuencias de la esperanza nula del score”}
@@ -93,4 +96,5 @@ demostrada, es precisamente el argumento que la
 [Sección “Consistencia del estimador máximo verosímil”](04-consistencia-del-estimador-maximo-verosimil.qmd) usará para demostrar la igualdad de la
 información de Fisher en sus dos formas equivalentes, sin tener que
 introducir ninguna herramienta nueva en ese momento.
+
 :::

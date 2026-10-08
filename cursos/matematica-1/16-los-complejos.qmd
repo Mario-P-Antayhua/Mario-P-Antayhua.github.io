@@ -29,6 +29,7 @@ $$
 $$ {#eq-operaciones-complejos}
 
 Escribiendo $i:=(0,1)$, todo $(a,b)\in\mathbb{C}$ se denota $a+bi$.
+
 :::
 
 La fórmula del producto en @eq-operaciones-complejos está construida
@@ -54,6 +55,7 @@ multiplicativo, dado por
 $$
 z^{-1} = \frac{a}{a^2+b^2} - \frac{b}{a^2+b^2}\,i .
 $$
+
 :::
 
 ::: {.proof}
@@ -70,6 +72,7 @@ $$
 donde $a^2+b^2>0$ porque $(a,b)\neq(0,0)$, así que la división está bien
 definida; el producto es efectivamente el neutro multiplicativo de
 $\mathbb{C}$.
+
 :::
 
 ::: {#nota-c-no-ordenado .callout-note appearance=“simple” title=“Nota: $\mathbb{C}$ no es un cuerpo ordenado”}
@@ -82,6 +85,7 @@ $\mathbb{C}$ no puede dotarse de ningún orden compatible con la suma y el
 producto, y nociones que dependen esencialmente de un orden, como el
 supremo o los intervalos de las subsecciones anteriores, no tienen
 contraparte dentro de $\mathbb{C}$.
+
 :::
 
 Con los complejos se completa la cadena de extensiones, y mirarla en conjunto muestra el patrón que se repite en cada paso.
@@ -98,6 +102,7 @@ excepción parcial es el paso de $\mathbb{Q}$ a $\mathbb{R}$, donde la
 limitación no fue algebraica sino topológica, y por eso la reparación exigió
 un axioma de naturaleza distinta, el de completitud, en lugar de una
 construcción explícita por pares.
+
 :::
 
 Con los cinco sistemas numéricos disponibles, $\mathbb{N}\subset\mathbb{Z}

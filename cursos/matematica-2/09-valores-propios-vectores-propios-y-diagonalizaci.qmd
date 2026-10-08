@@ -30,6 +30,7 @@ $(\mat{A}-\lambda\Imat)\vect{v}=\vect{0}$, que admite una solución no
 nula si y solo si $\mat{A}-\lambda\Imat$ no es invertible, es decir, si y
 solo si $\det(\mat{A}-\lambda\Imat)=0$ por el
 [Teorema “Caracterización de la invertibilidad”](08-el-determinante-y-la-invertibilidad.qmd#thm-caracterizacion-invertibilidad).
+
 :::
 
 Calcular los valores propios exige, en general, resolver una ecuación polinomial; en una clase importante de matrices el cálculo es inmediato.
@@ -39,6 +40,7 @@ Calcular los valores propios exige, en general, resolver una ecuación polinomia
 
 Si $\mat{A}$ es triangular, sus valores propios son exactamente sus
 elementos diagonales.
+
 :::
 
 ::: {.proof}
@@ -47,6 +49,7 @@ diagonal $a_{11}-\lambda,\ldots,a_{nn}-\lambda$. Por la propiedad (iii)
 de la [Proposición “Propiedades del determinante”](08-el-determinante-y-la-invertibilidad.qmd#prp-propiedades-determinante), el polinomio característico
 es $p(\lambda)=\prod_{i=1}^{n}(a_{ii}-\lambda)$, cuyas raíces son
 exactamente los valores $a_{11},\ldots,a_{nn}$.
+
 :::
 
 El caso general de la definición no garantiza que los valores propios
@@ -67,6 +70,7 @@ valores propios son reales, los vectores propios asociados a valores
 propios distintos son ortogonales entre sí en el sentido de la
 [Definición “Ortogonalidad”](04-espacios-con-producto-interno.qmd#def-ortogonalidad), y existe una base ortonormal de $\mathbb{R}^n$
 formada enteramente por vectores propios de $\mat{A}$.
+
 :::
 
 ::: {.proof}
@@ -130,6 +134,7 @@ $(n-1)\times(n-1)$, y la hipótesis de inducción le da una base
 ortonormal de vectores propios $\{\vect{e}_2,\ldots,\vect{e}_n\}$; el
 conjunto $\{\vect{e}_1,\vect{e}_2,\ldots,\vect{e}_n\}$ es entonces la
 base ortonormal de vectores propios de $\mat{A}$ buscada.
+
 :::
 
 El teorema espectral resuelve, para el caso simétrico, las dos
@@ -150,6 +155,7 @@ matriz diagonal $\mat{\Lambda}$ tales que $\mat{A}=\mat{Q}\mat{\Lambda}
 \mat{Q}^{\top}$, con las columnas de $\mat{Q}$ formadas por los vectores
 propios ortonormales de $\mat{A}$ y las entradas diagonales de
 $\mat{\Lambda}$ dadas por los valores propios correspondientes.
+
 :::
 
 ::: {.proof}
@@ -165,6 +171,7 @@ que $\mat{Q}^{\top}\mat{Q}=\Imat$ implica también
 $\mat{Q}\mat{Q}^{\top}=\Imat$ por tratarse de una matriz cuadrada con
 inversa por la izquierda, se obtiene
 $\mat{A}=\mat{Q}\mat{\Lambda}\mat{Q}^{\top}$.
+
 :::
 
 Esta descomposición, conocida como descomposición espectral, separa a

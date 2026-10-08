@@ -17,6 +17,7 @@ coincidentes exactamente con el ruido blanco estructural de su
 definición, y coeficientes $\psi_k$ dados por la representación
 MA($\infty$) del [Corolario “Representación MA(∞) del AR(p) estacionario”](26-representacion-ma-y-forma-companera.qmd#cor-ma-infinito-arp) de la
 [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) en el caso autorregresivo.
+
 :::
 
 ::: {.proof}
@@ -39,6 +40,7 @@ de forma única a la innovación de Wold por el
 mismo argumento aplica al ARMA(p,q) estacionario e invertible, usando en
 su lugar la representación MA($\infty$) construida en la
 [Sección “El proceso MA(1)”](27-el-proceso-ma-1.qmd) a partir de $\phi(\Lag)^{-1}\theta(\Lag)$.
+
 :::
 
 Este corolario es el que justifica, en retrospectiva, por qué toda la

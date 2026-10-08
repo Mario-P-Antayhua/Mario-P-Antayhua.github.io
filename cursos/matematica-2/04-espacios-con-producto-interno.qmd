@@ -35,6 +35,7 @@ Todo producto interno induce una función
 $\|\vect{v}\|:=\sqrt{\langle\vect{v},\vect{v}\rangle}$, que se
 demuestra a continuación que es, en efecto, una norma en el sentido de la
 [Definición “Norma”](03-espacios-normados.qmd#def-norma).
+
 :::
 
 Las dos primeras propiedades de esa función inducida son inmediatas de
@@ -51,6 +52,7 @@ Para todos $\vect{u},\vect{v}\in V$,
 $$
 |\langle\vect{u},\vect{v}\rangle| \leq \|\vect{u}\|\,\|\vect{v}\|.
 $$ {#eq-cauchy-schwarz}
+
 :::
 
 ::: {.proof}
@@ -86,6 +88,7 @@ y tomando raíz cuadrada en ambos lados de esta última desigualdad, que es
 válida por tratarse de dos cantidades no negativas, se obtiene
 $|\langle\vect{u},\vect{v}\rangle|\leq\|\vect{u}\|\,\|\vect{v}\|$, que es
 lo que se quería demostrar.
+
 :::
 
 La desigualdad tiene, además de su utilidad algebraica inmediata, una
@@ -118,6 +121,7 @@ axioma que se asume y pasa a ser un resultado que se deriva.
 La función $\|\vect{v}\|=\sqrt{\langle\vect{v},\vect{v}\rangle}$ de la
 @def-producto-interno satisface los tres axiomas de la
 [Definición “Norma”](03-espacios-normados.qmd#def-norma).
+
 :::
 
 ::: {.proof}
@@ -146,6 +150,7 @@ $\|\vect{u}\|\,\|\vect{v}\|$ proporcionada por la desigualdad de
 Cauchy–Schwarz. Como ambos lados de @eq-norma-suma-expandida son no
 negativos, tomar raíz cuadrada preserva la desigualdad y da
 $\|\vect{u}+\vect{v}\|\leq\|\vect{u}\|+\|\vect{v}\|$.
+
 :::
 
 ::: {#nota-paralelogramo .callout-note appearance=“simple” title=“Nota: Ley del paralelogramo”}
@@ -162,6 +167,7 @@ $\vect{u}-\vect{v}$, iguala siempre el doble de la suma de los cuadrados
 de los lados, una propiedad que la geometría euclidiana usual da por
 evidente y que aquí queda establecida para cualquier espacio con producto
 interno, sin importar la naturaleza de sus elementos.
+
 :::
 
 Con la norma y la desigualdad de Cauchy–Schwarz disponibles, ya es
@@ -182,6 +188,7 @@ siempre entre $-1$ y $1$, lo que permite definir el ángulo $\theta$ entre
 ambos vectores mediante $\cos\theta=\langle\vect{u},\vect{v}\rangle/
 (\|\vect{u}\|\,\|\vect{v}\|)$; la ortogonalidad corresponde al caso
 $\theta=\pi/2$.
+
 :::
 
 La ortogonalidad se vuelve útil cuando permite descomponer longitudes; el primer resultado en esa dirección generaliza un hecho conocido de la geometría plana.
@@ -191,6 +198,7 @@ La ortogonalidad se vuelve útil cuando permite descomponer longitudes; el prime
 
 Si $\vect{u}\perp\vect{v}$, entonces
 $\|\vect{u}+\vect{v}\|^{2}=\|\vect{u}\|^{2}+\|\vect{v}\|^{2}$.
+
 :::
 
 ::: {.proof}
@@ -206,6 +214,7 @@ $$
 $$
 
 con lo que la identidad queda establecida.
+
 :::
 
 El mismo argumento se extiende, por inducción sobre el número de

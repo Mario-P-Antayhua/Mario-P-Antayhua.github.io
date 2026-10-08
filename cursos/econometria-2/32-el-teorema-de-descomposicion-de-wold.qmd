@@ -41,6 +41,7 @@ donde $\rblanco_t:=Y_t-\Proj{Y_t}{Y_{t-1},Y_{t-2},\ldots}$ es la
 diferencia entre $Y_t$ y su mejor predicción lineal a partir de todo su
 pasado, en el sentido de la proyección de la
 [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd), y $\{\rblanco_t\}$ es ruido blanco.
+
 :::
 
 ::: {.proof}
@@ -64,6 +65,7 @@ determinístico y de un argumento de completitud del espacio de
 variables aleatorias con varianza finita; ese argumento pertenece a la
 teoría de espacios de Hilbert y se sale del alcance algebraico de estas
 notas, de modo que se acepta aquí como resultado citado.
+
 :::
 
 ::: {#idea-wold-garantias .callout-tip appearance=“simple” title=“Idea central: Qué garantiza el teorema de Wold y qué no garantiza”}
@@ -88,4 +90,5 @@ ese componente antes de aplicar la descomposición, en una versión
 extendida del teorema que añade un segundo sumando determinístico a la
 representación y que no se detalla en el curso por no ser necesaria
 para los modelos ARMA de las secciones anteriores.
+
 :::

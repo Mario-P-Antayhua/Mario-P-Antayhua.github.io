@@ -43,6 +43,7 @@ $X_1,\ldots,X_k$ son variables aleatorias en el sentido de la
 $\Esp{\vect{X}}:=(\Esp{X_1},\ldots,\Esp{X_k})^{\top}\in\mathbb{R}^k$,
 aplicando la esperanza de la [Definición “Esperanza matemática”](04-esperanza-matematica-y-momentos.qmd#def-esperanza) componente a
 componente.
+
 :::
 
 El vector de medias resume la ubicación central de la distribución
@@ -68,6 +69,7 @@ donde la esperanza se aplica entrada a entrada a la matriz aleatoria
 $(\vect{X}-\vect{\mu})(\vect{X}-\vect{\mu})^{\top}$. La entrada $(i,j)$
 de $\Var(\vect{X})$ es $\Cov(X_i,X_j):=\Esp{(X_i-\mu_i)(X_j-\mu_j)}$, y
 en particular la entrada $(i,i)$ es $\Var(X_i)$.
+
 :::
 
 La [Sección “Operaciones matriciales y sus propiedades algebraicas”](../matematica-2/06-operaciones-matriciales-y-sus-propiedades-algebr.qmd) ya adelantó, en su discusión sobre
@@ -81,6 +83,7 @@ afirmación con todo rigor, en lugar de darla por sabida.
 Para todo vector aleatorio $\vect{X}$ con matriz de covarianzas finita,
 $\Var(\vect{X})$ es simétrica y semidefinida positiva en el sentido de
 la [Definición “Forma cuadrática y matriz definida positiva”](../matematica-2/10-formas-cuadraticas-y-matrices-definidas-positiva.qmd#def-forma-cuadratica).
+
 :::
 
 ::: {.proof}
@@ -104,6 +107,7 @@ varianza es exactamente la esperanza de su desviación al cuadrado. Como
 ninguna varianza puede ser negativa, por ser la esperanza de un cuadrado,
 $\vect{a}^{\top}\Var(\vect{X})\vect{a}\geq 0$ para todo $\vect{a}$, que
 es la [Definición “Forma cuadrática y matriz definida positiva”](../matematica-2/10-formas-cuadraticas-y-matrices-definidas-positiva.qmd#def-forma-cuadratica) de semidefinición positiva.
+
 :::
 
 La demostración anterior descubrió, de paso, un hecho que resultará
@@ -123,6 +127,7 @@ $\Var(\vect{X})=\mat{\Sigma}$, y sean $\mat{A}\in\mathbb{R}^{m\times k}$
 y $\vect{b}\in\mathbb{R}^m$ constantes. Entonces
 $\Esp{\mat{A}\vect{X}+\vect{b}}=\mat{A}\Esp{\vect{X}}+\vect{b}$ y
 $\Var(\mat{A}\vect{X}+\vect{b})=\mat{A}\mat{\Sigma}\mat{A}^{\top}$.
+
 :::
 
 ::: {.proof}
@@ -149,4 +154,5 @@ constantes, la esperanza se aplica únicamente al factor central, lo que
 da $\Var(\vect{Y})=\mat{A}\,\Esp{(\vect{X}-\vect{\mu})
 (\vect{X}-\vect{\mu})^{\top}}\,\mat{A}^{\top}=\mat{A}\mat{\Sigma}
 \mat{A}^{\top}$.
+
 :::

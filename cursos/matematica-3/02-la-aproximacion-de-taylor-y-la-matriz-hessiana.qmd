@@ -23,6 +23,7 @@ de $f$ en $\vect{p}$ es la matriz $\mat{H}_f(\vect{p})\in
 \mathbb{R}^{n\times n}$ con entradas
 $(\mat{H}_f(\vect{p}))_{ij}:=\dfrac{\partial^2 f}{\partial x_i\partial
 x_j}(\vect{p})$.
+
 :::
 
 Nada en la definición anterior obliga a que
@@ -45,6 +46,7 @@ $\partial^2 f/\partial x_j\partial x_i$ existen en una vecindad de
 $\vect{p}\in D$ y son continuas en $\vect{p}$. Entonces
 $\dfrac{\partial^2 f}{\partial x_i\partial x_j}(\vect{p})=
 \dfrac{\partial^2 f}{\partial x_j\partial x_i}(\vect{p})$.
+
 :::
 
 ::: {.proof}
@@ -90,6 +92,7 @@ cruzadas en $\vect{p}$, supuesta en la hipótesis, permite entonces
 pasar al límite en ambos lados y concluir
 $\partial^2 f/\partial x_2\partial x_1(\vect{p})=\partial^2 f/\partial
 x_1\partial x_2(\vect{p})$.
+
 :::
 
 Con la simetría de la hessiana establecida, la aproximación cuadrática
@@ -111,6 +114,7 @@ f(\vect{p}+\vect{h}) = f(\vect{p}) + \langle\nabla f(\vect{p}),
   \frac{R(\vect{h})}{\|\vect{h}\|^{2}}\xrightarrow[\vect{h}\to
   \vect{0}]{}0.
 $$ {#eq-taylor-segundo-orden}
+
 :::
 
 ::: {.proof}
@@ -129,6 +133,7 @@ $\vect{p}$. Sustituyendo $g(1)=f(\vect{p}+\vect{h})$, $g(0)=f(\vect{p})$,
 $g'(0)=\langle\nabla f(\vect{p}),\vect{h}\rangle$ y
 $g''(0)=\vect{h}^{\top}\mat{H}_f(\vect{p})\vect{h}$ se obtiene
 exactamente @eq-taylor-segundo-orden.
+
 :::
 
 ::: {#exm-gradiente-hessiana-cuadratica}
@@ -151,6 +156,7 @@ f(\vect{p}),\vect{h}\rangle+\vect{h}^{\top}\mat{A}\vect{h}$ para
 cualquier $\vect{h}$, sin ningún resto. Este cálculo es precisamente el
 que la [Sección “Existencia de un óptimo: el teorema de Weierstrass”](04-existencia-de-un-optimo-el-teorema-de-weierstras.qmd) retomará para anular $\nabla f$ y
 resolver explícitamente por el mínimo de la suma de cuadrados residual.
+
 :::
 
 Con el gradiente, la hessiana y la aproximación de Taylor disponibles,

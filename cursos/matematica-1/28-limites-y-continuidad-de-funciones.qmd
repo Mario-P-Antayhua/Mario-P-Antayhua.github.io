@@ -42,6 +42,7 @@ $\varepsilon>0$ existe $\delta>0$ tal que, para todo
 $\vect{x}\in D$ con $0<\|\vect{x}-\vect{p}\|<\delta$, se cumple
 $\|f(\vect{x})-\vect{L}\|<\varepsilon$, donde $\|\cdot\|$ es la norma
 euclidiana de la [Definición “Norma”](../matematica-2/03-espacios-normados.qmd#def-norma).
+
 :::
 
 La definición reutiliza literalmente la estructura $\varepsilon$-$\delta$
@@ -63,6 +64,7 @@ $\|f(\vect{x})-f(\vect{p})\|<\varepsilon$; equivalentemente, si
 $\vect{p}$ es punto de acumulación de $D$, $f$ es continua en $\vect{p}$
 si y solo si $\lim_{\vect{x}\to\vect{p}}f(\vect{x})=f(\vect{p})$. Se dice
 que $f$ es continua en $D$ si lo es en cada punto de $D$.
+
 :::
 
 Verificar la continuidad de funciones complicadas a partir de la definición sería impracticable; las propiedades algebraicas del límite permiten construirlas a partir de piezas simples.
@@ -76,6 +78,7 @@ entonces $\lim_{\vect{x}\to\vect{p}}\bigl(f(\vect{x})+g(\vect{x})\bigr)=
 L+M$ y $\lim_{\vect{x}\to\vect{p}}\bigl(f(\vect{x})g(\vect{x})\bigr)=LM$;
 si además $M\neq 0$,
 $\lim_{\vect{x}\to\vect{p}}\bigl(f(\vect{x})/g(\vect{x})\bigr)=L/M$.
+
 :::
 
 ::: {.proof}
@@ -93,6 +96,7 @@ $f(\vect{x}_k)/g(\vect{x}_k)\to L/M$. Como esto vale para toda sucesión
 $\vect{x}_k\to\vect{p}$, el mismo @thm-continuidad-sucesiones
 aplicado en sentido inverso da las tres igualdades de límites
 enunciadas.
+
 :::
 
 La demostración anterior citó un resultado que todavía no se ha
@@ -110,6 +114,7 @@ Sea $D\subseteq\mathbb{R}^n$, $f:D\to\mathbb{R}^m$ y $\vect{p}\in D$.
 Entonces $f$ es continua en $\vect{p}$ si y solo si para toda sucesión
 $\{\vect{x}_k\}$ en $D$ con $\vect{x}_k\to\vect{p}$ se cumple
 $f(\vect{x}_k)\to f(\vect{p})$.
+
 :::
 
 ::: {.proof}
@@ -135,6 +140,7 @@ $\vect{x}_k\to\vect{p}$, pero $\|f(\vect{x}_k)-f(\vect{p})\|\geq
 \varepsilon_0$ para todo $k$, de modo que $f(\vect{x}_k)$ no converge a
 $f(\vect{p})$. Esta sucesión contradice la hipótesis del enunciado, con
 lo cual la equivalencia queda establecida en ambas direcciones.
+
 :::
 
 ::: {#idea-continuidad-plim .callout-tip appearance=“simple” title=“Idea central: Por qué importa la continuidad para la estimación”}
@@ -149,6 +155,7 @@ exactamente el argumento del @thm-continuidad-sucesiones,
 sustituyendo la convergencia de sucesiones deterministas por la
 convergencia en probabilidad de sucesiones de variables aleatorias, sin
 alterar la estructura lógica del razonamiento.
+
 :::
 
 Con la continuidad ya disponible, el siguiente paso es medir no solo si

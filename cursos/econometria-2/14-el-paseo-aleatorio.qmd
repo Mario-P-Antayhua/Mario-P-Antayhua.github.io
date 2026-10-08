@@ -21,6 +21,7 @@ distinta.
 El ***paseo aleatorio sin deriva*** es el proceso
 $Y_t:=Y_{t-1}+\rblanco_t$, con $\{\rblanco_t\}$ ruido blanco y valor
 inicial $Y_0$ fijo y conocido, no aleatorio.
+
 :::
 
 La varianza del paseo aleatorio crece con el tiempo, y ese hecho decide si el proceso es estacionario.
@@ -31,6 +32,7 @@ La varianza del paseo aleatorio crece con el tiempo, y ese hecho decide si el pr
 Para el proceso de la @def-paseo-aleatorio,
 $\Esp{Y_t}=Y_0$ para todo $t\geq 0$, y $\Var(Y_t)=t\sigma^2$. En
 consecuencia, el paseo aleatorio no es débilmente estacionario.
+
 :::
 
 ::: {.proof}
@@ -60,6 +62,7 @@ $\Var(Y_t)=t\sigma^2$ depende explícitamente de $t$, y crece sin cota a
 medida que $t\to\infty$, se viola la segunda condición de la
 [Definición “Estacionariedad débil”](10-estacionariedad.qmd#def-estacionariedad-debil), de modo que el paseo aleatorio no es
 débilmente estacionario.
+
 :::
 
 El resultado $\Var(Y_t)=t\sigma^2$ tiene una lectura intuitiva directa:
@@ -85,6 +88,7 @@ El ***paseo aleatorio con deriva*** es el proceso
 $Y_t:=\delta+Y_{t-1}+\rblanco_t$, con $\delta\in\mathbb{R}$ constante,
 llamada la ***deriva***, $\{\rblanco_t\}$ ruido blanco, y
 valor inicial $Y_0$ fijo.
+
 :::
 
 Resolver la recursión hacia atrás expresa el proceso mediante la deriva y la suma acumulada de los choques.
@@ -95,6 +99,7 @@ Resolver la recursión hacia atrás expresa el proceso mediante la deriva y la s
 Para el proceso de la @def-paseo-aleatorio-deriva,
 $Y_t=Y_0+\delta t+\sum_{j=1}^{t}\rblanco_j$, y en consecuencia
 $\Esp{Y_t}=Y_0+\delta t$ y $\Var(Y_t)=t\sigma^2$.
+
 :::
 
 ::: {.proof}
@@ -118,4 +123,5 @@ constante $\delta t$, de modo que
 $\Var(Y_t)=\Var\bigl(Y_0+\sum_{j=1}^{t}\rblanco_j\bigr)=
 \Var\bigl(\sum_{j=1}^{t}\rblanco_j\bigr)=t\sigma^2$, exactamente el
 mismo cálculo del @thm-varianza-paseo-aleatorio.
+
 :::

@@ -14,6 +14,7 @@ $Y_t=\phi_1Y_{t-1}+\cdots+\phi_pY_{t-p}+\rblanco_t$, con
 $\phi_1,\ldots,\phi_p\in\mathbb{R}$ y $\{\rblanco_t\}$ ruido blanco. En
 notación de rezagos, $\phi(\Lag)Y_t=\rblanco_t$ con
 $\phi(\Lag)=1-\phi_1\Lag-\cdots-\phi_p\Lag^p$.
+
 :::
 
 La ecuación que define al AR(p) es, literalmente, la misma ecuación
@@ -29,12 +30,14 @@ nuevo.
 El AR(p) de la @def-arp admite una solución débilmente
 estacionaria si y solo si todas las raíces del polinomio característico
 $\phi(z)=1-\phi_1z-\cdots-\phi_pz^p$ están fuera del círculo unitario.
+
 :::
 
 ::: {.proof}
 Es exactamente el [Teorema “Condición de estacionariedad de un proceso autorregresivo”](21-la-condicion-de-estacionariedad-en-terminos-de-r.qmd#thm-condicion-estacionariedad-raices) de la
 [Sección “El operador de rezago”](16-el-operador-de-rezago.qmd), aplicado sin ninguna modificación al
 polinomio $\phi(\Lag)$ de la @def-arp.
+
 :::
 
 Verificar esta condición para un AR(p) con $p$ grande exige, en la

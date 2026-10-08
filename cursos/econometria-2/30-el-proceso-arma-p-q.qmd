@@ -14,6 +14,7 @@ $\phi(\Lag)Y_t=\theta(\Lag)\rblanco_t$, con
 $\phi(\Lag)=1-\phi_1\Lag-\cdots-\phi_p\Lag^p$,
 $\theta(\Lag)=1+\theta_1\Lag+\cdots+\theta_q\Lag^q$, y
 $\{\rblanco_t\}$ ruido blanco.
+
 :::
 
 Las dos partes del modelo, la autorregresiva y la de medias móviles, imponen condiciones distintas, y cada una se verifica por separado.
@@ -26,6 +27,7 @@ si todas las raíces de $\phi(z)$ están fuera del círculo unitario, y es
 invertible si y solo si todas las raíces de $\theta(z)$ están fuera del
 círculo unitario; ambas condiciones son independientes entre sí y se
 verifican por separado, cada una sobre su propio polinomio.
+
 :::
 
 ::: {.proof}
@@ -42,6 +44,7 @@ argumento aplicado a $\theta(\Lag)$, exige que las raíces de
 $\theta(z)$ estén fuera del círculo unitario, sin ninguna referencia a
 $\phi(\Lag)$. Como cada condición involucra un polinomio distinto, son
 verificables y pueden fallar de manera independiente.
+
 :::
 
 ::: {#exm-momentos-arma11}
@@ -79,4 +82,5 @@ patrón que se generaliza a cualquier ARMA(p,q): la parte autorregresiva
 gobierna el comportamiento de cola de la función de autocorrelación,
 mientras que la parte de medias móviles solo contamina los primeros $q$
 rezagos.
+
 :::

@@ -31,6 +31,7 @@ $$
 Cuando $\mat{\Sigma}$ no es invertible, la distribución se define de
 manera equivalente, sin densidad, como el límite de distribuciones no
 degeneradas, un caso que no se necesitará en lo que sigue.
+
 :::
 
 Los parámetros de la distribución llevan los nombres de sus momentos, y la notación se justifica al comprobar que lo son.
@@ -40,6 +41,7 @@ Los parámetros de la distribución llevan los nombres de sus momentos, y la not
 
 Si $\vect{X}\sim N(\vect{\mu},\mat{\Sigma})$, entonces
 $\Esp{\vect{X}}=\vect{\mu}$ y $\Var(\vect{X})=\mat{\Sigma}$.
+
 :::
 
 ::: {.proof}
@@ -66,6 +68,7 @@ $$
   \Var(\vect{Y}) &= \mat{S}\,\Var(\vect{Z})\,\mat{S}^{\top} = \mat{S}\Imat\mat{S} = \mat{\Sigma}.
 \end{aligned}
 $$
+
 :::
 
 ::: {#thm-transformacion-lineal-normal}
@@ -75,6 +78,7 @@ Si $\vect{X}\sim N(\vect{\mu},\mat{\Sigma})$ y $\mat{A}\in
 \mathbb{R}^{m\times k}$ tiene rango completo por filas, entonces
 $\mat{A}\vect{X}+\vect{b}\sim N(\mat{A}\vect{\mu}+\vect{b},\,
 \mat{A}\mat{\Sigma}\mat{A}^{\top})$.
+
 :::
 
 ::: {.proof}
@@ -98,6 +102,7 @@ distribución a partir de su MGF, ya mencionado en la
 [Idea central “Por qué importa la función generadora de momentos”](04-esperanza-matematica-y-momentos.qmd#idea-mgf-unicidad) de la [Sección “Espacios de probabilidad”](01-espacios-de-probabilidad.qmd), esto basta para
 concluir $\mat{A}\vect{X}+\vect{b}\sim N(\mat{A}\vect{\mu}+\vect{b},\,
 \mat{A}\mat{\Sigma}\mat{A}^{\top})$.
+
 :::
 
 ::: {#cor-normal-condicional}
@@ -126,6 +131,7 @@ $$
   = \mat{\Sigma}_{11} - \mat{\Sigma}_{12}\mat{\Sigma}_{22}^{-1}
   \mat{\Sigma}_{21}.
 $$
+
 :::
 
 ::: {.proof}
@@ -156,6 +162,7 @@ media condicional de $\vect{Z}$ se obtiene exactamente la fórmula de
 $\Esp[\vect{X}_2=\vect{x}_2]{\vect{X}_1}$ enunciada, mientras que la
 varianza condicional no cambia al sumar una constante y coincide con
 $\Var(\vect{Z})$.
+
 :::
 
 ::: {#idea-anticipacion-kalman-normal .callout-tip appearance=“simple” title=“Idea central: Anticipación: la actualización bayesiana del filtro de Kalman”}
@@ -174,4 +181,5 @@ combina una predicción previa con una nueva observación: $\vect{X}_2$
 jugará el papel de la observación, $\vect{X}_1$ el del estado no
 observado, y la matriz $\mat{\Sigma}_{12}\mat{\Sigma}_{22}^{-1}$ el de
 la ganancia de Kalman.
+
 :::

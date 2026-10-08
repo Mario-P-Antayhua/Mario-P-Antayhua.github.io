@@ -28,6 +28,7 @@ $\hat{\mathcal{I}}_B:=n^{-1}\sum_{i=1}^{n}\vect{s}_i
 consistentes para $\mathcal{I}(\vect{\theta}_0)$ por la ley de los
 grandes números, la continuidad de $\mat{H}_n$ y $\vect{s}_i$, y la
 consistencia de $\hat{\vect{\theta}}_n$.
+
 :::
 
 Ambos estimadores de la @def-estimadores-informacion presuponen
@@ -58,6 +59,7 @@ hessiana, $\mat{A}(\vect{\theta}):=-\Esp{\nabla_{\vect{\theta}}
 $\mat{A}(\vect{\theta})^{-1}\mat{B}(\vect{\theta})\mat{A}(\vect{\theta})
 ^{-1}$, con $\mat{B}$ colocada entre dos copias de
 $\mat{A}^{-1}$ como el relleno de un sándwich.
+
 :::
 
 La forma sándwich es la varianza correcta del estimador cuando el modelo no está bien especificado.
@@ -79,6 +81,7 @@ donde $\vect{\theta}^{*}$ es el valor que maximiza el límite
 poblacional $Q(\vect{\theta})$ de la demostración del
 [Teorema “Consistencia del estimador máximo verosímil”](04-consistencia-del-estimador-maximo-verosimil.qmd#thm-consistencia-emv), no necesariamente el parámetro de ningún
 modelo verdadero.
+
 :::
 
 ::: {.proof}
@@ -106,6 +109,7 @@ por la [Proposición “Covarianza de una transformación lineal”](../economet
 [Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd) es exactamente
 $N(\vect{0},\mat{A}(\vect{\theta}^*)^{-1}\mat{B}(\vect{\theta}^*)
 \mat{A}(\vect{\theta}^*)^{-1})$.
+
 :::
 
 Cuando el modelo está correctamente especificado, $\mat{A}(\vect{\theta}_0)

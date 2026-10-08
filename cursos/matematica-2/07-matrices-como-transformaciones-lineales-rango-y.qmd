@@ -18,6 +18,7 @@ vectoriales. Esta identificación entre matrices y transformaciones
 lineales es la que permite trasladar directamente a este contexto los
 conceptos de subespacio, base y dimensión desarrollados en la sección
 anterior, en lugar de reconstruirlos desde cero para matrices.
+
 :::
 
 Dos subespacios asociados a toda matriz resumen lo que la transformación conserva y lo que pierde.
@@ -31,6 +32,7 @@ $\mat{A}$ es $\ker(\mat{A}):=\{\vect{x}\in\mathbb{R}^n:\mat{A}\vect{x}=
 $\operatorname{Im}(\mat{A}):=\{\mat{A}\vect{x}:\vect{x}\in\mathbb{R}^n\}$,
 que coincide con la envoltura lineal de las columnas de $\mat{A}$ en el
 sentido de la [Definición “Combinación lineal y envoltura lineal”](01-espacios-vectoriales-y-subespacios.qmd#def-span).
+
 :::
 
 Que el núcleo y la imagen sean subespacios no es una convención sino un resultado, y de él depende que se pueda hablar de sus dimensiones.
@@ -41,6 +43,7 @@ Que el núcleo y la imagen sean subespacios no es una convención sino un result
 Para toda $\mat{A}\in\mathbb{R}^{m\times n}$, $\ker(\mat{A})$ es un
 subespacio de $\mathbb{R}^n$ y $\operatorname{Im}(\mat{A})$ es un
 subespacio de $\mathbb{R}^m$.
+
 :::
 
 ::: {.proof}
@@ -54,6 +57,7 @@ $\vect{u}=\mat{A}\vect{x}$ y $\vect{v}=\mat{A}\vect{y}$, la misma
 linealidad da $\alpha\vect{u}+\beta\vect{v}=\mat{A}(\alpha\vect{x}+
 \beta\vect{y})\in\operatorname{Im}(\mat{A})$, y en ambos casos el
 criterio queda verificado.
+
 :::
 
 El núcleo mide, en cierto sentido, cuánta información se pierde al
@@ -72,6 +76,7 @@ lo que permite darle un nombre a la dimensión de la imagen.
 El ***rango*** de $\mat{A}\in\mathbb{R}^{m\times n}$ es
 $\rango(\mat{A}):=\dim\bigl(\operatorname{Im}(\mat{A})\bigr)$, la
 dimensión de su imagen en el sentido de la [Definición “Dimensión”](02-independencia-lineal-base-y-dimension.qmd#def-dimension).
+
 :::
 
 El rango mide, entonces, cuántas columnas de $\mat{A}$ son en verdad
@@ -87,6 +92,7 @@ el teorema del rango, apoyándose directamente en el
 
 Para toda $\mat{A}\in\mathbb{R}^{m\times n}$,
 $\rango(\mat{A})+\dim\bigl(\ker(\mat{A})\bigr)=n$.
+
 :::
 
 ::: {.proof}
@@ -129,6 +135,7 @@ todos los $\beta_i$ sean cero. Queda así probado que
 $\{\mat{A}\vect{v}_{k+1},\ldots,\mat{A}\vect{v}_n\}$ es base de
 $\operatorname{Im}(\mat{A})$, de donde $\rango(\mat{A})=n-k$, que es
 exactamente la identidad enunciada.
+
 :::
 
 El teorema del rango tiene una lectura inmediata para los sistemas de
@@ -148,6 +155,7 @@ Para toda $\mat{A}\in\mathbb{R}^{m\times n}$, la dimensión del espacio
 generado por las filas de $\mat{A}$ coincide con
 $\rango(\mat{A})=\dim(\operatorname{Im}(\mat{A}))$, la dimensión del
 espacio generado por sus columnas.
+
 :::
 
 ::: {.proof}
@@ -158,6 +166,7 @@ lineales entre las filas de $\mat{A}$ de la misma manera en que
 $\ker(\mat{A})$ describe las relaciones entre sus columnas; ambas cotas
 se reducen, tras cancelar $n$ y $m$ respectivamente, a la misma cantidad,
 lo que fuerza su igualdad.
+
 :::
 
 Que el rango se pueda calcular indistintamente por filas o por columnas

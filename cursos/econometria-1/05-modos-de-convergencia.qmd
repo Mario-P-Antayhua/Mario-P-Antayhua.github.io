@@ -47,6 +47,7 @@ $X_n\xrightarrow{p}X$ o $\plim X_n=X$, si para todo $\varepsilon>0$,
 $$
 \lim_{n\to\infty}\Prob{|X_n-X|\geq\varepsilon} = 0.
 $$
+
 :::
 
 Esta definición reproduce, en el nivel de las probabilidades, la
@@ -83,6 +84,7 @@ que en lugar de trabajar con probabilidades de eventos trabaja
 directamente con el tamaño esperado del error, en el sentido de la
 norma euclidiana de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd) aplicada al espacio de
 variables aleatorias con varianza finita.
+
 :::
 
 La tercera manera de medir la cercanía mide directamente el tamaño esperado del error.
@@ -98,6 +100,7 @@ $\Esp{(X_n-X)^2}$, es precisamente el cuadrado de la distancia entre
 $X_n$ y $X$ en el espacio con producto interno que la
 [Subsección “Esperanza condicional”](08-esperanza-condicional.qmd) de esta misma sección volverá a usar
 para caracterizar la esperanza condicional.
+
 :::
 
 La última de las cuatro nociones prescinde por completo de comparar
@@ -113,6 +116,7 @@ Una sucesión $\{X_n\}$ con funciones de distribución $F_n$
 con función de distribución $F$, lo que se escribe
 $X_n\xrightarrow{d}X$, si $F_n(x)\to F(x)$ para todo punto $x$ en el que
 $F$ es continua.
+
 :::
 
 La convergencia en distribución es, de las cuatro, la más débil: a
@@ -141,6 +145,7 @@ implica $X_n\xrightarrow{p}X$; (ii) $X_n\xrightarrow{\text{m.c.}}X$
 implica $X_n\xrightarrow{p}X$; (iii) $X_n\xrightarrow{p}X$ implica
 $X_n\xrightarrow{d}X$. Ninguna de las tres implicaciones se invierte en
 general.
+
 :::
 
 ::: {.proof}
@@ -164,6 +169,7 @@ F(x-\varepsilon)$; haciendo $\varepsilon\to 0$ y usando la continuidad
 de $F$ en $x$, ambas cotas colapsan en $F_n(x)\to F(x)$. Para (i), sea $\varepsilon>0$ y $A_n(\varepsilon):=\bigcup_{m\geq n}\{|X_m-X|\geq\varepsilon\}$. Los eventos $A_n(\varepsilon)$ decrecen con $n$, y su intersección es el evento de que $|X_m-X|\geq\varepsilon$ para infinitos $m$, contenido en el evento de que $X_m$ no converge a $X$, que tiene probabilidad cero por la convergencia casi segura. La continuidad de la probabilidad sobre sucesiones decrecientes de eventos da entonces $\Prob{A_n(\varepsilon)}\to 0$, y como $\{|X_n-X|\geq\varepsilon\}\subseteq A_n(\varepsilon)$, resulta $\Prob{|X_n-X|\geq\varepsilon}\leq\Prob{A_n(\varepsilon)}\to 0$, que es la convergencia en probabilidad.
 
 Las tres implicaciones no se invierten, como muestran tres sucesiones. En las dos primeras, $U$ es uniforme en $[0,1]$. La primera es $X_n:=n\,\mathbb{1}\{U<1/n\}$: para cada $U>0$, la condición $U<1/n$ se cumple solo para finitos $n$, de modo que $X_n$ converge casi seguramente, y por tanto en probabilidad, a cero; pero $\Esp{X_n^2}=n^2\cdot\frac{1}{n}=n\to\infty$, así que no converge en media cuadrática. La segunda recorre los intervalos $[0,\tfrac12]$, $[\tfrac12,1]$, $[0,\tfrac13]$, $[\tfrac13,\tfrac23]$, $[\tfrac23,1]$, y así sucesivamente, y define $Y_n$ como el indicador del $n$-ésimo intervalo evaluado en $U$: $\Prob{Y_n=1}$ es la longitud de ese intervalo, que tiende a cero, de modo que $Y_n\xrightarrow{p}0$, pero para cada valor de $U$ la sucesión $Y_n(U)$ toma el valor uno infinitas veces y no converge casi seguramente. La tercera usa $Z\sim N(0,1)$ y $Z_n:=-Z$ para todo $n$: por simetría $Z_n$ tiene la misma distribución que $Z$, de modo que $Z_n\xrightarrow{d}Z$, pero $|Z_n-Z|=2|Z|$ no tiende a cero en probabilidad.
+
 :::
 
 De estas cuatro nociones, la convergencia en probabilidad y la

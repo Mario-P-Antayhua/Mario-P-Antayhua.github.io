@@ -60,6 +60,7 @@ original. Esta distinción, invisible en un solo vistazo pero decisiva
 para la inferencia estadística, es exactamente la que motiva las
 pruebas de raíz unitaria que la [Sección “El operador de rezago”](16-el-operador-de-rezago.qmd) introducirá
 al estudiar las raíces del polinomio de rezagos.
+
 :::
 
 ![Trayectorias simuladas de una tendencia determinística ([Definición “Tendencia determinística lineal”](13-tendencias-deterministicas.qmd#def-tendencia-lineal)) y de un paseo aleatorio con deriva ([Definición “Paseo aleatorio con deriva”](14-el-paseo-aleatorio.qmd#def-paseo-aleatorio-deriva)), con la misma pendiente promedio $\delta$. Ambas crecen en la misma dirección, pero solo la segunda acumula desviaciones permanentes respecto de su recta de origen.](../../assets/img/fig/econometria-2-15-contraste-final-1.svg){#fig-tendencia-vs-paseo fig-alt="Trayectorias simuladas de una tendencia determinística ([Definición “Tendencia determinística lineal”](13-tendencias-deterministicas.qmd#def-tendencia-lineal)) y de un paseo aleatorio con deriva ([Definición “Paseo aleatorio con deriva”](14-el-paseo-aleatorio.qmd#def-paseo-aleatorio-deriva)), con la misma pendiente promedio $\delta$. Ambas crecen en la misma dirección, pero solo la segunda acumula desviaciones permanentes respecto de su recta de origen."}

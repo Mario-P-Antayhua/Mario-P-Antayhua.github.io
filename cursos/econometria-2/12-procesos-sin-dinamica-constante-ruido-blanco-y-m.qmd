@@ -37,6 +37,7 @@ simulada. Aplicar sistemáticamente estos seis pasos, en lugar de
 calcular ad hoc lo que parezca relevante en cada caso, es lo que permite
 comparar los siete procesos entre sí en la tabla de contraste que cierra
 la sección.
+
 :::
 
 Los procesos más sencillos son aquellos sin dinámica: su valor no depende de los valores pasados, y sirven de punto de partida para aplicar sistemáticamente el procedimiento de seis pasos.
@@ -46,6 +47,7 @@ Los procesos más sencillos son aquellos sin dinámica: su valor no depende de l
 
 El ***proceso constante*** es $Y_t:=c$ para todo $t$, con
 $c\in\mathbb{R}$ fijo y sin ningún componente aleatorio.
+
 :::
 
 Aplicando el procedimiento de la [Idea central](#idea-seis-pasos): la media es
@@ -73,6 +75,7 @@ $\rblanco_t$ y $\rblanco_s$ son independientes, en el sentido de la
 [Definición “Independencia de eventos”](../econometria-1/02-probabilidad-condicional-e-independencia.qmd#def-independencia-eventos), para todo $t\neq s$, y no solo
 incorrelacionadas; y es ***ruido blanco gaussiano*** si,
 adicionalmente, cada $\rblanco_t\sim N(0,\sigma^2)$.
+
 :::
 
 Aplicando el procedimiento de la [Idea central](#idea-seis-pasos) a cualquiera de
@@ -99,6 +102,7 @@ la que la [Sección “La función de verosimilitud y el estimador máximo veros
 función de verosimilitud de un modelo ARMA, porque sin un supuesto
 distribucional no hay densidad que maximizar, solamente momentos que
 igualar.
+
 :::
 
 El siguiente proceso añade una media constante al ruido blanco, de modo que su nivel deja de ser cero.
@@ -109,6 +113,7 @@ El siguiente proceso añade una media constante al ruido blanco, de modo que su 
 El ***proceso con media*** es $Y_t:=\mu+\rblanco_t$, con
 $\mu\in\mathbb{R}$ constante y $\{\rblanco_t\}$ ruido blanco en el
 sentido de la @def-ruido-blanco.
+
 :::
 
 Este proceso difiere del ruido blanco únicamente en su nivel: la

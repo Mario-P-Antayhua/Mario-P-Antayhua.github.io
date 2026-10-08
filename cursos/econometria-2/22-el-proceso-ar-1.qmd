@@ -37,6 +37,7 @@ Un proceso $\{Y_t\}$ sigue un ***AR(1)*** si
 $Y_t=\phi Y_{t-1}+\rblanco_t$, con $\phi\in\mathbb{R}$ y
 $\{\rblanco_t\}$ ruido blanco con varianza $\sigma^2$. En notación de
 rezagos, $(1-\phi\Lag)Y_t=\rblanco_t$.
+
 :::
 
 La ecuación en diferencias del AR(1) se resuelve hacia atrás, y el resultado depende de que el coeficiente sea menor que uno en valor absoluto.
@@ -52,6 +53,7 @@ $$
 
 convergente en media cuadrática, y esta solución es débilmente
 estacionaria.
+
 :::
 
 ::: {.proof}
@@ -68,6 +70,7 @@ débil de esta solución es el caso particular $p=1$ del
 [Sección “El operador de rezago”](16-el-operador-de-rezago.qmd), porque la única raíz del polinomio
 característico $\phi(z)=1-\phi z$ es $z=1/\phi$, que satisface
 $|1/\phi|>1$ exactamente cuando $|\phi|<1$.
+
 :::
 
 Cuando $|\phi|\geq 1$, en cambio, no existe ninguna solución débilmente
@@ -86,6 +89,7 @@ Para el AR(1) estacionario de la @thm-solucion-ar1,
 $\Esp{Y_t}=0$, $\Var(Y_t)=\sigma^2/(1-\phi^2)$, y para $j\geq 0$,
 $\autocov{j}=\phi^j\sigma^2/(1-\phi^2)$, de modo que
 $\autocorr{j}=\phi^j$.
+
 :::
 
 ::: {.proof}
@@ -129,6 +133,7 @@ en $i=j+k$ con $k\geq 0$, vuelve a ser una serie geométrica de razón
 $\phi^2$ que arranca en $i=j$ en lugar de en $i=0$. Dividiendo
 $\autocov{j}$ entre $\autocov{0}=\sigma^2/(1-\phi^2)$ se obtiene
 directamente $\autocorr{j}=\phi^j$.
+
 :::
 
 ![Función de autocorrelación de un AR(1) con $\phi=0.7$: decae geométricamente hacia cero sin cortarse nunca en ningún rezago finito. Cuando $\phi<0$, la misma fórmula $\rho_j=\phi^j$ produce un decaimiento con signo alternante en lugar de monótono.](../../assets/img/fig/econometria-2-22-el-proceso-ar-1-1.svg){#fig-fac-ar1 fig-alt=“Función de autocorrelación de un AR(1) con $\phi=0.7$: decae geométricamente hacia cero sin cortarse nunca en ningún rezago finito. Cuando $\phi<0$, la misma fórmula $\rho_j=\phi^j$ produce un decaimiento con signo alternante en lugar de monótono.”}

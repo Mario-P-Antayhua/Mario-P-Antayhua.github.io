@@ -21,6 +21,7 @@ particular que se necesite.
 Sea $g:\mathbb{R}\to\mathbb{R}$ continua. Si $X_n\xrightarrow{p}X$,
 entonces $g(X_n)\xrightarrow{p}g(X)$; si $X_n\xrightarrow{d}X$, entonces
 $g(X_n)\xrightarrow{d}g(X)$.
+
 :::
 
 ::: {.proof}
@@ -45,6 +46,7 @@ $$
 $$
 
 Como esto vale para toda $\psi$ acotada y continua, el mismo resultado clásico aplicado ahora a $g(X_n)$ da $g(X_n)\xrightarrow{d}g(X)$.
+
 :::
 
 El teorema de la aplicación continua es el que permite, en la práctica,
@@ -70,6 +72,7 @@ $$
 \sqrt{n}\bigl(g(X_n)-g(\mu)\bigr) \xrightarrow{d}
   N\bigl(0,\,g'(\mu)^2\sigma^2\bigr).
 $$
+
 :::
 
 ::: {.proof}
@@ -104,4 +107,5 @@ por otra que converge en probabilidad a cero también converge en
 probabilidad a cero, de modo que el segundo término no contribuye a la
 distribución límite, y
 $\sqrt{n}(g(X_n)-g(\mu))\xrightarrow{d}N(0,g'(\mu)^2\sigma^2)$.
+
 :::

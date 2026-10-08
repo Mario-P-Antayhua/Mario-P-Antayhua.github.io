@@ -48,6 +48,7 @@ e idénticamente distribuida, $L_n(\vect{\theta})=
 ***log-verosimilitud*** es
 $\ell_n(\vect{\theta}):=\log L_n(\vect{\theta})=
 \sum_{i=1}^{n}\log f(\vect{x}_i;\vect{\theta})$.
+
 :::
 
 La misma fórmula matemática admite dos lecturas radicalmente distintas
@@ -77,6 +78,7 @@ estimador máximo verosímil se defina como el valor del parámetro bajo
 el cual los datos observados resultan más plausibles, y no como el
 parámetro más probable, una noción que exigiría una distribución a
 priori sobre $\Theta$ ajena por completo a este enfoque.
+
 :::
 
 Con la verosimilitud entendida como función del parámetro, queda definido el estimador que la maximiza.
@@ -95,6 +97,7 @@ $$
 donde la segunda igualdad se sigue de que el logaritmo es una función
 estrictamente creciente, de modo que maximizar $L_n$ y maximizar
 $\ell_n$ producen exactamente el mismo maximizador.
+
 :::
 
 La notación $\hat{\vect{\theta}}_n$, con el subíndice $n$ explícito,
@@ -131,6 +134,7 @@ $\hat{\vect{\theta}}_n$ el EMV de $\vect{\theta}$. Entonces el EMV de
 $\vect{\xi}=\varphi(\vect{\theta})$, reparametrizando la misma
 verosimilitud en términos de $\vect{\xi}$, es
 $\hat{\vect{\xi}}_n=\varphi(\hat{\vect{\theta}}_n)$.
+
 :::
 
 ::: {.proof}
@@ -148,6 +152,7 @@ puntos correspondientes; en consecuencia,
 $\hat{\vect{\xi}}_n=\argmax_{\vect{\xi}}\tilde{L}_n(\vect{\xi})=
 \varphi\bigl(\argmax_{\vect{\theta}}L_n(\vect{\theta})\bigr)=
 \varphi(\hat{\vect{\theta}}_n)$.
+
 :::
 
 Esta invariancia es la razón por la que, en la práctica, se puede
@@ -165,6 +170,7 @@ es no solo un óptimo local sino el único óptimo global.
 Si $\ell_n$ es estrictamente cóncava en el abierto convexo $\Theta$,
 entonces el EMV, si existe, es el único punto que satisface
 $\vect{s}_n(\hat{\vect{\theta}}_n)=\vect{0}$, y es un máximo global.
+
 :::
 
 ::: {.proof}
@@ -178,4 +184,5 @@ ahí; como esa equivalencia identifica a los puntos críticos con los
 crítico, porque dos máximos globales distintos de una función
 estrictamente cóncava contradirían la definición estricta de
 concavidad aplicada al punto medio entre ambos.
+
 :::

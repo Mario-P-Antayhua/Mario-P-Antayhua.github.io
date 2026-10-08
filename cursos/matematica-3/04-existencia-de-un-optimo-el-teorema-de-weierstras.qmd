@@ -42,6 +42,7 @@ $\|\vect{x}-\vect{x}^*\|<\delta$. Las definiciones de
 ***máximo global*** y ***máximo local*** son
 análogas, invirtiendo la desigualdad. Todo mínimo global es, en
 particular, un mínimo local, pero el recíproco no vale en general.
+
 :::
 
 Esta distinción entre lo local y lo global reaparecerá constantemente:
@@ -60,6 +61,7 @@ conjunto a otro.
 
 Sea $K\subseteq\mathbb{R}^n$ compacto y $f:K\to\mathbb{R}^m$ continua.
 Entonces $f(K)$ es compacto.
+
 :::
 
 ::: {.proof}
@@ -81,6 +83,7 @@ del subcubrimiento finito de $K$, de modo que
 $\vect{y}=f(\vect{x})\in f(U_{\vect{x}_i}\cap K)\subseteq G_{\alpha_i}$;
 en consecuencia, $G_{\alpha_1},\ldots,G_{\alpha_r}$ cubre $f(K)$, y es un
 subcubrimiento finito extraído de $\{G_\alpha\}$.
+
 :::
 
 Con este lema disponible, la existencia de un óptimo global se reduce a
@@ -95,6 +98,7 @@ Sea $K\subseteq\mathbb{R}^n$ compacto y no vacío, y sea $f:K\to
 globales en $K$: existen $\vect{x}^*,\vect{x}_*\in K$ tales que
 $f(\vect{x}_*)\leq f(\vect{x})\leq f(\vect{x}^*)$ para todo
 $\vect{x}\in K$.
+
 :::
 
 ::: {.proof}
@@ -115,6 +119,7 @@ con $f(\vect{x}^*)=M$ y $f(\vect{x}_*)=m$, y por ser $M$ y $m$ el
 supremo y el ínfimo de $f(K)$, se cumple
 $f(\vect{x}_*)\leq f(\vect{x})\leq f(\vect{x}^*)$ para todo
 $\vect{x}\in K$.
+
 :::
 
 ::: {#idea-compacidad-indispensable .callout-tip appearance=“simple” title=“Idea central: Por qué la compacidad es indispensable”}
@@ -131,4 +136,5 @@ como ocurre al forzar que una varianza sea estrictamente positiva, el
 teorema de Weierstrass no garantiza por sí solo que el estimador máximo
 verosímil exista, y hace falta un argumento adicional para descartar que
 la verosimilitud se dispare hacia esa frontera excluida.
+
 :::

@@ -45,6 +45,7 @@ equivalentes*** si tienen exactamente la misma tabla de verdad, es decir, si
 toman el mismo valor de verdad para cada combinación posible de valores de
 verdad de las proposiciones simples que las componen. Se denota
 $p\equiv q$.
+
 :::
 
 La utilidad de la equivalencia lógica es que permite sustituir una
@@ -70,6 +71,7 @@ $$
   p\leftrightarrow q &\equiv (p\rightarrow q)\wedge(q\rightarrow p). \tag{doble condicional}
 \end{aligned}
 $$
+
 :::
 
 ::: {.proof}
@@ -128,6 +130,7 @@ sea verdadera, es decir, que no haya caso en que $p$ sea verdadera y $q$
 falsa; y que $q\rightarrow p$ también lo sea, es decir, que no haya caso en
 que $q$ sea verdadera y $p$ falsa. Ambas cosas a la vez son, por definición
 de conjunción, $(p\rightarrow q)\wedge(q\rightarrow p)$.
+
 :::
 
 De las seis equivalencias recién probadas, cinco son útiles como herramientas
@@ -142,4 +145,5 @@ probar que la negación de $q$ implica la negación de $p$, y en muchas
 ocasiones esta segunda formulación resulta bastante más manejable que la
 primera, sobre todo cuando la hipótesis original está planteada como una
 negación y la tesis original no lo está.
+
 :::

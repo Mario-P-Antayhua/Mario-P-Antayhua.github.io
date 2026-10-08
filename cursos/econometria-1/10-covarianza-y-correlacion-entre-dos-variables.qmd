@@ -23,6 +23,7 @@ $\Var(X),\Var(Y)>0$, es
 $$
 \Corr(X,Y) := \frac{\Cov(X,Y)}{\sqrt{\Var(X)}\sqrt{\Var(Y)}}.
 $$
+
 :::
 
 La covarianza depende de las unidades de $X$ y de $Y$: multiplicar $X$
@@ -39,6 +40,7 @@ importar la distribución de $X$ ni de $Y$.
 
 Para cualesquiera $X,Y$ con varianza finita y positiva,
 $-1\leq\Corr(X,Y)\leq 1$.
+
 :::
 
 ::: {.proof}
@@ -61,6 +63,7 @@ $$
 
 y dividiendo ambos lados entre $\sqrt{\Var(X)}\sqrt{\Var(Y)}>0$ se
 obtiene $|\Corr(X,Y)|\leq 1$, que es la desigualdad enunciada.
+
 :::
 
 ::: {#idea-incorrelacion-independencia .callout-tip appearance=“simple” title=“Idea central: Incorrelación no implica independencia”}
@@ -80,4 +83,5 @@ excepción notable a esta asimetría, como mostrará la
 [Subsección “La distribución normal multivariante”](11-la-distribucion-normal-multivariante.qmd), ocurre cuando $X$ y $Y$ son
 conjuntamente normales, caso en el que incorrelación e independencia sí
 coinciden.
+
 :::

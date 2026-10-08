@@ -22,6 +22,7 @@ $q(\vect{x}):=\vect{x}^{\top}\mat{A}\vect{x}$. Se dice que $\mat{A}$ es
 ***definida positiva*** si $q(\vect{x})>0$ para todo
 $\vect{x}\neq\vect{0}$, y ***semidefinida positiva*** si
 $q(\vect{x})\geq 0$ para todo $\vect{x}$.
+
 :::
 
 Decidir si una matriz es definida positiva con la definición exigiría examinar todos los vectores; el siguiente resultado reduce la pregunta a una condición sobre los valores propios.
@@ -32,6 +33,7 @@ Decidir si una matriz es definida positiva con la definición exigiría examinar
 Una matriz simétrica $\mat{A}$ es definida positiva si y solo si todos
 sus valores propios son estrictamente positivos, y es semidefinida
 positiva si y solo si todos sus valores propios son no negativos.
+
 :::
 
 ::: {.proof}
@@ -59,6 +61,7 @@ de la base canónica, se obtiene $\vect{y}=\vect{e}_j$ y
 $q(\vect{x})=\lambda_j\leq 0$ pese a que $\vect{x}\neq\vect{0}$ por ser
 $\mat{Q}$ invertible, lo que contradice que $\mat{A}$ sea definida
 positiva.
+
 :::
 
 ::: {#idea-aplicaciones-definida-positiva .callout-tip appearance=“simple” title=“Idea central: Dos apariciones recurrentes de las matrices definidas positivas”}
@@ -76,6 +79,7 @@ segundas derivadas de una función objetivo, que la
 crítico para garantizar, mediante el
 @thm-definida-positiva-espectral, que ese punto sea efectivamente
 un mínimo local y no un punto de silla.
+
 :::
 
 Un ejemplo de matriz semidefinida positiva aparece al proyectar sobre el espacio columna de una matriz de regresores, y permite ver estas propiedades en acción.
@@ -120,4 +124,5 @@ modo que $\tr(\mat{P})=k$ por la
 número de parámetros estimados en una regresión con $k$ regresores, y
 reaparecerá bajo ese nombre al calcular los grados de libertad de la
 suma de cuadrados residual.
+
 :::

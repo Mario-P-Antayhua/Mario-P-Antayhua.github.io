@@ -30,6 +30,7 @@ donde la segunda igualdad usa que $\Esp[\vect{\theta}]{\vect{s}_i
 (\vect{\theta})}=\vect{0}$ por la [Proposición “La esperanza del score es cero”](02-la-funcion-score.qmd#prp-esperanza-score-cero) de la
 [Sección “La función de verosimilitud y el estimador máximo verosímil”](01-la-funcion-de-verosimilitud-y-el-estimador-maxim.qmd), de modo que la varianza y el segundo momento
 del score coinciden.
+
 :::
 
 Bajo condiciones de regularidad las dos expresiones de la información coinciden, lo que ofrece dos maneras de calcularla.
@@ -47,6 +48,7 @@ $$
   = -\Esp[\vect{\theta}]{\nabla_{\vect{\theta}}
   \vect{s}_i(\vect{\theta})^{\top}}.
 $$
+
 :::
 
 ::: {.proof}
@@ -93,6 +95,7 @@ $\Esp[\vect{\theta}]{\vect{s}_i(\vect{\theta})
 \vect{s}_i(\vect{\theta})^{\top}}=-\Esp[\vect{\theta}]{
 \nabla_{\vect{\theta}}\vect{s}_i(\vect{\theta})^{\top}}$, que es la
 igualdad enunciada.
+
 :::
 
 ::: {#idea-informacion-bhhh .callout-tip appearance=“simple” title=“Idea central: La igualdad de la información y el método BHHH”}
@@ -107,4 +110,5 @@ un estimador consistente de la misma cantidad poblacional,
 $\mathcal{I}(\vect{\theta})$, que estima la hessiana verdadera, con la
 ventaja adicional, señalada entonces, de ser automáticamente
 semidefinida positiva.
+
 :::

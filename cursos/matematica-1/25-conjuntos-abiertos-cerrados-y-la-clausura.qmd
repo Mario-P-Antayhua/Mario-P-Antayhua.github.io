@@ -17,6 +17,7 @@ límite.
 $E\subseteq X$ es ***abierto*** si todo punto de $E$ es
 interior a $E$. Es ***cerrado*** si todo punto límite de $E$
 pertenece a $E$.
+
 :::
 
 Conviene subrayar, antes de seguir, que “abierto” y “cerrado” no son
@@ -38,6 +39,7 @@ cerrado. El intervalo $[0,2)$, en cambio, es cerrado por la izquierda y
 abierto por la derecha en el mismo sentido, mostrado en la
 @fig-abierto-cerrado junto con $[3,5]$, que sí es cerrado por ambos
 lados.
+
 :::
 
 ![El punto relleno pertenece al conjunto; el punto hueco marca un punto límite que no pertenece al conjunto y que impide que sea cerrado.](../../assets/img/fig/matematica-1-25-conjuntos-abiertos-cerrados-y-la-clausura-1.svg){#fig-abierto-cerrado fig-alt=“El punto relleno pertenece al conjunto; el punto hueco marca un punto límite que no pertenece al conjunto y que impide que sea cerrado.”}
@@ -52,6 +54,7 @@ la definición misma de cerrado aplicada al complemento.
 ## Un conjunto es abierto si y solo si su complemento es cerrado
 
 $E$ es abierto si y solo si $E^c$ es cerrado.
+
 :::
 
 ::: {.proof}
@@ -78,6 +81,7 @@ $$
 
 con lo cual todo punto límite de $E^c$ pertenece a $E^c$, que es
 exactamente lo que se quería probar.
+
 :::
 
 Este teorema es lo que permite, en la práctica, decidir que un conjunto es
@@ -99,6 +103,7 @@ ellas exige una restricción que a primera vista parece innecesaria.
             abierta.
 
 (i) La unión de una colección *finita* de cerrados es cerrada.
+
 :::
 
 ::: {.proof}
@@ -125,6 +130,7 @@ ningún radio positivo funcionaría para todos a la vez.
 Las partes (ii) y (iv) se obtienen de (i) y (iii), respectivamente,
 tomando complementos y aplicando las leyes de De Morgan junto con el
 @thm-abierto-complemento-cerrado.
+
 :::
 
 La advertencia sobre la finitud en (iii) no es un tecnicismo vacío, y el
@@ -149,6 +155,7 @@ vecindad de $0$, sin importar cuán pequeña, está contenida en $\{0\}$,
 porque toda vecindad de radio positivo contiene infinitos puntos distintos
 de $0$. Esto confirma, con un caso concreto, por qué la
 @prp-uniones-intersecciones(iii) exige que la colección sea finita.
+
 :::
 
 Hasta aquí, “abierto” y “cerrado” describen propiedades de un conjunto
@@ -161,6 +168,7 @@ contiene.
 
 $\overline{E}:=E\cup E'$, donde $E'$ es el conjunto de puntos límite de
 $E$.
+
 :::
 
 La clausura simplemente añade a $E$ los puntos límite que le faltaban;
@@ -177,6 +185,7 @@ Para todo $E\subseteq X$: (i) $\overline{E}$ es cerrado; (ii)
 $E=\overline{E}$ si y solo si $E$ es cerrado; (iii) si $F$ es cerrado y
 $E\subseteq F$, entonces $\overline{E}\subseteq F$. En particular,
 $\overline{E}$ es el conjunto cerrado más pequeño que contiene a $E$.
+
 :::
 
 ::: {.proof}
@@ -200,6 +209,7 @@ como $F$ es cerrado, ese punto límite pertenece a $F$. En consecuencia,
 $E'\subseteq F$, y junto con $E\subseteq F$ se obtiene
 $\overline{E}=E\cup E'\subseteq F$, que es exactamente la minimalidad
 buscada.
+
 :::
 
 La parte (iii) es la que se invocará con más frecuencia en secciones
@@ -214,6 +224,7 @@ que conecta esta sección con el axioma de completitud de la
 
 Sea $E\subseteq\mathbb{R}$ no vacío y acotado superiormente, $y=\sup E$.
 Entonces $y\in\overline{E}$.
+
 :::
 
 ::: {.proof}
@@ -229,6 +240,7 @@ de modo que $x\in N_h(y)$ y $x\neq y$; como $h>0$ era arbitrario, esto
 significa que toda vecindad de $y$ contiene un punto de $E$ distinto de
 $y$, es decir, $y$ es punto límite de $E$. Por lo tanto
 $y\in E'\subseteq\overline{E}$.
+
 :::
 
 Con las nociones de conjunto abierto, cerrado y clausura ya disponibles,

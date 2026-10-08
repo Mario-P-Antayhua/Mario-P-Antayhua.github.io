@@ -31,6 +31,7 @@ Un proceso $\{Y_t\}$ sigue un ***MA(1)*** si
 $Y_t=\rblanco_t+\theta\rblanco_{t-1}$, con $\theta\in\mathbb{R}$ y
 $\{\rblanco_t\}$ ruido blanco con varianza $\sigma^2$. En notación de
 rezagos, $Y_t=\theta(\Lag)\rblanco_t$ con $\theta(\Lag)=1+\theta\Lag$.
+
 :::
 
 A diferencia del AR(1), la ecuación del MA(1) ya está resuelta desde el
@@ -48,6 +49,7 @@ Para el MA(1) de la @def-ma1, $\Esp{Y_t}=0$,
 $\Var(Y_t)=(1+\theta^2)\sigma^2$, $\autocov{1}=\theta\sigma^2$, y
 $\autocov{j}=0$ para $j\geq 2$; en consecuencia,
 $\autocorr{1}=\theta/(1+\theta^2)$ y $\autocorr{j}=0$ para $j\geq 2$.
+
 :::
 
 ::: {.proof}
@@ -80,6 +82,7 @@ menores que $t-1$ cuando $j\geq 2$, de modo que las cuatro covarianzas
 cruzadas se anulan y $\autocov{j}=0$. Dividiendo $\autocov{1}$ y
 $\autocov{j}$ entre $\autocov{0}=(1+\theta^2)\sigma^2$ se obtienen las
 autocorrelaciones enunciadas.
+
 :::
 
 El resultado $\autocorr{j}=0$ para $j\geq 2$ es exactamente el opuesto

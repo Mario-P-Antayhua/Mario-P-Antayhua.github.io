@@ -20,6 +20,7 @@ cerrada están disponibles.
 Una sucesión $(x_n)$ es de ***Cauchy*** si para todo
 $\varepsilon>0$ existe $N\in\mathbb{N}$ tal que, para todos $m,n\geq N$, se
 cumple $|x_n-x_m|<\varepsilon$.
+
 :::
 
 La diferencia con la definición de límite es sutil pero decisiva: en lugar
@@ -33,6 +34,7 @@ disponer del límite.
 ## Criterio de Cauchy
 
 Una sucesión de números reales converge si y solo si es de Cauchy.
+
 :::
 
 ::: {.proof}
@@ -64,6 +66,7 @@ $$
 donde el primer término usa que tanto $n$ como $n_k$ son mayores o iguales
 que $N_1$, de modo que la propiedad de Cauchy se aplica entre ellos. Por lo
 tanto $x_n\to x$.
+
 :::
 
 Vale la pena notar cómo se articulan, en esta única demostración, casi todos
@@ -89,6 +92,7 @@ El criterio de Cauchy será la herramienta concreta que sostenga la
 convergencia de la suma infinita de la representación de Wold, precisamente
 porque en ese contexto no hay forma directa de adivinar el valor del límite
 antes de probar que existe.
+
 :::
 
 Con el criterio de Cauchy completa el arsenal de herramientas sobre

@@ -28,6 +28,7 @@ $$
 
 en el sentido de la [Definición “Convergencia en media cuadrática”](../econometria-1/05-modos-de-convergencia.qmd#def-convergencia-l2) de la
 [Sección “Modos de convergencia”](../econometria-1/05-modos-de-convergencia.qmd).
+
 :::
 
 La definición exige, en esencia, que promediar más observaciones de la
@@ -59,6 +60,7 @@ verificará explícitamente para cada uno de los procesos de la
 autorregresivo estacionario de la [Sección “El proceso AR(1)”](22-el-proceso-ar-1.qmd) y todo proceso de medias
 móviles invertible de la [Sección “El proceso MA(1)”](27-el-proceso-ma-1.qmd), de modo que la ergodicidad
 no volverá a cuestionarse en ninguna de esas secciones posteriores.
+
 :::
 
 Antes de seguir conviene aclarar que la ergodicidad y la estacionariedad son propiedades distintas.
@@ -76,6 +78,7 @@ ergódico sin ser estacionario, aunque ese caso es menos relevante en la
 práctica y no se detallará aquí. La distinción entre ambas propiedades
 es la que justifica tratarlas por separado, en lugar de como una sola
 condición combinada.
+
 :::
 
 Con la estacionariedad y la ergodicidad ya establecidas como los dos

@@ -25,6 +25,7 @@ $\vect{\mu}^*\in\mathbb{R}^p$ tal que
 
 (i) $\mu_j^* h_j(\vect{x}^*)=0$ para cada $j=1,\ldots,p$
             (***holgura complementaria***).
+
 :::
 
 La condición de holgura complementaria es la que distingue este
@@ -44,6 +45,7 @@ continuidad cerca de $\vect{x}^*$, y supóngase que las filas de
 $\mat{J}_h(\vect{x}^*)$ correspondientes a las restricciones activas en
 $\vect{x}^*$ son linealmente independientes. Entonces $\vect{x}^*$
 satisface las condiciones KKT de la @def-problema-desigualdad.
+
 :::
 
 ::: {.proof}
@@ -78,6 +80,7 @@ implicaría que esa dirección factible reduce estrictamente $f$ en
 primer orden, lo que contradice que $\vect{x}^*$ sea un mínimo local.
 Esta contradicción descarta $\mu_{j_0}^*<0$, y como $j_0\in A$ era
 arbitrario, $\vect{\mu}^*\geq\vect{0}$.
+
 :::
 
 ::: {#exm-cobb-douglas}
@@ -111,6 +114,7 @@ multiplicador $\mu^*=\alpha x_1^{*\alpha-1}x_2^{*1-\alpha}/p_1>0$ es
 estrictamente positivo, lo que confirma, a través de la holgura
 complementaria, que la restricción presupuestaria en efecto aprieta en
 el óptimo.
+
 :::
 
 El ejemplo anterior tuvo la fortuna de admitir una solución cerrada,

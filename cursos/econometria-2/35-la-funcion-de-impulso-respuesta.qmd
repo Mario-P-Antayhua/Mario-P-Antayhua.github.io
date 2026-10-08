@@ -15,6 +15,7 @@ coeficientes $\{\psi_k\}_{k\geq 0}$ misma, interpretada como el efecto
 sobre $Y_{t+k}$ de un choque unitario en la innovación
 $\rblanco_t$, manteniendo todas las demás innovaciones sin cambio:
 $\psi_k=\partial Y_{t+k}/\partial\rblanco_t$.
+
 :::
 
 Esta definición responde una pregunta que los economistas formulan con frecuencia, y su lectura económica merece una explicación aparte.
@@ -39,4 +40,5 @@ impulso-respuesta reaparecerá, sin ninguna modificación conceptual, como
 la herramienta central para interpretar los sistemas dinámicos
 multivariantes que la representación espacio-estado de la
 [sección sobre la representación espacio-estado](../econometria-3/index.qmd) introducirá más adelante.
+
 :::

@@ -27,6 +27,7 @@ $$
 
 donde $\mathcal{I}(\vect{\theta}_0)$ es la matriz de información de
 Fisher de la [Definición “Matriz de información de Fisher”](06-la-matriz-de-informacion-de-fisher.qmd#def-informacion-fisher) de esta misma sección.
+
 :::
 
 ::: {.proof}
@@ -95,4 +96,5 @@ donde el penúltimo paso aplica la
 [Sección “Vector de medias y matriz de covarianzas”](../econometria-1/09-vector-de-medias-y-matriz-de-covarianzas.qmd) a la transformación lineal por
 $\mathcal{I}(\vect{\theta}_0)^{-1}$, que es simétrica por serlo
 $\mathcal{I}(\vect{\theta}_0)$.
+
 :::

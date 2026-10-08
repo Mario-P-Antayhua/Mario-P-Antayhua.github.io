@@ -22,6 +22,7 @@ $\mathbb{Q}$ que se usará repetidamente en el argumento que sigue.
 
 Si $p,q\in\mathbb{Q}$ satisfacen $0<p<q$, entonces $p^2<q^2$. Recíprocamente,
 si $p,q>0$ y $p^2<q^2$, entonces $p<q$.
+
 :::
 
 ::: {.proof}
@@ -48,6 +49,7 @@ Si $p=q$, entonces $p^2=q^2$, contradiciendo $p^2<q^2$. Si $p>q$, la primera
 parte ya demostrada, aplicada ahora con los papeles de $p$ y $q$
 intercambiados, da $q^2<p^2$, que también contradice $p^2<q^2$. En ambos
 casos se llega a una contradicción, así que debe ser $p<q$.
+
 :::
 
 ::: {#prp-no-sup-en-q}
@@ -55,6 +57,7 @@ casos se llega a una contradicción, así que debe ser $p<q$.
 
 $S$ está acotado superiormente en $\mathbb{Q}$, pero ningún racional es su
 menor cota superior.
+
 :::
 
 ::: {.proof}
@@ -118,6 +121,7 @@ menor cota superior.
 
 Descartados los tres casos, ningún racional positivo puede ser el supremo de
 $S$ dentro de $\mathbb{Q}$.
+
 :::
 
 ::: {#exm-no-sup-numerico}
@@ -131,6 +135,7 @@ $b''=1.5-0.05=1.45$. Se verifica que $(1.45)^2=2.1025>2$, de modo que $b''$
 sigue siendo cota superior de $S$, y que $b''=1.45<1.5=b$: se ha encontrado
 una cota superior estrictamente menor que $b$, exactamente lo que la
 demostración predice, con un número concreto de principio a fin.
+
 :::
 
 El resultado anterior muestra que $\mathbb{Q}$ tiene, literalmente, huecos:

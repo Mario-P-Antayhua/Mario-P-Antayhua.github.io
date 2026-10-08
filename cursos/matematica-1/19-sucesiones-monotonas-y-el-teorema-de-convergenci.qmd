@@ -16,6 +16,7 @@ mueva siempre en la misma dirección.
 Una sucesión $(x_n)$ es ***creciente*** si $x_n\leq x_{n+1}$
 para todo $n$, y ***decreciente*** si $x_n\geq x_{n+1}$ para
 todo $n$. Es ***monótona*** si es creciente o decreciente.
+
 :::
 
 Una sucesión monótona pero no acotada, como $x_n=n$, diverge con toda
@@ -29,6 +30,7 @@ completitud entra en juego de manera decisiva.
 ## Teorema de convergencia monótona
 
 Toda sucesión monótona y acotada converge.
+
 :::
 
 ::: {.proof}
@@ -44,6 +46,7 @@ se tiene $x_n\geq x_N>x-\varepsilon$; y como $x$ es cota superior de $A$,
 $x_n\leq x$ para todo $n$, así que $x_n<x+\varepsilon$ trivialmente. Juntando
 ambas desigualdades, $x-\varepsilon<x_n\leq x<x+\varepsilon$, de donde
 $|x_n-x|<\varepsilon$ para todo $n\geq N$.
+
 :::
 
 Lo notable de esta demostración es que en ningún momento se calcula el
@@ -62,6 +65,7 @@ un régimen estacionario, ya que esa sucesión, bajo las condiciones de
 estabilidad de la matriz de transición, resulta monótona y acotada en el
 sentido de las matrices semidefinidas positivas, una generalización directa
 de esta misma idea.
+
 :::
 
 La utilidad del teorema de convergencia monótona está, sin embargo, acotada

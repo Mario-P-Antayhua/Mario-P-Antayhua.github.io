@@ -17,6 +17,7 @@ función $g:\mathbb{R}\to\mathbb{R}$, la esperanza de $g(X)$ se calcula
 de manera análoga, sin necesidad de hallar antes la distribución de
 $g(X)$: $\Esp{g(X)}=\sum_i g(x_i)p_X(x_i)$ o
 $\Esp{g(X)}=\int g(x)f_X(x)\,dx$, según el caso.
+
 :::
 
 La posibilidad de calcular $\Esp{g(X)}$ sin conocer explícitamente la
@@ -35,6 +36,7 @@ de las combinaciones lineales.
 Para variables aleatorias $X,Y$ con esperanza finita y
 $\alpha,\beta\in\mathbb{R}$, $\Esp{\alpha X+\beta Y}=\alpha\Esp{X}+
 \beta\Esp{Y}$.
+
 :::
 
 ::: {.proof}
@@ -55,6 +57,7 @@ integrando, exactamente $\Esp{X}$ y $\Esp{Y}$ por marginalización, lo
 que da la identidad enunciada. El caso discreto es idéntico,
 sustituyendo las integrales por sumas y usando la linealidad de series
 convergentes de la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd).
+
 :::
 
 La linealidad de la esperanza es, en la práctica, la propiedad más
@@ -79,6 +82,7 @@ $\Var(X):=\Esp{(X-\Esp{X})^2}$, y su raíz cuadrada, $\sqrt{\Var(X)}$, es
 la ***desviación estándar***. Desarrollando el cuadrado y
 aplicando la @prp-linealidad-esperanza,
 $\Var(X)=\Esp{X^2}-(\Esp{X})^2$.
+
 :::
 
 Los momentos de la variable más simple, la de Bernoulli, se calculan completos y sirven de verificación de la fórmula alternativa de la varianza.
@@ -98,6 +102,7 @@ el resultado, y alcanza su máximo en $\pi=1/2$, el caso de máxima
 incertidumbre entre dos resultados igualmente probables; este patrón,
 varianza nula en la certeza y máxima en la equiprobabilidad, reaparecerá
 sin cambios al estudiar el error estándar de una proporción muestral.
+
 :::
 
 Los momentos resumen aspectos parciales de una distribución, pero
@@ -113,6 +118,7 @@ Si $X\geq 0$ y $a>0$, $\Prob{X\geq a}\leq\Esp{X}/a$ (desigualdad de
 Markov). Si $X$ tiene varianza finita y $\varepsilon>0$,
 $\Prob{|X-\Esp{X}|\geq\varepsilon}\leq\Var(X)/\varepsilon^2$
 (desigualdad de Chebyshev).
+
 :::
 
 ::: {.proof}
@@ -132,6 +138,7 @@ $Y:=(X-\Esp{X})^2$ con $a=\varepsilon^2$: como
 $\{|X-\Esp{X}|\geq\varepsilon\}=\{Y\geq\varepsilon^2\}$, Markov da
 $\Prob{Y\geq\varepsilon^2}\leq\Esp{Y}/\varepsilon^2=
 \Var(X)/\varepsilon^2$, que es exactamente la desigualdad de Chebyshev.
+
 :::
 
 La desigualdad de Chebyshev tiene una lectura que se explotará
@@ -150,6 +157,7 @@ compacta de empaquetarlos a todos en un solo objeto.
 La ***función generadora de momentos*** (MGF) de $X$ es
 $M_X(t):=\Esp{e^{tX}}$, definida para los valores de $t\in\mathbb{R}$
 en los que esta esperanza existe y es finita en una vecindad de $t=0$.
+
 :::
 
 El nombre de la función anticipa su utilidad: como se detalla a
@@ -171,6 +179,7 @@ características y transformadas de Laplace, y que será la herramienta
 que permita, en la [Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd), verificar que una
 combinación lineal de variables normales es a su vez normal sin
 calcular explícitamente su densidad.
+
 :::
 
 Con el espacio de probabilidad, la variable aleatoria y sus momentos ya

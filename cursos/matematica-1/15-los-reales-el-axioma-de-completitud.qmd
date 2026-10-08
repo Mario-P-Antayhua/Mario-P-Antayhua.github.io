@@ -27,6 +27,7 @@ ese caso, $A$ se dice ***acotado superiormente***. Un número
 $s\in\mathbb{R}$ es el ***supremo*** de $A$, denotado
 $s=\sup A$, si $s$ es cota superior de $A$ y toda cota superior $b$ de $A$
 satisface $s\leq b$, es decir, si $s$ es la menor de las cotas superiores.
+
 :::
 
 La definición exige dos cosas de naturaleza distinta, y conviene separarlas
@@ -40,6 +41,7 @@ $\mathbb{R}$.
 ::: {#ax-completitud .callout-important appearance=“simple” title=“Axioma: Axioma de completitud”}
 Todo subconjunto no vacío de $\mathbb{R}$ acotado superiormente tiene
 supremo en $\mathbb{R}$.
+
 :::
 
 Conviene precisar qué cambia el axioma respecto de lo que ya había en $\mathbb{Q}$, porque no agrega ninguna operación nueva sino una propiedad de naturaleza distinta.
@@ -54,6 +56,7 @@ algebraica adicional, la que hará posible construir $\sqrt2$ como un número
 real más adelante en esta misma subsección, y la que sostendrá, mucho más
 adelante en el documento, la existencia de límites de sucesiones de Cauchy y
 la compacidad de los intervalos cerrados y acotados.
+
 :::
 
 Antes de aplicar el axioma a un caso concreto, conviene dar una
@@ -67,6 +70,7 @@ posteriores que la definición original.
 Sea $A\subseteq\mathbb{R}$ no vacío y acotado superiormente. Entonces
 $s=\sup A$ si y solo si $s$ es cota superior de $A$ y, para todo
 $\varepsilon>0$, existe $a\in A$ con $a>s-\varepsilon$.
+
 :::
 
 ::: {.proof}
@@ -93,6 +97,7 @@ Pero @eq-sup-epsilon-contradiccion dice que $a>b$ con $a\in A$, lo
 cual contradice que $b$ sea cota superior de $A$. La contradicción obliga a
 descartar la existencia de una cota superior menor que $s$, así que $s$ es,
 en efecto, la menor de todas.
+
 :::
 
 La utilidad de esta caracterización se apreciará mejor tras acumular, en lo
@@ -114,6 +119,7 @@ Sea $\{I_n\}_{n\in\mathbb{N}}$ una sucesión de intervalos cerrados
 $I_n=[a_n,b_n]\subseteq\mathbb{R}$ tal que
 $I_1\supseteq I_2\supseteq I_3\supseteq\cdots$. Entonces
 $\bigcap_{n\in\mathbb{N}} I_n\neq\varnothing$.
+
 :::
 
 ::: {.proof}
@@ -138,6 +144,7 @@ observó en el párrafo anterior que cada $b_n$ es cota superior de $A$; y
 como $x$ es, por definición de supremo, la menor de todas las cotas
 superiores, se sigue $x\leq b_n$. Así, $x\in I_n$ para todo $n$, y por lo
 tanto $x\in\bigcap_n I_n$, que queda establecido como no vacío.
+
 :::
 
 Una segunda consecuencia del axioma de completitud, de apariencia mucho más
@@ -154,6 +161,7 @@ extensiones no arquimedianas de $\mathbb{Q}$) donde la propiedad falla.
 (i) Para todo $x\in\mathbb{R}$ existe $n\in\mathbb{N}$ con $n>x$.
 (ii) Para todo $y\in\mathbb{R}$ con $y>0$ existe $n\in\mathbb{N}$ con
 $1/n<y$.
+
 :::
 
 ::: {.proof}
@@ -183,6 +191,7 @@ Para la parte (ii), dado $y>0$, se aplica la parte (i) ya demostrada al
 número real $x=1/y$: existe $n\in\mathbb{N}$ con $n>1/y$, y multiplicando
 esta desigualdad por $y/n>0$ (lícito porque $y>0$ y $n>0$) se obtiene
 $y>1/n$, que reordenado es exactamente $1/n<y$.
+
 :::
 
 Con la propiedad arquimediana disponible, puede probarse ahora que entre dos
@@ -196,6 +205,7 @@ racionales.
 
 Para cualesquiera $a,b\in\mathbb{R}$ con $a<b$, existe $r\in\mathbb{Q}$ con
 $a<r<b$.
+
 :::
 
 ::: {.proof}
@@ -224,6 +234,7 @@ $na<m<nb$, tal como se buscaba.
 Dividiendo la desigualdad $na<m<nb$ entre $n>0$, que preserva el sentido de
 las desigualdades, se obtiene $a<m/n<b$, con $m/n\in\mathbb{Q}$; el
 racional $r=m/n$ satisface lo requerido.
+
 :::
 
 ::: {#exm-reales-numerico-conjunto}
@@ -261,6 +272,7 @@ $n=1001$, se calcula $na\approx1416.03$ y $nb\approx1417.03$. El menor
 entero mayor que $1416.03$ es $m=1417$, y el racional resultante es
 $r=1417/1001\approx1.415584$, que en efecto satisface $a<r<b$: separa
 exitosamente a $a$ de $b$ pese a lo estrecho del intervalo entre ellos.
+
 :::
 
 Con los tres resultados anteriores disponibles, puede abordarse por fin el
@@ -275,6 +287,7 @@ axioma de completitud garantiza de antemano la existencia del supremo.
 
 El número $\alpha:=\sup\{r\in\mathbb{R}: r>0,\ r^2<2\}$ está bien definido y
 satisface $\alpha^2=2$.
+
 :::
 
 ::: {.proof}
@@ -317,6 +330,7 @@ superior.
 
 Ambas alternativas producen una contradicción, así que la tricotomía obliga
 a $\alpha^2=2$.
+
 :::
 
 El argumento de la demostración anterior no usó en ningún momento una
@@ -330,6 +344,7 @@ argumento.
 
 Para todo $c\in\mathbb{R}$ con $c\geq0$, existe un único $\beta\geq0$ tal
 que $\beta^2=c$.
+
 :::
 
 ::: {.proof}
@@ -345,6 +360,7 @@ argumento vale igual con reales en lugar de racionales: si $\beta_1\neq
 \beta_2$ fueran ambos no negativos con el mismo cuadrado $c$, la monotonía
 del cuadrado forzaría $\beta_1<\beta_2\Rightarrow\beta_1^2<\beta_2^2$ o al
 revés, contradiciendo $\beta_1^2=\beta_2^2$.
+
 :::
 
 ::: {#exm-raiz-2-aproximaciones}
@@ -360,4 +376,5 @@ luego $2-1.99996164=0.00003836$: se reduce en más de un orden de magnitud en
 cada término, ilustrando numéricamente cómo la sucesión se aproxima al
 supremo $\alpha=\sqrt2$, cuyo cuadrado exacto, según el teorema recién
 demostrado, es $2$.
+
 :::

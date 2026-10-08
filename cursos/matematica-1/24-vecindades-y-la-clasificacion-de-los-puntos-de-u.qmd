@@ -15,6 +15,7 @@ cierta distancia de un punto dado.
 
 La ***vecindad*** de radio $r>0$ alrededor de $p\in X$ es
 $N_r(p):=\{q\in X : d(p,q)<r\}$.
+
 :::
 
 A partir de la vecindad se puede clasificar, respecto de un conjunto
@@ -38,6 +39,7 @@ Sea $X$ un espacio métrico y $E\subseteq X$.
 
 (i) $E$ es ***acotado*** si existen $M>0$ y $q\in X$ con
             $d(p,q)\leq M$ para todo $p\in E$.
+
 :::
 
 La diferencia entre punto límite y punto aislado suele ser el aspecto más
@@ -74,6 +76,7 @@ $1/n$, tiene esta propiedad.
 
 Finalmente, $E\subseteq[0,1]$, así que $E$ es acotado, con $M=1$ y $q=0$
 en la @def-puntos-especiales(iv).
+
 :::
 
 Lo que el ejemplo deja ver, y que se usará sin volver a demostrarlo, es que
@@ -87,6 +90,7 @@ sigue.
 
 Sea $N=N_r(p)$ una vecindad. Todo punto $q\in N$ es un punto interior de
 $N$.
+
 :::
 
 ::: {.proof}
@@ -107,6 +111,7 @@ $$
 
 de modo que $s\in N_r(p)$. Como esto vale para cualquier $s\in N_h(q)$,
 queda $N_h(q)\subseteq N_r(p)=N$, y por lo tanto $q$ es interior a $N$.
+
 :::
 
 El margen $h=r-d(p,q)$ tiene una lectura directa: es exactamente lo que le

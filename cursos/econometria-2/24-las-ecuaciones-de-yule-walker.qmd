@@ -23,6 +23,7 @@ $\vect{\rho}=\mat{R}\vect{\phi}$, con
 $\vect{\rho}=(\autocorr{1},\ldots,\autocorr{p})^{\top}$,
 $\vect{\phi}=(\phi_1,\ldots,\phi_p)^{\top}$, y $\mat{R}$ la matriz
 $p\times p$ con entrada $(i,k)$ igual a $\autocorr{|i-k|}$.
+
 :::
 
 ::: {.proof}
@@ -51,6 +52,7 @@ $\autocorr{-k}=\autocorr{k}$ de la
 [Proposición “Propiedades de la función de autocovarianza”](10-estacionariedad.qmd#prp-propiedades-autocovarianza) de la [Sección “Procesos estocásticos y sus funciones de momentos”](09-procesos-estocasticos-y-sus-funciones-de-momento.qmd) para
 completar la matriz $\mat{R}$, el sistema de $p$ ecuaciones se reescribe
 exactamente como $\vect{\rho}=\mat{R}\vect{\phi}$.
+
 :::
 
 Las ecuaciones de Yule–Walker resuelven, en las dos direcciones, un

@@ -18,6 +18,7 @@ acaban de estudiarse.
 
 Dos conjuntos $A$ y $B$ son ***equipotentes***, lo que se escribe
 $A\sim B$, si existe una función biyectiva $f:A\to B$.
+
 :::
 
 La equipotencia es, ella misma, una relación de equivalencia en el sentido de
@@ -42,6 +43,7 @@ $A\sim\{1,2,\ldots,n\}$ para algún $n\in\mathbb{N}$; en caso contrario, es
 ***numerable*** si $A\sim\mathbb{N}$, y es
 ***no numerable*** si es infinito pero no numerable. Un conjunto
 es ***contable*** si es finito o numerable.
+
 :::
 
 El primer caso que conviene examinar es el de los enteros, y revela de
@@ -72,6 +74,7 @@ a primera vista, parecería mucho más grande.
 ## El producto de conjuntos numerables es numerable
 
 $\mathbb{N}\times\mathbb{N}$ es numerable.
+
 :::
 
 ::: {.proof}
@@ -104,6 +107,7 @@ segundo sumando ubica la posición de $(m,n)$ dentro de su propia diagonal.
 Esta función asigna a cada par de naturales un natural distinto, y todo
 natural se alcanza recorriendo las diagonales sucesivamente, de modo que $f$
 es una biyección.
+
 :::
 
 Los dos resultados anteriores podrían sugerir que todos los conjuntos
@@ -117,6 +121,7 @@ los resultados más célebres de toda la matemática.
 Para todo conjunto $A$, no existe ninguna función sobreyectiva de $A$ en
 $\mathcal{P}(A)$. En particular, $A$ y $\mathcal{P}(A)$ nunca son
 equipotentes.
+
 :::
 
 ::: {.proof}
@@ -155,6 +160,7 @@ En ambos casos se llega a una contradicción, así que la suposición de que
 existe una función sobreyectiva de $A$ en $\mathcal{P}(A)$ debe ser falsa. La
 afirmación sobre la equipotencia se sigue de inmediato, porque toda función
 biyectiva es, en particular, sobreyectiva.
+
 :::
 
 La consecuencia de este teorema es inmediata y transforma por completo la
@@ -171,6 +177,7 @@ infinito máximo. Este es, además, el mismo argumento de diagonalización que,
 aplicado a las expansiones decimales de los números reales, demostrará que
 $\mathbb{R}$ tampoco es numerable, una vez que $\mathbb{R}$ esté construido
 con propiedad en la sección siguiente.
+
 :::
 
 Para cerrar el panorama de la cardinalidad conviene mencionar, sin
@@ -186,4 +193,5 @@ de esta sección, porque exige construir la biyección final a partir de $f$ y
 $g$ mediante un argumento de seguimiento de órbitas que no aporta ninguna
 técnica de las que se usarán más adelante. Se enuncia aquí sin demostración,
 únicamente para que el panorama quede completo, y no volverá a emplearse.
+
 :::

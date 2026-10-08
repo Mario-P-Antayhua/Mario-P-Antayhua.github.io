@@ -16,6 +16,7 @@ original, descartando los demás.
 Dada una sucesión $(x_n)$ y una sucesión estrictamente creciente de índices
 naturales $n_1<n_2<n_3<\cdots$, la sucesión $(x_{n_k})_{k=1}^{\infty}$ se
 llama una ***subsucesión*** de $(x_n)$.
+
 :::
 
 Antes de usar las subsucesiones como herramienta para sucesiones que no
@@ -29,6 +30,7 @@ convergencia ya estudiada.
 
 Si $x_n\to x$, entonces toda subsucesión $(x_{n_k})$ también converge a
 $x$.
+
 :::
 
 ::: {.proof}
@@ -36,6 +38,7 @@ Dado $\varepsilon>0$, existe $N$ tal que $|x_n-x|<\varepsilon$ para todo
 $n\geq N$. Como $n_1<n_2<\cdots$ son naturales estrictamente crecientes, se
 tiene $n_k\geq k$ para todo $k$, así que para $k\geq N$, $n_k\geq k\geq N$,
 y por lo tanto $|x_{n_k}-x|<\varepsilon$.
+
 :::
 
 Esta proposición tiene una lectura recíproca de gran valor práctico, aunque
@@ -54,6 +57,7 @@ comportamiento.
 ## Teorema de Bolzano–Weierstrass
 
 Toda sucesión acotada de números reales tiene una subsucesión convergente.
+
 :::
 
 ::: {.proof}
@@ -76,6 +80,7 @@ pertenecen a $I_k$, cuya longitud es $2M/2^k$, se tiene
 $|x_{n_k}-x|\leq 2M/2^k\to 0$ por el
 [Ejemplo “Un límite verificado directamente”](17-sucesiones-y-su-limite.qmd#exm-limite-directo) extendido a potencias de dos, de modo que
 $x_{n_k}\to x$.
+
 :::
 
 La construcción por bisección merece un comentario adicional: en cada paso
@@ -95,6 +100,7 @@ de divergencia útil en la práctica.
 
 Si $(x_n)$ es acotada y no converge, entonces tiene al menos dos
 subsucesiones que convergen a límites distintos.
+
 :::
 
 ::: {.proof}
@@ -105,6 +111,7 @@ a $x$ mediante el mismo argumento de bisección aplicado a la cola de
 $(x_n)$ fuera de cualquier vecindad de $x$, lo cual contradice la hipótesis
 de no convergencia; por lo tanto debe existir una segunda subsucesión
 convergente a algún $y\neq x$.
+
 :::
 
 Este corolario es exactamente el que se usó de manera informal en la

@@ -40,6 +40,7 @@ $\Omega\in\mathcal{F}$; (ii) si $A\in\mathcal{F}$, entonces
 $A^c\in\mathcal{F}$; (iii) si $A_1,A_2,\ldots\in\mathcal{F}$, entonces
 $\bigcup_{i=1}^{\infty}A_i\in\mathcal{F}$. A los elementos de
 $\mathcal{F}$ se les llama ***eventos***.
+
 :::
 
 La tercera condición exige cerradura bajo uniones *numerables*, no
@@ -70,6 +71,7 @@ sentido de la @def-sigma-algebra, y $\Prob{\cdot}:\mathcal{F}\to
 para toda sucesión $A_1,A_2,\ldots\in\mathcal{F}$ disjunta dos a dos,
 $\Prob{\bigcup_{i=1}^{\infty}A_i}=\sum_{i=1}^{\infty}\Prob{A_i}$
 (aditividad numerable).
+
 :::
 
 Nótese que la definición no dice nada sobre cómo se construye
@@ -92,6 +94,7 @@ Para todo espacio de probabilidad $(\Omega,\mathcal{F},\Prob{\cdot})$ y
 todos $A,B\in\mathcal{F}$: (i) $\Prob{\varnothing}=0$; (ii)
 $\Prob{A^c}=1-\Prob{A}$; (iii) si $A\subseteq B$, $\Prob{A}\leq\Prob{B}$
 (monotonía); (iv) $\Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B}$.
+
 :::
 
 Estas cuatro propiedades son las que, en la práctica, se usan para
@@ -121,6 +124,7 @@ aditividad da $\Prob{A\cup B}=\Prob{A\setminus B}+\Prob{A\cap B}+
 $\Prob{A\setminus B}+\Prob{A\cap B}=\Prob{A}$ y
 $\Prob{B\setminus A}+\Prob{A\cap B}=\Prob{B}$, se obtiene
 $\Prob{A\cup B}=\Prob{A}+\Prob{B}-\Prob{A\cap B}$.
+
 :::
 
 La aditividad numerable del @def-espacio-probabilidad tiene una
@@ -136,6 +140,7 @@ exactamente la convergencia de sucesiones reales de la
 Sea $A_1\subseteq A_2\subseteq\cdots$ una sucesión creciente de eventos
 en $\mathcal{F}$, y sea $A:=\bigcup_{i=1}^{\infty}A_i$. Entonces
 $\Prob{A_i}\to\Prob{A}$.
+
 :::
 
 ::: {.proof}
@@ -161,6 +166,7 @@ consecuencia de la numerable con todos los conjuntos posteriores a $B_n$
 vacíos, da $\sum_{i=1}^{n}\Prob{B_i}=\Prob{\bigcup_{i=1}^{n}B_i}=
 \Prob{A_n}$, de modo que @eq-continuidad-probabilidad se reduce
 exactamente a $\Prob{A}=\lim_{n\to\infty}\Prob{A_n}$.
+
 :::
 
 Con el espacio de probabilidad y sus propiedades básicas ya

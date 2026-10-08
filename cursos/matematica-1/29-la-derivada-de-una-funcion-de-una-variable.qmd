@@ -18,6 +18,7 @@ $$
 
 existe, en cuyo caso $f'(p)$ se llama la ***derivada*** de
 $f$ en $p$.
+
 :::
 
 El cociente que define a $f'(p)$ mide la pendiente promedio de $f$ entre
@@ -36,6 +37,7 @@ $(f+g)'(p)=f'(p)+g'(p)$, $(fg)'(p)=f'(p)g(p)+f(p)g'(p)$, y, si
 $h:D'\to\mathbb{R}$ es derivable en $f(p)$ con $f(D)\subseteq D'$, la
 composición $h\circ f$ es derivable en $p$ con
 $(h\circ f)'(p)=h'(f(p))\,f'(p)$ (regla de la cadena).
+
 :::
 
 ::: {.proof}
@@ -74,6 +76,7 @@ $$
 $$
 
 Cuando $t\to 0$, $f(p+t)\to f(p)$ porque $f$ es continua en $p$, de modo que $\varphi(f(p+t))\to\varphi(f(p))=h'(f(p))$ por la continuidad de $\varphi$, mientras que el último cociente tiende a $f'(p)$. El producto de los límites es $h'(f(p))\,f'(p)$, lo que establece la regla de la cadena.
+
 :::
 
 Con las reglas de derivación disponibles, el resultado que conecta el
@@ -87,6 +90,7 @@ base de la condición necesaria de primer orden de la
 Si $f:[a,b]\to\mathbb{R}$ es continua en $[a,b]$ y derivable en
 $(a,b)$, existe $c\in(a,b)$ tal que
 $f'(c)=\dfrac{f(b)-f(a)}{b-a}$.
+
 :::
 
 ::: {.proof}
@@ -117,6 +121,7 @@ $g(a)=g(b)$. El caso de Rolle aplicado a $g$ da un punto $c\in(a,b)$ con
 $g'(c)=0$, es decir,
 $f'(c)-\dfrac{f(b)-f(a)}{b-a}=0$, que es exactamente la igualdad
 enunciada.
+
 :::
 
 El teorema del valor medio relaciona una propiedad global de $f$, la
@@ -134,6 +139,7 @@ margen para moverse.
 
 Si $f:[a,b]\to\mathbb{R}$ es continua en $[a,b]$, derivable en $(a,b)$ y
 $f'(x)=0$ para todo $x\in(a,b)$, entonces $f$ es constante en $[a,b]$.
+
 :::
 
 ::: {.proof}
@@ -142,6 +148,7 @@ Para cualesquiera $x,y\in[a,b]$ con $x<y$, el
 $c\in(x,y)$ con $f(y)-f(x)=f'(c)(y-x)=0$, de modo que $f(x)=f(y)$; como
 $x,y$ eran arbitrarios, $f$ toma el mismo valor en todo punto de
 $[a,b]$.
+
 :::
 
 Este corolario, aunque sencillo, es el que garantiza que una función

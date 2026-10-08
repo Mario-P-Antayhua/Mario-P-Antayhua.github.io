@@ -17,6 +17,7 @@ estructura algebraica razonable.
 
 En $\mathbb{Z}\times(\mathbb{Z}\setminus\{0\})$ se define $(a,b)\sim(c,d)$
 si y solo si $ad=bc$.
+
 :::
 
 Igual que antes, la condición reformula sin división la igualdad que se
@@ -35,6 +36,7 @@ $\mathbb{Z}$.
 Si $(a,b)\sim(a',b')$ y $(c,d)\sim(c',d')$ en
 $\mathbb{Z}\times(\mathbb{Z}\setminus\{0\})$, entonces
 $(ad+bc,\,bd)\sim(a'd'+b'c',\,b'd')$ y $(ac,\,bd)\sim(a'c',\,b'd')$.
+
 :::
 
 ::: {.proof}
@@ -84,6 +86,7 @@ $$ {#eq-buena-def-q-suma-final}
 
 que es precisamente $(ad+bc,\,bd)\sim(a'd'+b'c',\,b'd')$, la compatibilidad
 de la suma con el cambio de representante.
+
 :::
 
 Con la buena definición asegurada para ambas operaciones, ya puede darse la
@@ -103,6 +106,7 @@ $$
   \qquad
   \frac{a}{b}\cdot\frac{c}{d} := \frac{ac}{bd} .
 $$ {#eq-operaciones-racionales}
+
 :::
 
 El @lem-buena-def-q es lo que permite escribir estas fórmulas sin
@@ -117,6 +121,7 @@ racional no nulo admite un inverso multiplicativo.
 
 Todo $q=a/b\in\mathbb{Q}$ con $a\neq0$ tiene inverso multiplicativo, dado
 por $b/a$.
+
 :::
 
 ::: {.proof}
@@ -132,6 +137,7 @@ producto en $\mathbb{Z}$ es conmutativo; de modo que la clase del lado
 derecho de @eq-inverso-racional-producto es exactamente $1/1$, el
 neutro multiplicativo de $\mathbb{Q}$. Así, $(a/b)\cdot(b/a)=1$, con lo cual
 $b/a$ es, en efecto, el inverso multiplicativo de $a/b$.
+
 :::
 
 ::: {#exm-racionales-aritmetica}
@@ -168,6 +174,7 @@ $$
 
 y $35/35\sim1/1$, porque $35\times1=35=35\times1$: el producto es
 efectivamente el neutro multiplicativo.
+
 :::
 
 Con $\mathbb{Q}$ dotado de suma, producto, neutro aditivo, neutro

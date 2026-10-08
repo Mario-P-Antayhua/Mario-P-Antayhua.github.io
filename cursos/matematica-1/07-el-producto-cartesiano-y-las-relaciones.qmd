@@ -22,6 +22,7 @@ primitivo adicional.
 
 Dados dos objetos $a$ y $b$, el ***par ordenado*** $(a,b)$ se
 define como el conjunto $\bigl\{\{a\},\{a,b\}\bigr\}$.
+
 :::
 
 Esta definición tiene todo el aspecto de un artificio, y en cierto sentido lo
@@ -33,6 +34,7 @@ propiedad es la que justifica llamarlo así y no de otra manera.
 ## Caracterización de la igualdad de pares ordenados
 
 $(a,b)=(c,d)$ si y solo si $a=c$ y $b=d$.
+
 :::
 
 ::: {.proof}
@@ -64,6 +66,7 @@ con $\{a,b\}$ del lado izquierdo. Como ambos contienen a $a$ y tienen dos
 elementos, el segundo elemento debe coincidir, de donde $d=b$.
 
 En ambos casos se concluye $a=c$ y $b=d$, que es lo que se quería probar.
+
 :::
 
 Con el par ordenado disponible, la construcción que sigue produce el conjunto
@@ -79,6 +82,7 @@ componente en $A$ y segunda componente en $B$, esto es,
 $$
 A\times B := \bigl\{(a,b) : a\in A \wedge b\in B\bigr\}.
 $$ {#eq-producto-cartesiano}
+
 :::
 
 La construcción se extiende de manera natural a más de dos conjuntos,
@@ -98,6 +102,7 @@ Una ***relación binaria*** $R$ de $A$ en $B$ es un subconjunto
 $R\subseteq A\times B$. Si $(a,b)\in R$, se escribe $aRb$ y se dice que $a$
 está relacionado con $b$. Cuando $A=B$, se dice simplemente que $R$ es una
 relación en $A$.
+
 :::
 
 Definir una relación como un conjunto de pares puede parecer una manera

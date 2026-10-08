@@ -25,6 +25,7 @@ fila, produce el mismo valor si se expande a lo largo de cualquier otra
 fila o columna, hecho que aquí se acepta sin demostrar por tratarse de un
 resultado puramente combinatorio que no aporta intuición adicional para
 lo que sigue.
+
 :::
 
 De la definición recursiva se siguen varias propiedades que se usarán
@@ -39,6 +40,7 @@ $\det(\mat{A}\mat{B})=\det(\mat{A})\det(\mat{B})$; (ii)
 $\det(\mat{A}^{\top})=\det(\mat{A})$; (iii) si $\mat{A}$ es triangular
 (superior o inferior), $\det(\mat{A})$ es el producto de sus elementos
 diagonales.
+
 :::
 
 ::: {.proof}
@@ -54,6 +56,7 @@ Leibniz del determinante como suma sobre todas las permutaciones de
 $\{1,\ldots,n\}$; ese argumento es más largo que instructivo y se omite
 aquí, dado que ambas propiedades se usarán en lo que sigue únicamente
 como herramientas y no como objeto de estudio.
+
 :::
 
 El determinante adquiere su importancia práctica en el resultado
@@ -70,6 +73,7 @@ $\mat{A}\mat{B}=\mat{B}\mat{A}=\Imat$; (b) $\det(\mat{A})\neq 0$; (c)
 $\ker(\mat{A})=\{\vect{0}\}$; (d) $\rango(\mat{A})=n$; (e) las columnas de
 $\mat{A}$ son linealmente independientes en el sentido de la
 [Definición “Independencia lineal”](02-independencia-lineal-base-y-dimension.qmd#def-independencia-lineal).
+
 :::
 
 ::: {.proof}
@@ -104,6 +108,7 @@ establecida con (c) implica que $\ker(\mat{A})\neq\{\vect{0}\}$ y, por el
 argumento del párrafo anterior, que ninguna matriz $\mat{B}$ puede
 satisfacer (a). Con las cinco afirmaciones conectadas dos a dos, la
 cadena completa de equivalencias queda establecida.
+
 :::
 
 ::: {#def-inversa}
@@ -117,6 +122,7 @@ es ***invertible*** o ***no singular***. Cuando
 $\mat{A}$ y $\mat{B}$ son ambas invertibles y de tamaños compatibles,
 $(\mat{A}\mat{B})^{-1}=\mat{B}^{-1}\mat{A}^{-1}$, con el orden invertido
 por la misma razón que en la [Proposición “Propiedades de la transpuesta”](06-operaciones-matriciales-y-sus-propiedades-algebr.qmd#prp-propiedades-transpuesta).
+
 :::
 
 El caso de orden dos permite ver la inversa con todas sus entradas.
@@ -146,6 +152,7 @@ cofactores es posible pero computacionalmente costoso, y en la práctica
 econométrica casi nunca se calcula la inversa de forma explícita, sino
 que se resuelven directamente los sistemas lineales en los que
 $\mat{A}^{-1}$ aparecería multiplicando.
+
 :::
 
 Con el determinante y la inversa disponibles, ya se puede decidir si una

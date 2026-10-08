@@ -20,6 +20,7 @@ Un MA(q) con polinomio $\theta(\Lag)=1+\theta_1\Lag+\cdots+
 \theta_q\Lag^q$ es ***invertible*** si todas las raíces de
 $\theta(z)$ están fuera del círculo unitario, en el sentido de la
 [Idea central “Qué significa geométricamente una raíz dentro o fuera del círculo unitario”](18-raices-del-polinomio-caracteristico-y-el-circulo.qmd#idea-raices-circulo-unitario) de la [Sección “El operador de rezago”](16-el-operador-de-rezago.qmd).
+
 :::
 
 La invertibilidad no es un capricho técnico: sin ella el modelo no queda identificado por sus autocovarianzas.
@@ -30,6 +31,7 @@ La invertibilidad no es un capricho técnico: sin ella el modelo no queda identi
 Existen procesos MA(1) con parámetros distintos, $\theta$ y $1/\theta$,
 que generan exactamente la misma función de autocovarianza, y de los
 dos, solo el que satisface $|\theta|<1$ es invertible.
+
 :::
 
 ::: {.proof}
@@ -51,6 +53,7 @@ uno de los dos parámetros satisface $|\theta|<1$, la condición de la
 @def-invertibilidad para $q=1$, porque la única raíz de
 $\theta(z)=1+\theta z$ es $z=-1/\theta$, que queda fuera del círculo
 unitario exactamente cuando $|\theta|<1$.
+
 :::
 
 Esta ambigüedad es la razón práctica de exigir invertibilidad: sin ella,
@@ -71,6 +74,7 @@ representación $\pi(\Lag)Y_t=\rblanco_t$ con
 $\pi(\Lag)=\theta(\Lag)^{-1}=\sum_{j=0}^{\infty}\pi_j\Lag^j$,
 coeficientes absolutamente sumables, de modo que
 $\rblanco_t=\sum_{j=0}^{\infty}\pi_jY_{t-j}$ con $\pi_0=1$.
+
 :::
 
 ::: {.proof}
@@ -85,6 +89,7 @@ una serie de potencias de $\Lag$ con coeficientes absolutamente
 sumables. Aplicando $\theta(\Lag)^{-1}$ a ambos lados de
 $Y_t=\theta(\Lag)\rblanco_t$ se obtiene
 $\theta(\Lag)^{-1}Y_t=\rblanco_t$, que es la representación enunciada.
+
 :::
 
 Con este teorema y el [Corolario “Representación MA(∞) del AR(p) estacionario”](26-representacion-ma-y-forma-companera.qmd#cor-ma-infinito-arp) de la

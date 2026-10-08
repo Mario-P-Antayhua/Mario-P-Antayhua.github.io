@@ -14,6 +14,7 @@ $Y_t=\sum_{j=0}^{\infty}\psi_j\rblanco_{t-j}$, con coeficientes
 $\{\psi_j\}$ absolutamente sumables determinados por la factorización de
 $\phi(\Lag)^{-1}$ en fracciones parciales de la
 [Subsección “Factorización de polinomios de rezagos”](20-factorizacion-de-polinomios-de-rezagos.qmd) de la [Sección “El operador de rezago”](16-el-operador-de-rezago.qmd).
+
 :::
 
 ::: {.proof}
@@ -26,6 +27,7 @@ combinando las inversas geométricas de cada factor de primer orden de
 la factorización; aplicando ese operador a $\rblanco_t$ en la ecuación
 $\phi(\Lag)Y_t=\rblanco_t$ se obtiene directamente
 $Y_t=\phi(\Lag)^{-1}\rblanco_t=\sum_{j=0}^{\infty}\psi_j\rblanco_{t-j}$.
+
 :::
 
 Esta representación es la que permitirá, en la
@@ -57,6 +59,7 @@ $$
     0 & 0 & \cdots & 1 & 0
   \end{pmatrix}.
 $$
+
 :::
 
 La primera fila de $\vect{Y}_t=\mat{F}\vect{Y}_{t-1}+\vect{e}_1

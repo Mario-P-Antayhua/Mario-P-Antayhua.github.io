@@ -28,6 +28,7 @@ $$ {#eq-newton-raphson}
 
 siempre que $\mat{H}_f(\vect{\theta}_k)$ sea invertible en el sentido
 del [Teorema “Caracterización de la invertibilidad”](../matematica-2/08-el-determinante-y-la-invertibilidad.qmd#thm-caracterizacion-invertibilidad).
+
 :::
 
 La regla de actualización tiene una justificación geométrica que explica por qué el método funciona cerca de un óptimo.
@@ -39,6 +40,7 @@ El punto $\vect{\theta}_{k+1}$ definido en @eq-newton-raphson es
 el punto crítico de la aproximación de Taylor de segundo orden de $f$
 alrededor de $\vect{\theta}_k$, dada por la
 [Teorema “Fórmula de Taylor de segundo orden”](02-la-aproximacion-de-taylor-y-la-matriz-hessiana.qmd#thm-taylor-segundo-orden).
+
 :::
 
 ::: {.proof}
@@ -55,6 +57,7 @@ crítico, es decir,
 $\vect{h}^*=-[\mat{H}_f(\vect{\theta}_k)]^{-1}\nabla f(\vect{\theta}_k)$.
 El siguiente iterado, $\vect{\theta}_k+\vect{h}^*$, es exactamente
 $\vect{\theta}_{k+1}$ de @eq-newton-raphson.
+
 :::
 
 Esta proposición aclara el sentido geométrico del método: en cada paso,
@@ -84,6 +87,7 @@ $$
 
 construida enteramente a partir de los gradientes individuales, sin
 calcular ninguna segunda derivada.
+
 :::
 
 La aproximación BHHH se apoya en un resultado que la
@@ -116,4 +120,5 @@ explica el compromiso práctico entre los tres: mayor uso de curvatura
 acelera la convergencia cerca del óptimo pero exige más cálculo por
 iteración, mientras que el ascenso rápido es más barato por paso pero
 típicamente necesita muchos más pasos para converger.
+
 :::

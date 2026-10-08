@@ -54,6 +54,7 @@ descartan, una por una, cada una de esas posibilidades.
             $\vect{\theta}\in\Theta$, lo que garantiza, junto con (iv), que
             $n^{-1}\ell_n(\vect{\theta})$ converge uniformemente en
             $\vect{\theta}$ a su límite poblacional.
+
 :::
 
 Ninguna de estas cinco condiciones es una formalidad prescindible: la
@@ -76,6 +77,7 @@ Bajo los [Supuestos](#sup-regularidad-consistencia), con
 $\{X_i\}$ independientes e idénticamente distribuidas según
 $f(\cdot;\vect{\theta}_0)$, el EMV es consistente:
 $\hat{\vect{\theta}}_n\xrightarrow{p}\vect{\theta}_0$.
+
 :::
 
 ::: {.proof}
@@ -143,4 +145,5 @@ que invierte el [Teorema “Teorema de la aplicación continua”](../econometri
 a una vecindad de su máximo, traduce
 $Q(\hat{\vect{\theta}}_n)\xrightarrow{p}Q(\vect{\theta}_0)$ en
 $\hat{\vect{\theta}}_n\xrightarrow{p}\vect{\theta}_0$.
+
 :::

@@ -28,6 +28,7 @@ $g(\vect{x}^*)=\vect{0}$, satisface la
 linealmente independientes en el sentido de la
 [Definición “Independencia lineal”](../matematica-2/02-independencia-lineal-base-y-dimension.qmd#def-independencia-lineal), es decir, si $\rango(\mat{J}_g
 (\vect{x}^*))=m$.
+
 :::
 
 Con el problema y la calificación de restricciones ya definidos, el siguiente resultado da la condición necesaria que cumple todo óptimo local.
@@ -44,6 +45,7 @@ vector de ***multiplicadores de Lagrange***, tal que
 $$
 \nabla f(\vect{x}^*) = \mat{J}_g(\vect{x}^*)^{\top}\vect{\lambda}^*.
 $$ {#eq-lagrange-primer-orden}
+
 :::
 
 ::: {.proof}
@@ -78,6 +80,7 @@ $\mat{J}_g(\vect{x}^*)^{\top}$, de modo que
 $\nabla f(\vect{x}^*)=\mat{J}_g(\vect{x}^*)^{\top}\vect{\lambda}^*$ para
 algún $\vect{\lambda}^*\in\mathbb{R}^m$, que es
 @eq-lagrange-primer-orden.
+
 :::
 
 ::: {#idea-precio-sombra .callout-tip appearance=“simple” title=“Idea central: El multiplicador de Lagrange como precio sombra”}
@@ -89,6 +92,7 @@ economía como el precio sombra de la restricción, es la que le da
 sentido económico al problema del consumidor: el multiplicador asociado
 a la restricción presupuestaria es, hasta un cambio de escala, la
 utilidad marginal del ingreso.
+
 :::
 
 Las restricciones de igualdad de esta subsección tienen una limitación

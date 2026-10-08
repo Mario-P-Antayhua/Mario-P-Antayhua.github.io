@@ -36,6 +36,7 @@ Un ***conjunto*** es una colección de objetos, llamados sus
 ***elementos***. Si un objeto $x$ es elemento de un conjunto $A$,
 se escribe $x\in A$ y se lee “$x$ pertenece a $A$”; en caso contrario se
 escribe $x\notin A$.
+
 :::
 
 La pertenencia es la noción primitiva sobre la que se construye todo lo
@@ -60,6 +61,7 @@ $\forall x,\ (x\in A \leftrightarrow x\in B)$. Se dice que $A$ es
 ***subconjunto*** de $B$, lo que se escribe $A\subseteq B$, si
 todo elemento de $A$ es también elemento de $B$, esto es, si
 $\forall x,\ (x\in A \rightarrow x\in B)$.
+
 :::
 
 Obsérvese que ambas nociones se han escrito con el vocabulario de la sección
@@ -74,6 +76,7 @@ igualdades entre conjuntos.
 
 Dados dos conjuntos $A$ y $B$, se cumple $A=B$ si y solo si $A\subseteq B$ y
 $B\subseteq A$.
+
 :::
 
 ::: {.proof}
@@ -99,6 +102,7 @@ afirmaciones separadas $\forall x,\ (x\in A\rightarrow x\in B)$ y
 $\forall x,\ (x\in B\rightarrow x\in A)$, que son precisamente, por la
 @def-igualdad-conjuntos, las inclusiones $A\subseteq B$ y
 $B\subseteq A$.
+
 :::
 
 Esta proposición, de apariencia modesta, es en realidad el método de
@@ -112,6 +116,7 @@ las herramientas de la [Subsección “Métodos de demostración”](04-metodos-
 más lejos, al probar que dos subespacios vectoriales coinciden, o que el
 conjunto donde una función alcanza su máximo es igual a otro descrito de
 forma distinta.
+
 :::
 
 El segundo principio permite fabricar subconjuntos nuevos a partir de una
@@ -130,6 +135,7 @@ $$ {#eq-especificacion}
 
 es decir, el conjunto de todos los elementos de $A$ para los cuales $P(x)$ es
 verdadera.
+
 :::
 
 Un detalle de esta definición merece subrayarse, porque no es una precaución
@@ -150,6 +156,7 @@ más pequeño posible, que aparecerá constantemente.
 
 El ***conjunto vacío***, denotado $\varnothing$, es el conjunto
 que no tiene ningún elemento.
+
 :::
 
 La definición habla de “el” conjunto vacío, en singular, y esa elección del
@@ -160,6 +167,7 @@ haya varios conjuntos distintos, todos sin elementos.
 ## Unicidad del conjunto vacío
 
 Existe un único conjunto sin elementos.
+
 :::
 
 ::: {.proof}
@@ -180,6 +188,7 @@ nunca se cumple y el condicional nunca puede ser refutado.
 El mismo argumento, intercambiando los papeles de $E_1$ y $E_2$, prueba la
 inclusión recíproca $E_2\subseteq E_1$. Por la
 @prp-doble-inclusion, se concluye $E_1=E_2$.
+
 :::
 
 Con la especificación disponible pueden definirse ya las operaciones usuales
@@ -204,6 +213,7 @@ $$ {#eq-union}
 
 Se dice que $A$ y $B$ son ***disjuntos*** si
 $A\cap B=\varnothing$.
+
 :::
 
 La correspondencia salta a la vista: la unión se define con la disyunción, la
@@ -221,6 +231,7 @@ $$
   \qquad
   (A\cap B)^{c} = A^{c}\cup B^{c}.
 $$ {#eq-demorgan-conjuntos}
+
 :::
 
 ::: {.proof}
@@ -251,6 +262,7 @@ definición de intersección.
 Como la cadena muestra que $x\in(A\cup B)^c$ si y solo si
 $x\in A^c\cap B^c$, ambos conjuntos tienen exactamente los mismos elementos
 y, por la @def-igualdad-conjuntos, son iguales.
+
 :::
 
 Esta demostración ilustra un principio general que ahorrará trabajo repetidas
@@ -264,6 +276,7 @@ o puede demostrarse, con las herramientas de la [Proposición “Equivalencias l
 teoría de conjuntos elemental no introduce, en este sentido, ninguna
 dificultad genuinamente nueva respecto de la lógica proposicional: solo
 cambia el vocabulario en el que se enuncian los mismos hechos.
+
 :::
 
 Queda por introducir una construcción que produce, a partir de un conjunto,
@@ -276,6 +289,7 @@ de conjuntos medibles en probabilidad.
 Dado un conjunto $A$, el ***conjunto potencia*** de $A$, denotado
 $\mathcal{P}(A)$, es el conjunto de todos los subconjuntos de $A$, esto es,
 $\mathcal{P}(A) := \{S : S\subseteq A\}$.
+
 :::
 
 Conviene ver la definición en funcionamiento sobre un conjunto pequeño, donde
@@ -308,6 +322,7 @@ principio de inducción.
 
 Si $A$ es un conjunto finito con $n$ elementos, entonces $\mathcal{P}(A)$
 tiene $2^{n}$ elementos.
+
 :::
 
 ::: {.proof}
@@ -345,4 +360,5 @@ que es lo que la fórmula predice para un conjunto de $k+1$ elementos.
 
 Por el principio de inducción, $|\mathcal{P}(A)|=2^{n}$ para todo natural
 $n$.
+
 :::

@@ -14,6 +14,7 @@ sumas parciales*** es $s_N:=\sum_{n=1}^{N}a_n$. La ***serie***
 $\sum_{n=1}^{\infty}a_n$ ***converge*** a $S$ si $s_N\to S$
 según la [Definición “Límite de una sucesión”](17-sucesiones-y-su-limite.qmd#def-limite-sucesion), y en ese caso se escribe
 $\sum_{n=1}^{\infty}a_n=S$.
+
 :::
 
 Una serie no es, entonces, más que una sucesión particular, la de sus sumas
@@ -30,11 +31,13 @@ cómoda de aplicar en la práctica.
 La serie $\sum a_n$ converge si y solo si para todo $\varepsilon>0$ existe
 $N$ tal que, para todos $m>n\geq N$, se cumple
 $\bigl|\sum_{k=n+1}^{m}a_k\bigr|<\varepsilon$.
+
 :::
 
 ::: {.proof}
 Aplíquese el [Teorema “Criterio de Cauchy”](21-el-criterio-de-cauchy.qmd#thm-criterio-cauchy) a la sucesión de sumas parciales
 $(s_N)$, observando que $s_m-s_n=\sum_{k=n+1}^{m}a_k$.
+
 :::
 
 Esta reformulación tiene una consecuencia inmediata y útil como prueba de
@@ -53,6 +56,7 @@ una potencia se acerca a cero.
 
 Si $r\in\mathbb{R}$ con $|r|<1$, entonces $r^{N}\to 0$ cuando
 $N\to\infty$.
+
 :::
 
 ::: {.proof}
@@ -74,6 +78,7 @@ $$
 
 así que $|r^{N}-0|<\varepsilon$ para todo $N\geq N_0$, lo que establece
 $r^{N}\to 0$.
+
 :::
 
 Con este lema disponible, la demostración de la convergencia de la serie
@@ -91,6 +96,7 @@ $$
 $$ {#eq-serie-geometrica}
 
 Si $|r|\geq 1$, la serie diverge.
+
 :::
 
 ::: {.proof}
@@ -114,6 +120,7 @@ cota, y si $|r|=1$, o bien $r^n$ es constantemente $1$ sin que la suma se
 estabilice, o bien oscila sin límite. En cualquiera de los dos casos, la
 condición necesaria $a_n\to 0$ señalada tras la
 @prp-cauchy-series falla, así que la serie diverge.
+
 :::
 
 Conviene detenerse un momento en el alcance de este resultado antes de
@@ -126,6 +133,7 @@ documento. La condición de estabilidad de un proceso AR(1), $|\phi|<1$, es
 exactamente la condición que este teorema exige para que
 $\sum_{j=0}^{\infty}\phi^{2j}$ converja, y el valor límite,
 $1/(1-\phi^2)$, es precisamente la varianza no condicional del proceso.
+
 :::
 
 La serie geométrica converge de una manera particularmente fuerte, en el
@@ -144,6 +152,7 @@ Una serie $\sum a_n$ ***converge absolutamente*** si la serie de
 valores absolutos $\sum|a_n|$ converge. Si $\sum a_n$ converge pero
 $\sum|a_n|$ no, se dice que converge
 ***condicionalmente***.
+
 :::
 
 La terminología sugiere ya la relación entre ambas nociones, pero conviene
@@ -156,6 +165,7 @@ sentido de que la implica.
 ## La convergencia absoluta implica convergencia
 
 Si $\sum a_n$ converge absolutamente, entonces converge.
+
 :::
 
 ::: {.proof}
@@ -170,6 +180,7 @@ $$
 
 así que $\sum a_n$ satisface la misma condición de Cauchy, y por la
 @prp-cauchy-series converge.
+
 :::
 
 Este teorema tiene una consecuencia práctica de peso: para probar que una
@@ -184,6 +195,7 @@ que sigue es la herramienta estándar para resolverlo.
 
 Sean $(a_n)$ y $(b_n)$ con $0\leq a_n\leq b_n$ para todo $n$. Si
 $\sum b_n$ converge, entonces $\sum a_n$ converge.
+
 :::
 
 ::: {.proof}
@@ -192,6 +204,7 @@ están acotadas superiormente por las sumas parciales de $\sum b_n$, que a
 su vez están acotadas porque $\sum b_n$ converge; por el
 [Teorema “Teorema de convergencia monótona”](19-sucesiones-monotonas-y-el-teorema-de-convergenci.qmd#thm-convergencia-monotona), la sucesión de sumas parciales de
 $\sum a_n$ converge.
+
 :::
 
 El criterio de comparación traslada así el problema de decidir la
@@ -209,6 +222,7 @@ $\sum_k\psi_k^2$ converge por comparación con
 $\sum_k r^{2k}$, y la representación de Wold queda garantizada como una
 suma bien definida en el sentido de la
 [Definición “Límite de una sucesión”](17-sucesiones-y-su-limite.qmd#def-limite-sucesion), no como una expresión formal sin respaldo.
+
 :::
 
 El criterio de comparación cierra el círculo de esta sección: nótese que su

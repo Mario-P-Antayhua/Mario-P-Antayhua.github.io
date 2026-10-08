@@ -13,6 +13,7 @@ Sea $\{X_i\}$ una sucesión de variables aleatorias independientes e
 idénticamente distribuidas con $\Esp{X_i}=\mu$ y $\Var(X_i)=\sigma^2<
 \infty$, y sea $\bar{X}_n:=\frac{1}{n}\sum_{i=1}^{n}X_i$. Entonces
 $\bar{X}_n\xrightarrow{p}\mu$.
+
 :::
 
 ::: {.proof}
@@ -38,6 +39,7 @@ donde el límite se sigue de que $\sigma^2/\varepsilon^2$ es una
 constante fija y $1/n\to 0$ por la [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd). Esto es
 exactamente la [Definición “Convergencia en probabilidad”](05-modos-de-convergencia.qmd#def-convergencia-probabilidad) aplicada a
 $\bar{X}_n\xrightarrow{p}\mu$.
+
 :::
 
 La ley de los grandes números dice que $\bar{X}_n$ se acerca a $\mu$,
@@ -58,6 +60,7 @@ Bajo las hipótesis del @thm-llgn,
 $$
 \sqrt{n}\,(\bar{X}_n-\mu) \xrightarrow{d} N(0,\sigma^2).
 $$
+
 :::
 
 ::: {.proof}
@@ -74,6 +77,7 @@ alcance del curso y no vuelve a necesitarse en ningún resultado
 posterior, de modo que el teorema se acepta aquí sin reproducir su
 demostración completa, dejando establecido únicamente el enunciado, que
 sí se usará repetidamente a partir de la [Sección “Consistencia del estimador máximo verosímil”](../econometria-2/04-consistencia-del-estimador-maximo-verosimil.qmd).
+
 :::
 
 ::: {#idea-llgn-tcl-estimacion .callout-tip appearance=“simple” title=“Idea central: Consistencia y normalidad como plantilla para la estimación”}
@@ -88,4 +92,5 @@ demostraciones futuras será idéntica a la de esta subsección: primero
 verificar que un promedio converge en probabilidad a una constante, y
 después reescalar por $\sqrt{n}$ para obtener una distribución normal
 límite no degenerada.
+
 :::

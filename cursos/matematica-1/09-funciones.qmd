@@ -19,6 +19,7 @@ $b\in B$ con $(a,b)\in f$. A ese único $b$ se le denota $f(a)$. El conjunto
 $A$ se llama ***dominio*** de $f$, $B$ se llama
 ***codominio***, y el conjunto $f(A):=\{f(a) : a\in A\}\subseteq
 B$ se llama ***imagen*** o ***rango*** de $f$.
+
 :::
 
 Las dos exigencias hacen trabajos distintos y conviene separarlas. La de
@@ -44,6 +45,7 @@ Sea $f:A\to B$. Se dice que $f$ es:
         f(a)=b$, es decir, si $f(A)=B$;
 
 (i) ***biyectiva*** si es inyectiva y sobreyectiva a la vez.
+
 :::
 
 Nótese que la inyectividad se ha enunciado en su forma contrarrecíproca, que
@@ -60,6 +62,7 @@ $g\circ f: A\to C$ se define por $(g\circ f)(a):=g(f(a))$. Si existe una
 función $f^{-1}:B\to A$ tal que $f^{-1}\circ f$ es la función identidad en
 $A$ y $f\circ f^{-1}$ es la función identidad en $B$, se dice que $f$ es
 ***invertible*** y que $f^{-1}$ es su ***inversa***.
+
 :::
 
 El resultado que sigue conecta las dos definiciones anteriores y explica por
@@ -69,6 +72,7 @@ qué la biyectividad es la propiedad relevante.
 ## Caracterización de la invertibilidad
 
 Una función $f:A\to B$ es invertible si y solo si es biyectiva.
+
 :::
 
 ::: {.proof}
@@ -111,4 +115,5 @@ $g(f(a))=a$ para todo $a\in A$, puesto que $a$ es precisamente el único
 elemento que $f$ envía a $f(a)$; y $f(g(b))=b$ para todo $b\in B$, por la
 propia definición de $g(b)$. Ambas composiciones son la identidad, así que
 $f$ es invertible.
+
 :::

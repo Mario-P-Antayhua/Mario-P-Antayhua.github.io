@@ -13,6 +13,7 @@ Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad y
 $A,B\in\mathcal{F}$ con $\Prob{B}>0$. La ***probabilidad
 condicional*** de $A$ dado $B$ es
 $\Prob{A\mid B}:=\dfrac{\Prob{A\cap B}}{\Prob{B}}$.
+
 :::
 
 Fijado $B$ con $\Prob{B}>0$, la función $A\mapsto\Prob{A\mid B}$
@@ -36,6 +37,7 @@ Sean $A,B\in\mathcal{F}$ con $\Prob{A}>0$ y $\Prob{B}>0$. Entonces
 $$
 \Prob{A\mid B} = \frac{\Prob{B\mid A}\,\Prob{A}}{\Prob{B}}.
 $$ {#eq-bayes}
+
 :::
 
 ::: {.proof}
@@ -46,6 +48,7 @@ $\Prob{A\cap B}=\Prob{B\mid A}\Prob{A}$, porque $A\cap B=B\cap A$.
 Igualando ambas expresiones para $\Prob{A\cap B}$ y despejando
 $\Prob{A\mid B}$, que es válido porque $\Prob{B}>0$, se obtiene
 exactamente @eq-bayes.
+
 :::
 
 ::: {#exm-bayes-diagnostico}
@@ -76,6 +79,7 @@ como la falacia de la tasa base cuando se ignora, es la razón por la
 que interpretar $\Prob{B\mid A}$ como si fuera $\Prob{A\mid B}$, un
 error frecuente fuera del ámbito técnico, puede llevar a conclusiones
 completamente equivocadas.
+
 :::
 
 La probabilidad condicional describe cómo cambia la probabilidad de un
@@ -91,6 +95,7 @@ $\Prob{A\cap B}=\Prob{A}\Prob{B}$. Cuando $\Prob{B}>0$, esta condición
 equivale, por la @def-probabilidad-condicional, a
 $\Prob{A\mid B}=\Prob{A}$: conocer que ocurrió $B$ no altera la
 probabilidad de $A$.
+
 :::
 
 La independencia de eventos es la versión más sencilla de una idea que se generaliza a variables aleatorias, y conviene distinguirla desde ahora de la ausencia de correlación.
@@ -108,6 +113,7 @@ correlación nunca se usa como sinónimo de independencia salvo bajo el
 supuesto adicional de normalidad conjunta, caso en el que ambas
 nociones sí coinciden, como mostrará la
 [Sección “Vector de medias y matriz de covarianzas”](09-vector-de-medias-y-matriz-de-covarianzas.qmd).
+
 :::
 
 Los eventos y la probabilidad condicional bastan para describir

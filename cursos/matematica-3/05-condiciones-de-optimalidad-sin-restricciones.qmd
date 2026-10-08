@@ -18,6 +18,7 @@ ninguna dirección de mejora disponible.
 Sea $D\subseteq\mathbb{R}^n$ abierto, $f:D\to\mathbb{R}$ diferenciable
 en $\vect{x}^*\in D$. Si $\vect{x}^*$ es un óptimo local de $f$ en $D$,
 entonces $\nabla f(\vect{x}^*)=\vect{0}$.
+
 :::
 
 ::: {.proof}
@@ -37,6 +38,7 @@ que $\phi'(0)=0$, es decir, $\langle\nabla f(\vect{x}^*),\vect{u}\rangle
 particular $\vect{u}=\vect{e}_i$ para cada $i=1,\ldots,n$ se obtiene que
 la $i$-ésima coordenada de $\nabla f(\vect{x}^*)$ es cero, y como esto
 vale para todo $i$, $\nabla f(\vect{x}^*)=\vect{0}$.
+
 :::
 
 La condición $\nabla f(\vect{x}^*)=\vect{0}$ identifica candidatos a
@@ -65,6 +67,7 @@ para todos $\vect{x},\vect{y}\in D$ y $\lambda\in[0,1]$, y es
 ***cuasiconvexa*** si, para todo $c\in\mathbb{R}$, el
 conjunto de subnivel $\{\vect{x}\in D:f(\vect{x})\leq c\}$ es convexo.
 Toda función convexa es cuasiconvexa, aunque el recíproco no vale.
+
 :::
 
 Comprobar la convexidad con la definición exige comparar valores de la función en pares de puntos; para funciones dos veces diferenciables existe un criterio local.
@@ -76,6 +79,7 @@ Sea $D\subseteq\mathbb{R}^n$ abierto y convexo, y $f:D\to\mathbb{R}$ dos
 veces diferenciable con continuidad. Entonces $f$ es convexa en $D$ si y
 solo si $\mat{H}_f(\vect{x})$ es semidefinida positiva, en el sentido de
 la [Definición “Forma cuadrática y matriz definida positiva”](../matematica-2/10-formas-cuadraticas-y-matrices-definidas-positiva.qmd#def-forma-cuadratica), para todo $\vect{x}\in D$.
+
 :::
 
 ::: {.proof}
@@ -121,6 +125,7 @@ $$
 $$
 
 es decir, $\bigl(g'(t)-g'(0)\bigr)\,t\geq 0$ para todo $t\neq 0$ del intervalo. Dividiendo por $t^2>0$ resulta $\bigl(g'(t)-g'(0)\bigr)/t\geq 0$, y al tomar $t\to 0$ se obtiene $g''(0)\geq 0$, que es $\vect{h}^{\top}\mat{H}_f(\vect{x})\vect{h}\geq 0$. Como $\vect{x}$ y $\vect{h}$ eran arbitrarios, la hessiana es semidefinida positiva en todo $D$.
+
 :::
 
 ::: {#thm-condiciones-segundo-orden}
@@ -131,6 +136,7 @@ diferenciable con continuidad, y $\vect{x}^*\in D$ un punto crítico,
 $\nabla f(\vect{x}^*)=\vect{0}$. Si $\mat{H}_f(\vect{x}^*)$ es definida
 positiva, $\vect{x}^*$ es un mínimo local estricto de $f$. Si además $f$
 es convexa en $D$, todo punto crítico es un mínimo global.
+
 :::
 
 ::: {.proof}
@@ -166,6 +172,7 @@ $f(\vect{y})\geq f(\vect{x}^*)+\langle\nabla f(\vect{x}^*),\vect{y}-
 \vect{x}^*\rangle=f(\vect{x}^*)$, usando de nuevo que
 $\nabla f(\vect{x}^*)=\vect{0}$, de modo que $\vect{x}^*$ minimiza $f$
 en todo $D$, no solo localmente.
+
 :::
 
 ::: {#cor-primer-orden-suficiente-convexa}
@@ -174,6 +181,7 @@ en todo $D$, no solo localmente.
 Si $f:D\to\mathbb{R}$ es convexa y diferenciable en el abierto convexo
 $D$, entonces $\vect{x}^*\in D$ es un mínimo global de $f$ si y solo si
 $\nabla f(\vect{x}^*)=\vect{0}$.
+
 :::
 
 ::: {.proof}
@@ -183,6 +191,7 @@ exactamente el argumento usado en la segunda parte de la demostración
 del @thm-condiciones-segundo-orden, que no requirió la hipótesis
 de definición positiva estricta, sino únicamente convexidad y
 $\nabla f(\vect{x}^*)=\vect{0}$.
+
 :::
 
 Este corolario es el que justificará, en la [sección sobre la estimación por máxima verosimilitud de modelos ARMA](../econometria-2/index.qmd), que

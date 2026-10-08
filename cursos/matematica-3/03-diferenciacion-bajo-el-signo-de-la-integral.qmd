@@ -27,6 +27,7 @@ $$
 \frac{d}{d\theta}\int_a^b f(x,\theta)\,dx
   = \int_a^b \frac{\partial f}{\partial\theta}(x,\theta)\,dx.
 $$ {#eq-leibniz}
+
 :::
 
 ::: {.proof}
@@ -57,6 +58,7 @@ pareja, de modo que
 $\lim_{h\to 0}\int_a^b\partial f/\partial\theta(x,\xi(x))\,dx=
 \int_a^b\partial f/\partial\theta(x,\theta)\,dx$, que es
 @eq-leibniz.
+
 :::
 
 ::: {#idea-anticipacion-leibniz-fisher .callout-tip appearance=“simple” title=“Idea central: Anticipación: la regla de Leibniz y el score de la verosimilitud”}
@@ -74,4 +76,5 @@ la esperanza del score. Ninguna parte de ese argumento futuro necesitará
 volver a justificar el intercambio de la derivada y la integral: bastará
 con citar las condiciones de regularidad del
 @thm-leibniz.
+
 :::

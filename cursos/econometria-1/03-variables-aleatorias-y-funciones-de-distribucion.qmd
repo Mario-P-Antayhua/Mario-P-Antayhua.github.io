@@ -28,6 +28,7 @@ Sea $(\Omega,\mathcal{F},\Prob{\cdot})$ un espacio de probabilidad. Una
 \mathbb{R}$ tal que, para todo $x\in\mathbb{R}$, el conjunto
 $\{\omega\in\Omega:X(\omega)\leq x\}$ pertenece a $\mathcal{F}$; a esta
 condición se le llama ***medibilidad***.
+
 :::
 
 La condición de medibilidad es, precisamente, la que garantiza que
@@ -53,6 +54,7 @@ de $X$ en una sola función.
 La ***función de distribución acumulada*** (FDA) de una
 variable aleatoria $X$ es $F_X(x):=\Prob{X\leq x}$ para $x\in
 \mathbb{R}$.
+
 :::
 
 La FDA describe por completo el comportamiento probabilístico de $X$,
@@ -71,6 +73,7 @@ de una vez por todas.
 La FDA de cualquier variable aleatoria $X$ satisface: (i) $F_X$ es no
 decreciente; (ii) $\lim_{x\to-\infty}F_X(x)=0$ y
 $\lim_{x\to\infty}F_X(x)=1$; (iii) $F_X$ es continua por la derecha.
+
 :::
 
 ::: {.proof}
@@ -89,6 +92,7 @@ $\{X\leq x+1/n\}$, cuya intersección es $\{X\leq x\}$; el argumento del
 teorema se adapta directamente al caso decreciente pasando al
 complemento, y da $F_X(x+1/n)\to F_X(x)$, que es exactamente la
 continuidad por la derecha en $x$.
+
 :::
 
 Estas tres propiedades caracterizan por completo qué funciones pueden
@@ -112,6 +116,7 @@ probabilidad*** $p_X(x_i):=\Prob{X=x_i}$. Es
 ***función de densidad*** $f_X\geq 0$ tal que
 $F_X(x)=\int_{-\infty}^{x}f_X(t)\,dt$ para todo $x$, integral en el
 sentido de Riemann de la [Definición “Sumas de Riemann e integral”](../matematica-2/11-la-integral-de-riemann-y-el-teorema-fundamental.qmd#def-particion-integral-riemann).
+
 :::
 
 Con la distribución de una variable aleatoria completamente

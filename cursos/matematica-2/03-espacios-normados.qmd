@@ -26,6 +26,7 @@ $\vect{u},\vect{v}\in V$ y todo $\alpha\in\mathbb{R}$:
             triangular).
 
 Al par $(V,\|\cdot\|)$ se le llama ***espacio normado***.
+
 :::
 
 Distintas normas sobre el mismo espacio capturan nociones de tamaño
@@ -52,6 +53,7 @@ círculo, y la de $\|\cdot\|_\infty$ es un cuadrado, como muestra la
 @fig-bolas-unitarias. La norma euclidiana es la única de las tres
 que proviene de un producto interno, en el sentido que precisa la
 [Subsección “Espacios con producto interno”](04-espacios-con-producto-interno.qmd).
+
 :::
 
 ![Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro.](../../assets/img/fig/matematica-2-03-espacios-normados-1.svg){#fig-bolas-unitarias fig-alt=“Bolas unitarias en $\mathbb{R}^2$ para las normas $1$, $2$ e $\infty$. Los tres conjuntos contienen al origen y son simétricos, pero ninguno es una versión reescalada de otro.”}
@@ -67,6 +69,7 @@ cero.
 Si $\|\cdot\|$ es una norma en $V$, la función
 $d(\vect{u},\vect{v}):=\|\vect{u}-\vect{v}\|$ es una métrica en $V$ en el
 sentido de la [Definición “Espacio métrico”](../matematica-1/23-espacios-metricos.qmd#def-espacio-metrico).
+
 :::
 
 ::: {.proof}
@@ -88,6 +91,7 @@ d(\vect{u},\vect{v}) = \|\vect{u}-\vect{v}\|
 $$
 
 que es exactamente la tercera condición de la [Definición “Espacio métrico”](../matematica-1/23-espacios-metricos.qmd#def-espacio-metrico).
+
 :::
 
 Esta proposición es la que permite, a partir de aquí, aplicar sin

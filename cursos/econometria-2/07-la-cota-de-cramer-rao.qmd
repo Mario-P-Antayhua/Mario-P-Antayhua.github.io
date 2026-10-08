@@ -25,6 +25,7 @@ $$
 \vect{a}^{\top}\Var(\tilde{\vect{\theta}}_n)\vect{a}
   \geq \frac{1}{n}\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}.
 $$
+
 :::
 
 ::: {.proof}
@@ -74,6 +75,7 @@ n\,\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}$, y dividiendo
 ambos lados entre $\vect{a}^{\top}\mathcal{I}(\vect{\theta})^{-1}\vect{a}
 >0$, que es positivo por ser $\mathcal{I}(\vect{\theta})^{-1}$ definida
 positiva, se obtiene exactamente la cota enunciada.
+
 :::
 
 ::: {#cor-eficiencia-asintotica}
@@ -83,6 +85,7 @@ El EMV alcanza asintóticamente la cota de Cramér–Rao: su varianza
 asintótica, $n^{-1}\mathcal{I}(\vect{\theta}_0)^{-1}$ por el
 [Teorema “Normalidad asintótica del estimador máximo verosímil”](05-normalidad-asintotica.qmd#thm-normalidad-asintotica), coincide exactamente con la cota del
 @thm-cramer-rao evaluada en $n$ observaciones.
+
 :::
 
 ::: {.proof}
@@ -94,4 +97,5 @@ $n^{-1}\mathcal{I}(\vect{\theta})^{-1}$ del
 punto: ningún estimador insesgado, ni siquiera en el límite asintótico,
 puede tener menor varianza que el EMV, lo que en la práctica se resume
 diciendo que el EMV es asintóticamente eficiente.
+
 :::

@@ -15,6 +15,7 @@ coeficientes $\phi_1,\ldots,\phi_p\in\mathbb{R}$. Aplicado a un proceso,
 $\phi(\Lag)Y_t=Y_t-\phi_1Y_{t-1}-\cdots-\phi_pY_{t-p}$, por la
 linealidad de $\Lag$ de la [Proposición “Propiedades algebraicas del operador de rezago”](16-el-operador-de-rezago.qmd#prp-propiedades-lag) extendida a
 combinaciones lineales finitas de potencias de $\Lag$.
+
 :::
 
 La notación $\phi(\Lag)$ recuerda, deliberadamente, a la de un
@@ -34,6 +35,7 @@ para todo proceso $\{Y_t\}$, y el producto
 $\phi(\Lag)\theta(\Lag)$ es un polinomio de rezagos de orden $p+q$ cuyos
 coeficientes se obtienen multiplicando los polinomios ordinarios
 $\phi(z)$ y $\theta(z)$ término a término.
+
 :::
 
 ::: {.proof}
@@ -53,6 +55,7 @@ algebraico que multiplicar los polinomios ordinarios
 $\phi(z)\theta(z)$ y agrupar potencias iguales de $z$, de modo que los
 coeficientes resultantes coinciden con los que produciría esa
 multiplicación ordinaria.
+
 :::
 
 Esta proposición es la que permite, en la práctica, tratar una

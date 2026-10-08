@@ -38,6 +38,7 @@ $\omega\in\Omega$ fijo, la función $t\mapsto Y_t(\omega)$ es una
 ***trayectoria*** o ***realización*** del
 proceso; para cada instante $t$ fijo, $Y_t$ es una variable aleatoria
 ordinaria en el sentido de la [Definición “Variable aleatoria”](../econometria-1/03-variables-aleatorias-y-funciones-de-distribucion.qmd#def-variable-aleatoria).
+
 :::
 
 Esta doble lectura, un proceso estocástico como una familia de
@@ -67,6 +68,7 @@ $$
 
 definida para cada par $(t,s)\in T\times T$; en particular,
 $\gamma(t,t)=\Var(Y_t)$.
+
 :::
 
 Estas dos funciones, $\mu_t$ y $\gamma(t,s)$, generalizan

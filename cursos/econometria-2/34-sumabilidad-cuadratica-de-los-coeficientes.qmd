@@ -12,6 +12,7 @@ categories: [Econometría II, La representación de Wold]
 Para el proceso de la [Teorema “Descomposición de Wold”](32-el-teorema-de-descomposicion-de-wold.qmd#thm-wold), $\Var(Y_t)=\sigma^2
 \sum_{k=0}^{\infty}\psi_k^2$, finita precisamente por la condición de
 sumabilidad cuadrática del teorema.
+
 :::
 
 ::: {.proof}
@@ -23,6 +24,7 @@ $\Var(Y_t)=\sum_{k=0}^{\infty}\psi_k^2\Var(\rblanco_{t-k})=
 cuando $\sum_k\psi_k^2<\infty$, la condición de convergencia de una
 serie de términos no negativos ya estudiada en la
 [Sección “Sucesiones y su límite”](../matematica-1/17-sucesiones-y-su-limite.qmd).
+
 :::
 
 La condición $\sum_k\psi_k^2<\infty$, más débil que la sumabilidad

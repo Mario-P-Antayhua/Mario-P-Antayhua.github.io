@@ -67,4 +67,5 @@ contradice ninguna propiedad del EMV demostrada hasta aquí, porque
 maximizar la verosimilitud no promete insesgadez en muestras finitas,
 solo optimalidad asintótica, que es precisamente el tema de la
 [Sección “Consistencia del estimador máximo verosímil”](04-consistencia-del-estimador-maximo-verosimil.qmd).
+
 :::

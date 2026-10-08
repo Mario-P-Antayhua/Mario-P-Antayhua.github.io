@@ -30,6 +30,7 @@ $\Esp[X=x]{Y}:=\int y\,f_{Y\mid X}(y\mid x)\,dy$. La función
 $x\mapsto\Esp[X=x]{Y}$, evaluada en la variable aleatoria $X$, define la
 variable aleatoria $\Esp[X]{Y}$, que es, en sí misma, una función de
 $X$.
+
 :::
 
 Antes de llegar a su caracterización geométrica, conviene reunir las
@@ -46,6 +47,7 @@ medible $h$: (i) $\Esp{\Esp[X]{Y}}=\Esp{Y}$ (ley de esperanzas
 iteradas); (ii) $\Esp[X]{h(X)Y}=h(X)\Esp[X]{Y}$ (sacar lo conocido fuera
 de la esperanza); (iii) si $X$ y $Y$ son independientes,
 $\Esp[X]{Y}=\Esp{Y}$.
+
 :::
 
 ::: {.proof}
@@ -72,6 +74,7 @@ $f_{X,Y}(x,y)=f_X(x)f_Y(y)$ por definición, de modo que
 $f_{Y\mid X}(y\mid x)=f_Y(y)$ no depende de $x$, y la
 @def-esperanza-condicional-variable se reduce a
 $\Esp[X=x]{Y}=\int y f_Y(y)\,dy=\Esp{Y}$ para todo $x$.
+
 :::
 
 Estas tres propiedades bastan para calcular con la esperanza condicional
@@ -92,6 +95,7 @@ $S\subseteq V$ el subespacio de las funciones medibles de $X$ con
 varianza finita. Entonces $\Esp[X]{Y}$ es el elemento de $S$ que
 minimiza $\Esp{(Y-g(X))^2}$ sobre todas las funciones $g$, y satisface
 $\Esp{(Y-\Esp[X]{Y})h(X)}=0$ para toda función medible acotada $h$.
+
 :::
 
 ::: {.proof}
@@ -135,6 +139,7 @@ arbitrario de $S$, esto establece
 $\langle Y-\Esp[X]{Y},h(X)\rangle=0$ para todo $h(X)\in S$, que es
 exactamente la propiedad de ortogonalidad requerida por la
 [Proposición “Existencia y unicidad de la proyección ortogonal”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#prp-proyeccion-existencia).
+
 :::
 
 ::: {#cor-principio-ortogonalidad-esperanza}
@@ -142,6 +147,7 @@ exactamente la propiedad de ortogonalidad requerida por la
 
 La esperanza condicional $\Esp[X]{Y}$ es el único elemento de $S$ que
 satisface $\Esp{(Y-g(X))h(X)}=0$ para toda función medible acotada $h$.
+
 :::
 
 ::: {.proof}
@@ -151,6 +157,7 @@ y al subespacio $S$ de esta subsección, usando la caracterización de
 ortogonalidad ya demostrada en el
 @thm-esperanza-condicional-proyeccion para identificar
 $\Esp[X]{Y}$ como el punto de $S$ cuyo residuo es ortogonal a todo $S$.
+
 :::
 
 Este corolario es, literalmente, el principio de ortogonalidad que la

@@ -25,6 +25,7 @@ error ortogonal a $Y_{t-1},\ldots,Y_{t-k}$ en el sentido del
 [Corolario “Principio de ortogonalidad”](../matematica-2/05-ortogonalidad-proyeccion-y-el-teorema-de-la-mejo.qmd#cor-principio-ortogonalidad) de la [Sección “Espacios vectoriales y subespacios”](../matematica-2/01-espacios-vectoriales-y-subespacios.qmd). La
 ***función de autocorrelación parcial*** (FACP) es la
 sucesión $\{\phi_{kk}\}_{k\geq 1}$.
+
 :::
 
 En un AR(p) la autocorrelación parcial tiene una forma característica que permite identificar el orden del proceso.
@@ -34,6 +35,7 @@ En un AR(p) la autocorrelación parcial tiene una forma característica que perm
 
 Para un AR(p) estacionario, $\phi_{pp}=\phi_p\neq 0$, y
 $\phi_{kk}=0$ para todo $k>p$.
+
 :::
 
 ::: {.proof}
@@ -55,6 +57,7 @@ incorrelacionado con cualquier variable fechada antes de $t$, incluidas
 $Y_{t-p-1},\ldots,Y_{t-k}$; en consecuencia, el coeficiente de la última
 variable incorporada, $Y_{t-k}$, es cero, es decir, $\phi_{kk}=0$ para
 todo $k>p$.
+
 :::
 
 Este corte abrupto en el rezago $p$, en contraste con el decaimiento

@@ -62,6 +62,7 @@ conjunto de todas las matrices $m\times n$ se denota
 $\mathbb{R}^{m\times n}$; cuando $m=n$ la matriz se llama
 ***cuadrada***, y cuando $n=1$ se identifica con el vector
 $\vect{a}\in\mathbb{R}^m$ de la [Sección “Espacios vectoriales y subespacios”](01-espacios-vectoriales-y-subespacios.qmd).
+
 :::
 
 Con $\mathbb{R}^{m\times n}$ definido como conjunto, hace falta dotarlo
@@ -86,6 +87,7 @@ $$
 
 que solo está definido cuando el número de columnas de $\mat{A}$
 coincide con el número de filas de $\mat{B}$.
+
 :::
 
 Con la suma y el escalamiento así definidos, $\mathbb{R}^{m\times n}$
@@ -105,6 +107,7 @@ matricial es asociativo, $\mat{A}(\mat{B}\mat{C})=(\mat{A}\mat{B})\mat{C}$,
 y distribuye sobre la suma,
 $\mat{A}(\mat{B}+\mat{C})=\mat{A}\mat{B}+\mat{A}\mat{C}$. Sin embargo, el
 producto matricial no es, en general, conmutativo.
+
 :::
 
 ::: {.proof}
@@ -138,6 +141,7 @@ que $\mat{B}\mat{A}=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$, 
 modo que $\mat{A}\mat{B}\neq\mat{B}\mat{A}$ y la conmutatividad no puede
 darse por supuesta en ningún argumento posterior que involucre productos
 de matrices.
+
 :::
 
 La falta de conmutatividad no es un detalle menor: cada vez que se
@@ -155,6 +159,7 @@ La ***transpuesta*** de $\mat{A}\in\mathbb{R}^{m\times n}$ es
 la matriz $\mat{A}^{\top}\in\mathbb{R}^{n\times m}$ definida por
 $(\mat{A}^{\top})_{ij}:=a_{ji}$. Una matriz cuadrada $\mat{A}$ es
 ***simétrica*** si $\mat{A}^{\top}=\mat{A}$.
+
 :::
 
 La transposición se comporta de manera sencilla frente a las operaciones anteriores, con un detalle fácil de olvidar: invierte el orden de los factores de un producto.
@@ -167,6 +172,7 @@ $(\mat{A}+\mat{B})^{\top}=\mat{A}^{\top}+\mat{B}^{\top}$,
 $(\alpha\mat{A})^{\top}=\alpha\mat{A}^{\top}$,
 $(\mat{A}^{\top})^{\top}=\mat{A}$, y, cuando el producto $\mat{A}\mat{B}$
 está definido, $(\mat{A}\mat{B})^{\top}=\mat{B}^{\top}\mat{A}^{\top}$.
+
 :::
 
 ::: {.proof}
@@ -196,6 +202,7 @@ y como el producto de números reales conmuta, las sumas
 @eq-transpuesta-producto-1 y @eq-transpuesta-producto-2
 coinciden término a término para todo par $(i,j)$, lo que establece la
 igualdad de las dos matrices completas.
+
 :::
 
 El orden invertido en $(\mat{A}\mat{B})^{\top}=\mat{B}^{\top}\mat{A}^{\top}$
@@ -213,6 +220,7 @@ traza de su matriz de proyección.
 La ***traza*** de una matriz cuadrada
 $\mat{A}\in\mathbb{R}^{n\times n}$ es la suma de sus elementos
 diagonales, $\tr(\mat{A}):=\sum_{i=1}^{n}a_{ii}$.
+
 :::
 
 La traza tiene una propiedad que permite reordenar productos de matrices, incluso cuando las matrices no tienen el mismo tamaño.
@@ -222,6 +230,7 @@ La traza tiene una propiedad que permite reordenar productos de matrices, inclus
 
 Para $\mat{A}\in\mathbb{R}^{m\times n}$ y $\mat{B}\in\mathbb{R}^{n\times m}$,
 $\tr(\mat{A}\mat{B})=\tr(\mat{B}\mat{A})$.
+
 :::
 
 ::: {.proof}
@@ -248,6 +257,7 @@ donde el único paso no trivial, de @eq-traza-ciclica-1 a
 @eq-traza-ciclica-1, intercambia el orden de una suma doble
 finita, lo cual es lícito sin ninguna condición adicional, y reagrupa
 los índices para reconocer la definición de $(\mat{B}\mat{A})_{jj}$.
+
 :::
 
 La propiedad cíclica de la traza se invocará más adelante en dos

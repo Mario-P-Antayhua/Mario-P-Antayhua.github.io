@@ -38,6 +38,7 @@ función $d:X\times X\to\mathbb{R}$, llamada ***métrica*** o
 (i) $d(p,q)=d(q,p)$;
 
 (i) $d(p,q)\leq d(p,r)+d(r,q)$ (desigualdad triangular).
+
 :::
 
 Ninguna de las tres condiciones depende de que $X$ sea un conjunto de
@@ -70,6 +71,7 @@ tres condiciones de la @def-espacio-metrico se siguen cumpliendo al
 restringir $p,q,r$ a estar en $Y$. Así, por ejemplo, la circunferencia
 unitaria de $\mathbb{R}^2$ es un espacio métrico por derecho propio, con
 la misma distancia euclidiana del plano restringida a sus puntos.
+
 :::
 
 Con la métrica fijada, el siguiente paso es dar sentido a la idea de

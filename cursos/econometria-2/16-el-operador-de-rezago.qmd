@@ -35,6 +35,7 @@ El ***operador de rezago*** $\Lag$ actúa sobre un proceso
 estocástico $\{Y_t\}$ produciendo $\Lag Y_t:=Y_{t-1}$. Para $k\geq 1$
 entero, la $k$-ésima potencia de $\Lag$ se define recursivamente,
 $\Lag^k Y_t:=\Lag(\Lag^{k-1}Y_t)$, y se conviene $\Lag^0Y_t:=Y_t$.
+
 :::
 
 El operador se manipula como un símbolo algebraico gracias a un conjunto de propiedades elementales.
@@ -47,6 +48,7 @@ y enteros $j,k\geq 0$: (i) $\Lag^k Y_t=Y_{t-k}$; (ii)
 $\Lag(\alpha Y_t+\beta Z_t)=\alpha\Lag Y_t+\beta\Lag Z_t$ (linealidad);
 (iii) $\Lag^j\Lag^k Y_t=\Lag^{j+k}Y_t$; (iv) $\Lag c=c$ para toda
 constante $c$, que no depende de $t$.
+
 :::
 
 ::: {.proof}
@@ -63,6 +65,7 @@ Y_t+\beta\Lag Z_t$. La propiedad (iii) se sigue de aplicar (i) dos
 veces, $\Lag^j\Lag^kY_t=\Lag^j Y_{t-k}=Y_{t-k-j}=\Lag^{j+k}Y_t$. La
 propiedad (iv) es inmediata, porque una constante no cambia de valor al
 retroceder el índice temporal.
+
 :::
 
 La propiedad (ii) es la que justifica llamar a $\Lag$ un
@@ -85,6 +88,7 @@ $\Lag$: $\difop^2Y_t=\difop(\difop Y_t)=(Y_t-Y_{t-1})-(Y_{t-1}-Y_{t-2})
 =Y_t-2Y_{t-1}+Y_{t-2}$, y en general $\difop^dY_t$ para $d$ entero
 positivo se calcula expandiendo $(1-\Lag)^d$ mediante el teorema del
 binomio y aplicando cada potencia de $\Lag$ resultante.
+
 :::
 
 El operador diferencia es, en la práctica, la herramienta más usada

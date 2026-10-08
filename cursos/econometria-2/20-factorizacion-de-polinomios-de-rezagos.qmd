@@ -20,6 +20,7 @@ se factoriza como
 $\phi(\Lag)=\prod_{i=1}^{p}\bigl(1-\Lag/z_i\bigr)$, donde
 $z_1,\ldots,z_p$ son las raíces del polinomio característico de la
 [Definición “Polinomio característico y sus raíces”](18-raices-del-polinomio-caracteristico-y-el-circulo.qmd#def-polinomio-caracteristico).
+
 :::
 
 ::: {.proof}
@@ -35,6 +36,7 @@ $\phi(z)=\prod_{i=1}^{p}(1-z/z_i)$. Sustituyendo formalmente $z$ por
 $\Lag$ en esta identidad polinómica, válida coeficiente a coeficiente
 por construcción, se obtiene la factorización enunciada para
 $\phi(\Lag)$.
+
 :::
 
 Esta factorización es la que permite invertir un polinomio de rezagos de

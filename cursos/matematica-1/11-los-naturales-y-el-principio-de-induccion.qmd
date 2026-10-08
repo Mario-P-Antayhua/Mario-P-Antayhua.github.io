@@ -52,6 +52,7 @@ condiciones siguientes.
 1. [(P3)] **(Principio de inducción)** Si $S\subseteq\mathbb{N}$
         satisface $1\in S$ y, para todo $n\in S$, también $s(n)\in S$, entonces
         $S=\mathbb{N}$.
+
 :::
 
 El axioma (P1) impide que la sucesión de naturales se cierre sobre sí misma
@@ -75,6 +76,7 @@ para reconstruir toda la aritmética elemental de $\mathbb{N}$: asociatividad,
 conmutatividad, distributividad y la existencia de un orden total compatible
 con las operaciones. Esa aritmética se da por establecida a partir de aquí, y
 es sobre ella que se construyen los sistemas numéricos siguientes.
+
 :::
 
 Con $\mathbb{N}$ fijado de esta manera, y su aritmética elemental aceptada

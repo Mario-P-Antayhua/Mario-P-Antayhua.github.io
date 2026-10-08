@@ -38,6 +38,7 @@ la exigencia que los separa es más estricta de lo que sugiere la intuición.
 Una ***proposición*** es un enunciado declarativo al que se le
 puede asignar exactamente uno de dos valores de verdad, verdadero o falso,
 nunca ambos ni ninguno.
+
 :::
 
 La exigencia de que el valor de verdad sea único y esté bien definido es lo
@@ -70,6 +71,7 @@ verdadero. Ninguna de las dos asignaciones es consistente consigo misma, y
 por eso este enunciado no es una proposición en el sentido de la
 @def-proposicion: viola la exigencia de tener exactamente un valor de
 verdad.
+
 :::
 
 Este ejemplo, lejos de ser un juego de palabras vacío, es la razón por la
@@ -92,6 +94,7 @@ más simple.
 Dada una proposición $p$, su ***negación***, denotada $\neg p$, es
 la proposición que resulta verdadera exactamente cuando $p$ es falsa, y falsa
 exactamente cuando $p$ es verdadera.
+
 :::
 
 La negación opera sobre una sola proposición; los dos conectores que siguen
@@ -106,6 +109,7 @@ $p\wedge q$ y leída “$p$ y $q$”, es verdadera únicamente cuando ambas
 proposiciones son verdaderas a la vez. Su ***disyunción***,
 denotada $p\vee q$ y leída “$p$ o $q$”, es verdadera cuando al menos una de
 las dos lo es, y falsa únicamente cuando ambas son falsas.
+
 :::
 
 Conviene subrayar que la disyunción matemática es siempre inclusiva, en el
@@ -131,6 +135,7 @@ otro caso. En esta proposición, $p$ recibe el nombre de
 ***bicondicional***, denotado $p\leftrightarrow q$ y leído “$p$ si
 y solo si $q$”, es verdadero exactamente cuando $p$ y $q$ tienen el mismo
 valor de verdad.
+
 :::
 
 La cláusula del condicional que suele resultar menos intuitiva a primera

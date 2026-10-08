@@ -18,6 +18,7 @@ $\{G_\alpha\}$ de abiertos con $E\subseteq\bigcup_\alpha G_\alpha$.
 $K\subseteq X$ es ***compacto*** si todo cubrimiento abierto de
 $K$ admite un ***subcubrimiento finito***, es decir, una
 subcolección finita que ya cubre a $K$ por sí sola.
+
 :::
 
 Que la definición cuantifique sobre *todos* los cubrimientos abiertos
@@ -49,6 +50,7 @@ importa: en $[0,1]$ los extremos están incluidos y “atrapables” por algún
 abierto del cubrimiento, mientras que en $(0,1)$ el extremo $0$ nunca se
 alcanza, y el cubrimiento $G_n$ está diseñado para escaparse hacia él sin
 que ningún $G_n$ solo baste.
+
 :::
 
 ![Tres abiertos de la colección $\{G_x\}$ del @exm-cubrimiento-si-finito, traslapados consecutivamente, bastan para cubrir todo $[0,1]$.](../../assets/img/fig/matematica-1-26-conjuntos-compactos-y-el-teorema-de-heine-borel-1.svg){#fig-cubrimiento-finito fig-alt=“Tres abiertos de la colección $\{G_x\}$ del @exm-cubrimiento-si-finito, traslapados consecutivamente, bastan para cubrir todo $[0,1]$.”}
@@ -63,6 +65,7 @@ auxiliar despeja la mitad más sencilla de esa conexión.
 ## Todo compacto es acotado
 
 Si $K\subseteq X$ es compacto, entonces $K$ es acotado.
+
 :::
 
 ::: {.proof}
@@ -78,6 +81,7 @@ subcubrimiento finito equivale a una sola vecindad de radio
 $M:=\max\{n_1,\ldots,n_r\}$ que ya cubre a $K$. Por lo tanto todo punto de
 $K$ dista de $p_0$ menos de $M$, y $K$ es acotado según la
 [Definición “Punto interior, límite y aislado”](24-vecindades-y-la-clasificacion-de-los-puntos-de-u.qmd#def-puntos-especiales)(iv).
+
 :::
 
 La otra mitad de la conexión, que todo compacto es también cerrado, exige
@@ -88,6 +92,7 @@ propio $K$ mediante vecindades disjuntas.
 ## Todo conjunto compacto es cerrado
 
 Si $K\subseteq X$ es compacto, $K$ es cerrado.
+
 :::
 
 ::: {.proof}
@@ -117,6 +122,7 @@ una intersección finita de vecindades de $p$ y, por la
 $W$ es disjunta de $K$: cualquier punto de $K$ cae en algún $V_{q_i}$, que
 es disjunto del correspondiente $W_{q_i}\supseteq W$. Por lo tanto $p$ es
 interior a $K^c$, y como $p\notin K$ era arbitrario, $K$ es cerrado.
+
 :::
 
 El @lem-compacto-acotado y este teorema juntos dan la mitad fácil
@@ -131,6 +137,7 @@ una de ellas.
 
 Si $F\subseteq K$, con $F$ cerrado y $K$ compacto, entonces $F$ es
 compacto.
+
 :::
 
 ::: {.proof}
@@ -143,6 +150,7 @@ apareciera entre los elegidos, puesto que $F^c$ no contiene ningún punto
 de $F$ y por lo tanto no aporta nada a su cubrimiento. Los elementos
 restantes, en número finito, son un subcubrimiento finito de $F$ tomado de
 la colección original $\{V_\alpha\}$.
+
 :::
 
 Este teorema deja pendiente una pregunta: ¿de dónde sale, en primer lugar,
@@ -156,6 +164,7 @@ continuación.
 
 Dados $a_j\leq b_j$ para $j=1,\ldots,k$, la ***$k$-celda*** es
 $\{\vect{x}\in\mathbb{R}^k : a_j\leq x_j\leq b_j,\ \forall j\}$.
+
 :::
 
 Una $k$-celda es, en otras palabras, un rectángulo (o su análogo en
@@ -170,6 +179,7 @@ $\mathbb{R}^k$.
 ## Toda $k$-celda es compacta
 
 Toda $k$-celda $I\subseteq\mathbb{R}^k$ es compacta.
+
 :::
 
 ::: {.proof}
@@ -207,6 +217,7 @@ N_r(\vect{x}^{*})\subseteq G_{\alpha_0}$: un solo abierto ya cubre a
 $I_n$, lo que contradice que $I_n$ no admitiera subcubrimiento finito. Esta
 contradicción descarta la suposición inicial, y por lo tanto $I$ es
 compacta.
+
 :::
 
 Con la compacidad de la $k$-celda establecida, el @thm-cerrado-en-compacto
@@ -220,6 +231,7 @@ central de toda la subsección.
 Para $E\subseteq\mathbb{R}^k$, las siguientes tres condiciones son
 equivalentes: (a) $E$ es cerrado y acotado; (b) $E$ es compacto; (c) todo
 subconjunto infinito de $E$ tiene un punto límite en $E$.
+
 :::
 
 ::: {.proof}
@@ -247,6 +259,7 @@ definición de punto límite se puede construir una sucesión
 $\vect{x}_n\in E$ con $\|\vect{x}_n-\vect{x}_0\|<1/n$; el conjunto
 $\{\vect{x}_n\}$ es infinito y su único punto límite posible es
 $\vect{x}_0$, que no pertenece a $E$.
+
 :::
 
 Este teorema es la razón por la cual, en $\mathbb{R}^k$, casi nunca se
@@ -258,11 +271,13 @@ manejables.
 ## Compacidad en $\mathbb{R}^k$ vía cerrado y acotado
 
 Todo subconjunto cerrado y acotado de $\mathbb{R}^k$ es compacto.
+
 :::
 
 ::: {.proof}
 Es la implicación (a)$\Rightarrow$(b) del @thm-heine-borel, ya
 demostrada.
+
 :::
 
 Este corolario es, en la práctica, la forma en que Heine–Borel se aplica
@@ -287,6 +302,7 @@ subcubrimiento finito del mismo tipo que el visto en el
 @exm-cubrimiento-si-finito para $(0,1)$: ningún $G_n$ alcanza a cubrir
 la “franja” de $D$ cercana a la circunferencia $x^2+y^2=9$, sin importar
 cuán grande sea $n$.
+
 :::
 
 Una consecuencia adicional de Heine–Borel, que en secciones posteriores
@@ -299,6 +315,7 @@ sucesiones, sin mencionar cubrimientos.
 
 $E\subseteq\mathbb{R}^k$ es compacto si y solo si toda sucesión de puntos
 de $E$ tiene una subsucesión que converge a un punto de $E$.
+
 :::
 
 ::: {.proof}
@@ -317,6 +334,7 @@ punto de $E$, entonces $E$ satisface la condición (c) del
 @thm-heine-borel aplicada a subconjuntos infinitos (tomando una
 sucesión de elementos distintos del subconjunto en cuestión), y por lo
 tanto $E$ es cerrado y acotado, luego compacto.
+
 :::
 
 El resultado que sigue, aunque se enuncia para conjuntos y no para
@@ -329,6 +347,7 @@ aplicación directa de Heine–Borel.
 
 Todo subconjunto infinito y acotado de $\mathbb{R}^k$ tiene un punto límite
 en $\mathbb{R}^k$.
+
 :::
 
 ::: {.proof}
@@ -337,6 +356,7 @@ $k$-celda $I$, que es compacta por el @thm-kcelda-compacta.
 Aplicando la implicación (b)$\Rightarrow$(c) del @thm-heine-borel a
 $I$, todo subconjunto infinito de $I$, y en particular el propio $E$,
 tiene un punto límite en $I\subseteq\mathbb{R}^k$.
+
 :::
 
 Con esto queda cerrado el desarrollo de la compacidad en $\mathbb{R}^k$: el
