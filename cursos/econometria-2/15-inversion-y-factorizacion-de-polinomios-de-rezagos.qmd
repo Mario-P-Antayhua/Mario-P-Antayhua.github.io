@@ -12,6 +12,7 @@ Una serie infinita de variables aleatorias necesita un modo de convergencia. Se 
 
 ::: {#ax-l2-completo .callout-important appearance="simple" title="Axioma: Completitud de $L^2$"}
 Si $Y_1,Y_2,\ldots$ son variables aleatorias con $\E[Y_n^2]<\infty$ y $\E[(Y_n-Y_m)^2]\to0$ cuando $n,m\to\infty$, existe una variable aleatoria $Y$ con $\E[Y^2]<\infty$ y $\E[(Y_n-Y)^2]\to0$.
+
 :::
 
 Con ello, una serie $\sum_ja_jX_{t-j}$ de un proceso de varianza acotada converge en media cuadrática cuando los coeficientes son sumables.

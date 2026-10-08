@@ -8,7 +8,8 @@ categories: [Matemática para Economistas I, Sucesiones y series]
 
 Una suma de infinitos términos solo tiene sentido si se define como el límite de las sumas de los primeros términos. Con eso, una serie no es más que una sucesión particular, la de sus sumas parciales, y todos los resultados de las notas anteriores se aplican a ella. Esta nota fija la definición y estudia la convergencia de las series con los criterios de Cauchy y de comparación, empezando por la serie geométrica.
 
-::: {#def-serie}## Serie y suma parcial
+::: {#def-serie}
+## Serie y suma parcial
 
 Dada una sucesión $(a_n)_{n=1}^{\infty}$, la ***sucesión de
 sumas parciales*** es $s_N:=\sum_{n=1}^{N}a_n$. La ***serie***

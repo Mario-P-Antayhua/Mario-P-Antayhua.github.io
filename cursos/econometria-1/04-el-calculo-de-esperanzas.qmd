@@ -30,6 +30,7 @@ A cada variable aleatoria $X\geq0$, y a cada variable aleatoria integrable, se l
 **(E8)** *Cambio de variables.* Si $\vect{\varphi}:U\to V$ es una biyección de clase $C^1$ entre abiertos de $\mathbb{R}^k$ con inversa de clase $C^1$ y $h\geq0$ o integrable en $V$, entonces $\int_Vh(\vect{y})\,d\vect{y}=\int_Uh(\vect{\varphi}(\vect{x}))\,|\det\mat{J}_{\vect{\varphi}}(\vect{x})|\,d\vect{x}$.
 
 **(E9)** *Unicidad de la ley.* Dos medidas de probabilidad sobre $(\mathbb{R}^k,\mathcal{B}(\mathbb{R}^k))$ que coinciden sobre todos los rectángulos $\prod_{i=1}^k(a_i,b_i]$ son iguales.
+
 :::
 
 Las propiedades (E2) y (E3) son las conocidas de la suma y de la integral de Riemann; (E4) y (E5) son las que permiten tomar límites dentro de una esperanza bajo condiciones controladas; (E6) conecta la definición abstracta con las sumas y las integrales ordinarias; (E7) y (E8) son los teoremas de integración múltiple que se usarán para distribuciones conjuntas y transformaciones, y (E9) permite identificar una distribución conjunta por sus valores en rectángulos. Con ellas se obtienen las propiedades inmediatas de la esperanza.

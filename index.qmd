@@ -28,7 +28,7 @@ En este sitio publico mis apuntes de Macroeconomía, Econometría y Matemática 
 
 <p class="hero-botones">
 <a class="boton boton-principal" href="sobre-mi.qmd">Conoce mi perfil</a>
-<a class="boton" href="cursos/econometria-3/nivel-local.qmd">Leer una nota</a>
+<a class="boton" href="cursos/econometria-3/17-modelo-de-nivel-local.qmd">Leer una nota</a>
 </p>
 
 <p class="hero-redes">

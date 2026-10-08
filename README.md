@@ -28,7 +28,7 @@ uv run quarto preview
 | `scripts/tex_a_qmd.sh` | Borrador de `.qmd` a partir de un `.tex` existente (con pandoc) |
 | `.github/workflows/` | `publish.yml` publica al hacer push a `main`; `revisar.yml` compila cada PR |
 
-La nota de `cursos/econometria-3/nivel-local.qmd` es el piloto: muestra todos los componentes ya renderizados.
+La nota de `cursos/econometria-3/17-modelo-de-nivel-local.qmd` es el piloto: muestra todos los componentes ya renderizados.
 
 ## Cómo se trabaja
 

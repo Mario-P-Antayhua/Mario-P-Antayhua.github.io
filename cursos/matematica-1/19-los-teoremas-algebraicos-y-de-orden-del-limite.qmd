@@ -7,6 +7,7 @@ categories: [Matemática para Economistas I, Sucesiones y series]
 ---
 
 Calcular el límite de una suma, un producto o un cociente de sucesiones convergentes a partir de los límites de las sucesiones originales evita repetir el argumento $\varepsilon$-$N$ cada vez. La necesidad es evidente apenas se intenta hallar, por ejemplo, el límite de $(3n^2+2n)/(n^2+1)$ con la [Definición “Límite de una sucesión”](18-sucesiones-y-su-limite.qmd#def-limite-sucesion): el argumento directo exigiría manipular la expresión completa dentro de $|x_n-x|<\varepsilon$, mientras que con las reglas de esta nota basta dividir numerador y denominador por $n^2$ y aplicarlas a los límites ya conocidos de $1/n$ y de las sucesiones constantes.
+
 ::: {#thm-algebraico-limite}
 ## Teorema algebraico del límite
 
@@ -79,6 +80,7 @@ lo que prueba que $1/y_n\to 1/y$ y, con ello, el apartado (iv).
 :::
 
 Por ejemplo, para $x_n=(3n^2+2n)/(n^2+1)$, dividiendo numerador y denominador por $n^2$ se obtiene $x_n=(3+2\cdot\tfrac1n)/(1+\tfrac1n\cdot\tfrac1n)$. Como $1/n\to0$, el teorema da $\tfrac1n\cdot\tfrac1n\to0$, $2\cdot\tfrac1n\to0$, el numerador tiende a $3$, el denominador tiende a $1\neq0$ y el cociente tiende a $3$. Numéricamente, $x_{10}=320/101\approx3.168$ y $x_{1000}=3002000/1000001\approx3.001997$. Con la aritmética del límite disponible, el siguiente resultado natural es preguntar cómo se comporta el límite frente al orden: si dos sucesiones respetan una desigualdad en cada término, ¿la respetan también sus límites?
+
 ::: {#thm-orden-limite}
 ## Teorema del orden del límite
 

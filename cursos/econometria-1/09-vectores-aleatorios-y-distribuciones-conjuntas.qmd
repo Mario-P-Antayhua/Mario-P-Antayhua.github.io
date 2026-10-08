@@ -85,6 +85,7 @@ Finalmente, la existencia de variables independientes con leyes dadas, que se ne
 
 ::: {#ax-independientes .callout-important appearance="simple" title="Axioma: Existencia de variables independientes"}
 Dadas medidas de probabilidad $P_1,P_2,\ldots$ sobre $\mathbb{R}^{k_1},\mathbb{R}^{k_2},\ldots$, existe un espacio de probabilidad con variables aleatorias independientes $\vect{X}_1,\vect{X}_2,\ldots$ tales que la ley de $\vect{X}_i$ es $P_i$ para todo $i$.
+
 :::
 
 Con este axioma tiene sentido hablar de una muestra de variables iid con una distribución dada, o de variables auxiliares independientes de una muestra.
