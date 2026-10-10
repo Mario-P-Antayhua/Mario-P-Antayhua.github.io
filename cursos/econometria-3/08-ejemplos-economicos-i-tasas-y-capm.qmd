@@ -1,44 +1,158 @@
 ---
-title: "Ejemplos económicos I: estructura temporal de tasas y CAPM con beta variable"
-description: "Dos modelos de espacio-estado de la economía financiera: la curva de rendimientos descrita por tres factores con cargas que dependen del plazo, y la regresión del exceso de rendimiento de un activo con un coeficiente beta que cambia en el tiempo."
+title: "Ejemplos económicos I: tasas de interés y CAPM"
+description: "Dos modelos de espacio-estado en finanzas: la curva de rendimientos con factores de nivel, pendiente y curvatura, y el modelo de valoración de activos con riesgo sistemático variable, con la actualización de Kalman calculada a mano."
 author: "Mario Peñaloza"
-date: 2026-10-08
+date: 2026-10-10
 categories: [Econometría III, Espacio-estado]
 ---
 
-Los modelos de las notas anteriores se han presentado por su forma. Esta nota y la siguiente muestran cuatro situaciones económicas en las que la variable de interés no se observa y el modelo de espacio-estado es la herramienta natural. En cada una se identifica qué es el estado, qué es la observación y de dónde salen las matrices. Los dos primeros ejemplos son de finanzas: una curva de rendimientos que depende de pocos factores, y el riesgo sistemático de un activo que cambia con el tiempo.
+Los modelos de las notas anteriores se presentaron por su forma. Esta nota y la siguiente muestran cuatro situaciones económicas en las que la variable de interés no se observa y el modelo de espacio-estado es la herramienta natural. En cada una se identifica qué es el estado, qué es la observación y de dónde salen las matrices.
 
-La curva de rendimientos es la relación entre la tasa de un bono y su plazo. Se observan las tasas de varios plazos cada período, pero su variación se explica casi por completo con tres movimientos: un cambio paralelo de toda la curva, un cambio de su pendiente y un cambio de su curvatura. Se modela cada tasa observada como una combinación de tres factores con cargas que dependen del plazo $\tau$:
+Los dos primeros ejemplos son de finanzas: una curva de rendimientos que depende de pocos factores, y el riesgo sistemático de un activo que cambia con el tiempo.
+
+## La curva de rendimientos
+
+La curva de rendimientos es la relación entre la tasa de un bono y su plazo. Cada periodo se observan las tasas de varios plazos, pero su variación se explica casi por completo con tres movimientos: un cambio paralelo de toda la curva, un cambio de su pendiente y un cambio de su curvatura.
+
+Se modela cada tasa observada como una combinación de tres factores, con cargas que dependen del plazo $\tau$:
+
 $$
-y_t(\tau)=L_t+a(\tau)\,S_t+b(\tau)\,C_t+\varepsilon_t(\tau),\qquad a(\tau)=\frac{1-e^{-\lambda\tau}}{\lambda\tau},\quad b(\tau)=a(\tau)-e^{-\lambda\tau},
+y_t(\tau) = L_t + a(\tau)\,S_t + b(\tau)\,C_t + \varepsilon_t(\tau),
 $$ {#eq-curva-rendimientos}
-donde $L_t$ es el ***nivel***, $S_t$ la ***pendiente*** y $C_t$ la ***curvatura***, no observables, y $\lambda>0$ fija la velocidad con que las cargas cambian con el plazo. Las cargas tienen formas que justifican los nombres.
+
+con
+
+$$
+a(\tau) = \frac{1-e^{-\lambda\tau}}{\lambda\tau},
+\qquad
+b(\tau) = a(\tau) - e^{-\lambda\tau}.
+$$
+
+Aquí $L_t$ es el ***nivel***, $S_t$ la ***pendiente*** y $C_t$ la ***curvatura***, todos no observables, y $\lambda>0$ fija la velocidad con que las cargas cambian con el plazo. Las cargas tienen formas que justifican los nombres.
 
 ::: {#prp-cargas-curva}
 ## Forma de las cargas
 
-Para $\lambda>0$: (i) $a(\tau)$ es decreciente en $\tau$, con $a(\tau)\to1$ cuando $\tau\to0$ y $a(\tau)\to0$ cuando $\tau\to\infty$; (ii) $b(\tau)>0$ para todo $\tau>0$ y $b(\tau)\to0$ cuando $\tau\to0$ y cuando $\tau\to\infty$.
+Para $\lambda>0$:
 
+(i) $a(\tau)$ es decreciente en $\tau$, con $a(\tau)\to1$ cuando $\tau\to0$ y $a(\tau)\to0$ cuando $\tau\to\infty$.
+
+(ii) $b(\tau)>0$ para todo $\tau>0$, y $b(\tau)\to0$ cuando $\tau\to0$ y cuando $\tau\to\infty$.
 :::
 
 ::: {.proof}
-Con $x=\lambda\tau$, $a=(1-e^{-x})/x$. Cuando $x\to0$, $(1-e^{-x})/x\to1$ porque es la derivada de $1-e^{-x}$ en cero, y cuando $x\to\infty$, $a\to0$ porque el numerador está acotado por uno. La derivada es $a'(x)=\bigl(xe^{-x}-(1-e^{-x})\bigr)/x^2$, negativa porque $e^{x}>1+x$ equivale a $1-e^{-x}>xe^{-x}$; esto prueba que $a$ decrece. Para (ii), $b=a-e^{-x}$ es positiva si y solo si $1-e^{-x}>xe^{-x}$, que es la misma desigualdad, y tiende a $1-1=0$ cuando $x\to0$ y a $0-0=0$ cuando $x\to\infty$.
+Con $x=\lambda\tau$, se tiene $a=(1-e^{-x})/x$. Cuando $x\to0$, $a\to1$, porque el cociente es la derivada de $1-e^{-x}$ en cero. Cuando $x\to\infty$, $a\to0$, porque el numerador está acotado por uno.
 
+Para ver que $a$ decrece se calcula su derivada:
+
+$$
+a'(x) = \frac{x\,e^{-x} - (1-e^{-x})}{x^2}.
+$$
+
+Es negativa porque $e^{x}>1+x$ equivale a $1-e^{-x}>x\,e^{-x}$, y esto prueba (i).
+
+Para (ii), $b=a-e^{-x}$ es positiva si y solo si $1-e^{-x}>x\,e^{-x}$, que es la misma desigualdad. Sus límites son
+
+$$
+b \to 1-1 = 0 \quad(x\to0),
+\qquad
+b \to 0-0 = 0 \quad(x\to\infty).
+$$
 :::
 
-La carga de $L_t$ es $1$ en todos los plazos, de modo que mueve la curva entera por igual. La de $S_t$ pesa más a los plazos cortos, de modo que modifica la diferencia entre tasas cortas y largas. La de $C_t$ es una joroba, que se anula en los extremos y afecta a los plazos intermedios. Con $\lambda=0.6$ por año, las cargas $(a,b)$ en los plazos de $1,2,5$ y $10$ años son $(0.752,0.203)$, $(0.582,0.281)$, $(0.317,0.267)$ y $(0.166,0.164)$. Para pasar a espacio-estado, se toman los factores como el estado, $\vect{\alpha}_t=(L_t,S_t,C_t)^{\top}$, con una transición autorregresiva de primer orden alrededor de una media, $\vect{\alpha}_t-\vect{\mu}=\mat{T}(\vect{\alpha}_{t-1}-\vect{\mu})+\vect{\eta}_t$, es decir, $\vect{c}=(\Imat-\mat{T})\vect{\mu}$. Para cuatro plazos, la medición es multivariada, $\vect{y}_t=\mat{Z}\vect{\alpha}_t+\vect{\varepsilon}_t$ con
-$$
-\mat{Z}=\begin{pmatrix}1&0.752&0.203\\1&0.582&0.281\\1&0.317&0.267\\1&0.166&0.164\end{pmatrix},\qquad N=4,\ m=3,\ r=3,
-$$
-$\mat{T}=\mathrm{diag}(\phi_L,\phi_S,\phi_C)$ con coeficientes cercanos a uno para el nivel, que es muy persistente, y menores para los otros dos, $\mat{R}=\Imat_3$ y $\mat{H}$ diagonal. El filtro entrega los tres factores en cada fecha a partir de cuatro tasas, y esa reducción de dimensión es el principal beneficio del modelo.
+La carga de $L_t$ es $1$ en todos los plazos, así que mueve la curva entera por igual. La de $S_t$ pesa más a los plazos cortos y modifica la diferencia entre tasas cortas y largas. La de $C_t$ es una joroba: se anula en los extremos y afecta a los plazos intermedios.
 
-El segundo ejemplo es la sensibilidad de un activo al mercado. El modelo de valoración de activos de capital dice que el exceso de rendimiento de un activo sobre la tasa libre de riesgo es proporcional al exceso de rendimiento del mercado, con la constante $\beta$ que mide el riesgo sistemático: $r_t-r_{f,t}=\alpha+\beta(r_{m,t}-r_{f,t})+\varepsilon_t$. Si el negocio de la empresa cambia, también cambia su riesgo, y un $\beta$ fijo es una mala descripción. Se permite que evolucione como un paseo aleatorio.
+Con $\lambda=0.6$ por año, las cargas en cuatro plazos son:
+
+| Plazo $\tau$ (años) | $a(\tau)$ | $b(\tau)$ |
+|---:|---:|---:|
+| 1 | 0.752 | 0.203 |
+| 2 | 0.582 | 0.281 |
+| 5 | 0.317 | 0.267 |
+| 10 | 0.166 | 0.164 |
+
+: Cargas de la pendiente y de la curvatura con $\lambda=0.6$. {#tbl-cargas-curva}
+
+Para pasar a espacio-estado se toman los factores como el estado, $\vect{\alpha}_t=(L_t,S_t,C_t)^{\top}$, con una transición autorregresiva de primer orden alrededor de una media:
+
+$$
+\vect{\alpha}_t - \vect{\mu} = \mat{T}\,(\vect{\alpha}_{t-1}-\vect{\mu}) + \vect{\eta}_t,
+\qquad
+\vect{c} = (\Imat-\mat{T})\,\vect{\mu}.
+$$
+
+Con cuatro plazos la medición es multivariada, $\vect{y}_t=\mat{Z}\vect{\alpha}_t+\vect{\varepsilon}_t$, con
+
+$$
+\mat{Z} = \begin{pmatrix}
+1 & 0.752 & 0.203 \\
+1 & 0.582 & 0.281 \\
+1 & 0.317 & 0.267 \\
+1 & 0.166 & 0.164
+\end{pmatrix},
+\qquad
+N=4,\quad m=3,\quad r=3.
+$$
+
+La matriz de transición es $\mat{T}=\mathrm{diag}(\phi_L,\phi_S,\phi_C)$, con coeficientes cercanos a uno para el nivel, que es muy persistente, y menores para los otros dos. Además, $\mat{R}=\Imat_3$ y $\mat{H}$ es diagonal.
+
+El filtro entrega los tres factores en cada fecha a partir de cuatro tasas. Esa reducción de dimensión es el principal beneficio del modelo.
+
+## El CAPM con beta variable
+
+El segundo ejemplo es la sensibilidad de un activo al mercado. El modelo de valoración de activos de capital dice que el exceso de rendimiento de un activo sobre la tasa libre de riesgo es proporcional al exceso de rendimiento del mercado:
+
+$$
+r_t - r_{f,t} = \alpha + \beta\,(r_{m,t}-r_{f,t}) + \varepsilon_t.
+$$
+
+La constante $\beta$ mide el riesgo sistemático. Si el negocio de la empresa cambia, también cambia su riesgo, y un $\beta$ fijo es una mala descripción. Se permite entonces que evolucione como un paseo aleatorio.
 
 ::: {#def-capm-variable}
 ## CAPM con beta variable
 
-Sea $y_t=r_t-r_{f,t}$ el exceso de rendimiento del activo y $x_t=r_{m,t}-r_{f,t}$ el del mercado. El modelo es $y_t=x_t\beta_t+\varepsilon_t$, $\beta_t=\beta_{t-1}+\eta_t$, con $\varepsilon_t\sim\N(0,H)$ y $\eta_t\sim\N(0,Q)$ independientes. En espacio-estado, $\alpha_t=\beta_t$, $Z_t=x_t$, $T=R=1$, y es un modelo univariado, variante y estocástico.
+Sea $y_t=r_t-r_{f,t}$ el exceso de rendimiento del activo y $x_t=r_{m,t}-r_{f,t}$ el del mercado. El modelo es
 
+$$
+\begin{aligned}
+y_t &= x_t\,\beta_t + \varepsilon_t, & \varepsilon_t &\sim \N(0,H), \\[6pt]
+\beta_t &= \beta_{t-1} + \eta_t, & \eta_t &\sim \N(0,Q),
+\end{aligned}
+$$
+
+con $\varepsilon_t$ y $\eta_t$ independientes. En espacio-estado, $\alpha_t=\beta_t$, $Z_t=x_t$ y $T=R=1$. Es un modelo univariado, variante y estocástico.
 :::
 
-La matriz de medición $Z_t=x_t$ depende de los datos, y por eso el modelo es variante. La información que aporta cada observación sobre $\beta_t$ es mayor cuando el mercado se mueve mucho, porque $|x_t|$ grande da una señal más nítida, y casi nula cuando $x_t\approx0$. Esta intuición se confirma con el cálculo de la actualización de Kalman. Con $H=0.04$, $Q=0.01$, una creencia inicial $\beta_0\sim\N(1,0.25)$ y el primer par $(x_1,y_1)=(0.5,0.62)$, la varianza del estado predicho es $0.25+0.01=0.26$, la varianza de la innovación es $0.5^2\cdot0.26+0.04=0.105$, el error de predicción es $0.62-0.5=0.12$ y la ganancia es $0.26\cdot0.5/0.105=1.238$, de modo que la estimación actualizada es $\beta_{1|1}=1+1.238\cdot0.12=1.149$ con varianza $0.099$. En el segundo período, con $(x_2,y_2)=(-0.3,-0.18)$, la innovación es $-0.18-(-0.3)(1.149)=0.165$, la ganancia es $-0.657$ y la estimación baja a $\beta_{2|2}=1.040$ con varianza $0.088$. El primer dato, con un movimiento de mercado mayor, mueve más la estimación que el segundo.
+La matriz de medición $Z_t=x_t$ depende de los datos, y por eso el modelo es variante. La información que aporta cada observación sobre $\beta_t$ es mayor cuando el mercado se mueve mucho, porque un $|x_t|$ grande da una señal más nítida, y casi nula cuando $x_t\approx0$.
+
+Esa intuición se confirma con el cálculo de la actualización de Kalman. Los datos son $H=0.04$, $Q=0.01$, una creencia inicial $\beta_0\sim\N(1,\,0.25)$ y el primer par $(x_1,y_1)=(0.5,\ 0.62)$. En el primer periodo,
+
+$$
+\begin{aligned}
+P_{1\mid0} &= 0.25+0.01 = 0.26, \\[6pt]
+F_1 &= 0.5^2\cdot0.26+0.04 = 0.105, \\[6pt]
+v_1 &= 0.62-0.5\cdot1 = 0.12, \\[6pt]
+K_1 &= \frac{0.26\cdot0.5}{0.105} = 1.238.
+\end{aligned}
+$$
+
+La estimación actualizada y su varianza son
+
+$$
+\beta_{1\mid1} = 1+1.238\cdot0.12 = 1.149,
+\qquad
+P_{1\mid1} = 0.26-1.238^2\cdot0.105 = 0.099.
+$$
+
+En el segundo periodo, con $(x_2,y_2)=(-0.3,\ -0.18)$, el mismo cálculo da
+
+$$
+\begin{aligned}
+v_2 &= -0.18-(-0.3)(1.149) = 0.165, \\[6pt]
+K_2 &= -0.657, \\[6pt]
+\beta_{2\mid2} &= 1.149+(-0.657)(0.165) = 1.040, \\[6pt]
+P_{2\mid2} &= 0.088.
+\end{aligned}
+$$
+
+El primer dato, con un movimiento de mercado mayor, mueve más la estimación que el segundo: la ganancia es $1.238$ contra $-0.657$.

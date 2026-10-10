@@ -1,47 +1,165 @@
 ---
-title: "Construcción de matrices III: AR y MA"
-description: "La representación en espacio-estado de un proceso AR(2) y de un MA(1), el papel de la matriz R para introducir perturbaciones en pocas componentes del estado, la verificación de dimensiones y la comprobación de que reproducen las autocovarianzas conocidas."
+title: "Construcción de matrices III: procesos AR y MA"
+description: "La escritura del AR(2) y del MA(1) en forma de espacio-estado, el papel de la matriz R cuando el estado tiene más componentes que perturbaciones, y la verificación de las construcciones con la distribución estacionaria del estado."
 author: "Mario Peñaloza"
-date: 2026-10-08
+date: 2026-10-10
 categories: [Econometría III, Espacio-estado]
 ---
 
-Los procesos autorregresivos y de medias móviles de Econometría II también son modelos de espacio-estado. Escribirlos en esa forma tiene dos usos: estimar un ciclo o un componente persistente dentro de un modelo mayor, y aprovechar el mismo algoritmo para toda la familia. Además, estos ejemplos muestran el papel de la matriz $\mat{R}$, que permite que el estado tenga más componentes que perturbaciones. Esta nota construye las matrices del AR(2) y del MA(1) y las verifica comparando el estado estacionario con las autocovarianzas conocidas.
+Los procesos autorregresivos y de medias móviles de Econometría II también son modelos de espacio-estado. Escribirlos en esa forma sirve para dos cosas: estimar un ciclo o un componente persistente dentro de un modelo mayor, y aprovechar el mismo algoritmo para toda la familia.
 
-Un AR(2), $y_t=\phi_1y_{t-1}+\phi_2y_{t-2}+\varepsilon_t$ con $\varepsilon_t\sim\N(0,\sigma^2)$, necesita dos valores pasados para generar el siguiente. El estado debe contener ambos.
+Estos ejemplos muestran además el papel de la matriz $\mat{R}$, que permite que el estado tenga más componentes que perturbaciones. La nota construye las matrices del AR(2) y del MA(1), y las verifica comparando el estado estacionario con autocovarianzas ya conocidas.
+
+## El AR(2)
+
+Un AR(2),
+
+$$
+y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \varepsilon_t,
+\qquad
+\varepsilon_t\sim\N(0,\sigma^2),
+$$
+
+necesita dos valores pasados para generar el siguiente. El estado debe contener ambos.
 
 ::: {#prp-ar2-espacio-estado}
 ## El AR(2) como modelo de espacio-estado
 
-Con $\vect{\alpha}_t=(y_t,y_{t-1})^{\top}$, el AR(2) es un modelo de espacio-estado con $\mat{Z}=(1,0)$, $\mat{H}=0$, $\mat{T}=\left(\begin{smallmatrix}\phi_1&\phi_2\\1&0\end{smallmatrix}\right)$, $\mat{R}=(1,0)^{\top}$ y $\mat{Q}=\sigma^2$, con $m=2$, $r=1$ y $N=1$.
+Con $\vect{\alpha}_t=(y_t,\ y_{t-1})^{\top}$, el AR(2) es un modelo de espacio-estado con
 
+$$
+\mat{Z} = \begin{pmatrix} 1 & 0 \end{pmatrix},
+\quad
+\mat{H} = 0,
+\quad
+\mat{T} = \begin{pmatrix} \phi_1 & \phi_2 \\ 1 & 0 \end{pmatrix},
+\quad
+\mat{R} = \begin{pmatrix} 1 \\ 0 \end{pmatrix},
+\quad
+\mat{Q} = \sigma^2,
+$$
+
+y dimensiones $m=2$, $r=1$ y $N=1$.
 :::
 
 ::: {.proof}
-La primera fila de la transición es $y_t=\phi_1y_{t-1}+\phi_2y_{t-2}+\varepsilon_t$, con $\mat{R}\eta_t=(\varepsilon_t,0)^{\top}$, y la segunda es la identidad $y_{t-1}=y_{t-1}$. La medición $y_t=\mat{Z}\vect{\alpha}_t$ extrae la primera componente sin error.
+La primera fila de la transición es la ecuación del AR(2), con $\mat{R}\eta_t=(\varepsilon_t,0)^{\top}$:
 
+$$
+y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \varepsilon_t.
+$$
+
+La segunda fila es la identidad $y_{t-1}=y_{t-1}$, que solo copia un valor. La medición $y_t=\mat{Z}\vect{\alpha}_t$ extrae la primera componente sin error.
 :::
 
-El estado tiene dos componentes pero solo una perturbación: la segunda ecuación no tiene ruido porque solo copia un valor. Por eso $\mat{R}$ es de $2\times1$, y la matriz $\mat{R}\mat{Q}\mat{R}^{\top}=\sigma^2\left(\begin{smallmatrix}1&0\\0&0\end{smallmatrix}\right)$ es singular. El modelo se verifica con la distribución estacionaria del estado de la nota de definición. Con $\vect{\phi}=(1.2,-0.35)$ y $\sigma^2=1$, la solución de $\mat{\Sigma}_{\alpha}=\mat{T}\mat{\Sigma}_{\alpha}\mat{T}^{\top}+\mat{R}\mat{Q}\mat{R}^{\top}$ es
-$$
-\mat{\Sigma}_{\alpha}=\begin{pmatrix}5.430&4.827\\4.827&5.430\end{pmatrix},
-$$
-que contiene $\gamma(0)=5.430$ en la diagonal y $\gamma(1)=4.827$ fuera de ella, los valores que se obtuvieron en Econometría II con las ecuaciones de Yule–Walker. La construcción es correcta, y los valores propios de $\mat{T}$, $0.7$ y $0.5$, son los inversos de las raíces del polinomio de rezagos. Si se añade un error de medición, $y_t=\mat{Z}\vect{\alpha}_t+\varepsilon_t$ con $\mat{H}=\sigma_\varepsilon^2>0$, el mismo estado describe un ciclo AR(2) observado con ruido, que es el uso habitual dentro de los modelos de tendencia y ciclo.
+El estado tiene dos componentes y una sola perturbación: la segunda ecuación no tiene ruido. Por eso $\mat{R}$ es de $2\times1$ y la matriz
 
-El proceso de medias móviles $y_t=\varepsilon_t+\theta\varepsilon_{t-1}$ depende de un choque pasado que no se observa y que debe formar parte del estado.
+$$
+\mat{R}\mat{Q}\mat{R}^{\top} = \sigma^2\begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}
+$$
+
+es singular.
+
+El modelo se verifica con la distribución estacionaria del estado de la [nota de definición](03-que-es-un-modelo-espacio-estado.qmd). Con $\vect{\phi}=(1.2,\ -0.35)$ y $\sigma^2=1$, la solución de la ecuación de Lyapunov
+
+$$
+\mat{\Sigma}_{\alpha} = \mat{T}\mat{\Sigma}_{\alpha}\mat{T}^{\top} + \mat{R}\mat{Q}\mat{R}^{\top}
+$$
+
+es
+
+$$
+\mat{\Sigma}_{\alpha} = \begin{pmatrix} 5.430 & 4.827 \\ 4.827 & 5.430 \end{pmatrix}.
+$$
+
+La diagonal contiene $\gamma(0)=5.430$ y la entrada fuera de ella, $\gamma(1)=4.827$: los valores que se obtuvieron en Econometría II con las ecuaciones de Yule–Walker. La construcción es correcta.
+
+Los valores propios de $\mat{T}$ son
+
+$$
+\lambda^2 - 1.2\lambda + 0.35 = 0
+\quad\Longrightarrow\quad
+\lambda\in\{0.7,\ 0.5\},
+$$
+
+que son los inversos de las raíces del polinomio de rezagos.
+
+Si se añade un error de medición, $y_t=\mat{Z}\vect{\alpha}_t+\varepsilon_t$ con $\mat{H}=\sigma_\varepsilon^2>0$, el mismo estado describe un ciclo AR(2) observado con ruido. Es el uso habitual dentro de los modelos de tendencia y ciclo.
+
+## El MA(1)
+
+El proceso de medias móviles $y_t=\varepsilon_t+\theta\varepsilon_{t-1}$ depende de un choque pasado que no se observa, y ese choque debe formar parte del estado.
 
 ::: {#prp-ma1-espacio-estado}
 ## El MA(1) como modelo de espacio-estado
 
-Con $\vect{\alpha}_t=(y_t,\theta\varepsilon_t)^{\top}$, el MA(1) es un modelo de espacio-estado con $\mat{Z}=(1,0)$, $\mat{H}=0$, $\mat{T}=\left(\begin{smallmatrix}0&1\\0&0\end{smallmatrix}\right)$, $\mat{R}=(1,\theta)^{\top}$ y $\mat{Q}=\sigma^2$, con $m=2$ y $r=1$.
+Con $\vect{\alpha}_t=(y_t,\ \theta\varepsilon_t)^{\top}$, el MA(1) es un modelo de espacio-estado con
 
+$$
+\mat{Z} = \begin{pmatrix} 1 & 0 \end{pmatrix},
+\quad
+\mat{H} = 0,
+\quad
+\mat{T} = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix},
+\quad
+\mat{R} = \begin{pmatrix} 1 \\ \theta \end{pmatrix},
+\quad
+\mat{Q} = \sigma^2,
+$$
+
+y dimensiones $m=2$ y $r=1$.
 :::
 
 ::: {.proof}
-La primera ecuación de transición es $y_t=0\cdot y_{t-1}+1\cdot\theta\varepsilon_{t-1}+\varepsilon_t$, que es el MA(1). La segunda es $\theta\varepsilon_t=0+\theta\varepsilon_t$, que define la segunda componente del estado con el mismo choque. La perturbación de transición entra en ambas componentes con coeficientes $(1,\theta)$, y por eso $\mat{R}$ no es una submatriz de la identidad.
+La primera ecuación de transición es
 
+$$
+y_t = 0\cdot y_{t-1} + 1\cdot\theta\varepsilon_{t-1} + \varepsilon_t,
+$$
+
+que es el MA(1). La segunda es
+
+$$
+\theta\varepsilon_t = 0 + \theta\,\varepsilon_t,
+$$
+
+y define la segunda componente del estado con el mismo choque. La perturbación entra en ambas componentes con coeficientes $(1,\theta)$, y por eso $\mat{R}$ no es una submatriz de la identidad.
 :::
 
-Aquí el papel de $\mat{R}$ es esencial: un único choque $\varepsilon_t$ alimenta las dos componentes del estado con pesos distintos, de modo que las dos perturbaciones de transición están perfectamente correlacionadas, y esto solo puede expresarse con $\mat{R}$ de rango uno y $\mat{Q}$ escalar. La matriz $\mat{T}$ es nilpotente, $\mat{T}^2=\mat{0}$, de modo que la solución estacionaria tiene solo dos términos: $\mat{\Sigma}_{\alpha}=\mat{R}\mat{Q}\mat{R}^{\top}+\mat{T}\mat{R}\mat{Q}\mat{R}^{\top}\mat{T}^{\top}=\sigma^2\left(\begin{smallmatrix}1+\theta^2&\theta\\\theta&\theta^2\end{smallmatrix}\right)$, porque $\mat{T}\mat{R}=(\theta,0)^{\top}$. La entrada $(1,1)$ es $\gamma(0)=\sigma^2(1+\theta^2)$, la covarianza entre $y_t$ y $\theta\varepsilon_t$ es $\theta\sigma^2$ y la varianza de $\theta\varepsilon_t$ es $\theta^2\sigma^2$. Con $\theta=0.5$ y $\sigma^2=1$ se obtiene $\left(\begin{smallmatrix}1.25&0.5\\0.5&0.25\end{smallmatrix}\right)$, consistente con $\gamma(0)=1.25$ del MA(1) de Econometría II.
+Aquí el papel de $\mat{R}$ es esencial. Un único choque $\varepsilon_t$ alimenta las dos componentes del estado con pesos distintos, así que las dos perturbaciones de transición están perfectamente correlacionadas. Eso solo puede expresarse con $\mat{R}$ de rango uno y $\mat{Q}$ escalar.
 
-La verificación de dimensiones es una forma de detectar errores de construcción. En el AR(2) y el MA(1) se cumple: $\mat{Z}$ es $1\times2$, $\mat{T}$ es $2\times2$, $\mat{R}$ es $2\times1$, $\mat{Q}$ es $1\times1$ y $\mat{H}$ es $1\times1$. El producto $\mat{R}\mat{Q}\mat{R}^{\top}$ es entonces $2\times2$, de la dimensión de $\mat{T}\mat{\Sigma}\mat{T}^{\top}$, y $\mat{Z}\mat{P}\mat{Z}^{\top}+\mat{H}$ es $1\times1$, la de la varianza de la observación. Un desajuste en cualquiera de esos productos indica una matriz mal armada.
+La matriz $\mat{T}$ es nilpotente, $\mat{T}^2=\mat{0}$, y la solución estacionaria tiene solo dos términos. Como $\mat{T}\mat{R}=(\theta,\ 0)^{\top}$,
+
+$$
+\begin{aligned}
+\mat{\Sigma}_{\alpha} &= \mat{R}\mat{Q}\mat{R}^{\top} + \mat{T}\mat{R}\mat{Q}\mat{R}^{\top}\mat{T}^{\top}, \\[6pt]
+\mat{\Sigma}_{\alpha} &= \sigma^2\begin{pmatrix} 1 & \theta \\ \theta & \theta^2 \end{pmatrix} + \sigma^2\begin{pmatrix} \theta^2 & 0 \\ 0 & 0 \end{pmatrix}, \\[6pt]
+\mat{\Sigma}_{\alpha} &= \sigma^2\begin{pmatrix} 1+\theta^2 & \theta \\ \theta & \theta^2 \end{pmatrix}.
+\end{aligned}
+$$
+
+La entrada $(1,1)$ es $\gamma(0)=\sigma^2(1+\theta^2)$; la covarianza entre $y_t$ y $\theta\varepsilon_t$ es $\theta\sigma^2$, y la varianza de $\theta\varepsilon_t$ es $\theta^2\sigma^2$.
+
+Con $\theta=0.5$ y $\sigma^2=1$ se obtiene
+
+$$
+\mat{\Sigma}_{\alpha} = \begin{pmatrix} 1.25 & 0.5 \\ 0.5 & 0.25 \end{pmatrix},
+$$
+
+consistente con $\gamma(0)=1.25$ del MA(1) de Econometría II.
+
+## Verificación de dimensiones
+
+Revisar las dimensiones es una forma barata de detectar errores de construcción. En el AR(2) y en el MA(1) se cumple:
+
+| Matriz | Dimensión |
+|:---|:---|
+| $\mat{Z}$ | $1\times2$ |
+| $\mat{T}$ | $2\times2$ |
+| $\mat{R}$ | $2\times1$ |
+| $\mat{Q}$ | $1\times1$ |
+| $\mat{H}$ | $1\times1$ |
+
+: Dimensiones de las matrices del AR(2) y del MA(1). {#tbl-dimensiones-ar-ma}
+
+Entonces $\mat{R}\mat{Q}\mat{R}^{\top}$ es de $2\times2$, la dimensión de $\mat{T}\mat{\Sigma}\mat{T}^{\top}$, y $\mat{Z}\mat{P}\mat{Z}^{\top}+\mat{H}$ es de $1\times1$, la de la varianza de la observación. Un desajuste en cualquiera de esos productos indica una matriz mal armada.
