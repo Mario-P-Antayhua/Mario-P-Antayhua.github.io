@@ -34,7 +34,7 @@ Con números, para dos exponenciales con tasas $\lambda_0=2$ y $\lambda=1$, la d
 ::: {#def-identificacion}
 ## Identificación
 
-El modelo $\{f(\cdot;\vect{\theta}):\vect{\theta}\in\Theta\}$ está ***identificado*** en $\vect{\theta}_0$ si, para todo $\vect{\theta}\in\Theta$ con $\vect{\theta}\neq\vect{\theta}_0$, $\Prob_{\vect{\theta}_0}\bigl(f(X;\vect{\theta})\neq f(X;\vect{\theta}_0)\bigr)>0$.
+El modelo $\{f(\cdot;\vect{\theta}):\vect{\theta}\in\Theta\}$ está ***identificado*** en $\vect{\theta}_0$ si, para todo $\vect{\theta}\in\Theta$ con $\vect{\theta}\neq\vect{\theta}_0$, $\mathbb{P}_{\vect{\theta}_0}\bigl(f(X;\vect{\theta})\neq f(X;\vect{\theta}_0)\bigr)>0$.
 
 :::
 

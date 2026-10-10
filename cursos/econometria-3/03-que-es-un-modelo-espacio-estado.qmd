@@ -2,73 +2,268 @@
 title: "Qué es un modelo de espacio-estado"
 description: "La definición del modelo de espacio-estado lineal gaussiano con sus ecuaciones de medición y de transición, la normalidad conjunta del sistema, la no unicidad por cambio de base y la distribución estacionaria del estado mediante el operador vec y el producto de Kronecker."
 author: "Mario Peñaloza"
-date: 2026-10-08
+date: 2026-10-10
 categories: [Econometría III, Espacio-estado]
 ---
 
-Una serie de tiempo observada es la parte visible de un sistema más grande, cuyos componentes no se observan pero evolucionan según reglas. El modelo de espacio-estado formaliza esa idea con dos ecuaciones: una que describe cómo se mueve el vector de estado, que reúne las magnitudes no observadas, y otra que describe cómo lo observado depende del estado. Con esa estructura es posible estimar el estado a medida que llegan los datos, que es lo que hace el filtro de Kalman. Esta nota define el modelo, muestra que sus variables forman un vector normal, prueba que las matrices del modelo no están únicamente determinadas por la distribución de los datos, y calcula la distribución estacionaria del estado.
+Una serie de tiempo es la parte visible de un sistema más grande, cuyos componentes no se observan pero evolucionan según reglas. El modelo de espacio-estado formaliza esa idea con dos ecuaciones: una describe cómo se mueve el vector de estado, que reúne las magnitudes no observadas, y otra describe cómo lo observado depende del estado.
+
+Con esa estructura se puede estimar el estado a medida que llegan los datos, que es lo que hace el filtro de Kalman. Esta nota define el modelo, muestra que sus variables forman un vector normal, prueba que las matrices no quedan determinadas por la distribución de los datos y calcula la distribución estacionaria del estado.
+
+## El modelo
 
 ::: {#def-espacio-estado}
 ## Modelo de espacio-estado lineal gaussiano
 
-Sea $\vect{y}_t\in\mathbb{R}^N$ el vector observado en $t=1,\ldots,n$ y $\vect{\alpha}_t\in\mathbb{R}^m$ el ***vector de estado***. El modelo consiste en una ***ecuación de medición*** y una ***ecuación de transición***,
-$$
-\vect{y}_t=\mat{Z}_t\vect{\alpha}_t+\vect{d}_t+\vect{\varepsilon}_t,\qquad\vect{\varepsilon}_t\sim\N_N(\vect{0},\mat{H}_t),
-$$ {#eq-medicion}
-$$
-\vect{\alpha}_t=\mat{T}_t\vect{\alpha}_{t-1}+\vect{c}_t+\mat{R}_t\vect{\eta}_t,\qquad\vect{\eta}_t\sim\N_r(\vect{0},\mat{Q}_t),
-$$ {#eq-transicion}
-con $\mat{Z}_t\in\mathbb{R}^{N\times m}$, $\vect{d}_t\in\mathbb{R}^N$, $\mat{H}_t\in\mathbb{R}^{N\times N}$, $\mat{T}_t\in\mathbb{R}^{m\times m}$, $\vect{c}_t\in\mathbb{R}^m$, $\mat{R}_t\in\mathbb{R}^{m\times r}$ y $\mat{Q}_t\in\mathbb{R}^{r\times r}$ conocidas (o dependientes de parámetros), y el estado inicial $\vect{\alpha}_0\sim\N_m(\vect{a}_0,\mat{P}_0)$. Las variables $\vect{\alpha}_0$, $\{\vect{\varepsilon}_t\}$ y $\{\vect{\eta}_t\}$ son mutuamente independientes. Se llaman ***perturbación de medición*** a $\vect{\varepsilon}_t$ y ***perturbación de transición*** a $\vect{\eta}_t$.
+Sea $\vect{y}_t\in\R^N$ el vector observado en $t=1,\ldots,n$ y sea $\vect{\alpha}_t\in\R^m$ el ***vector de estado***. El modelo tiene una ***ecuación de medición*** y una ***ecuación de transición***:
 
+$$
+\vect{y}_t = \mat{Z}_t\vect{\alpha}_t + \vect{d}_t + \vect{\varepsilon}_t,
+\qquad
+\vect{\varepsilon}_t \sim \N_N(\vect{0},\mat{H}_t),
+$$ {#eq-medicion}
+
+$$
+\vect{\alpha}_t = \mat{T}_t\vect{\alpha}_{t-1} + \vect{c}_t + \mat{R}_t\vect{\eta}_t,
+\qquad
+\vect{\eta}_t \sim \N_r(\vect{0},\mat{Q}_t).
+$$ {#eq-transicion}
+
+Las matrices son conocidas (o dependen de parámetros):
+
+(i) Medición: $\mat{Z}_t\in\R^{N\times m}$, $\vect{d}_t\in\R^N$ y $\mat{H}_t\in\R^{N\times N}$.
+
+(ii) Transición: $\mat{T}_t\in\R^{m\times m}$, $\vect{c}_t\in\R^m$, $\mat{R}_t\in\R^{m\times r}$ y $\mat{Q}_t\in\R^{r\times r}$.
+
+(iii) Estado inicial: $\vect{\alpha}_0\sim\N_m(\vect{a}_0,\mat{P}_0)$, independiente de $\{\vect{\varepsilon}_t\}$ y de $\{\vect{\eta}_t\}$, que a su vez son independientes entre sí.
+
+A $\vect{\varepsilon}_t$ se le llama ***perturbación de medición*** y a $\vect{\eta}_t$, ***perturbación de transición***.
 :::
 
-La matriz $\mat{R}_t$ permite que el número de perturbaciones $r$ sea menor que el número de estados $m$, como ocurre cuando una parte del estado es una identidad contable, por ejemplo el valor rezagado de otra componente. Se dice que el modelo es ***invariante*** si $\mat{Z}_t$, $\mat{T}_t$, $\mat{R}_t$, $\mat{H}_t$, $\mat{Q}_t$, $\vect{c}_t$ y $\vect{d}_t$ no dependen de $t$. Hay una convención alternativa en la que la ecuación de transición se escribe adelantada un período, $\vect{\alpha}_{t+1}=\mat{T}_t\vect{\alpha}_t+\mat{R}_t\vect{\eta}_t$ con $\vect{y}_t=\mat{Z}_t\vect{\alpha}_t+\vect{\varepsilon}_t$. Ambas describen el mismo proceso con distinto índice para el estado. La diferencia solo tiene consecuencias si las perturbaciones de medición y de transición pueden estar correlacionadas, y en la manera de definir la ganancia del filtro. Aquí se usa la forma contemporánea, en la que el estado de la ecuación de medición es el mismo que acaba de generarse en la de transición.
+La matriz $\mat{R}_t$ permite que el número de perturbaciones $r$ sea menor que el de estados $m$. Ocurre cuando una parte del estado es una identidad contable, por ejemplo el valor rezagado de otra componente.
 
-Todas las variables del sistema son combinaciones lineales de variables normales independientes, y por eso el vector que reúne a estados y observaciones es normal.
+El modelo es ***invariante*** si ninguna de las matrices ni de los vectores $\vect{c}_t$ y $\vect{d}_t$ depende de $t$.
+
+Hay una convención alternativa que adelanta un periodo la ecuación de transición:
+
+$$
+\vect{\alpha}_{t+1} = \mat{T}_t\vect{\alpha}_t + \mat{R}_t\vect{\eta}_t,
+\qquad
+\vect{y}_t = \mat{Z}_t\vect{\alpha}_t + \vect{\varepsilon}_t.
+$$
+
+Describe el mismo proceso con otro índice para el estado. La diferencia solo importa si las perturbaciones de medición y de transición pueden estar correlacionadas, y en cómo se define la ganancia del filtro. Aquí se usa la forma contemporánea, en la que el estado de la ecuación de medición es el que acaba de generarse en la de transición.
+
+## Normalidad conjunta
+
+Todas las variables del sistema son combinaciones lineales de variables normales independientes. Por eso el vector que reúne estados y observaciones es normal.
 
 ::: {#prp-normalidad-conjunta}
 ## Normalidad conjunta del sistema
 
-Para el modelo de espacio-estado, el vector $(\vect{\alpha}_0,\vect{\alpha}_1,\ldots,\vect{\alpha}_n,\vect{y}_1,\ldots,\vect{y}_n)$ tiene distribución normal multivariante. En el modelo invariante, $\vect{\alpha}_t=\mat{T}^t\vect{\alpha}_0+\sum_{j=1}^t\mat{T}^{t-j}(\vect{c}+\mat{R}\vect{\eta}_j)$ para $t\geq1$.
+Para el modelo de espacio-estado, el vector
 
+$$
+(\vect{\alpha}_0,\vect{\alpha}_1,\ldots,\vect{\alpha}_n,\vect{y}_1,\ldots,\vect{y}_n)
+$$
+
+tiene distribución normal multivariante. En el modelo invariante, para $t\geq1$,
+
+$$
+\vect{\alpha}_t = \mat{T}^t\vect{\alpha}_0 + \sum_{j=1}^{t}\mat{T}^{t-j}\bigl(\vect{c}+\mat{R}\vect{\eta}_j\bigr).
+$$
 :::
+
+La demostración tiene dos partes: el vector es una transformación afín de variables normales independientes, y la fórmula del modelo invariante sale de iterar la transición.
 
 ::: {.proof}
-Por inducción, cada $\vect{\alpha}_t$ es una función afín de $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_t)$: para $t=1$ es la ecuación de transición, y si lo es $\vect{\alpha}_{t-1}$, también lo es $\vect{\alpha}_t=\mat{T}_t\vect{\alpha}_{t-1}+\vect{c}_t+\mat{R}_t\vect{\eta}_t$. Entonces cada $\vect{y}_t$ es afín en $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_t,\vect{\varepsilon}_t)$. Todo el vector es entonces una transformación afín de $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_n,\vect{\varepsilon}_1,\ldots,\vect{\varepsilon}_n)$, que es normal con componentes independientes. Entonces el vector completo es una combinación lineal afín de variables normales estándar independientes, que es la definición de normalidad conjunta (generalizada cuando la matriz de covarianzas es singular, como ocurre si algún $\mat{R}_t$ tiene menos columnas que filas). La fórmula del modelo invariante se obtiene iterando la ecuación de transición.
+Se prueba por inducción que cada $\vect{\alpha}_t$ es una función afín de $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_t)$. Para $t=1$ es la ecuación de transición. Si lo es $\vect{\alpha}_{t-1}$, también lo es
 
+$$
+\vect{\alpha}_t = \mat{T}_t\vect{\alpha}_{t-1} + \vect{c}_t + \mat{R}_t\vect{\eta}_t.
+$$
+
+Entonces cada $\vect{y}_t$ es afín en $(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_t,\vect{\varepsilon}_t)$, y el vector completo es una transformación afín de
+
+$$
+(\vect{\alpha}_0,\vect{\eta}_1,\ldots,\vect{\eta}_n,\vect{\varepsilon}_1,\ldots,\vect{\varepsilon}_n),
+$$
+
+que es normal con componentes independientes. Una combinación afín de variables normales independientes es normal, que es la definición de normalidad conjunta. La definición vale también cuando la matriz de covarianzas es singular, como ocurre si algún $\mat{R}_t$ tiene menos columnas que filas.
+
+Para la fórmula del modelo invariante se itera la transición:
+
+$$
+\begin{aligned}
+\vect{\alpha}_1 &= \mat{T}\vect{\alpha}_0 + \vect{c} + \mat{R}\vect{\eta}_1, \\[6pt]
+\vect{\alpha}_2 &= \mat{T}^2\vect{\alpha}_0 + \mat{T}(\vect{c}+\mat{R}\vect{\eta}_1) + (\vect{c}+\mat{R}\vect{\eta}_2), \\[6pt]
+\vect{\alpha}_t &= \mat{T}^t\vect{\alpha}_0 + \sum_{j=1}^{t}\mat{T}^{t-j}\bigl(\vect{c}+\mat{R}\vect{\eta}_j\bigr).
+\end{aligned}
+$$
 :::
 
-Entre las consecuencias de la normalidad conjunta está que las distribuciones condicionales del estado dados los datos son normales, y que sus medias son las proyecciones lineales; esa es la base de la derivación del filtro. Otra consecuencia es que la ley de las observaciones no determina las matrices del modelo.
+Entre las consecuencias de la normalidad conjunta está que las distribuciones del estado condicionadas a los datos son normales y que sus medias son proyecciones lineales. Esa es la base de la derivación del filtro.
+
+## Las matrices no se identifican
+
+La normalidad trae otra consecuencia: la distribución de las observaciones no determina las matrices del modelo.
 
 ::: {#prp-no-unicidad}
 ## No unicidad por cambio de base
 
-Sea $\mat{S}\in\mathbb{R}^{m\times m}$ invertible. El modelo con estado $\vect{\alpha}^*_t=\mat{S}\vect{\alpha}_t$ y matrices $\mat{Z}^*_t=\mat{Z}_t\mat{S}^{-1}$, $\mat{T}^*_t=\mat{S}\mat{T}_t\mat{S}^{-1}$, $\vect{c}^*_t=\mat{S}\vect{c}_t$, $\mat{R}^*_t=\mat{S}\mat{R}_t$, $\vect{a}^*_0=\mat{S}\vect{a}_0$, $\mat{P}^*_0=\mat{S}\mat{P}_0\mat{S}^{\top}$, y las mismas $\vect{d}_t,\mat{H}_t,\mat{Q}_t$, genera la misma distribución conjunta de $(\vect{y}_1,\ldots,\vect{y}_n)$.
+Sea $\mat{S}\in\R^{m\times m}$ invertible. El modelo con estado $\vect{\alpha}^*_t=\mat{S}\vect{\alpha}_t$ y matrices
 
+$$
+\begin{aligned}
+\mat{Z}^*_t &= \mat{Z}_t\mat{S}^{-1}, & \mat{T}^*_t &= \mat{S}\mat{T}_t\mat{S}^{-1}, & \vect{c}^*_t &= \mat{S}\vect{c}_t, \\[6pt]
+\mat{R}^*_t &= \mat{S}\mat{R}_t, & \vect{a}^*_0 &= \mat{S}\vect{a}_0, & \mat{P}^*_0 &= \mat{S}\mat{P}_0\mat{S}^{\top},
+\end{aligned}
+$$
+
+y con las mismas $\vect{d}_t$, $\mat{H}_t$ y $\mat{Q}_t$, genera la misma distribución conjunta de $(\vect{y}_1,\ldots,\vect{y}_n)$.
 :::
+
+La idea es que $\mat{S}$ solo cambia las unidades en que se mide el estado.
 
 ::: {.proof}
-Se multiplica la ecuación de transición por $\mat{S}$: $\vect{\alpha}^*_t=\mat{S}\mat{T}_t\mat{S}^{-1}\vect{\alpha}^*_{t-1}+\mat{S}\vect{c}_t+\mat{S}\mat{R}_t\vect{\eta}_t$, que es la transición con las matrices con asterisco. En la medición, $\mat{Z}^*_t\vect{\alpha}^*_t=\mat{Z}_t\mat{S}^{-1}\mat{S}\vect{\alpha}_t=\mat{Z}_t\vect{\alpha}_t$. El estado inicial $\vect{\alpha}^*_0=\mat{S}\vect{\alpha}_0$ es $\N(\mat{S}\vect{a}_0,\mat{S}\mat{P}_0\mat{S}^{\top})$ por la regla de transformaciones lineales de la normal. Las perturbaciones son las mismas, de modo que las observaciones $\vect{y}_t$ son las mismas variables aleatorias.
+Se multiplica la ecuación de transición por $\mat{S}$ y se inserta $\mat{S}^{-1}\mat{S}=\Imat$:
 
+$$
+\begin{aligned}
+\vect{\alpha}^*_t &= \mat{S}\vect{\alpha}_t, \\[6pt]
+\vect{\alpha}^*_t &= \mat{S}\mat{T}_t\mat{S}^{-1}\,\mat{S}\vect{\alpha}_{t-1} + \mat{S}\vect{c}_t + \mat{S}\mat{R}_t\vect{\eta}_t, \\[6pt]
+\vect{\alpha}^*_t &= \mat{T}^*_t\vect{\alpha}^*_{t-1} + \vect{c}^*_t + \mat{R}^*_t\vect{\eta}_t.
+\end{aligned}
+$$
+
+En la ecuación de medición, el producto no cambia:
+
+$$
+\mat{Z}^*_t\vect{\alpha}^*_t = \mat{Z}_t\mat{S}^{-1}\mat{S}\vect{\alpha}_t = \mat{Z}_t\vect{\alpha}_t.
+$$
+
+El estado inicial $\vect{\alpha}^*_0=\mat{S}\vect{\alpha}_0$ es normal con media $\mat{S}\vect{a}_0$ y covarianza $\mat{S}\mat{P}_0\mat{S}^{\top}$, por la regla de transformaciones lineales de la normal. Las perturbaciones son las mismas, y por tanto las observaciones $\vect{y}_t$ son las mismas variables aleatorias.
 :::
 
-La consecuencia es que las matrices del modelo no se identifican a partir de los datos sin restricciones adicionales, y que cualquier especificación debe fijar la forma del estado. En los modelos de componentes no observables, la forma se fija por interpretación: el primer estado es el nivel, el segundo la pendiente, etcétera. Con números, el modelo de nivel local con $\mat{Z}=1$, $\mat{T}=1$ y $\mat{S}=2$ da el estado $\alpha^*_t=2\alpha_t$ con $Z^*=1/2$, $T^*=1$ y $R^*=2$: ambos generan las mismas observaciones, pero el segundo mide el nivel en otra unidad.
+Las matrices del modelo no se identifican a partir de los datos sin restricciones adicionales, y toda especificación debe fijar la forma del estado. En los modelos de componentes no observables la forma se fija por interpretación: el primer estado es el nivel, el segundo la pendiente, y así sucesivamente.
 
-Cuando el sistema es invariante y estable, el estado tiene una distribución estacionaria que se calcula en forma cerrada con los resultados de la [Nota “El producto de Kronecker y el operador vec”](../matematica-2/10-producto-de-kronecker-y-operador-vec.qmd) y de la [Nota “Valores propios, triangularización y teorema espectral”](../matematica-2/11-valores-propios-y-teorema-espectral.qmd).
+Un caso numérico lo ilustra. En el modelo de nivel local, $Z=T=1$ y $R=1$. Con $S=2$ se obtiene
+
+$$
+\alpha^*_t = 2\,\alpha_t,
+\qquad
+Z^* = \tfrac12,
+\qquad
+T^* = 1,
+\qquad
+R^* = 2.
+$$
+
+Los dos modelos generan las mismas observaciones. El segundo mide el nivel en otra unidad.
+
+## La distribución estacionaria del estado
+
+Cuando el sistema es invariante y estable, el estado tiene una distribución estacionaria en forma cerrada. Se calcula con los resultados de la [nota sobre el producto de Kronecker y el operador vec](../matematica-2/10-producto-de-kronecker-y-operador-vec.qmd) y de la [nota sobre valores propios y teorema espectral](../matematica-2/11-valores-propios-y-teorema-espectral.qmd).
 
 ::: {#thm-estado-estacionario}
 ## Distribución estacionaria del estado
 
-Sea el sistema invariante con todos los valores propios de $\mat{T}$ de módulo menor que uno. Entonces el proceso $\vect{\alpha}_t=\vect{\mu}+\sum_{j\geq0}\mat{T}^j\mat{R}\vect{\eta}_{t-j}$, con $\vect{\mu}=(\Imat-\mat{T})^{-1}\vect{c}$, es la única solución estacionaria de la ecuación de transición, con media $\vect{\mu}$ y matriz de covarianzas $\mat{\Sigma}_{\alpha}$ solución de $\mat{\Sigma}_{\alpha}=\mat{T}\mat{\Sigma}_{\alpha}\mat{T}^{\top}+\mat{R}\mat{Q}\mat{R}^{\top}$, es decir,
-$$
-\vecop(\mat{\Sigma}_{\alpha})=(\Imat-\mat{T}\otimes\mat{T})^{-1}\vecop(\mat{R}\mat{Q}\mat{R}^{\top}).
-$$ {#eq-lyapunov-estado}
+Sea el sistema invariante, con todos los valores propios de $\mat{T}$ de módulo menor que uno, y sea $\vect{\mu}=(\Imat-\mat{T})^{-1}\vect{c}$. Entonces:
 
+(i) El proceso $\vect{\alpha}_t=\vect{\mu}+\sum_{j\geq0}\mat{T}^j\mat{R}\vect{\eta}_{t-j}$ es la única solución estacionaria de la ecuación de transición.
+
+(ii) Tiene media $\vect{\mu}$ y matriz de covarianzas $\mat{\Sigma}_{\alpha}$, solución de la ecuación de Lyapunov
+
+$$
+\mat{\Sigma}_{\alpha} = \mat{T}\mat{\Sigma}_{\alpha}\mat{T}^{\top} + \mat{R}\mat{Q}\mat{R}^{\top},
+$$
+
+que equivale a
+
+$$
+\vecop(\mat{\Sigma}_{\alpha}) = (\Imat-\mat{T}\otimes\mat{T})^{-1}\vecop(\mat{R}\mat{Q}\mat{R}^{\top}).
+$$ {#eq-lyapunov-estado}
 :::
+
+La demostración verifica que la serie converge y resuelve la transición, prueba la unicidad y calcula los dos primeros momentos.
 
 ::: {.proof}
-Por el teorema de potencias de una matriz, las entradas de $\mat{T}^j$ decaen como $C\rho^j$ con $\rho<1$, de modo que los coeficientes de la serie son absolutamente sumables y la serie converge en media cuadrática. Aplicando $(\Imat-\mat{T}L)$ a la serie se recupera $\mat{R}\vect{\eta}_t$, y el desplazamiento por $\vect{\mu}$ cumple $\vect{\mu}=\mat{T}\vect{\mu}+\vect{c}$, de modo que la serie es una solución. Si hubiera otra con varianza acotada, la diferencia $\vect{D}_t$ cumpliría $\vect{D}_t=\mat{T}\vect{D}_{t-1}=\mat{T}^n\vect{D}_{t-n}\to\vect{0}$. La media de $\vect{\alpha}_t$ es $\vect{\mu}$ y su covarianza es $\mat{\Sigma}_{\alpha}=\sum_{j\geq0}\mat{T}^j\mat{R}\mat{Q}\mat{R}^{\top}(\mat{T}^{\top})^j$, porque los $\vect{\eta}$ no están correlacionados entre períodos. De allí, $\mat{T}\mat{\Sigma}_{\alpha}\mat{T}^{\top}+\mat{R}\mat{Q}\mat{R}^{\top}=\sum_{j\geq1}\mat{T}^j\mat{R}\mat{Q}\mat{R}^{\top}(\mat{T}^{\top})^j+\mat{R}\mat{Q}\mat{R}^{\top}=\mat{\Sigma}_{\alpha}$. Aplicando $\vecop$ y la regla $\vecop(\mat{T}\mat{\Sigma}\mat{T}^{\top})=(\mat{T}\otimes\mat{T})\vecop(\mat{\Sigma})$ del producto de Kronecker, $(\Imat-\mat{T}\otimes\mat{T})\vecop(\mat{\Sigma}_{\alpha})=\vecop(\mat{R}\mat{Q}\mat{R}^{\top})$. La matriz $\Imat-\mat{T}\otimes\mat{T}$ es invertible porque los valores propios de $\mat{T}\otimes\mat{T}$ son los productos $\lambda_i\lambda_j$, de módulo menor que uno.
+Por el teorema de potencias de una matriz, las entradas de $\mat{T}^j$ decaen como $C\rho^j$ con $\rho<1$. Los coeficientes de la serie son entonces absolutamente sumables y la serie converge en media cuadrática.
 
+Para ver que resuelve la transición, se separa el primer término. Con $\vect{\mu}=\mat{T}\vect{\mu}+\vect{c}$,
+
+$$
+\begin{aligned}
+\vect{\alpha}_t - \vect{\mu} &= \mat{R}\vect{\eta}_t + \mat{T}\sum_{j\geq0}\mat{T}^j\mat{R}\vect{\eta}_{t-1-j}, \\[6pt]
+\vect{\alpha}_t - \vect{\mu} &= \mat{R}\vect{\eta}_t + \mat{T}\,(\vect{\alpha}_{t-1}-\vect{\mu}), \\[6pt]
+\vect{\alpha}_t &= \mat{T}\vect{\alpha}_{t-1} + (\Imat-\mat{T})\vect{\mu} + \mat{R}\vect{\eta}_t = \mat{T}\vect{\alpha}_{t-1} + \vect{c} + \mat{R}\vect{\eta}_t.
+\end{aligned}
+$$
+
+Para la unicidad, si hubiera otra solución con varianza acotada, la diferencia $\vect{D}_t$ cumpliría
+
+$$
+\vect{D}_t = \mat{T}\vect{D}_{t-1} = \mat{T}^n\vect{D}_{t-n} \longrightarrow \vect{0},
+$$
+
+y las dos soluciones coincidirían.
+
+Los momentos salen de la serie. La media es $\vect{\mu}$. Como los $\vect{\eta}$ no están correlacionados entre periodos, la covarianza es
+
+$$
+\mat{\Sigma}_{\alpha} = \sum_{j\geq0}\mat{T}^j\mat{R}\mat{Q}\mat{R}^{\top}(\mat{T}^{\top})^j.
+$$
+
+Al separar el término $j=0$ se obtiene la ecuación de Lyapunov:
+
+$$
+\begin{aligned}
+\mat{T}\mat{\Sigma}_{\alpha}\mat{T}^{\top} + \mat{R}\mat{Q}\mat{R}^{\top} &= \sum_{j\geq1}\mat{T}^j\mat{R}\mat{Q}\mat{R}^{\top}(\mat{T}^{\top})^j + \mat{R}\mat{Q}\mat{R}^{\top}, \\[6pt]
+\mat{T}\mat{\Sigma}_{\alpha}\mat{T}^{\top} + \mat{R}\mat{Q}\mat{R}^{\top} &= \mat{\Sigma}_{\alpha}.
+\end{aligned}
+$$
+
+Se aplica $\vecop$ con la regla del producto de Kronecker,
+
+$$
+\vecop(\mat{T}\mat{\Sigma}\mat{T}^{\top}) = (\mat{T}\otimes\mat{T})\vecop(\mat{\Sigma}),
+$$
+
+y resulta
+
+$$
+(\Imat-\mat{T}\otimes\mat{T})\,\vecop(\mat{\Sigma}_{\alpha}) = \vecop(\mat{R}\mat{Q}\mat{R}^{\top}).
+$$
+
+La matriz $\Imat-\mat{T}\otimes\mat{T}$ es invertible, porque los valores propios de $\mat{T}\otimes\mat{T}$ son los productos $\lambda_i\lambda_j$, todos de módulo menor que uno y distintos de uno.
 :::
 
-Con números, para el estado escalar con $T=0.8$, $R=1$ y $Q=1$, $\Sigma_{\alpha}=1/(1-0.64)=2.778$, la varianza de un AR(1). Para el estado de dos componentes con $\mat{T}=\left(\begin{smallmatrix}0.5&0.2\\0&0.3\end{smallmatrix}\right)$, $\mat{R}=\Imat$ y $\mat{Q}=\mathrm{diag}(1,0.5)$, los valores propios son $0.5$ y $0.3$, y la solución de @eq-lyapunov-estado es $\mat{\Sigma}_{\alpha}=\left(\begin{smallmatrix}1.373&0.0388\\0.0388&0.5495\end{smallmatrix}\right)$. Se verifica a mano: la segunda componente es un AR(1) independiente de la primera, con varianza $0.5/(1-0.09)=0.5495$, y la covarianza satisface $\Sigma_{12}(1-0.15)=0.2\cdot0.3\cdot\Sigma_{22}$, que da $0.0388$.
+Dos casos numéricos. Para un estado escalar con $T=0.8$, $R=1$ y $Q=1$, la varianza de un AR(1) es
+
+$$
+\Sigma_{\alpha} = \frac{1}{1-0.64} = 2.778.
+$$
+
+Para un estado de dos componentes,
+
+$$
+\mat{T} = \begin{pmatrix} 0.5 & 0.2 \\ 0 & 0.3 \end{pmatrix},
+\qquad
+\mat{R} = \Imat,
+\qquad
+\mat{Q} = \begin{pmatrix} 1 & 0 \\ 0 & 0.5 \end{pmatrix},
+$$
+
+los valores propios son $0.5$ y $0.3$, y la solución de la @eq-lyapunov-estado es
+
+$$
+\mat{\Sigma}_{\alpha} = \begin{pmatrix} 1.373 & 0.0388 \\ 0.0388 & 0.5495 \end{pmatrix}.
+$$
+
+Se verifica a mano. La segunda componente es un AR(1) independiente de la primera, con varianza $0.5/(1-0.09)=0.5495$. La covarianza satisface
+
+$$
+\Sigma_{12}\,(1-0.15) = 0.2\cdot0.3\cdot\Sigma_{22},
+$$
+
+que da $\Sigma_{12}=0.0388$.
