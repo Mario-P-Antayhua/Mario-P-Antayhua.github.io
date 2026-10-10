@@ -64,7 +64,6 @@ h2 { margin-top: 2.6rem; padding-bottom: 0.35rem; border-bottom: 2px solid $polv
 h3 { margin-top: 2rem; }
 .quarto-title-block .quarto-title h1.title { color: $navy; }
 .quarto-title-block .quarto-title-meta-heading { color: $teal; }
-.page-columns .content > p, .content > p { max-width: 70ch; }
 
 // Cajas de definiciones, teoremas y demás: todas en azul marino, con la palabra del título como diferencia
 .theorem, .lemma, .corollary, .proposition, .definition, .example, .exercise, .remark {
@@ -89,6 +88,17 @@ h3 { margin-top: 2rem; }
 // La demostración va fuera de la caja, sin color
 .proof { margin: 1.6rem 0 2.4rem; padding-left: 0.2rem; }
 .proof > p:first-child > em:first-child, .proof > p:first-child > .proof-title { font-style: normal; font-weight: 600; color: $navy; }
+
+// Condiciones de un enunciado, una por línea: (i), (ii), (iii) y (a), (b), (c)
+ol[type="i"], ol[type="a"], ol[type="I"], ol[type="A"] { list-style: none; padding-left: 0; margin: 1rem 0 1.2rem; counter-reset: cond; }
+ol[type="i"] > li, ol[type="a"] > li, ol[type="I"] > li, ol[type="A"] > li { counter-increment: cond; position: relative; padding-left: 2.8rem; margin-bottom: 0.55rem; }
+ol[type="i"] > li::before { content: "(" counter(cond, lower-roman) ")"; }
+ol[type="a"] > li::before { content: "(" counter(cond, lower-alpha) ")"; }
+ol[type="I"] > li::before { content: "(" counter(cond, upper-roman) ")"; }
+ol[type="A"] > li::before { content: "(" counter(cond, upper-alpha) ")"; }
+ol[type="i"] > li::before, ol[type="a"] > li::before, ol[type="I"] > li::before, ol[type="A"] > li::before { position: absolute; left: 0.3rem; color: $navy; font-family: $font-family-sans-serif; font-size: 0.95em; }
+ol[type] > li > p { margin-bottom: 0.4rem; }
+ol[type] > li > p:last-child, ul > li > p:last-child { margin-bottom: 0; }
 
 // Ecuaciones con aire
 .math.display, mjx-container[display="true"] { margin: 1.5rem 0 !important; overflow-x: auto; overflow-y: hidden; }

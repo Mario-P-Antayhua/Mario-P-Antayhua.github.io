@@ -2,37 +2,185 @@
 title: "Orígenes del filtro de Kalman"
 description: "El recorrido histórico desde los mínimos cuadrados hasta el filtro de Kalman y su adopción en la econometría, y la demostración de que los mínimos cuadrados recursivos son un filtro de Kalman con estado constante."
 author: "Mario Peñaloza"
-date: 2026-10-08
+date: 2026-10-10
 categories: [Econometría III, Espacio-estado]
 ---
 
-El filtro de Kalman suele presentarse como una fórmula que aparece de pronto. Su historia es más gradual: es la culminación de una línea de problemas de estimación que empieza con la astronomía, pasa por la teoría de señales y llega a la economía. Conocer ese recorrido ayuda a ver qué problema resuelve el filtro y qué aportó la econometría, y la pregunta con que cierra esta nota es si el uso del filtro en economía fue una adaptación de una técnica ajena o una invención propia.
+El filtro de Kalman suele presentarse como una fórmula que aparece de pronto. Su historia es más gradual: culmina una línea de problemas de estimación que empieza con la astronomía, pasa por la teoría de señales y llega a la economía.
 
-A comienzos del siglo XIX, Legendre y Gauss propusieron elegir los parámetros de una órbita minimizando la suma de los cuadrados de los errores entre las posiciones observadas y las calculadas. El método de mínimos cuadrados resolvía un problema de estimación con todas las observaciones a la vez, y cada nueva observación obligaba a recalcular desde cero. Gauss mostró además que, si los errores son normales, el método entrega los valores más probables de los parámetros, es decir, coincide con la máxima verosimilitud.
+Conocer ese recorrido ayuda a ver qué problema resuelve el filtro. También deja una pregunta: ¿fue el uso del filtro en economía una adaptación de una técnica ajena o una invención propia?
 
-En la década de 1940, Wiener, y por separado Kolmogorov, resolvieron un problema distinto: estimar una señal estacionaria escondida en ruido, usando el pasado infinito de las observaciones. La solución de Wiener es un filtro lineal cuyos coeficientes resuelven una ecuación integral que depende de las autocovarianzas, y exige que las señales sean estacionarias y que el pasado sea completo. No sirve para señales que cambian de propiedades ni para estimar en tiempo real con una memoria que crece.
+## De los mínimos cuadrados al filtro
 
-En 1960, Kalman resolvió el mismo problema con una idea distinta. En lugar de resumir la dinámica con una autocovarianza, la describió con un sistema de ecuaciones en diferencias para un vector de estado, y en lugar de usar todo el pasado en cada paso, observó que la mejor estimación actual, junto con su matriz de covarianza, resume todo el pasado. Cada observación nueva actualiza esos dos objetos con unas pocas operaciones matriciales. Esa recursión admite sistemas que cambian en el tiempo y no exige estacionariedad, y fue la que se incorporó a los sistemas de guiado y navegación de la industria aeroespacial en los años sesenta.
+Tres momentos ordenan la historia. Cada uno resolvió un problema y dejó otro abierto.
 
-En la econometría, el filtro llegó a partir de los años setenta y se consolidó en los ochenta, con dos usos. El primero, la regresión con coeficientes que varían en el tiempo, donde el estado es el vector de coeficientes. El segundo, los modelos de componentes no observables, donde el estado contiene la tendencia, el ciclo y la estacionalidad. Los economistas añadieron lo que el problema original no tenía: la estimación de los parámetros del sistema por máxima verosimilitud usando los errores de predicción, el tratamiento de condiciones iniciales sin información, los datos faltantes y la interpretación económica de los componentes. En ese sentido, el uso en economía fue una adaptación con aportes propios, no una copia.
+| Época | Aporte | Límite que deja abierto |
+|:---|:---|:---|
+| Comienzos del siglo XIX, Legendre y Gauss | Elegir los parámetros de una órbita minimizando la suma de cuadrados de los errores. Con errores normales, el método coincide con la máxima verosimilitud. | Usa todas las observaciones a la vez: cada observación nueva obliga a recalcular desde cero. |
+| Década de 1940, Wiener y, por separado, Kolmogorov | Estimar una señal estacionaria escondida en ruido con el pasado infinito de las observaciones. La solución es un filtro lineal cuyos coeficientes resuelven una ecuación integral que depende de las autocovarianzas. | Exige señales estacionarias y pasado completo. No sirve para señales que cambian de propiedades ni para estimar en tiempo real con una memoria que crece. |
+| 1960, Kalman | Describir la dinámica con ecuaciones en diferencias para un vector de estado. La mejor estimación actual, junto con su matriz de covarianza, resume todo el pasado. | Admite sistemas que cambian en el tiempo y no exige estacionariedad. |
 
-Una conexión matemática concreta une a Gauss con Kalman: los mínimos cuadrados recursivos son un filtro de Kalman en el caso más simple, el de un estado que no cambia. Sea el modelo $y_i=\vect{x}_i^{\top}\vect{\beta}+\varepsilon_i$ y $\hat{\vect{\beta}}_t$ el estimador de mínimos cuadrados con las primeras $t$ observaciones, $\hat{\vect{\beta}}_t=(\mat{X}_t^{\top}\mat{X}_t)^{-1}\mat{X}_t^{\top}\vect{y}_t$. Se define $\mat{P}_t=(\mat{X}_t^{\top}\mat{X}_t)^{-1}$.
+: Tres etapas hacia el filtro de Kalman. {#tbl-historia-kalman}
+
+La idea de Kalman cambió el modo de calcular. En lugar de resumir la dinámica con una autocovarianza, usa un sistema de ecuaciones; en lugar de recorrer todo el pasado en cada paso, actualiza solo dos objetos, la estimación y su covarianza, con unas pocas operaciones matriciales. Esa recursión se incorporó a los sistemas de guiado y navegación de la industria aeroespacial en los años sesenta.
+
+## La llegada a la econometría
+
+El filtro llegó a la econometría en los años setenta y se consolidó en los ochenta, con dos usos:
+
+(i) La regresión con coeficientes que varían en el tiempo, donde el estado es el vector de coeficientes.
+
+(ii) Los modelos de componentes no observables, donde el estado contiene la tendencia, el ciclo y la estacionalidad.
+
+Los economistas añadieron lo que el problema original no tenía: la estimación de los parámetros del sistema por máxima verosimilitud con los errores de predicción, el tratamiento de condiciones iniciales sin información, los datos faltantes y la interpretación económica de los componentes. La respuesta a la pregunta inicial es entonces una adaptación con aportes propios, no una copia.
+
+## Mínimos cuadrados recursivos
+
+Una conexión matemática concreta une a Gauss con Kalman: los mínimos cuadrados recursivos son un filtro de Kalman en el caso más simple, el de un estado que no cambia. Sea el modelo
+
+$$
+y_i = \vect{x}_i^{\top}\vect{\beta} + \varepsilon_i,
+$$
+
+y sea $\hat{\vect{\beta}}_t$ el estimador de mínimos cuadrados con las primeras $t$ observaciones:
+
+$$
+\hat{\vect{\beta}}_t = (\mat{X}_t^{\top}\mat{X}_t)^{-1}\mat{X}_t^{\top}\vect{y}_t,
+\qquad
+\mat{P}_t = (\mat{X}_t^{\top}\mat{X}_t)^{-1}.
+$$
+
+La demostración necesita la inversa de una matriz más una matriz de rango uno, que se deduce primero.
+
+::: {#lem-rango-uno}
+## Inversa de una matriz más una de rango uno
+
+Sean $\mat{A}$ invertible y $\vect{x}$ tal que $c=1+\vect{x}^{\top}\mat{A}^{-1}\vect{x}\neq0$. Entonces
+
+$$
+(\mat{A}+\vect{x}\vect{x}^{\top})^{-1} = \mat{A}^{-1} - \frac{\mat{A}^{-1}\vect{x}\vect{x}^{\top}\mat{A}^{-1}}{c}.
+$$
+:::
+
+Basta multiplicar el lado derecho por $\mat{A}+\vect{x}\vect{x}^{\top}$ y comprobar que resulta la identidad.
+
+::: {.proof}
+Se calculan por separado los dos productos que aparecen:
+
+$$
+\begin{aligned}
+(\mat{A}+\vect{x}\vect{x}^{\top})\,\mat{A}^{-1} &= \Imat + \vect{x}\vect{x}^{\top}\mat{A}^{-1}, \\[6pt]
+(\mat{A}+\vect{x}\vect{x}^{\top})\,\mat{A}^{-1}\vect{x} &= \vect{x} + \vect{x}\,(\vect{x}^{\top}\mat{A}^{-1}\vect{x}) = c\,\vect{x}.
+\end{aligned}
+$$
+
+Con ellos, el producto buscado es
+
+$$
+\begin{aligned}
+(\mat{A}+\vect{x}\vect{x}^{\top})\Bigl(\mat{A}^{-1} - \frac{\mat{A}^{-1}\vect{x}\vect{x}^{\top}\mat{A}^{-1}}{c}\Bigr)
+&= \Imat + \vect{x}\vect{x}^{\top}\mat{A}^{-1} - \frac{c\,\vect{x}\vect{x}^{\top}\mat{A}^{-1}}{c}, \\[6pt]
+(\mat{A}+\vect{x}\vect{x}^{\top})\Bigl(\mat{A}^{-1} - \frac{\mat{A}^{-1}\vect{x}\vect{x}^{\top}\mat{A}^{-1}}{c}\Bigr)
+&= \Imat.
+\end{aligned}
+$$
+:::
+
+Con el lema se obtiene la recursión.
 
 ::: {#prp-mco-recursivo}
 ## Mínimos cuadrados recursivos
 
 Si $\mat{X}_{t-1}^{\top}\mat{X}_{t-1}$ es invertible, entonces
-$$
-\hat{\vect{\beta}}_t=\hat{\vect{\beta}}_{t-1}+\vect{k}_t\bigl(y_t-\vect{x}_t^{\top}\hat{\vect{\beta}}_{t-1}\bigr),\qquad\vect{k}_t=\frac{\mat{P}_{t-1}\vect{x}_t}{1+\vect{x}_t^{\top}\mat{P}_{t-1}\vect{x}_t},\qquad\mat{P}_t=\mat{P}_{t-1}-\vect{k}_t\vect{x}_t^{\top}\mat{P}_{t-1}.
-$$ {#eq-mco-recursivo}
 
+$$
+\begin{aligned}
+\vect{k}_t &= \frac{\mat{P}_{t-1}\vect{x}_t}{1+\vect{x}_t^{\top}\mat{P}_{t-1}\vect{x}_t}, \\[6pt]
+\hat{\vect{\beta}}_t &= \hat{\vect{\beta}}_{t-1} + \vect{k}_t\bigl(y_t - \vect{x}_t^{\top}\hat{\vect{\beta}}_{t-1}\bigr), \\[6pt]
+\mat{P}_t &= \mat{P}_{t-1} - \vect{k}_t\vect{x}_t^{\top}\mat{P}_{t-1}.
+\end{aligned}
+$$ {#eq-mco-recursivo}
 :::
+
+La estimación nueva es la anterior más una ganancia por el error de predicción, y la matriz $\mat{P}_t$ se actualiza restando lo que aporta la observación.
 
 ::: {.proof}
-Como $\mat{X}_t^{\top}\mat{X}_t=\mat{P}_{t-1}^{-1}+\vect{x}_t\vect{x}_t^{\top}$, hace falta la inversa de una matriz más una matriz de rango uno. Para $\mat{A}$ invertible y $\vect{x}$ con $1+\vect{x}^{\top}\mat{A}^{-1}\vect{x}\neq0$, se verifica multiplicando que $(\mat{A}+\vect{x}\vect{x}^{\top})^{-1}=\mat{A}^{-1}-\mat{A}^{-1}\vect{x}\vect{x}^{\top}\mat{A}^{-1}/(1+\vect{x}^{\top}\mat{A}^{-1}\vect{x})$: el producto de $(\mat{A}+\vect{x}\vect{x}^{\top})$ por el lado derecho es $\Imat+\vect{x}\vect{x}^{\top}\mat{A}^{-1}-\bigl(\vect{x}+\vect{x}\,\vect{x}^{\top}\mat{A}^{-1}\vect{x}\bigr)\vect{x}^{\top}\mat{A}^{-1}/(1+\vect{x}^{\top}\mat{A}^{-1}\vect{x})=\Imat$, porque el numerador del último término es $(1+\vect{x}^{\top}\mat{A}^{-1}\vect{x})\vect{x}\vect{x}^{\top}\mat{A}^{-1}$. Con $\mat{A}=\mat{P}_{t-1}^{-1}$, $\mat{P}_t=\mat{P}_{t-1}-\vect{k}_t\vect{x}_t^{\top}\mat{P}_{t-1}$. Para el estimador, $\mat{X}_t^{\top}\vect{y}_t=\mat{X}_{t-1}^{\top}\vect{y}_{t-1}+\vect{x}_ty_t=\mat{P}_{t-1}^{-1}\hat{\vect{\beta}}_{t-1}+\vect{x}_ty_t$, y entonces $\hat{\vect{\beta}}_t=\mat{P}_t\mat{P}_{t-1}^{-1}\hat{\vect{\beta}}_{t-1}+\mat{P}_t\vect{x}_ty_t$. Se tiene $\mat{P}_t\mat{P}_{t-1}^{-1}=\Imat-\vect{k}_t\vect{x}_t^{\top}$ y $\mat{P}_t\vect{x}_t=\vect{k}_t$, porque $\mat{P}_t\vect{x}_t=\mat{P}_{t-1}\vect{x}_t-\vect{k}_t\vect{x}_t^{\top}\mat{P}_{t-1}\vect{x}_t=\vect{k}_t$ por la definición de $\vect{k}_t$. Sustituyendo, $\hat{\vect{\beta}}_t=\hat{\vect{\beta}}_{t-1}-\vect{k}_t\vect{x}_t^{\top}\hat{\vect{\beta}}_{t-1}+\vect{k}_ty_t$.
+La nueva matriz de momentos es la anterior más una de rango uno:
 
+$$
+\mat{X}_t^{\top}\mat{X}_t = \mat{P}_{t-1}^{-1} + \vect{x}_t\vect{x}_t^{\top}.
+$$
+
+Se aplica el @lem-rango-uno con $\mat{A}=\mat{P}_{t-1}^{-1}$, para el cual $c=1+\vect{x}_t^{\top}\mat{P}_{t-1}\vect{x}_t$:
+
+$$
+\mat{P}_t = \mat{P}_{t-1} - \frac{\mat{P}_{t-1}\vect{x}_t\vect{x}_t^{\top}\mat{P}_{t-1}}{c} = \mat{P}_{t-1} - \vect{k}_t\vect{x}_t^{\top}\mat{P}_{t-1}.
+$$
+
+Para el estimador se separa la última observación en el producto cruzado:
+
+$$
+\begin{aligned}
+\mat{X}_t^{\top}\vect{y}_t &= \mat{X}_{t-1}^{\top}\vect{y}_{t-1} + \vect{x}_t y_t, \\[6pt]
+\mat{X}_t^{\top}\vect{y}_t &= \mat{P}_{t-1}^{-1}\hat{\vect{\beta}}_{t-1} + \vect{x}_t y_t,
+\end{aligned}
+$$
+
+y al multiplicar por $\mat{P}_t$ resulta
+
+$$
+\hat{\vect{\beta}}_t = \mat{P}_t\mat{P}_{t-1}^{-1}\hat{\vect{\beta}}_{t-1} + \mat{P}_t\vect{x}_t\,y_t.
+$$
+
+Faltan los dos factores. El primero sale de la fórmula de $\mat{P}_t$. Para el segundo se usa $\mat{P}_{t-1}\vect{x}_t=c\,\vect{k}_t$:
+
+$$
+\begin{aligned}
+\mat{P}_t\mat{P}_{t-1}^{-1} &= \Imat - \vect{k}_t\vect{x}_t^{\top}, \\[6pt]
+\mat{P}_t\vect{x}_t &= \mat{P}_{t-1}\vect{x}_t - \vect{k}_t\,\vect{x}_t^{\top}\mat{P}_{t-1}\vect{x}_t = \vect{k}_t\bigl(c - \vect{x}_t^{\top}\mat{P}_{t-1}\vect{x}_t\bigr) = \vect{k}_t.
+\end{aligned}
+$$
+
+Al sustituir en $\hat{\vect{\beta}}_t$ queda
+
+$$
+\begin{aligned}
+\hat{\vect{\beta}}_t &= \hat{\vect{\beta}}_{t-1} - \vect{k}_t\vect{x}_t^{\top}\hat{\vect{\beta}}_{t-1} + \vect{k}_t y_t, \\[6pt]
+\hat{\vect{\beta}}_t &= \hat{\vect{\beta}}_{t-1} + \vect{k}_t\bigl(y_t - \vect{x}_t^{\top}\hat{\vect{\beta}}_{t-1}\bigr).
+\end{aligned}
+$$
 :::
 
-El lado derecho tiene la forma de una actualización de Kalman: la nueva estimación es la anterior más una ganancia $\vect{k}_t$ por el error de predicción $y_t-\vect{x}_t^{\top}\hat{\vect{\beta}}_{t-1}$, y la matriz $\mat{P}_t$ se actualiza restando lo que la observación aporta. Con números, para el modelo $y_i=\beta x_i+\varepsilon_i$ con $x=(1,2,3)$ y $y=(1.1,1.9,3.2)$, las dos primeras observaciones dan $\hat\beta_2=(1.1+3.8)/5=0.98$ y $P_2=1/5=0.2$. La tercera observación da $k_3=0.2\cdot3/(1+9\cdot0.2)=0.2143$, un error de predicción de $3.2-3\cdot0.98=0.26$ y $\hat\beta_3=0.98+0.2143\cdot0.26=1.0357$, que coincide con el estimador directo $\sum x_iy_i/\sum x_i^2=14.5/14=1.0357$, con $P_3=0.0714=1/14$.
+Un caso numérico confirma la recursión. Sea $y_i=\beta x_i+\varepsilon_i$ con $x=(1,2,3)$ e $y=(1.1,\,1.9,\,3.2)$. Las dos primeras observaciones dan
 
-Las diferencias con el filtro completo son dos. Aquí el parámetro $\vect{\beta}$ no cambia con el tiempo, y la matriz $\mat{P}_t$ solo puede disminuir. El filtro de Kalman permite que el estado se mueva según una ecuación de transición, y entonces la incertidumbre se regenera en cada período con la varianza de las perturbaciones, de modo que el filtro nunca deja de aprender. Esa extensión es lo que se construye en esta unidad.
+$$
+\hat\beta_2 = \frac{1\cdot1.1+2\cdot1.9}{1+4} = 0.98,
+\qquad
+P_2 = \frac{1}{5} = 0.2.
+$$
+
+La tercera observación aporta una ganancia y un error de predicción:
+
+$$
+k_3 = \frac{0.2\cdot3}{1+9\cdot0.2} = 0.2143,
+\qquad
+y_3 - x_3\hat\beta_2 = 3.2 - 3\cdot0.98 = 0.26.
+$$
+
+Con ellos,
+
+$$
+\hat\beta_3 = 0.98 + 0.2143\cdot0.26 = 1.0357,
+\qquad
+P_3 = 0.2 - 0.2143\cdot3\cdot0.2 = 0.0714.
+$$
+
+Estos valores coinciden con los del estimador directo:
+
+$$
+\hat\beta_3 = \frac{\sum x_iy_i}{\sum x_i^2} = \frac{14.5}{14} = 1.0357,
+\qquad
+P_3 = \frac{1}{14} = 0.0714.
+$$
+
+Las diferencias con el filtro completo son dos. Aquí el parámetro $\vect{\beta}$ no cambia con el tiempo, y la matriz $\mat{P}_t$ solo puede disminuir. En el filtro de Kalman el estado se mueve según una ecuación de transición, y la incertidumbre se regenera en cada periodo con la varianza de las perturbaciones: el filtro nunca deja de aprender.

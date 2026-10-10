@@ -81,12 +81,12 @@ equivalencias:
 
 $$
 \begin{aligned}
-\neg(\neg p) &\equiv p, \tag{doble negación} \\
-  \neg(p\wedge q) &\equiv \neg p \vee \neg q, \tag{De Morgan, conjunción} \\
-  \neg(p\vee q) &\equiv \neg p \wedge \neg q, \tag{De Morgan, disyunción} \\
-  p\rightarrow q &\equiv \neg p \vee q, \tag{condicional como disyunción} \\
-  p\rightarrow q &\equiv \neg q \rightarrow \neg p, \tag{contrarrecíproco} \\
-  p\leftrightarrow q &\equiv (p\rightarrow q)\wedge(q\rightarrow p). \tag{doble condicional}
+\neg(\neg p) &\equiv p, &&\text{doble negación} \\
+  \neg(p\wedge q) &\equiv \neg p \vee \neg q, &&\text{De Morgan, conjunción} \\
+  \neg(p\vee q) &\equiv \neg p \wedge \neg q, &&\text{De Morgan, disyunción} \\
+  p\rightarrow q &\equiv \neg p \vee q, &&\text{condicional como disyunción} \\
+  p\rightarrow q &\equiv \neg q \rightarrow \neg p, &&\text{contrarrecíproco} \\
+  p\leftrightarrow q &\equiv (p\rightarrow q)\wedge(q\rightarrow p). &&\text{doble condicional}
 \end{aligned}
 $$
 

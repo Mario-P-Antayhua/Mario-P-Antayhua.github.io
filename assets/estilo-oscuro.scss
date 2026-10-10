@@ -16,6 +16,7 @@ h2 { border-bottom-color: #2c3c66; }
 .theorem .theorem-title, .lemma .theorem-title, .corollary .theorem-title, .proposition .theorem-title,
 .definition .theorem-title, .example .theorem-title, .exercise .theorem-title { color: #cfdcf2; }
 .proof > p:first-child > em:first-child { color: #cfdcf2; }
+ol[type="i"] > li::before, ol[type="a"] > li::before, ol[type="I"] > li::before, ol[type="A"] > li::before { color: #cfdcf2; }
 .tarjeta { background: #121a33; border-top-color: #5b84a6; }
 .tarjeta h3 a, .hero-nombre, .hero-redes a { color: #cfdcf2; }
 .hero-cargo { color: #8fb3d1; }
