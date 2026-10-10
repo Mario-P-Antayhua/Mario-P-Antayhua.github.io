@@ -85,6 +85,12 @@ h3 { margin-top: 2rem; }
 .theorem > p:last-child, .definition > p:last-child { margin-bottom: 0; }
 .theorem p, .definition p { max-width: none; }
 
+// En teléfono los recuadros usan menos relleno para dejar espacio a las ecuaciones
+@media (max-width: 575px) {
+  .theorem, .lemma, .corollary, .proposition, .definition, .example, .exercise, .remark { padding: 0.8rem 0.7rem 0.9rem; margin: 1.6rem 0; }
+  ol[type="i"] > li, ol[type="a"] > li, ol[type="I"] > li, ol[type="A"] > li { padding-left: 2.3rem; }
+}
+
 // La demostración va fuera de la caja, sin color
 .proof { margin: 1.6rem 0 2.4rem; padding-left: 0.2rem; }
 .proof > p:first-child > em:first-child, .proof > p:first-child > .proof-title { font-style: normal; font-weight: 600; color: $navy; }

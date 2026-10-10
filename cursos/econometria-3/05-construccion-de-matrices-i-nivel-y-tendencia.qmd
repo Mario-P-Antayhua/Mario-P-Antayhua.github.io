@@ -2,52 +2,207 @@
 title: "Construcción de matrices I: nivel y tendencia"
 description: "El procedimiento general para escribir un modelo en forma de espacio-estado, y su aplicación al modelo de nivel local y al de tendencia local, con sus casos particulares y la autocovarianza de la segunda diferencia."
 author: "Mario Peñaloza"
-date: 2026-10-08
+date: 2026-10-10
 categories: [Econometría III, Espacio-estado]
 ---
 
-Para usar el filtro de Kalman hay que traducir cada modelo a las matrices $\mat{Z}_t$, $\mat{T}_t$, $\mat{R}_t$, $\mat{H}_t$ y $\mat{Q}_t$ de la definición. Esa traducción es mecánica una vez que se entiende la lógica, y se aprende con ejemplos. Esta nota fija el procedimiento y lo aplica a los dos modelos de tendencia más simples, que son la base de los demás.
+Para usar el filtro de Kalman hay que traducir cada modelo a las matrices $\mat{Z}_t$, $\mat{T}_t$, $\mat{R}_t$, $\mat{H}_t$ y $\mat{Q}_t$ de la definición. La traducción es mecánica una vez que se entiende la lógica, y se aprende con ejemplos.
 
-El procedimiento tiene cinco pasos. Primero, se enumeran los componentes no observables que contiene el modelo. Segundo, se define el vector de estado $\vect{\alpha}_t$ como el vector que reúne, para cada componente, las variables que necesita conocerse en $t$ para generar el período siguiente; en particular, si una ecuación depende de un rezago, ese rezago entra al estado. Tercero, se escribe una ecuación de transición para cada elemento del estado, con su perturbación si la tiene. Cuarto, se escribe la ecuación de medición que expresa la serie observada como combinación del estado más un error. Quinto, se leen las matrices de los coeficientes y se verifican las dimensiones: $\mat{Z}$ es $N\times m$, $\mat{T}$ es $m\times m$, $\mat{R}$ es $m\times r$, $\mat{Q}$ es $r\times r$ y $\mat{H}$ es $N\times N$.
+Esta nota fija el procedimiento y lo aplica a los dos modelos de tendencia más simples, que son la base de los demás.
 
-El caso más simple es la serie que es un nivel no observable más un error de medición.
+## El procedimiento
+
+Escribir un modelo en forma de espacio-estado lleva cinco pasos:
+
+1. Se enumeran los componentes no observables que contiene el modelo.
+
+2. Se define el vector de estado $\vect{\alpha}_t$ con las variables que hay que conocer en $t$ para generar el periodo siguiente. Si una ecuación depende de un rezago, ese rezago entra al estado.
+
+3. Se escribe una ecuación de transición para cada elemento del estado, con su perturbación si la tiene.
+
+4. Se escribe la ecuación de medición, que expresa la serie observada como combinación del estado más un error.
+
+5. Se leen las matrices de los coeficientes y se verifican las dimensiones.
+
+Las dimensiones que se verifican en el último paso son:
+
+| Matriz | Dimensión | Aparece en |
+|:---|:---|:---|
+| $\mat{Z}$ | $N\times m$ | medición |
+| $\mat{H}$ | $N\times N$ | varianza del error de medición |
+| $\mat{T}$ | $m\times m$ | transición |
+| $\mat{R}$ | $m\times r$ | perturbaciones de la transición |
+| $\mat{Q}$ | $r\times r$ | varianza de las perturbaciones |
+
+: Dimensiones de las matrices del modelo. {#tbl-dimensiones-matrices}
+
+## El nivel local
+
+El caso más simple es una serie que es un nivel no observable más un error de medición.
 
 ::: {#def-nivel-local}
 ## Modelo de nivel local
 
-El ***modelo de nivel local*** es $y_t=\mu_t+\varepsilon_t$, $\mu_t=\mu_{t-1}+\eta_t$ con $\varepsilon_t\sim\N(0,\sigma_\varepsilon^2)$ y $\eta_t\sim\N(0,\sigma_\eta^2)$ independientes. En forma de espacio-estado, $\alpha_t=\mu_t$, $\mat{Z}=1$, $\mat{H}=\sigma_\varepsilon^2$, $\mat{T}=1$, $\mat{R}=1$ y $\mat{Q}=\sigma_\eta^2$, con $m=r=N=1$.
+El ***modelo de nivel local*** es
 
+$$
+\begin{aligned}
+y_t &= \mu_t + \varepsilon_t, & \varepsilon_t &\sim \N(0,\sigma_\varepsilon^2), \\[6pt]
+\mu_t &= \mu_{t-1} + \eta_t, & \eta_t &\sim \N(0,\sigma_\eta^2),
+\end{aligned}
+$$
+
+con $\varepsilon_t$ y $\eta_t$ independientes. En forma de espacio-estado, con $m=r=N=1$:
+
+$$
+\alpha_t = \mu_t,
+\qquad
+\mat{Z} = 1,
+\quad
+\mat{H} = \sigma_\varepsilon^2,
+\quad
+\mat{T} = 1,
+\quad
+\mat{R} = 1,
+\quad
+\mat{Q} = \sigma_\eta^2.
+$$
 :::
 
-El nivel es un paseo aleatorio observado con error. Los dos parámetros $\sigma_\varepsilon^2$ y $\sigma_\eta^2$ controlan cuánto del movimiento de la serie se atribuye al ruido y cuánto al nivel. Su cociente $q=\sigma_\eta^2/\sigma_\varepsilon^2$, la razón señal-ruido, es lo que determina el comportamiento del filtro. Cuando $\sigma_\eta^2=0$, el nivel es constante y el modelo es una media con ruido, y cuando $\sigma_\varepsilon^2=0$ la serie es el propio paseo aleatorio.
+El nivel es un paseo aleatorio observado con error. Los dos parámetros controlan cuánto del movimiento de la serie se atribuye al ruido y cuánto al nivel, y su cociente
 
-Cuando la serie tiene una pendiente que también cambia, se necesita un segundo componente.
+$$
+q = \frac{\sigma_\eta^2}{\sigma_\varepsilon^2},
+$$
+
+la razón señal-ruido, es lo que determina el comportamiento del filtro. Cuando $\sigma_\eta^2=0$, el nivel es constante y el modelo es una media con ruido. Cuando $\sigma_\varepsilon^2=0$, la serie es el propio paseo aleatorio.
+
+## La tendencia lineal local
+
+Cuando la serie tiene una pendiente que también cambia, se necesita un segundo componente en el estado.
 
 ::: {#def-tendencia-local}
 ## Modelo de tendencia lineal local
 
-El ***modelo de tendencia lineal local*** es $y_t=\mu_t+\varepsilon_t$, $\mu_t=\mu_{t-1}+\beta_{t-1}+\eta_t$, $\beta_t=\beta_{t-1}+\zeta_t$ con $\varepsilon_t$, $\eta_t$ y $\zeta_t$ normales independientes de varianzas $\sigma_\varepsilon^2$, $\sigma_\eta^2$, $\sigma_\zeta^2$. Con $\vect{\alpha}_t=(\mu_t,\beta_t)^{\top}$,
-$$
-\mat{Z}=\begin{pmatrix}1&0\end{pmatrix},\quad\mat{H}=\sigma_\varepsilon^2,\quad\mat{T}=\begin{pmatrix}1&1\\0&1\end{pmatrix},\quad\mat{R}=\Imat_2,\quad\mat{Q}=\begin{pmatrix}\sigma_\eta^2&0\\0&\sigma_\zeta^2\end{pmatrix},
-$$ {#eq-tendencia-local-matrices}
-con $m=r=2$ y $N=1$.
+El ***modelo de tendencia lineal local*** es
 
+$$
+\begin{aligned}
+y_t &= \mu_t + \varepsilon_t, \\[6pt]
+\mu_t &= \mu_{t-1} + \beta_{t-1} + \eta_t, \\[6pt]
+\beta_t &= \beta_{t-1} + \zeta_t,
+\end{aligned}
+$$
+
+con $\varepsilon_t$, $\eta_t$ y $\zeta_t$ normales, independientes, de varianzas $\sigma_\varepsilon^2$, $\sigma_\eta^2$ y $\sigma_\zeta^2$. Con $\vect{\alpha}_t=(\mu_t,\beta_t)^{\top}$, las matrices son
+
+$$
+\mat{Z} = \begin{pmatrix} 1 & 0 \end{pmatrix},
+\quad
+\mat{H} = \sigma_\varepsilon^2,
+\quad
+\mat{T} = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix},
+\quad
+\mat{R} = \Imat_2,
+\quad
+\mat{Q} = \begin{pmatrix} \sigma_\eta^2 & 0 \\ 0 & \sigma_\zeta^2 \end{pmatrix},
+$$ {#eq-tendencia-local-matrices}
+
+con $m=r=2$ y $N=1$.
 :::
 
-La pendiente $\beta_t$ es la tasa de crecimiento del nivel, y el estado la necesita porque la ecuación de $\mu_t$ depende de $\beta_{t-1}$. Los parámetros de varianza generan casos particulares con significado propio: si $\sigma_\zeta^2=0$, la pendiente es constante y el nivel es un paseo aleatorio con deriva; si $\sigma_\eta^2=0$, el nivel es una tendencia suave, el resultado de integrar dos veces ruido; si ambos son cero, la tendencia es determinista, la lineal de la nota de tipología.
+La pendiente $\beta_t$ es la tasa de crecimiento del nivel. El estado la necesita porque la ecuación de $\mu_t$ depende de $\beta_{t-1}$.
+
+Los parámetros de varianza generan casos particulares con significado propio:
+
+| Parámetros | Modelo que resulta |
+|:---|:---|
+| $\sigma_\zeta^2=0$ | la pendiente es constante y el nivel es un paseo aleatorio con deriva |
+| $\sigma_\eta^2=0$ | el nivel es una tendencia suave, el resultado de integrar dos veces un ruido |
+| $\sigma_\eta^2=\sigma_\zeta^2=0$ | la tendencia es determinista, la lineal de la [nota de tipología](04-tipologia-de-los-modelos-espacio-estado.qmd) |
+
+: Casos particulares de la tendencia local. {#tbl-casos-tendencia-local}
+
+## La segunda diferencia
 
 La forma reducida de la tendencia local tiene una autocovarianza explícita, que permite reconocer el modelo en los datos.
 
 ::: {#prp-segunda-diferencia}
 ## Segunda diferencia del modelo de tendencia local
 
-Sea $w_t=\Delta^2y_t=y_t-2y_{t-1}+y_{t-2}$. Entonces $w_t=\zeta_{t-1}+\eta_t-\eta_{t-1}+\varepsilon_t-2\varepsilon_{t-1}+\varepsilon_{t-2}$ es estacionario, con $\gamma_w(0)=\sigma_\zeta^2+2\sigma_\eta^2+6\sigma_\varepsilon^2$, $\gamma_w(1)=-\sigma_\eta^2-4\sigma_\varepsilon^2$, $\gamma_w(2)=\sigma_\varepsilon^2$ y $\gamma_w(h)=0$ para $h\geq3$.
+Sea $w_t=\Delta^2y_t=y_t-2y_{t-1}+y_{t-2}$. Entonces
 
+$$
+w_t = \zeta_{t-1} + \eta_t - \eta_{t-1} + \varepsilon_t - 2\varepsilon_{t-1} + \varepsilon_{t-2}
+$$
+
+es estacionario, con
+
+$$
+\begin{aligned}
+\gamma_w(0) &= \sigma_\zeta^2 + 2\sigma_\eta^2 + 6\sigma_\varepsilon^2, \\[6pt]
+\gamma_w(1) &= -\sigma_\eta^2 - 4\sigma_\varepsilon^2, \\[6pt]
+\gamma_w(2) &= \sigma_\varepsilon^2,
+\end{aligned}
+$$
+
+y $\gamma_w(h)=0$ para $h\geq3$.
 :::
+
+La demostración escribe $w_t$ como combinación de ruidos blancos y suma los productos de los coeficientes que comparten el mismo ruido.
 
 ::: {.proof}
-De la ecuación de nivel, $\Delta\mu_t=\beta_{t-1}+\eta_t$, y de la de pendiente, $\Delta\beta_t=\zeta_t$. Entonces $\Delta^2\mu_t=\Delta\beta_{t-1}+\Delta\eta_t=\zeta_{t-1}+\eta_t-\eta_{t-1}$. Como $y_t=\mu_t+\varepsilon_t$, $w_t=\Delta^2\mu_t+\Delta^2\varepsilon_t$, que da la expresión. Es una combinación lineal finita de ruidos blancos no correlacionados, de modo que es estacionario, y sus autocovarianzas se obtienen sumando los productos de los coeficientes que comparten el mismo ruido. En el rezago $0$, los coeficientes cuadrados suman $\sigma_\zeta^2\cdot1+\sigma_\eta^2(1+1)+\sigma_\varepsilon^2(1+4+1)$. En el rezago $1$, $w_t$ y $w_{t-1}$ comparten $\eta_{t-1}$, con coeficientes $-1$ y $+1$, y $\varepsilon_{t-1}$ y $\varepsilon_{t-2}$, con coeficientes $(-2)(1)$ y $(1)(-2)$, lo que da $-\sigma_\eta^2-4\sigma_\varepsilon^2$; los $\zeta$ no se comparten. En el rezago $2$, solo se comparte $\varepsilon_{t-2}$ con coeficientes $1$ y $1$. Para $h\geq3$ no se comparte ningún ruido.
+De la ecuación de nivel, $\Delta\mu_t=\beta_{t-1}+\eta_t$, y de la de pendiente, $\Delta\beta_t=\zeta_t$. Entonces
 
+$$
+\Delta^2\mu_t = \Delta\beta_{t-1} + \Delta\eta_t = \zeta_{t-1} + \eta_t - \eta_{t-1}.
+$$
+
+Como $y_t=\mu_t+\varepsilon_t$, la segunda diferencia es la suma de dos partes:
+
+$$
+w_t = \Delta^2\mu_t + \Delta^2\varepsilon_t = \zeta_{t-1} + \eta_t - \eta_{t-1} + \varepsilon_t - 2\varepsilon_{t-1} + \varepsilon_{t-2}.
+$$
+
+Es una combinación lineal finita de ruidos blancos no correlacionados, y por tanto estacionaria. Sus autocovarianzas son la suma de los productos de los coeficientes que comparten el mismo ruido, multiplicados por la varianza de ese ruido.
+
+En el rezago $0$ cuentan los coeficientes al cuadrado:
+
+$$
+\gamma_w(0) = \sigma_\zeta^2\cdot1 + \sigma_\eta^2\,(1+1) + \sigma_\varepsilon^2\,(1+4+1).
+$$
+
+En el rezago $1$, $w_t$ y $w_{t-1}$ comparten $\eta_{t-1}$, con coeficientes $-1$ y $+1$, y los ruidos $\varepsilon_{t-1}$ y $\varepsilon_{t-2}$, con coeficientes $(-2)(1)$ y $(1)(-2)$. Los $\zeta$ no se comparten:
+
+$$
+\gamma_w(1) = \sigma_\eta^2\,(-1)(1) + \sigma_\varepsilon^2\,\bigl[(-2)(1)+(1)(-2)\bigr] = -\sigma_\eta^2 - 4\sigma_\varepsilon^2.
+$$
+
+En el rezago $2$ solo se comparte $\varepsilon_{t-2}$, con coeficientes $1$ y $1$:
+
+$$
+\gamma_w(2) = \sigma_\varepsilon^2\,(1)(1) = \sigma_\varepsilon^2.
+$$
+
+Para $h\geq3$ no se comparte ningún ruido, y la autocovarianza es cero.
 :::
 
-Con números, para $\sigma_\varepsilon^2=1$, $\sigma_\eta^2=0.5$ y $\sigma_\zeta^2=0.1$, $\gamma_w(0)=0.1+1+6=7.1$, $\gamma_w(1)=-0.5-4=-4.5$ y $\gamma_w(2)=1$, de modo que $\rho_w(1)=-0.634$ y $\rho_w(2)=0.141$. La segunda diferencia de la tendencia local es entonces un proceso de media móvil de orden dos con autocorrelaciones características, cuyos signos y magnitudes permiten estimar los cocientes entre las varianzas.
+Un caso numérico, con $\sigma_\varepsilon^2=1$, $\sigma_\eta^2=0.5$ y $\sigma_\zeta^2=0.1$:
+
+$$
+\gamma_w(0) = 0.1+1+6 = 7.1,
+\qquad
+\gamma_w(1) = -0.5-4 = -4.5,
+\qquad
+\gamma_w(2) = 1.
+$$
+
+Las autocorrelaciones son
+
+$$
+\rho_w(1) = \frac{-4.5}{7.1} = -0.634,
+\qquad
+\rho_w(2) = \frac{1}{7.1} = 0.141.
+$$
+
+La segunda diferencia de la tendencia local es entonces un proceso de media móvil de orden dos. Los signos y las magnitudes de sus autocorrelaciones permiten estimar los cocientes entre las varianzas.

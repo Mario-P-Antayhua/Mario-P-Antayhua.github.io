@@ -1,42 +1,181 @@
 ---
-title: "Ejemplos económicos II: fechado del ciclo y tasa real ex ante"
-description: "Un factor común no observable extraído de varios indicadores coincidentes para fechar el ciclo económico, y la tasa de interés real ex ante como una señal persistente observada con el error de expectativas, con un ejemplo numérico de cada uno."
+title: "Ejemplos económicos II: el ciclo y la tasa de interés real"
+description: "Dos modelos de espacio-estado en macroeconomía: un factor común dinámico para fechar el ciclo con varios indicadores, y la tasa de interés real ex ante como componente no observable, con la propiedad de ruido blanco del error de expectativas."
 author: "Mario Peñaloza"
-date: 2026-10-08
+date: 2026-10-10
 categories: [Econometría III, Espacio-estado]
 ---
 
-Los dos ejemplos de esta nota son de macroeconomía. En el primero, el ciclo económico no tiene una medida única: cada indicador, como la producción, el empleo o las ventas, lo refleja con ruido propio, y se busca la componente común. En el segundo, la tasa de interés real que importa para las decisiones es la que se espera al momento de decidir, y no la que se observa después. En ambos, el espacio-estado convierte la pregunta en una estimación de un componente que no se observa.
+Los dos ejemplos de esta nota son de macroeconomía. En el primero, el ciclo económico no tiene una medida única: cada indicador (producción, empleo, ventas) lo refleja con ruido propio, y se busca la componente común. En el segundo, la tasa de interés real que importa para las decisiones es la que se espera al decidir, no la que se observa después.
 
-Para fechar el ciclo se observan $N$ indicadores coincidentes $y_{it}$, que se mueven con la actividad. Se supone que cada uno es una carga $\lambda_i$ sobre un factor común $c_t$ más un componente propio $u_{it}$ persistente: $y_{it}=\lambda_ic_t+u_{it}$. El factor sigue un proceso autorregresivo de segundo orden, capaz de producir oscilaciones, $c_t=\phi_1c_{t-1}+\phi_2c_{t-2}+\eta_t$, y cada componente propio un AR(1), $u_{it}=\rho_iu_{i,t-1}+e_{it}$. La varianza de $\eta_t$ se fija en uno, porque la escala del factor y las cargas solo se identifican juntas, como se vio en la nota de no unicidad por cambio de base.
+En ambos, el espacio-estado convierte la pregunta en la estimación de un componente que no se observa.
+
+## Un factor común para fechar el ciclo
+
+Para fechar el ciclo se observan $N$ indicadores coincidentes $y_{it}$, que se mueven con la actividad. Cada uno es una carga $\lambda_i$ sobre un factor común $c_t$ más un componente propio $u_{it}$ persistente:
+
+$$
+y_{it} = \lambda_i\,c_t + u_{it}.
+$$
+
+El factor sigue un proceso autorregresivo de segundo orden, capaz de producir oscilaciones, y cada componente propio es un AR(1):
+
+$$
+c_t = \phi_1 c_{t-1} + \phi_2 c_{t-2} + \eta_t,
+\qquad
+u_{it} = \rho_i\,u_{i,t-1} + e_{it}.
+$$
+
+La varianza de $\eta_t$ se fija en uno, porque la escala del factor y las cargas solo se identifican juntas, como muestra la [nota sobre la no unicidad por cambio de base](03-que-es-un-modelo-espacio-estado.qmd#prp-no-unicidad).
 
 ::: {#def-factor-comun}
 ## Modelo de factor común dinámico
 
-Con $N=3$ indicadores, el estado $\vect{\alpha}_t=(c_t,c_{t-1},u_{1t},u_{2t},u_{3t})^{\top}$ de dimensión $m=5$ y las perturbaciones $(\eta_t,e_{1t},e_{2t},e_{3t})$ con $r=4$ definen un modelo de espacio-estado con
-$$
-\mat{Z}=\begin{pmatrix}\lambda_1&0&1&0&0\\\lambda_2&0&0&1&0\\\lambda_3&0&0&0&1\end{pmatrix},\quad\mat{H}=\mat{0},\quad\mat{T}=\begin{pmatrix}\phi_1&\phi_2&0&0&0\\1&0&0&0&0\\0&0&\rho_1&0&0\\0&0&0&\rho_2&0\\0&0&0&0&\rho_3\end{pmatrix},
-$$
-$\mat{R}$ de $5\times4$ con unos en las posiciones $(1,1)$, $(3,2)$, $(4,3)$ y $(5,4)$, y $\mat{Q}=\mathrm{diag}(1,\sigma_{e1}^2,\sigma_{e2}^2,\sigma_{e3}^2)$.
+Con $N=3$ indicadores, el estado $\vect{\alpha}_t=(c_t,\ c_{t-1},\ u_{1t},\ u_{2t},\ u_{3t})^{\top}$ tiene dimensión $m=5$. Las perturbaciones $(\eta_t,\ e_{1t},\ e_{2t},\ e_{3t})$ son $r=4$. Las matrices del modelo de espacio-estado son
 
+$$
+\mat{Z} = \begin{pmatrix}
+\lambda_1 & 0 & 1 & 0 & 0 \\
+\lambda_2 & 0 & 0 & 1 & 0 \\
+\lambda_3 & 0 & 0 & 0 & 1
+\end{pmatrix},
+\qquad
+\mat{H} = \mat{0},
+$$
+
+$$
+\mat{T} = \begin{pmatrix}
+\phi_1 & \phi_2 & 0 & 0 & 0 \\
+1 & 0 & 0 & 0 & 0 \\
+0 & 0 & \rho_1 & 0 & 0 \\
+0 & 0 & 0 & \rho_2 & 0 \\
+0 & 0 & 0 & 0 & \rho_3
+\end{pmatrix},
+$$
+
+con $\mat{R}$ de $5\times4$, con unos en las posiciones $(1,1)$, $(3,2)$, $(4,3)$ y $(5,4)$, y
+
+$$
+\mat{Q} = \mathrm{diag}\bigl(1,\ \sigma_{e1}^2,\ \sigma_{e2}^2,\ \sigma_{e3}^2\bigr).
+$$
 :::
 
-Los componentes propios entran como estados, y por eso la matriz de error de medición $\mat{H}$ es cero. El filtro estima el factor $c_t$ combinando los tres indicadores con pesos que dependen de qué tan ruidoso es cada uno. El fechado del ciclo se hace sobre el factor estimado: se define una contracción como un período en que el factor está por debajo de un umbral, por ejemplo medio desvío estándar bajo su media, y los puntos de giro son los extremos locales.
+Los componentes propios entran como estados, y por eso la matriz de error de medición $\mat{H}$ es cero. El filtro estima el factor $c_t$ combinando los tres indicadores con pesos que dependen de qué tan ruidoso es cada uno.
 
-Con una simulación de $200$ períodos de este modelo, con $\vect{\phi}=(0.5,0.2)$, cargas $(1,0.8,0.6)$, $\vect{\rho}=(0.3,0.2,0.4)$ y desvíos de los componentes propios $(0.8,0.6,0.7)$, las correlaciones de cada indicador con el factor verdadero son $0.78$, $0.82$ y $0.69$, mientras que el factor suavizado por el filtro tiene correlación $0.90$ con el verdadero. Con el umbral de medio desvío estándar, el $43.5\,\%$ de los períodos es de contracción en el factor verdadero, y el factor estimado clasifica correctamente el $85\,\%$ de los períodos. Combinar varios indicadores produce una medida más precisa que cualquiera de ellos por separado, y eso es lo que se busca al fechar el ciclo.
+El fechado se hace sobre el factor estimado. Una contracción es un periodo en que el factor está por debajo de un umbral, por ejemplo medio desvío estándar bajo su media, y los puntos de giro son los extremos locales.
 
-El segundo ejemplo es la tasa de interés real. Si $i_t$ es la tasa nominal de un activo de un período y $\pi_{t+1}$ la inflación del período siguiente, la tasa real ex post es $i_t-\pi_{t+1}$. Cuando se decide, la inflación futura no se conoce, y lo que importa es la tasa real ex ante, $\rho_t=i_t-\E[\pi_{t+1}\mid\mathcal{I}_t]$, donde $\mathcal{I}_t$ es la información disponible en $t$. La relación entre ambas es $i_t-\pi_{t+1}=\rho_t-\nu_{t+1}$ con $\nu_{t+1}=\pi_{t+1}-\E[\pi_{t+1}\mid\mathcal{I}_t]$ el error de expectativas.
+Se simularon $200$ periodos del modelo con $\vect{\phi}=(0.5,\ 0.2)$, cargas $(1,\ 0.8,\ 0.6)$, $\vect{\rho}=(0.3,\ 0.2,\ 0.4)$ y desvíos de los componentes propios $(0.8,\ 0.6,\ 0.7)$. Los resultados son:
+
+| Medida | Valor |
+|:---|---:|
+| Correlación del indicador 1 con el factor verdadero | 0.78 |
+| Correlación del indicador 2 con el factor verdadero | 0.82 |
+| Correlación del indicador 3 con el factor verdadero | 0.69 |
+| Correlación del factor suavizado con el verdadero | 0.90 |
+| Periodos de contracción en el factor verdadero | 43.5 % |
+| Periodos clasificados correctamente con el factor estimado | 85 % |
+
+: Resultados de la simulación del factor común. Fuente: simulación propia. {#tbl-factor-comun}
+
+Combinar varios indicadores da una medida más precisa que cualquiera de ellos por separado: la correlación sube de entre $0.69$ y $0.82$ a $0.90$. Eso es lo que se busca al fechar el ciclo.
+
+## La tasa de interés real ex ante
+
+Sea $i_t$ la tasa nominal de un activo a un periodo y $\pi_{t+1}$ la inflación del periodo siguiente. La tasa real ex post es $i_t-\pi_{t+1}$.
+
+Al decidir, la inflación futura no se conoce, y lo que importa es la tasa real ex ante:
+
+$$
+\rho_t = i_t - \E[\pi_{t+1}\mid\mathcal{I}_t],
+$$
+
+donde $\mathcal{I}_t$ es la información disponible en $t$. La relación entre ambas es
+
+$$
+i_t - \pi_{t+1} = \rho_t - \nu_{t+1},
+\qquad
+\nu_{t+1} = \pi_{t+1} - \E[\pi_{t+1}\mid\mathcal{I}_t],
+$$
+
+con $\nu_{t+1}$ el error de expectativas.
 
 ::: {#prp-error-expectativas}
 ## El error de expectativas racionales es ruido blanco
 
-Si $\E[\pi_{t+1}\mid\mathcal{I}_t]$ es la esperanza condicional dada una información que crece con el tiempo y que incluye $\nu_s$ para $s\leq t$, entonces $\E[\nu_{t+1}\mid\mathcal{I}_t]=0$ y $\Cov(\nu_{t+1},\nu_s)=0$ para $s\leq t$. Si además la varianza es constante, $\nu_t$ es un ruido blanco.
+Sea $\E[\pi_{t+1}\mid\mathcal{I}_t]$ la esperanza condicional dada una información que crece con el tiempo y que incluye $\nu_s$ para $s\leq t$. Entonces:
 
+(i) $\E[\nu_{t+1}\mid\mathcal{I}_t]=0$.
+
+(ii) $\Cov(\nu_{t+1},\nu_s)=0$ para $s\leq t$.
+
+Si además la varianza es constante, $\nu_t$ es un ruido blanco.
 :::
 
 ::: {.proof}
-Por la definición, $\E[\nu_{t+1}\mid\mathcal{I}_t]=\E[\pi_{t+1}\mid\mathcal{I}_t]-\E[\pi_{t+1}\mid\mathcal{I}_t]=0$. Para $s\leq t$, $\nu_s$ es función de la información en $\mathcal{I}_t$, y por la ley de las esperanzas iteradas y la propiedad de sacar lo conocido, $\E[\nu_{t+1}\nu_s]=\E\bigl[\nu_s\,\E[\nu_{t+1}\mid\mathcal{I}_t]\bigr]=0$. La media es cero por la misma razón.
+La parte (i) es la definición:
 
+$$
+\E[\nu_{t+1}\mid\mathcal{I}_t] = \E[\pi_{t+1}\mid\mathcal{I}_t] - \E[\pi_{t+1}\mid\mathcal{I}_t] = 0.
+$$
+
+Para (ii), $\nu_s$ con $s\leq t$ es función de la información en $\mathcal{I}_t$. Por la ley de las esperanzas iteradas y la propiedad de sacar lo conocido,
+
+$$
+\begin{aligned}
+\E[\nu_{t+1}\nu_s] &= \E\bigl[\E[\nu_{t+1}\nu_s\mid\mathcal{I}_t]\bigr], \\[6pt]
+\E[\nu_{t+1}\nu_s] &= \E\bigl[\nu_s\,\E[\nu_{t+1}\mid\mathcal{I}_t]\bigr] = 0.
+\end{aligned}
+$$
+
+La media de $\nu_s$ es cero por la misma razón, y por tanto la covarianza también.
 :::
 
-Entonces la tasa real observada es la ex ante más un ruido blanco, $z_t=i_t-\pi_{t+1}=\rho_t+(-\nu_{t+1})$. Si la tasa ex ante es persistente, por ejemplo un AR(1) alrededor de una media $\bar\rho$, $\rho_t-\bar\rho=\phi(\rho_{t-1}-\bar\rho)+\eta_t$, el modelo es de espacio-estado con estado $\alpha_t=\rho_t-\bar\rho$, $Z=1$, $d=\bar\rho$, $H=\sigma_\nu^2$, $T=\phi$, $R=1$ y $Q=\sigma_\eta^2$. Con $\phi=0.9$, $\sigma_\eta^2=0.1$ y $\sigma_\nu^2=1$, la varianza incondicional del estado es $0.1/(1-0.81)=0.526$, que es menor que la del error de expectativas, y la serie observada es dominada por el ruido. Con el primer dato $z_1-\bar\rho=0.8$ y una creencia inicial estacionaria $\N(0,0.526)$, la ganancia es $0.526/(0.526+1)=0.345$, de modo que la estimación de la tasa ex ante sube a $\bar\rho+0.345\cdot0.8=\bar\rho+0.276$, y su varianza baja de $0.526$ a $0.345$: un dato ruidoso reduce en un tercio la incertidumbre sobre la tasa ex ante.
+La tasa real observada es entonces la ex ante más un ruido blanco:
+
+$$
+z_t = i_t - \pi_{t+1} = \rho_t + (-\nu_{t+1}).
+$$
+
+Si la tasa ex ante es persistente, por ejemplo un AR(1) alrededor de una media $\bar\rho$,
+
+$$
+\rho_t - \bar\rho = \phi\,(\rho_{t-1}-\bar\rho) + \eta_t,
+$$
+
+el modelo es de espacio-estado con estado $\alpha_t=\rho_t-\bar\rho$ y
+
+$$
+Z = 1,
+\quad
+d = \bar\rho,
+\quad
+H = \sigma_\nu^2,
+\quad
+T = \phi,
+\quad
+R = 1,
+\quad
+Q = \sigma_\eta^2.
+$$
+
+Un caso numérico, con $\phi=0.9$, $\sigma_\eta^2=0.1$ y $\sigma_\nu^2=1$. La varianza incondicional del estado es
+
+$$
+\frac{0.1}{1-0.81} = 0.526,
+$$
+
+menor que la del error de expectativas, y por eso la serie observada la domina el ruido.
+
+Con el primer dato $z_1-\bar\rho=0.8$ y una creencia inicial estacionaria $\N(0,\,0.526)$, la ganancia es
+
+$$
+K = \frac{0.526}{0.526+1} = 0.345.
+$$
+
+La estimación de la tasa ex ante sube a $\bar\rho+0.345\cdot0.8=\bar\rho+0.276$, y su varianza baja:
+
+$$
+P_{1\mid1} = 0.526\,(1-0.345) = 0.345.
+$$
+
+Un solo dato ruidoso reduce en un tercio la incertidumbre sobre la tasa ex ante.
